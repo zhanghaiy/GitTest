@@ -41,8 +41,6 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
     
-//    self.view.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
-    
     _listArray = @[@"心脑血管疾病预防",@"宝洁医疗诊断相机设计",@"心脑血管疾病预防",@"医学世界",@"心脑血管疾病预防"];
     
     _listTableView = [[UITableView alloc]initWithFrame:CGRectMake(10, 0, kScreenWidth-20, kScreenHeight-10) style:UITableViewStylePlain];
