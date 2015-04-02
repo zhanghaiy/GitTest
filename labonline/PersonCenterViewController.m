@@ -11,6 +11,8 @@
 #import "MyCommentViewController.h"
 #import "MyCollectionViewController.h"
 #import "OffLIneVidioViewController.h"
+#import "MyMagazineViewController.h"
+
 
 @interface PersonCenterViewController ()
 {
@@ -125,6 +127,8 @@
         {
             // 我的杂志
             NSLog(@"我的杂志");
+            MyMagazineViewController *magazineVC = [[MyMagazineViewController alloc]init];
+            [self.navigationController pushViewController:magazineVC animated:YES];
         }
             break;
         case 1:

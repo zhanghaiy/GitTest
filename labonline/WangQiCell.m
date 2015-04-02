@@ -10,8 +10,12 @@
 
 @implementation WangQiCell
 
-- (void)awakeFromNib {
+- (void)awakeFromNib
+{
     // Initialization code
+    self.backgroundColor = [UIColor whiteColor];
+    self.layer.masksToBounds = YES;
+    self.layer.cornerRadius = 5;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
