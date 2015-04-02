@@ -37,6 +37,7 @@
         if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
             self.edgesForExtendedLayout = UIRectEdgeNone;
     }
+    
     // 左侧返回按钮
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setFrame:CGRectMake(0, 0, 35, 40)];
@@ -44,7 +45,7 @@
     [button addTarget:self action:@selector(backToPrePage) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = leftItem;
-    
+   
     // right
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setFrame:CGRectMake(0, 0, 25, 25)];
@@ -219,7 +220,6 @@
 {
     // 搜索
     NSLog(@"enterSearchViewController");
-    NSLog(@"111");
 }
 
 

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7525" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment version="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7516"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="MainCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="2015.3.15" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uMx-XT-1LD">
+                        <rect key="frame" x="10" y="5" width="295" height="10"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="1c4-zO-6zN"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="10" id="fQB-Rg-YaV"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TnJ-0H-gAf">
+                        <rect key="frame" x="10" y="15" width="300" height="180"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QeE-ee-rNj">
+                                <rect key="frame" x="7" y="2" width="120" height="95"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="k7N-vJ-Xbt"/>
+                                    <constraint firstAttribute="height" constant="95" id="urg-Z8-PHy"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="杂志主图_05.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="toWanQi:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Y5P-F4-Wg3"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="来源：中国知网" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MH9-4s-0Cu">
+                                <rect key="frame" x="136" y="5" width="112" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="QAL-Tz-1hb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="宝洁医疗诊断相机" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KZ1-m3-tIw">
+                                <rect key="frame" x="136" y="20" width="150" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="isN-IH-W0e"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qbn-mN-kG5">
+                                <rect key="frame" x="136" y="35" width="157" height="68"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="68" id="K1y-1o-JYU"/>
+                                </constraints>
+                                <string key="text">文章简述：我们每一个生活在这个世界的人，总有一个思维时刻在催促着你前行，在前进的路上我们总是自觉或不自觉地调整着自己努力的方向。因为我们正在明白，在你的面前始终有一个你目前无法达到的目标，这个目标就象一剂强心针，将你的肾上腺素调到最亢奋的状态。以至于我们常常在目标之中却无端地失去了目标。</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JUP-6W-DNq">
+                                <rect key="frame" x="252" y="0.0" width="40" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="YVZ-ht-zL1"/>
+                                    <constraint firstAttribute="height" constant="18" id="fZU-0a-TC3"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="新消息提醒_05.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="180" id="1ID-d1-5Nz"/>
+                            <constraint firstItem="JUP-6W-DNq" firstAttribute="top" secondItem="TnJ-0H-gAf" secondAttribute="top" id="1Iv-T7-DAm"/>
+                            <constraint firstItem="JUP-6W-DNq" firstAttribute="leading" secondItem="MH9-4s-0Cu" secondAttribute="trailing" constant="10" id="3IS-or-WJ7"/>
+                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="180" id="4jS-vd-V1K"/>
+                            <constraint firstAttribute="trailing" secondItem="JUP-6W-DNq" secondAttribute="trailing" constant="10" id="74e-Hj-63Y"/>
+                            <constraint firstItem="KZ1-m3-tIw" firstAttribute="leading" secondItem="QeE-ee-rNj" secondAttribute="trailing" constant="10" id="Qx2-8a-nLO"/>
+                            <constraint firstAttribute="trailing" secondItem="Qbn-mN-kG5" secondAttribute="trailing" constant="10" id="Unm-Dt-dtf"/>
+                            <constraint firstItem="QeE-ee-rNj" firstAttribute="leading" secondItem="TnJ-0H-gAf" secondAttribute="leading" constant="5" id="aSJ-wN-gCq"/>
+                            <constraint firstAttribute="trailing" secondItem="KZ1-m3-tIw" secondAttribute="trailing" constant="10" id="aVd-z6-oWK"/>
+                            <constraint firstItem="MH9-4s-0Cu" firstAttribute="top" secondItem="TnJ-0H-gAf" secondAttribute="top" constant="5" id="cyK-FL-S1F"/>
+                            <constraint firstAttribute="height" constant="180" id="g4X-tH-7N6"/>
+                            <constraint firstItem="KZ1-m3-tIw" firstAttribute="top" secondItem="MH9-4s-0Cu" secondAttribute="bottom" id="gfz-Zc-HHa"/>
+                            <constraint firstItem="Qbn-mN-kG5" firstAttribute="top" secondItem="KZ1-m3-tIw" secondAttribute="bottom" id="hBk-1g-DE7"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="180" id="iyx-zU-VgR"/>
+                            <constraint firstItem="QeE-ee-rNj" firstAttribute="top" secondItem="TnJ-0H-gAf" secondAttribute="top" constant="2" id="nR2-XJ-8TD"/>
+                            <constraint firstItem="Qbn-mN-kG5" firstAttribute="leading" secondItem="QeE-ee-rNj" secondAttribute="trailing" constant="10" id="r86-ML-PCf"/>
+                            <constraint firstItem="MH9-4s-0Cu" firstAttribute="leading" secondItem="QeE-ee-rNj" secondAttribute="trailing" constant="10" id="uLa-5V-6z5"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="TnJ-0H-gAf" secondAttribute="trailing" id="84t-ic-W6I"/>
+                    <constraint firstItem="uMx-XT-1LD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="9Qz-mQ-yxk"/>
+                    <constraint firstItem="uMx-XT-1LD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="BDB-si-FJU"/>
+                    <constraint firstItem="TnJ-0H-gAf" firstAttribute="top" secondItem="uMx-XT-1LD" secondAttribute="bottom" constant="2" id="pWS-we-LVE"/>
+                    <constraint firstItem="TnJ-0H-gAf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="wPL-Q2-I1j"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="backView" destination="TnJ-0H-gAf" id="wqX-Iv-cST"/>
+                <outlet property="desLable" destination="Qbn-mN-kG5" id="q3v-Wy-Toj"/>
+                <outlet property="formLable" destination="MH9-4s-0Cu" id="w4p-v5-FBp"/>
+                <outlet property="magazineImageButton" destination="QeE-ee-rNj" id="9TM-lO-L1b"/>
+                <outlet property="timeLable" destination="uMx-XT-1LD" id="7tT-qe-Mbb"/>
+                <outlet property="titleLable" destination="KZ1-m3-tIw" id="AHn-4j-wSb"/>
+                <outlet property="topNewButton" destination="JUP-6W-DNq" id="d8b-Ye-XIi"/>
+            </connections>
+            <point key="canvasLocation" x="380" y="156"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="新消息提醒_05.png" width="86" height="38"/>
+        <image name="杂志主图_05.png" width="276" height="234"/>
+    </resources>
+</document>
