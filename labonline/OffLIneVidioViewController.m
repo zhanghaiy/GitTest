@@ -8,9 +8,9 @@
 
 #import "OffLIneVidioViewController.h"
 
-@interface OffLIneVidioViewController ()
+@interface OffLIneVidioViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
-//    UITableView *_
+    UITableView *_vidioTableView;
 }
 @end
 
@@ -23,8 +23,31 @@
     
     self.title = @"离线视频";
     self.view.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
+    //界面调整
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
+    {
+        if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
+            self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
     
-    
+    _vidioTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 5, kScreenWidth, kScreenHeight-80) style:UITableViewStylePlain];
+    _vidioTableView.delegate = self;
+    _vidioTableView.dataSource = self;
+    _vidioTableView.showsVerticalScrollIndicator = NO;
+    _vidioTableView.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
+    _vidioTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:_vidioTableView];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 8;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+//    static
+    return nil;
 }
 
 - (void)didReceiveMemoryWarning {

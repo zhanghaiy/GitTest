@@ -33,7 +33,7 @@
         if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
             self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-    _myCollectionTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 5, kScreenWidth, kScreenHeight-10) style:UITableViewStylePlain];
+    _myCollectionTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 5, kScreenWidth, kScreenHeight-80) style:UITableViewStylePlain];
     _myCollectionTableView.delegate = self;
     _myCollectionTableView.dataSource = self;
     _myCollectionTableView.showsVerticalScrollIndicator = NO;
