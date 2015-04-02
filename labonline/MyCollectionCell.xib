@@ -14,29 +14,42 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="我的收藏背景.png" translatesAutoresizingMaskIntoConstraints="NO" id="ovp-pv-A8w">
-                        <rect key="frame" x="10" y="5" width="300" height="60"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="我的收藏背景.png" translatesAutoresizingMaskIntoConstraints="NO" id="ovp-pv-A8w">
+                        <rect key="frame" x="10" y="5" width="300" height="59"/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="宝洁医疗诊断相机" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dnk-SK-Bir">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="宝洁医疗诊断相机" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dnk-SK-Bir">
                         <rect key="frame" x="20" y="10" width="250" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="6lT-df-kGV"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="来源：中国知网" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Frf-28-Z7T">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="来源：中国知网" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Frf-28-Z7T">
                         <rect key="frame" x="20" y="30" width="250" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="DHK-2R-kWm"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="类目：口腔" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="57x-LU-EN0">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="类目：口腔" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="57x-LU-EN0">
                         <rect key="frame" x="20" y="45" width="250" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="Ihz-Tw-A0y"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1h5-9R-htj">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1h5-9R-htj">
                         <rect key="frame" x="285" y="15" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="AJT-Bs-sQe"/>
+                            <constraint firstAttribute="width" constant="20" id="RcW-eD-BTg"/>
+                        </constraints>
                         <state key="normal" backgroundImage="删除.png">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
@@ -45,6 +58,23 @@
                         </connections>
                     </button>
                 </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="57x-LU-EN0" secondAttribute="bottom" constant="5" id="3b4-Yv-noh"/>
+                    <constraint firstItem="1h5-9R-htj" firstAttribute="leading" secondItem="Frf-28-Z7T" secondAttribute="trailing" constant="15" id="3yN-PY-kRV"/>
+                    <constraint firstItem="ovp-pv-A8w" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="5wg-Ne-wS1"/>
+                    <constraint firstItem="1h5-9R-htj" firstAttribute="leading" secondItem="Dnk-SK-Bir" secondAttribute="trailing" constant="15" id="6Ox-Qa-Ik0"/>
+                    <constraint firstAttribute="bottom" secondItem="ovp-pv-A8w" secondAttribute="bottom" constant="1" id="CaR-sU-2tC"/>
+                    <constraint firstAttribute="trailing" secondItem="57x-LU-EN0" secondAttribute="trailing" constant="50" id="Hoe-Zv-lTv"/>
+                    <constraint firstItem="Dnk-SK-Bir" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="ITv-Ba-Xz6"/>
+                    <constraint firstItem="Dnk-SK-Bir" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="JdG-Pf-o8p"/>
+                    <constraint firstItem="57x-LU-EN0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="WFh-WE-Zfj"/>
+                    <constraint firstItem="ovp-pv-A8w" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="avY-3H-m7K"/>
+                    <constraint firstAttribute="trailing" secondItem="ovp-pv-A8w" secondAttribute="trailing" constant="10" id="bOj-EP-fyW"/>
+                    <constraint firstItem="Frf-28-Z7T" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="ffP-GG-Jt6"/>
+                    <constraint firstItem="Frf-28-Z7T" firstAttribute="top" secondItem="Dnk-SK-Bir" secondAttribute="bottom" id="kCM-dX-3Ep"/>
+                    <constraint firstAttribute="trailing" secondItem="1h5-9R-htj" secondAttribute="trailing" constant="15" id="uTZ-Vl-uTQ"/>
+                    <constraint firstItem="1h5-9R-htj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="zJe-qN-TA0"/>
+                </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>

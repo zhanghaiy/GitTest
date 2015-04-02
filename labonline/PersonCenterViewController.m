@@ -10,7 +10,7 @@
 #import "PersonColumeView.h"
 #import "MyCommentViewController.h"
 #import "MyCollectionViewController.h"
-
+#import "OffLIneVidioViewController.h"
 
 @interface PersonCenterViewController ()
 {
@@ -147,7 +147,8 @@
         {
             // 离线视频
             NSLog(@"离线视频");
-            
+            OffLIneVidioViewController *offLineVidioVC = [[OffLIneVidioViewController alloc]init];
+            [self.navigationController pushViewController:offLineVidioVC animated:YES];
             
         }
             break;

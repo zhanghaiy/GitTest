@@ -7,6 +7,8 @@
 //
 
 #import "OffLIneVidioViewController.h"
+#import "OffLineVidioCell.h"
+
 
 @interface OffLIneVidioViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -46,8 +48,28 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    static
-    return nil;
+    static NSString *cellIdentifer = @"cell";
+    OffLineVidioCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifer];
+    if (cell == nil)
+    {
+        cell = [[[NSBundle mainBundle]loadNibNamed:@"OffLineVidioCell" owner:self options:0] lastObject];
+        cell.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
+        cell.target = self;
+        cell.action = @selector(playVidioButtonCallBack:);
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 200;
+}
+
+- (void)playVidioButtonCallBack:(OffLineVidioCell *)offLineCell
+{
+    // 播放离线视频
+    NSLog(@"播放离线视频");
 }
 
 - (void)didReceiveMemoryWarning {

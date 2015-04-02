@@ -24,16 +24,26 @@
     NSInteger width = self.view.bounds.size.width;
     NSInteger height = self.view.bounds.size.height;
     
-    self.view.backgroundColor = [UIColor colorWithRed:41/255.0 green:70/255.0 blue:134/255.0 alpha:1];
+//    self.view.backgroundColor = [UIColor colorWithRed:41/255.0 green:70/255.0 blue:134/255.0 alpha:1];
+    UIImageView *imgV = [[UIImageView alloc]initWithFrame:self.view.bounds];
+    imgV.image = [UIImage imageNamed:@"左侧列.png"];
+    imgV.userInteractionEnabled = YES;
+    [self.view addSubview:imgV];
+    
+    UIImageView *headImgV = [[UIImageView alloc]initWithFrame:CGRectMake(40, 100, 90, 90)];
+    headImgV.backgroundColor = [UIColor clearColor];
+    headImgV.layer.masksToBounds = YES;
+    headImgV.layer.cornerRadius = 45;
+    headImgV.layer.borderWidth = 3;
+    headImgV.layer.borderColor = [UIColor colorWithRed:162/255.0 green:203/255.0 blue:205/255.0 alpha:1].CGColor;
+    [imgV addSubview:headImgV];
     
     UIButton *userImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [userImageButton setFrame:CGRectMake(50, 100, 80, 80)];
+    [userImageButton setFrame:CGRectMake(45, 105, 80, 80)];
     [userImageButton setBackgroundImage:[UIImage imageNamed:@"33.jpg"] forState:UIControlStateNormal];
     userImageButton.layer.masksToBounds = YES;
     userImageButton.layer.cornerRadius = 40;
-    userImageButton.layer.borderWidth = 1;
-    userImageButton.layer.borderColor = [UIColor colorWithRed:83/255.0 green:175/255.0 blue:226/255.0 alpha:1].CGColor;
-    [self.view addSubview:userImageButton];
+    [imgV addSubview:userImageButton];
     
     _titleCateArray = [[NSMutableArray alloc]initWithObjects:@"PDF阅读",@"视频",@"技术专栏",@"首页",@"用户中心", nil];
     _cateTableView = [[UITableView alloc]initWithFrame:CGRectMake(50, 200, width-60-100, height-200) style:UITableViewStylePlain];
@@ -41,7 +51,7 @@
     _cateTableView.dataSource = self;
     _cateTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _cateTableView.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:_cateTableView];
+    [imgV addSubview:_cateTableView];
     
 }
 

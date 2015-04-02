@@ -21,6 +21,11 @@
 		FD462E521ACCE022001AC895 /* 删除.png in Resources */ = {isa = PBXBuildFile; fileRef = FD462E4D1ACCE022001AC895 /* 删除.png */; };
 		FD462E531ACCE022001AC895 /* 我的收藏背景.png in Resources */ = {isa = PBXBuildFile; fileRef = FD462E4E1ACCE022001AC895 /* 我的收藏背景.png */; };
 		FD462E561ACD0EF6001AC895 /* OffLIneVidioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD462E551ACD0EF6001AC895 /* OffLIneVidioViewController.m */; };
+		FD462E5A1ACD2DB2001AC895 /* OffLineVidioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD462E581ACD2DB2001AC895 /* OffLineVidioCell.m */; };
+		FD462E5B1ACD2DB2001AC895 /* OffLineVidioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD462E591ACD2DB2001AC895 /* OffLineVidioCell.xib */; };
+		FD462E5E1ACD2FC1001AC895 /* 播放.png in Resources */ = {isa = PBXBuildFile; fileRef = FD462E5C1ACD2FC1001AC895 /* 播放.png */; };
+		FD462E5F1ACD2FC1001AC895 /* 视频.png in Resources */ = {isa = PBXBuildFile; fileRef = FD462E5D1ACD2FC1001AC895 /* 视频.png */; };
+		FD462E611ACD3E90001AC895 /* 左侧列.png in Resources */ = {isa = PBXBuildFile; fileRef = FD462E601ACD3E90001AC895 /* 左侧列.png */; };
 		FD47C8101AC521D300846AC9 /* JiShuZhuanLanDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD47C80F1AC521D300846AC9 /* JiShuZhuanLanDetailViewController.m */; };
 		FD47C8121AC524FB00846AC9 /* 收藏.png in Resources */ = {isa = PBXBuildFile; fileRef = FD47C8111AC524FB00846AC9 /* 收藏.png */; };
 		FD47C8161AC5316300846AC9 /* 分享.png in Resources */ = {isa = PBXBuildFile; fileRef = FD47C8131AC5316300846AC9 /* 分享.png */; };
@@ -117,6 +122,12 @@
 		FD462E4E1ACCE022001AC895 /* 我的收藏背景.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "我的收藏背景.png"; sourceTree = "<group>"; };
 		FD462E541ACD0EF6001AC895 /* OffLIneVidioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OffLIneVidioViewController.h; sourceTree = "<group>"; };
 		FD462E551ACD0EF6001AC895 /* OffLIneVidioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OffLIneVidioViewController.m; sourceTree = "<group>"; };
+		FD462E571ACD2DB2001AC895 /* OffLineVidioCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OffLineVidioCell.h; sourceTree = "<group>"; };
+		FD462E581ACD2DB2001AC895 /* OffLineVidioCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OffLineVidioCell.m; sourceTree = "<group>"; };
+		FD462E591ACD2DB2001AC895 /* OffLineVidioCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OffLineVidioCell.xib; sourceTree = "<group>"; };
+		FD462E5C1ACD2FC1001AC895 /* 播放.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "播放.png"; sourceTree = "<group>"; };
+		FD462E5D1ACD2FC1001AC895 /* 视频.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "视频.png"; sourceTree = "<group>"; };
+		FD462E601ACD3E90001AC895 /* 左侧列.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "左侧列.png"; sourceTree = "<group>"; };
 		FD47C80E1AC521D300846AC9 /* JiShuZhuanLanDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JiShuZhuanLanDetailViewController.h; sourceTree = "<group>"; };
 		FD47C80F1AC521D300846AC9 /* JiShuZhuanLanDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JiShuZhuanLanDetailViewController.m; sourceTree = "<group>"; };
 		FD47C8111AC524FB00846AC9 /* 收藏.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "收藏.png"; sourceTree = "<group>"; };
@@ -315,6 +326,9 @@
 		FD558CF41AC3A62900DA42FF /* 切图（安卓） */ = {
 			isa = PBXGroup;
 			children = (
+				FD462E601ACD3E90001AC895 /* 左侧列.png */,
+				FD462E5C1ACD2FC1001AC895 /* 播放.png */,
+				FD462E5D1ACD2FC1001AC895 /* 视频.png */,
 				FD462E4A1ACCE022001AC895 /* 弹出框.png */,
 				FD462E4B1ACCE022001AC895 /* 取消.png */,
 				FD462E4C1ACCE022001AC895 /* 确定.png */,
@@ -596,6 +610,9 @@
 				FD462E451ACCDF6B001AC895 /* MyCollectionCell.h */,
 				FD462E461ACCDF6B001AC895 /* MyCollectionCell.m */,
 				FD462E471ACCDF6B001AC895 /* MyCollectionCell.xib */,
+				FD462E571ACD2DB2001AC895 /* OffLineVidioCell.h */,
+				FD462E581ACD2DB2001AC895 /* OffLineVidioCell.m */,
+				FD462E591ACD2DB2001AC895 /* OffLineVidioCell.xib */,
 			);
 			name = "个人中心";
 			sourceTree = "<group>";
@@ -680,10 +697,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD462E5F1ACD2FC1001AC895 /* 视频.png in Resources */,
 				FD462E501ACCE022001AC895 /* 取消.png in Resources */,
 				FDB7CD431ACAAE95007BAF79 /* 返回角.png in Resources */,
 				042C467B1AC297F600D36C8F /* wangqi.png in Resources */,
 				FD558D0F1AC3E1A500DA42FF /* aniu_07.png in Resources */,
+				FD462E5B1ACD2DB2001AC895 /* OffLineVidioCell.xib in Resources */,
 				FD47C8201AC53A3300846AC9 /* JSZLEvaluationCell.xib in Resources */,
 				FD47C8121AC524FB00846AC9 /* 收藏.png in Resources */,
 				FD96C8971AC109E00002778A /* LaunchScreen.xib in Resources */,
@@ -699,6 +718,7 @@
 				FD558D5E1AC4098F00DA42FF /* blueArrow.png in Resources */,
 				FD558CF91AC3A62900DA42FF /* 搜索.png in Resources */,
 				FD462E491ACCDF6B001AC895 /* MyCollectionCell.xib in Resources */,
+				FD462E5E1ACD2FC1001AC895 /* 播放.png in Resources */,
 				FD9A76F11ACBD2B1007ACC11 /* 我的评论.png in Resources */,
 				FD558D5D1AC4098F00DA42FF /* blackArrow@2x.png in Resources */,
 				042C46761AC296B500D36C8F /* WangQiCell.xib in Resources */,
@@ -719,6 +739,7 @@
 				FD462E521ACCE022001AC895 /* 删除.png in Resources */,
 				FD558CFA1AC3A62900DA42FF /* 游览.png in Resources */,
 				FD9A76EF1ACBD2B1007ACC11 /* 离线视频.png in Resources */,
+				FD462E611ACD3E90001AC895 /* 左侧列.png in Resources */,
 				FD9A76F21ACBD2B1007ACC11 /* 我的收藏.png in Resources */,
 				FD9A76F31ACBD2B1007ACC11 /* 我的杂志.png in Resources */,
 				FD558D631AC4098F00DA42FF /* whiteArrow@2x.png in Resources */,
@@ -754,6 +775,7 @@
 				FD47C81B1AC5386E00846AC9 /* JSZLEvaluationViewController.m in Sources */,
 				042C46741AC2815300D36C8F /* MenuViewController.m in Sources */,
 				FD96C8E71AC146480002778A /* PictureShowView.m in Sources */,
+				FD462E5A1ACD2DB2001AC895 /* OffLineVidioCell.m in Sources */,
 				FDB7CD3B1ACA6E86007BAF79 /* PDFBrowserViewController.m in Sources */,
 				FD96C8B21AC10A3A0002778A /* LeftViewController.m in Sources */,
 				FD47C81F1AC53A3300846AC9 /* JSZLEvaluationCell.m in Sources */,
