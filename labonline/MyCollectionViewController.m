@@ -64,6 +64,11 @@
     return cell;
 }
 
+- (void)deleteMyCollection:(MyCollectionCell *)cell
+{
+   // 删除收藏
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 66;

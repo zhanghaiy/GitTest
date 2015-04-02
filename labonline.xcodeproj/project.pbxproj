@@ -20,6 +20,7 @@
 		FD462E511ACCE022001AC895 /* 确定.png in Resources */ = {isa = PBXBuildFile; fileRef = FD462E4C1ACCE022001AC895 /* 确定.png */; };
 		FD462E521ACCE022001AC895 /* 删除.png in Resources */ = {isa = PBXBuildFile; fileRef = FD462E4D1ACCE022001AC895 /* 删除.png */; };
 		FD462E531ACCE022001AC895 /* 我的收藏背景.png in Resources */ = {isa = PBXBuildFile; fileRef = FD462E4E1ACCE022001AC895 /* 我的收藏背景.png */; };
+		FD462E561ACD0EF6001AC895 /* OffLIneVidioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD462E551ACD0EF6001AC895 /* OffLIneVidioViewController.m */; };
 		FD47C8101AC521D300846AC9 /* JiShuZhuanLanDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD47C80F1AC521D300846AC9 /* JiShuZhuanLanDetailViewController.m */; };
 		FD47C8121AC524FB00846AC9 /* 收藏.png in Resources */ = {isa = PBXBuildFile; fileRef = FD47C8111AC524FB00846AC9 /* 收藏.png */; };
 		FD47C8161AC5316300846AC9 /* 分享.png in Resources */ = {isa = PBXBuildFile; fileRef = FD47C8131AC5316300846AC9 /* 分享.png */; };
@@ -114,6 +115,8 @@
 		FD462E4C1ACCE022001AC895 /* 确定.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "确定.png"; sourceTree = "<group>"; };
 		FD462E4D1ACCE022001AC895 /* 删除.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "删除.png"; sourceTree = "<group>"; };
 		FD462E4E1ACCE022001AC895 /* 我的收藏背景.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "我的收藏背景.png"; sourceTree = "<group>"; };
+		FD462E541ACD0EF6001AC895 /* OffLIneVidioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OffLIneVidioViewController.h; sourceTree = "<group>"; };
+		FD462E551ACD0EF6001AC895 /* OffLIneVidioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OffLIneVidioViewController.m; sourceTree = "<group>"; };
 		FD47C80E1AC521D300846AC9 /* JiShuZhuanLanDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JiShuZhuanLanDetailViewController.h; sourceTree = "<group>"; };
 		FD47C80F1AC521D300846AC9 /* JiShuZhuanLanDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JiShuZhuanLanDetailViewController.m; sourceTree = "<group>"; };
 		FD47C8111AC524FB00846AC9 /* 收藏.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "收藏.png"; sourceTree = "<group>"; };
@@ -576,6 +579,8 @@
 				FD9A76F91ACBE711007ACC11 /* MyCommentViewController.m */,
 				FD462E421ACCDE1F001AC895 /* MyCollectionViewController.h */,
 				FD462E431ACCDE1F001AC895 /* MyCollectionViewController.m */,
+				FD462E541ACD0EF6001AC895 /* OffLIneVidioViewController.h */,
+				FD462E551ACD0EF6001AC895 /* OffLIneVidioViewController.m */,
 			);
 			name = "个人中心";
 			sourceTree = "<group>";
@@ -742,6 +747,7 @@
 				FD96C88C1AC109E00002778A /* AppDelegate.m in Sources */,
 				FD558CF21AC3A43B00DA42FF /* JiShuZhuanLanCell.m in Sources */,
 				FD558D131AC3E74600DA42FF /* JiShuZhuanLanMoreViewController.m in Sources */,
+				FD462E561ACD0EF6001AC895 /* OffLIneVidioViewController.m in Sources */,
 				FD47C8101AC521D300846AC9 /* JiShuZhuanLanDetailViewController.m in Sources */,
 				FD462E481ACCDF6B001AC895 /* MyCollectionCell.m in Sources */,
 				FD96C8D21AC116FF0002778A /* DeviceManager.m in Sources */,

@@ -147,6 +147,8 @@
         {
             // 离线视频
             NSLog(@"离线视频");
+            
+            
         }
             break;
         default:
