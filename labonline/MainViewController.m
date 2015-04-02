@@ -55,8 +55,10 @@
     _homePage = YES;
     self.title = @"医检在线";
     NSLog(@"测试");
+    NSLog(@"1111");
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
+    
     //界面调整
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
     {
