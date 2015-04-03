@@ -47,8 +47,6 @@
     // 左侧返回按钮
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setFrame:CGRectMake(0, 0, 35, 40)];
-    [button setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(backToPrePage) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = leftItem;
     // right
@@ -176,11 +174,6 @@
     
 }
 
-#pragma mark - 返回上一页
-- (void)backToPrePage
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 #pragma mark - 搜索
 - (void)enterSearchViewController

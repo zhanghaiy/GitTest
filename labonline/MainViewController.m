@@ -52,8 +52,6 @@
     // Do any additional setup after loading the view.
     
     self.title = @"医检在线";
-    NSLog(@"测试");
-    NSLog(@"1111");
     self.view.backgroundColor = [UIColor colorWithWhite:244/255.0 alpha:1];
     self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
     
@@ -149,6 +147,7 @@
     AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
     YRSideViewController *sideViewController=[delegate sideViewController];
     [sideViewController hideSideViewController:YES];
+    [self.navigationController popToRootViewControllerAnimated:NO];
     switch (type) {
         case MainPage:
         {
@@ -158,12 +157,14 @@
         case JiShuZhuanLan:
         {
             JiShuZhuanLanViewController *jSZLViewController = [[JiShuZhuanLanViewController alloc]init];
+            jSZLViewController.enterFromHome = YES;
             [self.navigationController pushViewController:jSZLViewController animated:YES];
         }
             break;
         case WangQi:
         {
             MenuViewController *menuVC=[[MenuViewController alloc] init];
+            menuVC.enterFromHome = YES;
             [self.navigationController pushViewController:menuVC animated:YES];
         }
             break;

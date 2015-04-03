@@ -44,6 +44,13 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
     
+//    //界面调整
+//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
+//    {
+//        if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
+//            self.edgesForExtendedLayout = UIRectEdgeNone;
+//    }
+    
     // 底部工具栏
     UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, kScreenHeight - kToolBarHeight, kScreenWidth, kToolBarHeight)];
     

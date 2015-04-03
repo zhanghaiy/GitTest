@@ -47,19 +47,14 @@
     /*
         判断是从主页进入还是杂志页进入，主页进入没有左侧按钮
      */
-    UIImage *img;
-    if (_enterFromHome)
-    {
-        img = [UIImage imageNamed:@""];
-    }
-    else
-    {
-        img = [UIImage imageNamed:@"aniu_07.png"];
-    }
+    
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setFrame:CGRectMake(0, 0, 25, 26)];
-    [button setBackgroundImage:img forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(popToPrePage) forControlEvents:UIControlEventTouchUpInside];
+    if (!_enterFromHome)
+    {
+        [button setBackgroundImage:[UIImage imageNamed:@"aniu_07.png"] forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(popToPrePage) forControlEvents:UIControlEventTouchUpInside];
+    }
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = leftItem;
     //右侧按钮

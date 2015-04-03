@@ -10,4 +10,6 @@
 
 @interface JiShuZhuanLanViewController : UIViewController
 
+@property (nonatomic,assign) BOOL enterFromHome;
+
 @end
