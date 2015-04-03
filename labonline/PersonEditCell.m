@@ -1,21 +1,21 @@
 //
-//  WangQiCell.m
+//  PersonEditCell.m
 //  labonline
 //
-//  Created by 引领科技 on 15/3/25.
+//  Created by cocim01 on 15/4/3.
 //  Copyright (c) 2015年 科希盟. All rights reserved.
 //
 
-#import "WangQiCell.h"
+#import "PersonEditCell.h"
 
-@implementation WangQiCell
+@implementation PersonEditCell
 
 - (void)awakeFromNib
 {
     // Initialization code
     self.backgroundColor = [UIColor whiteColor];
-    self.layer.masksToBounds = YES;
-    self.layer.cornerRadius = 5;
+    _titleLable.textColor = [UIColor colorWithRed:96/255.0 green:96/255.0 blue:96/255.0 alpha:1];
+    _contentLable.textColor = [UIColor colorWithRed:186/255.0 green:186/255.0 blue:186/255.0  alpha:1];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

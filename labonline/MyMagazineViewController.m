@@ -1,29 +1,29 @@
 //
-//  OffLIneVidioViewController.m
+//  MyMagazineViewController.m
 //  labonline
 //
 //  Created by cocim01 on 15/4/2.
 //  Copyright (c) 2015年 科希盟. All rights reserved.
 //
 
-#import "OffLIneVidioViewController.h"
-#import "OffLineVidioCell.h"
+#import "MyMagazineViewController.h"
+#import "WangQiCell.h"
 
 
-@interface OffLIneVidioViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface MyMagazineViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
-    UITableView *_vidioTableView;
+    UITableView *_myMagazineTableV;
 }
 @end
 
-@implementation OffLIneVidioViewController
+@implementation MyMagazineViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title = @"离线视频";
+    self.title = @"我的杂志";
     self.view.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
     //界面调整
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
@@ -32,30 +32,34 @@
             self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
-    _vidioTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 5, kScreenWidth, kScreenHeight-80) style:UITableViewStylePlain];
-    _vidioTableView.delegate = self;
-    _vidioTableView.dataSource = self;
-    _vidioTableView.showsVerticalScrollIndicator = NO;
-    _vidioTableView.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
-    _vidioTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:_vidioTableView];
+    _myMagazineTableV = [[UITableView alloc]initWithFrame:CGRectMake(10, 5, kScreenWidth-20, kScreenHeight-80) style:UITableViewStylePlain];
+    _myMagazineTableV.delegate = self;
+    _myMagazineTableV.dataSource = self;
+    _myMagazineTableV.showsVerticalScrollIndicator = NO;
+    _myMagazineTableV.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
+    _myMagazineTableV.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:_myMagazineTableV];
+    
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 7;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 8;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifer = @"cell";
-    OffLineVidioCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifer];
+    WangQiCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifer];
     if (cell == nil)
     {
-        cell = [[[NSBundle mainBundle]loadNibNamed:@"OffLineVidioCell" owner:self options:0] lastObject];
-        cell.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
-        cell.target = self;
-        cell.action = @selector(playVidioButtonCallBack:);
+        cell = [[[NSBundle mainBundle]loadNibNamed:@"WangQiCell" owner:self options:0] lastObject];
+        
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -63,14 +67,21 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 200;
+    return 180;
 }
 
-- (void)playVidioButtonCallBack:(OffLineVidioCell *)offLineCell
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    // 播放离线视频
-    NSLog(@"播放离线视频");
+    return 5;
 }
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth-20, 5)];
+    view.backgroundColor = [UIColor clearColor];
+    return view;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

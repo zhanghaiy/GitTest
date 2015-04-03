@@ -173,7 +173,7 @@
     desLab.textAlignment = NSTextAlignmentLeft;
     desLab.numberOfLines = 0;
     desLab.textColor = [UIColor colorWithRed:117/255.0 green:117/255.0 blue:117/255.0 alpha:1];
-    desLab.font = [UIFont systemFontOfSize:kTwoFontSize];
+    desLab.font = [UIFont systemFontOfSize:kOneFontSize];
     [scrollV addSubview:desLab];
     
     if (backViewheight-150-rect.size.height<=10)
