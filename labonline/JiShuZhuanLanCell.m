@@ -78,9 +78,9 @@
     if ([tapView isKindOfClass:[JiShuZhuanLanSubView class]])
     {
         JiShuZhuanLanSubView *jszlSunV = (JiShuZhuanLanSubView *)tapView;
-        if ([self.delegate respondsToSelector:self.jszlViewClickedAction])
+        if ([self.target respondsToSelector:self.jszlViewClickedAction])
         {
-            [self.delegate performSelector:self.jszlViewClickedAction withObject:jszlSunV afterDelay:NO];
+            [self.target performSelector:self.jszlViewClickedAction withObject:jszlSunV afterDelay:NO];
         }
     }
 }
@@ -94,9 +94,9 @@
 - (IBAction)moreButtonClicked:(id)sender
 {
     NSLog(@"moreButtonClicked");
-    if ([self.delegate respondsToSelector:self.buttonClickSelector])
+    if ([self.target respondsToSelector:self.buttonClickSelector])
     {
-        [self.delegate performSelector:self.buttonClickSelector withObject:self afterDelay:NO];
+        [self.target performSelector:self.buttonClickSelector withObject:self afterDelay:NO];
     }
 }
 @end

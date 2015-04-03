@@ -7,8 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "MainViewController.h"
 #import "LeftViewController.h"
+#import "MainViewController.h"
 
 @interface AppDelegate ()
 
@@ -29,7 +29,7 @@
     UINavigationController *mainNVC = [[UINavigationController alloc]initWithRootViewController:mainViewController];
     
     LeftViewController *leftViewController=[[LeftViewController alloc]initWithNibName:nil bundle:nil];
-    leftViewController.delegate=mainViewController;
+    leftViewController.delegate = mainViewController;
     //    leftViewController.view.backgroundColor=[UIColor brownColor];
     
     UIViewController *rightViewController=[[UIViewController alloc]initWithNibName:nil bundle:nil];

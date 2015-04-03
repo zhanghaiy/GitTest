@@ -13,30 +13,23 @@
 #import "PDFBrowserViewController.h"
 // 轮播
 #import "PictureShowView.h"
-#import "MainCell.h"
-// 技术专栏
-#import "JiShuZhuanLanCell.h"
-#import "JiShuZhuanLanSubView.h"
-#import "JiShuZhuanLanMoreViewController.h"
-#import "JiShuZhuanLanDetailViewController.h"
-// Main
+#import "MainNewView.h"
+#import "JSZLCateView.h"
 #import "MainDetailViewController.h"
+// 技术专栏
+#import "JiShuZhuanLanViewController.h"
+#import "JiShuZhuanLanDetailViewController.h"
+#import "JiShuZhuanLanMoreViewController.h"
+
 // 下拉刷新
-#import "EGORefreshTableHeaderView.h"
 #import "PersonCenterViewController.h"
 
 #import "YRSideViewController.h"
 #import "AppDelegate.h"
 
-@interface MainViewController ()<UITableViewDelegate,UITableViewDataSource,LeftViewControllerDelegate,EGORefreshTableHeaderDelegate,MainCellDelegate>
+@interface MainViewController ()<LeftViewControllerDelegate,UIScrollViewDelegate>
 {
-    NSArray *_mainPageDataArray;
-    NSArray *_jiShuZhuanLanDataArray;
-    UITableView *_tableView;
-    BOOL _homePage;
-    //刷新
-    EGORefreshTableHeaderView *_refreshHeaderView;
-    BOOL _reloading;
+    UIScrollView *_backScrollV;
 }
 @end
 
@@ -50,17 +43,20 @@
 #define kPageControlTag 335
 #define kImageButtonTag 112233
 
+#define kMainNewViewHeight 240
+#define kJSZLAloneHeight 80
+#define kJSZLHeadHeight 40
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    _homePage = YES;
     self.title = @"医检在线";
     NSLog(@"测试");
     NSLog(@"1111");
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor colorWithWhite:244/255.0 alpha:1];
     self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
-    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:215/255.0 green:0 blue:0 alpha:1];
+    
     //界面调整
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
     {
@@ -69,19 +65,9 @@
     }
     //修改标题颜色 其中 UITextAttributeTextColor和UITextAttributeFont 属性是文字颜色和字体
     UIColor *titleColor = [UIColor colorWithRed:215/255.0 green:0 blue:37/255.0 alpha:1];
-    UIFont *titleFont = [UIFont systemFontOfSize:18];
-    NSDictionary *paramDic = [NSDictionary dictionaryWithObjectsAndKeys:titleColor, UITextAttributeTextColor,titleColor,UITextAttributeTextShadowColor,[NSValue valueWithUIOffset:UIOffsetMake(0, 0)],UITextAttributeTextShadowOffset,titleFont, UITextAttributeFont,nil];
+    UIFont *titleFont = [UIFont systemFontOfSize:16];
+    NSDictionary *paramDic = [NSDictionary dictionaryWithObjectsAndKeys:titleColor, UITextAttributeTextColor,titleColor, UITextAttributeTextShadowColor,[NSValue valueWithUIOffset:UIOffsetMake(0, 0)],UITextAttributeTextShadowOffset,titleFont, UITextAttributeFont,nil];
     [self.navigationController.navigationBar setTitleTextAttributes:paramDic];
-    
-    //左侧按钮
-    /*
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setFrame:CGRectMake(0, 0, 25, 26)];
-    [button setBackgroundImage:[UIImage imageNamed:@"aniu_07.png"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(popToLeftMenu) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
-    self.navigationItem.leftBarButtonItem = leftItem;
-    */
     // right
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setFrame:CGRectMake(0, 0, 25, 25)];
@@ -90,38 +76,55 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
     
-    // 图片轮播View
-    UIView *headV = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kImageShowViewHeight+5)];
-    PictureShowView *pictureV = [[PictureShowView alloc]initWithFrame:CGRectMake(12, 5, kScreenWidth-24, kImageShowViewHeight)];
+    _backScrollV = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-65)];
+    _backScrollV.delegate =self;
+    [self.view addSubview:_backScrollV];
+    
+     // 图片轮播View
+    PictureShowView *pictureV = [[PictureShowView alloc]initWithFrame:CGRectMake(5, 5, kScreenWidth-10, kImageShowViewHeight)];
     pictureV.imageInfoArray = @[@"",@"",@"",@"",@""];
     pictureV.target = self;
     pictureV.action = @selector(pictureShowMethod:);
-    [headV addSubview:pictureV];
+    [_backScrollV addSubview:pictureV];
     
-    // 表视图
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-74) style:UITableViewStylePlain];
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.showsVerticalScrollIndicator = NO;
-    _tableView.tableHeaderView = headV;
-    [self.view addSubview:_tableView];
+    // 最新杂志
+    MainNewView *mainNewV = [[[NSBundle mainBundle]loadNibNamed:@"MainNewView" owner:self options:0] lastObject];
+    mainNewV.frame = CGRectMake(5, 15+kImageShowViewHeight, kScreenWidth-10, kMainNewViewHeight);
+    mainNewV.target = self;
+    mainNewV.action = @selector(enLargeImage:);
+    mainNewV.imageDataArray = @[@"12.jpg",@"pictureShow.png",@"文章缩略图.png",@"pictureShow.png",@"12.jpg"];
+    [_backScrollV addSubview:mainNewV];
     
-    // 往期按钮
-    UIButton *preButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [preButton setFrame:CGRectMake(kScreenWidth-kMainPreButtonWidth-10, kScreenHeight-kMainPreButtonWidth-74, kMainPreButtonWidth, kMainPreButtonWidth)];
-    [preButton setTitle:@"往期" forState:UIControlStateNormal];
-    [preButton setTitleColor:[UIColor colorWithRed:204/255.0 green:0 blue:0 alpha:1] forState:UIControlStateNormal];
-    preButton.layer.masksToBounds = YES;
-    preButton.layer.cornerRadius = preButton.frame.size.width/2;
-    preButton.layer.borderWidth = 2;
-    preButton.layer.borderColor = [UIColor colorWithRed:215/255.0 green:104/255.0 blue:121/255.0 alpha:1].CGColor;
-    preButton.backgroundColor = [UIColor colorWithWhite:1 alpha:0.8];
-    [preButton addTarget:self action:@selector(preButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:preButton];
+    // 技术专栏
+    // 先计算技术专栏的高度
+    NSInteger hang = 2;
+    NSInteger jSZLHeight = kJSZLHeadHeight + hang*kJSZLAloneHeight;
+    JSZLCateView *jSZLCateV = [[[NSBundle mainBundle]loadNibNamed:@"JSZLCateView" owner:self options:0] lastObject];
+    jSZLCateV.frame = CGRectMake(5, 25+kImageShowViewHeight+kMainNewViewHeight, kScreenWidth-10, jSZLHeight);
+    jSZLCateV.target = self;
+    jSZLCateV.action = @selector(enterJSZLVireController:);
+    [_backScrollV addSubview:jSZLCateV];
     
-    _reloading = NO;
-    [self createHeaderView];
+    _backScrollV.contentSize = CGSizeMake(kScreenWidth, 50+kImageShowViewHeight+kMainNewViewHeight+jSZLHeight);
+    _backScrollV.showsVerticalScrollIndicator = NO;
+}
+
+#pragma mark - 进入技术专栏界面
+- (void)enterJSZLVireController:(JSZLCateView *)jSZLCateView
+{
+    if (jSZLCateView.enterMoreVC)
+    {
+        // 更多界面
+        JiShuZhuanLanMoreViewController *moreVC = [[JiShuZhuanLanMoreViewController alloc]init];
+        [self.navigationController pushViewController:moreVC animated:YES];
+    }
+    else
+    {
+        // 技术专栏主页
+        JiShuZhuanLanViewController *jszlVC = [[JiShuZhuanLanViewController alloc]init];
+        [self.navigationController pushViewController:jszlVC animated:YES];
+    }
+    
 }
 
 #pragma mark - 图片轮播-->进入详情
@@ -131,7 +134,6 @@
     JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
     detailVC.titleStr = @"文章详情";
     [self.navigationController pushViewController:detailVC animated:YES];
-    
 }
 
 #pragma mark - 搜索
@@ -142,54 +144,39 @@
 }
 
 #pragma mark - LeftViewControllerDelegate(侧滑回到主页)
-
 - (void)pushViewControllerWithIndex:(NSInteger)type
 {
     AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
     YRSideViewController *sideViewController=[delegate sideViewController];
     [sideViewController hideSideViewController:YES];
-    
-    switch (type)
-    {
+    switch (type) {
         case MainPage:
         {
-            // 首页
-            NSLog(@"首页");
-            _homePage = YES;
-            [self.navigationController popToRootViewControllerAnimated:YES];
-            [self changeLanMu];
+            
         }
             break;
         case JiShuZhuanLan:
         {
-            // 技术专栏
-            NSLog(@"技术专栏");
-            _homePage = NO;
-            [self.navigationController popToRootViewControllerAnimated:YES];
-            [self changeLanMu];
+            JiShuZhuanLanViewController *jSZLViewController = [[JiShuZhuanLanViewController alloc]init];
+            [self.navigationController pushViewController:jSZLViewController animated:YES];
         }
             break;
         case WangQi:
         {
-            // 杂志
-            NSLog(@"杂志");
             MenuViewController *menuVC=[[MenuViewController alloc] init];
-            menuVC.enterFromHome = YES;
             [self.navigationController pushViewController:menuVC animated:YES];
         }
             break;
         case PersonCenter:
         {
-            // 用户中心
-            NSLog(@"用户中心");
             PersonCenterViewController *personVC = [[PersonCenterViewController alloc]init];
             [self.navigationController pushViewController:personVC animated:YES];
         }
             break;
-            
         default:
             break;
     }
+
 }
 
 #pragma mark - 往期按钮点击事件
@@ -199,91 +186,12 @@
     [self.navigationController pushViewController:menuVC animated:YES];
 }
 
-#pragma mark - UITableViewDelegate
-#pragma mark --数据数
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+#pragma mark - 放大图片
+- (void)enLargeImage:(MainNewView *)mainNewView
 {
-    if (_homePage)
-    {
-        // 主页
-//        return _mainPageDataArray.count;
-        return 3;
-    }
-    else
-    {
-        // 技术专栏
-//        return _jiShuZhuanLanDataArray.count;
-        return 4;
-    }
-    return 0;
+    [self createShowImagesViewWithDataArray:mainNewView.imageDataArray andIndex:mainNewView.clickImageIndex];
 }
 
-#pragma mark --cell高度
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (_homePage)
-    {
-        return kMainCellHeight;
-    }
-    else
-    {
-        return kJiShuZhuanLanCellHeight;
-    }
-    return 0;
-}
-
-#pragma mark -- 绘制cell
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (_homePage)
-    {
-        // 主页
-        static NSString *cellId = @"newsCell";
-        MainCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-        if (cell == nil)
-        {
-            cell = [[[NSBundle mainBundle]loadNibNamed:@"MainCell" owner:self options:0] lastObject];
-            cell.delegate=self;
-        }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
-    }
-    else
-    {
-        static NSString *cellId = @"JiShuZhuanLanCell";
-        JiShuZhuanLanCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-        if (cell == nil)
-        {
-            cell = [[[NSBundle mainBundle]loadNibNamed:@"JiShuZhuanLanCell" owner:self options:0] lastObject];
-            cell.delegate = self;
-            // 更多 参数JiShuZhuanLanCell
-            cell.buttonClickSelector = @selector(moreInfoWithObject:);
-            // 详情 参数JiShuZhuanLanSubView
-            cell.jszlViewClickedAction = @selector(enterDetail:);
-        }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
-    }
-}
-
-#pragma mark -- 选中cell
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (_homePage)
-    {
-        // 主页
-        MainDetailViewController *mainDetailVC = [[MainDetailViewController alloc]init];
-        [self.navigationController pushViewController:mainDetailVC animated:YES];
-    }
-}
-
-
-#pragma mark - 主页方法
-#pragma mark --MainCellDelegate
-- (void)imageButtonClicked:(UIButton *)btn withDataArray:(NSArray *)array
-{
-    [self createShowImagesViewWithDataArray:array andIndex:btn.tag-kImageButtonTag];
-}
 #pragma mark --创建展示图片的View
 - (void)createShowImagesViewWithDataArray:(NSArray *)array andIndex:(NSInteger)index
 {
@@ -338,90 +246,12 @@
     [view removeFromSuperview];
 }
 
-#pragma mark - 技术专栏页面方法
-#pragma mark --跳转到技术专栏更多界面
-- (void)moreInfoWithObject:(JiShuZhuanLanCell *)cell
-{
-    // 更多 跳转页面
-    JiShuZhuanLanMoreViewController *moreVC = [[JiShuZhuanLanMoreViewController alloc]init];
-    [self.navigationController pushViewController:moreVC animated:YES];
-}
-#pragma mark -- 跳转到技术专栏详情界面
-- (void)enterDetail:(JiShuZhuanLanSubView *)jszlSubView
-{
-    JiShuZhuanLanDetailViewController *jSZLDetailVC = [[JiShuZhuanLanDetailViewController alloc]init];
-    jSZLDetailVC.titleStr = @"生物检验";
-    [self.navigationController pushViewController:jSZLDetailVC animated:YES];
-}
-
-#pragma mark - 切换栏目
-- (void)changeLanMu
-{
-    if (_homePage)
-    {
-        // 主页
-        self.title = @"医检在线";
-    }
-    else
-    {
-        // 技术专栏
-        self.title = @"技术专栏";
-    }
-    [_tableView reloadData];
-
-}
 #pragma mark - 左侧菜单
--(void)popToLeftMenu{
+-(void)popToLeftMenu
+{
     AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
     YRSideViewController *sideViewController=[delegate sideViewController];
     [sideViewController showLeftViewController:YES];
-}
-#pragma mark - 下拉刷新
--(void)createHeaderView
-{
-    if (_refreshHeaderView && [_refreshHeaderView superview]) {
-        [_refreshHeaderView removeFromSuperview];
-    }
-    _refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.view.bounds.size.height,self.view.frame.size.width, self.view.bounds.size.height)];
-    _refreshHeaderView.delegate = self;
-    [_tableView addSubview:_refreshHeaderView];
-    [_refreshHeaderView refreshLastUpdatedDate];
-}
-
-#pragma mark --EGORefreshTableHeaderDelegate
-- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView *)view
-{
-    return _reloading;
-}
-- (NSDate *)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView *)view
-{
-    return [NSDate date];
-}
-
-- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
-{
-    if (_reloading == NO)
-    {
-        _reloading = YES;
-        // 定时器模拟刷新（网络请求 请求回来后调stopRefresh）
-        [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(timerMetnod) userInfo:nil repeats:NO];
-    }
-    else
-    {
-        // 告诉用户正在加载
-    }
-}
-
-- (void)timerMetnod
-{
-    [self stopRefresh];
-}
-
-- (void)stopRefresh
-{
-    _reloading = NO;
-    [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:_tableView];
-    [_tableView reloadData];
 }
 
 #pragma mark --UIScrollViewDelegate Methods
@@ -432,15 +262,6 @@
         UIPageControl *pageControl = (UIPageControl *)[self.view viewWithTag:kPageControlTag];
         pageControl.currentPage = scrollView.contentOffset.x/kScreenWidth;
     }
-    else
-    {
-        [_refreshHeaderView
-         egoRefreshScrollViewDidScroll:scrollView];
-    }
-}
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
 }
 
 

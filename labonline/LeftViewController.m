@@ -55,7 +55,7 @@
     [imgV addSubview:nameLab];
     
     _titleCateArray = [[NSMutableArray alloc]initWithObjects:@"首页",@"技术专栏",@"杂志",@"用户中心", nil];
-    _cateTableView = [[UITableView alloc]initWithFrame:CGRectMake(-5, 80+kCircleHeight, kLeftHeight-10, kScreenHeight-kCircleHeight-300) style:UITableViewStylePlain];
+    _cateTableView = [[UITableView alloc]initWithFrame:CGRectMake(-5, 80+kCircleHeight, kLeftHeight-10, kScreenHeight-kCircleHeight-180) style:UITableViewStylePlain];
     _cateTableView.delegate = self;
     _cateTableView.dataSource = self;
     _cateTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -65,11 +65,11 @@
     
     // 设置按钮
     UIButton *settingButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [settingButton setFrame:CGRectMake(20, kScreenHeight-100, kSettingButtonHeight, kSettingButtonHeight)];
+    [settingButton setFrame:CGRectMake(20, kScreenHeight-80, kSettingButtonHeight, kSettingButtonHeight)];
     [settingButton setBackgroundImage:[UIImage imageNamed:@"设置按钮.png"] forState:UIControlStateNormal];
     [self.view addSubview:settingButton];
     
-    UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(25+kSettingButtonHeight, kScreenHeight-100, 60, kSettingButtonHeight)];
+    UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(25+kSettingButtonHeight, kScreenHeight-80, 60, kSettingButtonHeight)];
     lable.text = @"设置";
     lable.textColor = [UIColor whiteColor];
     lable.font = [UIFont systemFontOfSize:kOneFontSize];
@@ -108,7 +108,6 @@
     // 选中后背景色
     cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
     cell.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:148/255.0 green:191/255.0 blue:196/255.0 alpha:0.7];
-//    cell.selectedBackgroundView.tintColor = [UIColor colorWithRed:37/255.0 green:121/255.0 blue:142/255.0 alpha:1];
     return cell;
 }
 
