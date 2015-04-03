@@ -10,10 +10,11 @@
 #import "PersonEditCell.h"
 #import "EditSubViewController.h"
 
-@interface EditPersonViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface EditPersonViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     UITableView *_myTableV;
     NSArray *_baseDataArray;
+    UIButton *imageBtn;
 }
 @end
 
@@ -44,13 +45,14 @@
     headView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:headView];
     
-    UIButton *imageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    imageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [imageBtn setFrame:CGRectMake((kScreenWidth-kHeadImageButtonHeight)/2, (kHeadViewHeight-kHeadImageButtonHeight)/2, kHeadImageButtonHeight, kHeadImageButtonHeight)];
     [imageBtn setBackgroundImage:[UIImage imageNamed:@"头像.png"] forState:UIControlStateNormal];
     imageBtn.layer.masksToBounds = YES;
     imageBtn.layer.cornerRadius = kHeadImageButtonHeight/2;
     imageBtn.layer.borderColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1].CGColor;
     imageBtn.layer.borderWidth = 1;
+    [imageBtn addTarget:self action:@selector(selectImage:) forControlEvents:UIControlEventTouchUpInside];
     [headView addSubview:imageBtn];
     
     _baseDataArray = @[@{@"Title":@"昵称",@"Content":@"幸福的小猫米"},@{@"Title":@"手机号",@"Content":@"15210065926"},@{@"Title":@"E-mail",@"Content":@"845602196@qq.com"}];
@@ -63,7 +65,107 @@
     [self.view addSubview:_myTableV];
 }
 
+#pragma mark - 修改头像
+#pragma mark -- 图片点击事件
+- (void)selectImage:(UIButton *)btn
+{
+    // 选取图片
+    [self createActionSheet];
+}
+#pragma mark --创建选择器
+- (void)createActionSheet
+{
+    UIActionSheet *chooseImageSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从相册获取图片", nil];
+    [chooseImageSheet showInView:self.view];
 
+}
+#pragma mark --UIActionSheetDelegate-->设置颜色
+- (void)willPresentActionSheet:(UIActionSheet *)actionSheet
+{
+    for (UIView *subViwe in actionSheet.subviews)
+    {
+        if ([subViwe isKindOfClass:[UIButton class]])
+        {
+            UIButton *button = (UIButton*)subViwe;
+            [button setTitleColor:[UIColor colorWithRed:72/255.0 green:163/255.0 blue:239/255.0 alpha:1] forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont systemFontOfSize:13];
+        }
+    }
+}
+#pragma mark --UIActionSheetDelegate -->选取图片方式
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    UIImagePickerController * picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    
+    switch (buttonIndex) {
+        case 0://Take picture
+        {
+            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+            {
+                picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            }
+            
+            [self.navigationController presentModalViewController:picker animated:YES];
+            break;
+        }
+        case 1://From album
+        {
+            picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+//            [self presentModalViewController:picker animated:YES];
+            [self.navigationController presentModalViewController:picker animated:YES];
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+}
+
+#pragma mark --拍照选择照片协议方法
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    [UIApplication sharedApplication].statusBarHidden = NO;
+    
+    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+    
+    NSData *data;
+    
+    if ([mediaType isEqualToString:@"public.image"]){
+        //不可直接使用originImage，因为这是没有经过格式化的图片数据，可能会导致选择的图片颠倒或是失真等现象的发生，从UIImagePickerControllerOriginalImage中的Origin可以看出，很原始
+        UIImage *originImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+        //图片压缩，因为原图都是很大的，不必要传原图
+        UIImage *scaleImage = [self scaleImage:originImage toScale:0.8];
+        //以下这两步都是比较耗时的操作，最好开一个HUD提示用户，这样体验会好些，不至于阻塞界面
+        if (UIImagePNGRepresentation(scaleImage) == nil) {
+            //将图片转换为JPG格式的二进制数据
+            data = UIImageJPEGRepresentation(scaleImage, 1);
+        } else {
+            //将图片转换为PNG格式的二进制数据
+            data = UIImagePNGRepresentation(scaleImage);
+        }
+        //将二进制数据生成UIImage
+        UIImage *image = [UIImage imageWithData:data];
+        [imageBtn setBackgroundImage:image forState:UIControlStateNormal];
+        NSLog(@"~~~~~~图片~~~~~~~");
+    }
+}
+
+#pragma mark --压缩图片
+-(UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize
+{
+    UIGraphicsBeginImageContext(CGSizeMake(image.size.width*scaleSize,image.size.height*scaleSize));
+    [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height *scaleSize)];
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
+}
+
+
+#pragma mark - UITableView
+#pragma mark --UITableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _baseDataArray.count;
@@ -96,7 +198,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSDictionary *dict = [_baseDataArray objectAtIndex:indexPath.row];
     EditSubViewController *subVC = [[EditSubViewController alloc]init];
+    subVC.dataDict = dict;
     [self.navigationController pushViewController:subVC animated:YES];
 }
 

@@ -10,4 +10,6 @@
 
 @interface EditSubViewController : UIViewController
 
+@property (nonatomic,strong) NSDictionary *dataDict;
+
 @end

@@ -15,14 +15,12 @@
 		04E37C6E1ACD28EB00045E64 /* YRSideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E37C6D1ACD28EB00045E64 /* YRSideViewController.m */; };
 		04FE4C421ACD328D00A922DA /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4C2E1ACD328D00A922DA /* AFHTTPRequestOperation.m */; };
 		04FE4C431ACD328D00A922DA /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4C301ACD328D00A922DA /* AFHTTPRequestOperationManager.m */; };
-		04FE4C441ACD328D00A922DA /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4C321ACD328D00A922DA /* AFHTTPSessionManager.m */; };
 		04FE4C451ACD328D00A922DA /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4C351ACD328D00A922DA /* AFNetworkReachabilityManager.m */; };
 		04FE4C461ACD328D00A922DA /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4C371ACD328D00A922DA /* AFSecurityPolicy.m */; };
 		04FE4C471ACD328D00A922DA /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4C391ACD328D00A922DA /* AFURLConnectionOperation.m */; };
 		04FE4C481ACD328D00A922DA /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4C3B1ACD328D00A922DA /* AFURLRequestSerialization.m */; };
 		04FE4C491ACD328D00A922DA /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4C3D1ACD328D00A922DA /* AFURLResponseSerialization.m */; };
 		04FE4C4A1ACD328D00A922DA /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4C3F1ACD328D00A922DA /* AFURLSessionManager.m */; };
-		04FE4C4B1ACD328D00A922DA /* AFNetworkTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4C411ACD328D00A922DA /* AFNetworkTool.m */; };
 		FD462E441ACCDE1F001AC895 /* MyCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD462E431ACCDE1F001AC895 /* MyCollectionViewController.m */; };
 		FD462E481ACCDF6B001AC895 /* MyCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD462E461ACCDF6B001AC895 /* MyCollectionCell.m */; };
 		FD462E491ACCDF6B001AC895 /* MyCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD462E471ACCDF6B001AC895 /* MyCollectionCell.xib */; };
@@ -80,6 +78,7 @@
 		FD8AE2DF1ACE230100A4A5B6 /* PersonEditCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8AE2DD1ACE230100A4A5B6 /* PersonEditCell.m */; };
 		FD8AE2E01ACE230100A4A5B6 /* PersonEditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8AE2DE1ACE230100A4A5B6 /* PersonEditCell.xib */; };
 		FD8AE2E31ACE2A2000A4A5B6 /* EditSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8AE2E21ACE2A2000A4A5B6 /* EditSubViewController.m */; };
+		FD8AE2E61ACE31CB00A4A5B6 /* AFNetworkTool.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8AE2E51ACE31CB00A4A5B6 /* AFNetworkTool.m */; };
 		FD96C8891AC109E00002778A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FD96C8881AC109E00002778A /* main.m */; };
 		FD96C88C1AC109E00002778A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FD96C88B1AC109E00002778A /* AppDelegate.m */; };
 		FD96C8941AC109E00002778A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD96C8931AC109E00002778A /* Images.xcassets */; };
@@ -146,8 +145,6 @@
 		04FE4C3D1ACD328D00A922DA /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		04FE4C3E1ACD328D00A922DA /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		04FE4C3F1ACD328D00A922DA /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
-		04FE4C401ACD328D00A922DA /* AFNetworkTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkTool.h; sourceTree = "<group>"; };
-		04FE4C411ACD328D00A922DA /* AFNetworkTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkTool.m; sourceTree = "<group>"; };
 		FD462E421ACCDE1F001AC895 /* MyCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCollectionViewController.h; sourceTree = "<group>"; };
 		FD462E431ACCDE1F001AC895 /* MyCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCollectionViewController.m; sourceTree = "<group>"; };
 		FD462E451ACCDF6B001AC895 /* MyCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCollectionCell.h; sourceTree = "<group>"; };
@@ -225,6 +222,8 @@
 		FD8AE2DE1ACE230100A4A5B6 /* PersonEditCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonEditCell.xib; sourceTree = "<group>"; };
 		FD8AE2E11ACE2A2000A4A5B6 /* EditSubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditSubViewController.h; sourceTree = "<group>"; };
 		FD8AE2E21ACE2A2000A4A5B6 /* EditSubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditSubViewController.m; sourceTree = "<group>"; };
+		FD8AE2E41ACE31CB00A4A5B6 /* AFNetworkTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkTool.h; sourceTree = "<group>"; };
+		FD8AE2E51ACE31CB00A4A5B6 /* AFNetworkTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkTool.m; sourceTree = "<group>"; };
 		FD96C8831AC109E00002778A /* labonline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = labonline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD96C8871AC109E00002778A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD96C8881AC109E00002778A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -591,9 +590,9 @@
 		FD96C8B51AC10A660002778A /* Net */ = {
 			isa = PBXGroup;
 			children = (
+				FD8AE2E41ACE31CB00A4A5B6 /* AFNetworkTool.h */,
+				FD8AE2E51ACE31CB00A4A5B6 /* AFNetworkTool.m */,
 				04FE4C2C1ACD328D00A922DA /* AFNetworking */,
-				04FE4C401ACD328D00A922DA /* AFNetworkTool.h */,
-				04FE4C411ACD328D00A922DA /* AFNetworkTool.m */,
 			);
 			name = Net;
 			sourceTree = "<group>";
@@ -889,6 +888,7 @@
 				FD558D671AC40FD800DA42FF /* MainCell.m in Sources */,
 				FD558D171AC3E89300DA42FF /* JiShuZhuanLanMoreCell.m in Sources */,
 				FD9A76F71ACBD3CF007ACC11 /* PersonColumeView.m in Sources */,
+				FD8AE2E61ACE31CB00A4A5B6 /* AFNetworkTool.m in Sources */,
 				04FE4C461ACD328D00A922DA /* AFSecurityPolicy.m in Sources */,
 				FD9A76FD1ACBF1B0007ACC11 /* MyCommentCell.m in Sources */,
 				04FE4C491ACD328D00A922DA /* AFURLResponseSerialization.m in Sources */,
@@ -898,7 +898,6 @@
 				042C46791AC2976200D36C8F /* WangQiCell.m in Sources */,
 				FD96C8891AC109E00002778A /* main.m in Sources */,
 				FD9A76FA1ACBE711007ACC11 /* MyCommentViewController.m in Sources */,
-				FD96C8C01AC10CAC0002778A /* PPRevealSideViewController.m in Sources */,
 				FD8AE2DF1ACE230100A4A5B6 /* PersonEditCell.m in Sources */,
 				FD558D081AC3B11D00DA42FF /* JiShuZhuanLanSubView.m in Sources */,
 			);
@@ -1022,7 +1021,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/pchFile.pch";
 				INFOPLIST_FILE = labonline/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1034,7 +1033,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/pchFile.pch";
 				INFOPLIST_FILE = labonline/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

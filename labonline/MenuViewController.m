@@ -193,7 +193,6 @@
             NSLog(@"请求失败");
         }];
     }
-    
 }
 
 //初始主界面
@@ -281,6 +280,7 @@
 {
     return 180;
 }
+
 /*
  #pragma mark - Navigation
  
