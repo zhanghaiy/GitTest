@@ -10,7 +10,7 @@
 
 @protocol LeftViewControllerDelegate <NSObject>
 
-- (void)pushViewControllerWithResourceType:(ResourceType)type;
+- (void)pushViewControllerWithIndex:(NSInteger)type;
 
 @end
 

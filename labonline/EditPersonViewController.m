@@ -88,23 +88,23 @@
 #pragma mark --创建选择器
 - (void)createActionSheet
 {
-    UIActionSheet *chooseImageSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从相册获取图片", nil];
+    UIActionSheet *chooseImageSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"从相册获取图片", nil];
     [chooseImageSheet showInView:self.view];
 
 }
-#pragma mark --UIActionSheetDelegate-->设置颜色
-- (void)willPresentActionSheet:(UIActionSheet *)actionSheet
-{
-    for (UIView *subViwe in actionSheet.subviews)
-    {
-        if ([subViwe isKindOfClass:[UIButton class]])
-        {
-            UIButton *button = (UIButton*)subViwe;
-            [button setTitleColor:[UIColor colorWithRed:72/255.0 green:163/255.0 blue:239/255.0 alpha:1] forState:UIControlStateNormal];
-            button.titleLabel.font = [UIFont systemFontOfSize:13];
-        }
-    }
-}
+//#pragma mark --UIActionSheetDelegate-->设置颜色
+//- (void)willPresentActionSheet:(UIActionSheet *)actionSheet
+//{
+//    for (UIView *subViwe in actionSheet.subviews)
+//    {
+//        if ([subViwe isKindOfClass:[UIButton class]])
+//        {
+//            UIButton *button = (UIButton*)subViwe;
+//            [button setTitleColor:[UIColor colorWithRed:217/255.0 green:0/255.0 blue:25/255.0 alpha:1] forState:UIControlStateNormal];
+//            button.titleLabel.font = [UIFont systemFontOfSize:10];
+//        }
+//    }
+//}
 #pragma mark --UIActionSheetDelegate -->选取图片方式
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -112,20 +112,9 @@
     picker.delegate = self;
     
     switch (buttonIndex) {
-        case 0://Take picture
-        {
-            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-            {
-                picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            }
-            
-            [self.navigationController presentModalViewController:picker animated:YES];
-            break;
-        }
-        case 1://From album
+        case 0://From album
         {
             picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-//            [self presentModalViewController:picker animated:YES];
             [self.navigationController presentModalViewController:picker animated:YES];
             break;
         }
@@ -135,6 +124,7 @@
         }
     }
 }
+
 
 #pragma mark --拍照选择照片协议方法
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info

@@ -16,49 +16,76 @@
 @end
 
 @implementation LeftViewController
+#define kLeftHeight 240
+#define kImageHeight 80
+#define kCircleHeight 90
+#define kCellHeight 40
+#define kSettingButtonHeight 25
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    NSInteger width = self.view.bounds.size.width;
-    NSInteger height = self.view.bounds.size.height;
-    
-//    self.view.backgroundColor = [UIColor colorWithRed:41/255.0 green:70/255.0 blue:134/255.0 alpha:1];
     UIImageView *imgV = [[UIImageView alloc]initWithFrame:self.view.bounds];
     imgV.image = [UIImage imageNamed:@"左侧列.png"];
     imgV.userInteractionEnabled = YES;
     [self.view addSubview:imgV];
     
-    UIImageView *headImgV = [[UIImageView alloc]initWithFrame:CGRectMake(40, 100, 90, 90)];
+    UIImageView *headImgV = [[UIImageView alloc]initWithFrame:CGRectMake((kLeftHeight-kCircleHeight)/2, 30, kCircleHeight, kCircleHeight)];
     headImgV.backgroundColor = [UIColor clearColor];
     headImgV.layer.masksToBounds = YES;
-    headImgV.layer.cornerRadius = 45;
+    headImgV.layer.cornerRadius = kCircleHeight/2;
     headImgV.layer.borderWidth = 3;
     headImgV.layer.borderColor = [UIColor colorWithRed:162/255.0 green:203/255.0 blue:205/255.0 alpha:1].CGColor;
     [imgV addSubview:headImgV];
     
     UIButton *userImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [userImageButton setFrame:CGRectMake(45, 105, 80, 80)];
+    [userImageButton setFrame:CGRectMake((kLeftHeight-kImageHeight)/2, 30+(kCircleHeight-kImageHeight)/2, kImageHeight, kImageHeight)];
     [userImageButton setBackgroundImage:[UIImage imageNamed:@"33.jpg"] forState:UIControlStateNormal];
     userImageButton.layer.masksToBounds = YES;
-    userImageButton.layer.cornerRadius = 40;
+    userImageButton.layer.cornerRadius = kImageHeight/2;
     [imgV addSubview:userImageButton];
     
-    _titleCateArray = [[NSMutableArray alloc]initWithObjects:@"PDF阅读",@"视频",@"技术专栏",@"首页",@"用户中心", nil];
-    _cateTableView = [[UITableView alloc]initWithFrame:CGRectMake(50, 200, width-60-100, height-200) style:UITableViewStylePlain];
+    UILabel *nameLab = [[UILabel alloc]initWithFrame:CGRectMake(10, 40+kCircleHeight, kLeftHeight-20, 30)];
+    nameLab.text = @"愤怒的老牛";
+    nameLab.textAlignment = NSTextAlignmentCenter;
+    nameLab.textColor = [UIColor whiteColor];
+    nameLab.font = [UIFont systemFontOfSize:15];
+    [imgV addSubview:nameLab];
+    
+    _titleCateArray = [[NSMutableArray alloc]initWithObjects:@"首页",@"技术专栏",@"杂志",@"用户中心", nil];
+    _cateTableView = [[UITableView alloc]initWithFrame:CGRectMake(-5, 80+kCircleHeight, kLeftHeight-10, kScreenHeight-kCircleHeight-300) style:UITableViewStylePlain];
     _cateTableView.delegate = self;
     _cateTableView.dataSource = self;
     _cateTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _cateTableView.backgroundColor = [UIColor clearColor];
     [imgV addSubview:_cateTableView];
     
+    
+    // 设置按钮
+    UIButton *settingButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [settingButton setFrame:CGRectMake(20, kScreenHeight-100, kSettingButtonHeight, kSettingButtonHeight)];
+    [settingButton setBackgroundImage:[UIImage imageNamed:@"设置按钮.png"] forState:UIControlStateNormal];
+    [self.view addSubview:settingButton];
+    
+    UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(25+kSettingButtonHeight, kScreenHeight-100, 60, kSettingButtonHeight)];
+    lable.text = @"设置";
+    lable.textColor = [UIColor whiteColor];
+    lable.font = [UIFont systemFontOfSize:kOneFontSize];
+    [self.view addSubview:lable];
 }
 
 #pragma mark - UITableViewDelegate
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return _titleCateArray.count;;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _titleCateArray.count;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -70,46 +97,40 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdendifer];
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.textLabel.text = [_titleCateArray objectAtIndex:indexPath.row];
+    cell.textLabel.text = [_titleCateArray objectAtIndex:indexPath.section];
+    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.layer.masksToBounds = YES;
+    cell.layer.cornerRadius = 5;
+    cell.layer.borderColor = [UIColor colorWithRed:120/255.0 green:170/255.0 blue:179/255.0 alpha:1].CGColor;
+    cell.layer.borderWidth = 1;
     cell.textLabel.font = [UIFont systemFontOfSize:kOneFontSize];
     cell.backgroundColor = [UIColor clearColor];
+    // 选中后背景色
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:148/255.0 green:191/255.0 blue:196/255.0 alpha:0.7];
+//    cell.selectedBackgroundView.tintColor = [UIColor colorWithRed:37/255.0 green:121/255.0 blue:142/255.0 alpha:1];
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 40;
+    return kCellHeight;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 0.1;
+    return 10;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView *footV = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kLeftHeight, 10)];
+    return footV;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0)
-    {
-        // PDF阅读
-        [self.delegate pushViewControllerWithResourceType:PDFType];
-    }
-    else if (indexPath.row == 1)
-    {
-        // 视频
-        [self.delegate pushViewControllerWithResourceType:VidioType];
-    }
-    else if (indexPath.row == 2)
-    {
-        [self.delegate pushViewControllerWithResourceType:JiShuZhuanLan];
-    }
-    else if (indexPath.row == 3)
-    {
-        [self.delegate pushViewControllerWithResourceType:MainPage];
-    }
-    else if(indexPath.row == 4)
-    {
-        [self.delegate pushViewControllerWithResourceType:PersonCenter];
-    }
+    [self.delegate pushViewControllerWithIndex:indexPath.section];
 }
 
 - (void)didReceiveMemoryWarning {

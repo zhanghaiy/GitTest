@@ -16,10 +16,9 @@
 
 typedef enum
 {
-    VidioType = 0,
-    PDFType,
+    MainPage = 0,
     JiShuZhuanLan,
-    MainPage,
+    WangQi,
     PersonCenter
 }ResourceType;
 

@@ -44,9 +44,21 @@
     //self.navigationController.navigationBar.barTintColor=[UIColor redColor];
     
     //左侧按钮
+    /*
+        判断是从主页进入还是杂志页进入，主页进入没有左侧按钮
+     */
+    UIImage *img;
+    if (_enterFromHome)
+    {
+        img = [UIImage imageNamed:@""];
+    }
+    else
+    {
+        img = [UIImage imageNamed:@"aniu_07.png"];
+    }
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setFrame:CGRectMake(0, 0, 25, 26)];
-    [button setBackgroundImage:[UIImage imageNamed:@"aniu_07.png"] forState:UIControlStateNormal];
+    [button setBackgroundImage:img forState:UIControlStateNormal];
     [button addTarget:self action:@selector(popToPrePage) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = leftItem;
@@ -57,7 +69,7 @@
     [rightBtn addTarget:self action:@selector(enterSearchViewController) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
-    
+//-----------------------------------------------------------------
     
     _topNaviV=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WidthOfScreen, MENU_HEIGHT)];
     _topNaviV.backgroundColor=RGBA(236.f, 236.f, 236.f, 1);

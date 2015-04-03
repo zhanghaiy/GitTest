@@ -14,4 +14,6 @@
 
 @interface MenuViewController : UIViewController
 
+@property (nonatomic,assign) BOOL enterFromHome;
+
 @end

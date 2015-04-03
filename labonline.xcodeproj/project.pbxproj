@@ -79,6 +79,7 @@
 		FD8AE2E01ACE230100A4A5B6 /* PersonEditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8AE2DE1ACE230100A4A5B6 /* PersonEditCell.xib */; };
 		FD8AE2E31ACE2A2000A4A5B6 /* EditSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8AE2E21ACE2A2000A4A5B6 /* EditSubViewController.m */; };
 		FD8AE2E61ACE31CB00A4A5B6 /* AFNetworkTool.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8AE2E51ACE31CB00A4A5B6 /* AFNetworkTool.m */; };
+		FD8AE31F1ACE606B00A4A5B6 /* 设置按钮.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8AE31E1ACE606B00A4A5B6 /* 设置按钮.png */; };
 		FD96C8891AC109E00002778A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FD96C8881AC109E00002778A /* main.m */; };
 		FD96C88C1AC109E00002778A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FD96C88B1AC109E00002778A /* AppDelegate.m */; };
 		FD96C8941AC109E00002778A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD96C8931AC109E00002778A /* Images.xcassets */; };
@@ -224,6 +225,7 @@
 		FD8AE2E21ACE2A2000A4A5B6 /* EditSubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditSubViewController.m; sourceTree = "<group>"; };
 		FD8AE2E41ACE31CB00A4A5B6 /* AFNetworkTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkTool.h; sourceTree = "<group>"; };
 		FD8AE2E51ACE31CB00A4A5B6 /* AFNetworkTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkTool.m; sourceTree = "<group>"; };
+		FD8AE31E1ACE606B00A4A5B6 /* 设置按钮.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "设置按钮.png"; sourceTree = "<group>"; };
 		FD96C8831AC109E00002778A /* labonline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = labonline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD96C8871AC109E00002778A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD96C8881AC109E00002778A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -405,6 +407,7 @@
 		FD558CF41AC3A62900DA42FF /* 切图（安卓） */ = {
 			isa = PBXGroup;
 			children = (
+				FD8AE31E1ACE606B00A4A5B6 /* 设置按钮.png */,
 				FD462E601ACD3E90001AC895 /* 左侧列.png */,
 				FD462E5C1ACD2FC1001AC895 /* 播放.png */,
 				FD462E5D1ACD2FC1001AC895 /* 视频.png */,
@@ -797,6 +800,7 @@
 				FD47C8121AC524FB00846AC9 /* 收藏.png in Resources */,
 				FD96C8971AC109E00002778A /* LaunchScreen.xib in Resources */,
 				FD558D621AC4098F00DA42FF /* whiteArrow.png in Resources */,
+				FD8AE31F1ACE606B00A4A5B6 /* 设置按钮.png in Resources */,
 				042C46701AC27D6000D36C8F /* testPDF2.pdf in Resources */,
 				FD9A76F01ACBD2B1007ACC11 /* 头像.png in Resources */,
 				FD47C8181AC5316300846AC9 /* 下载.png in Resources */,

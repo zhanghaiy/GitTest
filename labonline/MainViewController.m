@@ -142,45 +142,53 @@
 }
 
 #pragma mark - LeftViewControllerDelegate(侧滑回到主页)
-- (void)pushViewControllerWithResourceType:(ResourceType)type
+
+- (void)pushViewControllerWithIndex:(NSInteger)type
 {
     AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
     YRSideViewController *sideViewController=[delegate sideViewController];
     [sideViewController hideSideViewController:YES];
     
-    if (type == PDFType)
+    switch (type)
     {
-        // PDF阅读
-        PDFBrowserViewController *pdfBrowseVC = [[PDFBrowserViewController alloc]init];
-        pdfBrowseVC.fileName = @"PDF阅读";
-        pdfBrowseVC.filePath = @"http://192.168.0.253:8080/regulatory/temp/abc.pdf";//[[NSBundle mainBundle]pathForResource:@"testPDF2" ofType:@"pdf"];
-        [self.navigationController pushViewController:pdfBrowseVC animated:YES
-         ];
-    }
-    else if (type == VidioType)
-    {
-        // 视频
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"1" ofType:@"mp4"];
-        VidioPlayerViewController *vidioVC = [[VidioPlayerViewController alloc]init];
-        vidioVC.vidioPath = path;
-        [self.navigationController pushViewController:vidioVC animated:YES];
-    }
-    else if (type == JiShuZhuanLan)
-    {
-        _homePage = NO;
-        [self.navigationController popToRootViewControllerAnimated:YES];
-        [self changeLanMu];
-    }
-    else if (type == MainPage)
-    {
-        _homePage = YES;
-        [self.navigationController popToRootViewControllerAnimated:YES];
-        [self changeLanMu];
-    }
-    else if (type == PersonCenter)
-    {
-        PersonCenterViewController *personVC = [[PersonCenterViewController alloc]init];
-        [self.navigationController pushViewController:personVC animated:YES];
+        case MainPage:
+        {
+            // 首页
+            NSLog(@"首页");
+            _homePage = YES;
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            [self changeLanMu];
+        }
+            break;
+        case JiShuZhuanLan:
+        {
+            // 技术专栏
+            NSLog(@"技术专栏");
+            _homePage = NO;
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            [self changeLanMu];
+        }
+            break;
+        case WangQi:
+        {
+            // 杂志
+            NSLog(@"杂志");
+            MenuViewController *menuVC=[[MenuViewController alloc] init];
+            menuVC.enterFromHome = YES;
+            [self.navigationController pushViewController:menuVC animated:YES];
+        }
+            break;
+        case PersonCenter:
+        {
+            // 用户中心
+            NSLog(@"用户中心");
+            PersonCenterViewController *personVC = [[PersonCenterViewController alloc]init];
+            [self.navigationController pushViewController:personVC animated:YES];
+        }
+            break;
+            
+        default:
+            break;
     }
 }
 
