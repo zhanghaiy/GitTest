@@ -43,6 +43,13 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="desLable" destination="bzV-af-lyZ" id="aN2-SA-AdE"/>
+                <outlet property="magazineImageV" destination="3Ps-Yj-M0c" id="LdA-F6-GT6"/>
+                <outlet property="magazineTitleLable" destination="Zbk-Bw-0RQ" id="6R2-iU-els"/>
+                <outlet property="qiCiLable" destination="LiV-c8-ScV" id="2rd-Vg-vn5"/>
+                <outlet property="smallNewButton" destination="rbA-H7-RYQ" id="zOg-yU-qer"/>
+            </connections>
             <point key="canvasLocation" x="302" y="164"/>
         </view>
     </objects>

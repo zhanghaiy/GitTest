@@ -12,6 +12,8 @@
 #define kCategoryLableHeight 70
 #define kCateLableTag 555
 #define kTitleLableTag 999
+
+
 - (void)awakeFromNib
 {
     self.layer.masksToBounds = YES;

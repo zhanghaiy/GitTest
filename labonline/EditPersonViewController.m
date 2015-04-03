@@ -49,6 +49,14 @@
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = leftItem;
     
+    // right
+    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightBtn setFrame:CGRectMake(0, 0, 40, 22)];
+    [rightBtn setBackgroundImage:[UIImage imageNamed:@"OK.png"] forState:UIControlStateNormal];
+    [rightBtn addTarget:self action:@selector(alertFinished) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
     UIView *headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kHeadViewHeight)];
     headView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:headView];
@@ -73,6 +81,12 @@
     [self.view addSubview:_myTableV];
 }
 
+- (void)alertFinished
+{
+    // 修改完成
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)backToPrePage
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -92,19 +106,7 @@
     [chooseImageSheet showInView:self.view];
 
 }
-//#pragma mark --UIActionSheetDelegate-->设置颜色
-//- (void)willPresentActionSheet:(UIActionSheet *)actionSheet
-//{
-//    for (UIView *subViwe in actionSheet.subviews)
-//    {
-//        if ([subViwe isKindOfClass:[UIButton class]])
-//        {
-//            UIButton *button = (UIButton*)subViwe;
-//            [button setTitleColor:[UIColor colorWithRed:217/255.0 green:0/255.0 blue:25/255.0 alpha:1] forState:UIControlStateNormal];
-//            button.titleLabel.font = [UIFont systemFontOfSize:10];
-//        }
-//    }
-//}
+
 #pragma mark --UIActionSheetDelegate -->选取图片方式
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {

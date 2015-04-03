@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface MainNewView : UIView
+@property (weak, nonatomic) IBOutlet UIImageView *magazineImageV;
+@property (weak, nonatomic) IBOutlet UIButton *smallNewButton;
+@property (weak, nonatomic) IBOutlet UILabel *magazineTitleLable;
+@property (weak, nonatomic) IBOutlet UILabel *qiCiLable;
+@property (weak, nonatomic) IBOutlet UILabel *desLable;
 
 @property (nonatomic,assign) id target;
 @property (nonatomic,assign) SEL action;

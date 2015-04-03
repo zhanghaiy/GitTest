@@ -83,6 +83,7 @@
 		FD8B56641ACE7AF8009F5E15 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8B56631ACE7AF8009F5E15 /* MainViewController.m */; };
 		FD8B566C1ACE8578009F5E15 /* JSZLCateView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8B566B1ACE8578009F5E15 /* JSZLCateView.m */; };
 		FD8B566E1ACE858C009F5E15 /* JSZLCateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8B566D1ACE858C009F5E15 /* JSZLCateView.xib */; };
+		FD8B56701ACE9BD6009F5E15 /* OK.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8B566F1ACE9BD6009F5E15 /* OK.png */; };
 		FD96C8891AC109E00002778A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FD96C8881AC109E00002778A /* main.m */; };
 		FD96C88C1AC109E00002778A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FD96C88B1AC109E00002778A /* AppDelegate.m */; };
 		FD96C8941AC109E00002778A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD96C8931AC109E00002778A /* Images.xcassets */; };
@@ -235,6 +236,7 @@
 		FD8B566A1ACE8578009F5E15 /* JSZLCateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSZLCateView.h; sourceTree = "<group>"; };
 		FD8B566B1ACE8578009F5E15 /* JSZLCateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSZLCateView.m; sourceTree = "<group>"; };
 		FD8B566D1ACE858C009F5E15 /* JSZLCateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JSZLCateView.xib; sourceTree = "<group>"; };
+		FD8B566F1ACE9BD6009F5E15 /* OK.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = OK.png; sourceTree = "<group>"; };
 		FD96C8831AC109E00002778A /* labonline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = labonline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD96C8871AC109E00002778A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD96C8881AC109E00002778A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -420,6 +422,7 @@
 		FD558CF41AC3A62900DA42FF /* 切图（安卓） */ = {
 			isa = PBXGroup;
 			children = (
+				FD8B566F1ACE9BD6009F5E15 /* OK.png */,
 				FD8AE31E1ACE606B00A4A5B6 /* 设置按钮.png */,
 				FD462E601ACD3E90001AC895 /* 左侧列.png */,
 				FD462E5C1ACD2FC1001AC895 /* 播放.png */,
@@ -820,6 +823,7 @@
 				FD7901231ACA490D00D908EA /* 12.jpg in Resources */,
 				FD558D101AC3E1A500DA42FF /* aniu_09.png in Resources */,
 				FD96C8E11AC13A3E0002778A /* 1.mp4 in Resources */,
+				FD8B56701ACE9BD6009F5E15 /* OK.png in Resources */,
 				FD462E531ACCE022001AC895 /* 我的收藏背景.png in Resources */,
 				FD558D601AC4098F00DA42FF /* grayArrow.png in Resources */,
 				FD558D5E1AC4098F00DA42FF /* blueArrow.png in Resources */,

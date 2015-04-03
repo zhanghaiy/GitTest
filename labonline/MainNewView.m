@@ -18,6 +18,15 @@
     self.layer.cornerRadius = 5;
     self.layer.borderColor = [UIColor colorWithRed:232/255.0 green:232/255.0 blue:232/255.0 alpha:1].CGColor;
     self.layer.borderWidth = 1;
+    
+    _smallNewButton.layer.masksToBounds = YES;
+    _smallNewButton.layer.cornerRadius = 10;
+    _smallNewButton.layer.borderColor = [UIColor colorWithWhite:245/255.0 alpha:1].CGColor;
+    _smallNewButton.layer.borderWidth = 1;
+    
+    _magazineTitleLable.textColor = [UIColor colorWithWhite:86/255.0 alpha:1];
+    _qiCiLable.textColor = [UIColor colorWithWhite:177/255.0 alpha:1];
+    _desLable.textColor = [UIColor colorWithWhite:177/255.0 alpha:1];
 }
 
 - (void)setImageDataArray:(NSArray *)imageDataArray
