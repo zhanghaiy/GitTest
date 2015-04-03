@@ -78,9 +78,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // 选中cell 进入相应分类
-    [self.revealSideViewController popViewControllerAnimated:YES];
-
     if (indexPath.row == 0)
     {
         // PDF阅读

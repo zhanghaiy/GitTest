@@ -8,7 +8,6 @@
 
 #import "MainViewController.h"
 #import "LeftViewController.h"
-#import "PPRevealSideViewController.h"
 #import "VidioPlayerViewController.h"
 // pdf
 #import "PDFBrowserViewController.h"
@@ -25,6 +24,9 @@
 // 下拉刷新
 #import "EGORefreshTableHeaderView.h"
 #import "PersonCenterViewController.h"
+
+#import "YRSideViewController.h"
+#import "AppDelegate.h"
 
 @interface MainViewController ()<UITableViewDelegate,UITableViewDataSource,LeftViewControllerDelegate,EGORefreshTableHeaderDelegate,MainCellDelegate>
 {
@@ -70,7 +72,13 @@
     UIFont *titleFont = [UIFont systemFontOfSize:16];
     NSDictionary *paramDic = [NSDictionary dictionaryWithObjectsAndKeys:titleColor, UITextAttributeTextColor,titleColor, UITextAttributeTextShadowColor,[NSValue valueWithUIOffset:UIOffsetMake(0, 0)],UITextAttributeTextShadowOffset,titleFont, UITextAttributeFont,nil];
     [self.navigationController.navigationBar setTitleTextAttributes:paramDic];
-    
+    //左侧按钮
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setFrame:CGRectMake(0, 0, 25, 26)];
+    [button setBackgroundImage:[UIImage imageNamed:@"aniu_07.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(popToLeftMenu) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = leftItem;
     // right
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setFrame:CGRectMake(0, 0, 25, 25)];
@@ -78,12 +86,6 @@
     [rightBtn addTarget:self action:@selector(enterSearchViewController) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
-    
-    
-    // 右划手势 滑出左侧菜单
-    UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleMoveFrom:)];
-    [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
-    [self.view addGestureRecognizer:swipeRight];
     
     // 图片轮播View
     UIView *headV = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kImageShowViewHeight+5)];
@@ -136,18 +138,13 @@
     NSLog(@"enterSearchViewController");
 }
 
-
-#pragma mark - 右划-->菜单栏目
-- (void)handleMoveFrom:(UISwipeGestureRecognizer *)swip
-{
-    LeftViewController *left = [[LeftViewController alloc] init];
-    left.delegate = self;
-    [self.revealSideViewController pushViewController:left onDirection:PPRevealSideDirectionLeft withOffset:100.0 animated:YES];
-}
-
 #pragma mark - LeftViewControllerDelegate(侧滑回到主页)
 - (void)pushViewControllerWithResourceType:(ResourceType)type
 {
+    AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
+    YRSideViewController *sideViewController=[delegate sideViewController];
+    [sideViewController hideSideViewController:YES];
+    
     if (type == PDFType)
     {
         // PDF阅读
@@ -168,11 +165,13 @@
     else if (type == JiShuZhuanLan)
     {
         _homePage = NO;
+        [self.navigationController popToRootViewControllerAnimated:YES];
         [self changeLanMu];
     }
     else if (type == MainPage)
     {
         _homePage = YES;
+        [self.navigationController popToRootViewControllerAnimated:YES];
         [self changeLanMu];
     }
     else if (type == PersonCenter)
@@ -360,7 +359,12 @@
     [_tableView reloadData];
 
 }
-
+#pragma mark - 左侧菜单
+-(void)popToLeftMenu{
+    AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
+    YRSideViewController *sideViewController=[delegate sideViewController];
+    [sideViewController showLeftViewController:YES];
+}
 #pragma mark - 下拉刷新
 -(void)createHeaderView
 {

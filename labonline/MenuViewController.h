@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "WangQiCell.h"
+#import "MainViewController.h"
+#import "AFNetworkTool.h"
+
 
 @interface MenuViewController : UIViewController
 
