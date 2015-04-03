@@ -47,7 +47,7 @@
     // 左侧返回按钮
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setFrame:CGRectMake(0, 0, 35, 40)];
-    [button setBackgroundImage:[UIImage imageNamed:@"返回角.png"] forState:UIControlStateNormal];
+    [button setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(backToPrePage) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = leftItem;

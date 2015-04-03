@@ -60,7 +60,7 @@
     NSLog(@"1111");
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
-    
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:215/255.0 green:0 blue:0 alpha:1];
     //界面调整
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
     {
@@ -69,18 +69,19 @@
     }
     //修改标题颜色 其中 UITextAttributeTextColor和UITextAttributeFont 属性是文字颜色和字体
     UIColor *titleColor = [UIColor colorWithRed:215/255.0 green:0 blue:37/255.0 alpha:1];
-    UIFont *titleFont = [UIFont systemFontOfSize:16];
-    NSDictionary *paramDic = [NSDictionary dictionaryWithObjectsAndKeys:titleColor, UITextAttributeTextColor,titleColor, UITextAttributeTextShadowColor,[NSValue valueWithUIOffset:UIOffsetMake(0, 0)],UITextAttributeTextShadowOffset,titleFont, UITextAttributeFont,nil];
+    UIFont *titleFont = [UIFont systemFontOfSize:18];
+    NSDictionary *paramDic = [NSDictionary dictionaryWithObjectsAndKeys:titleColor, UITextAttributeTextColor,titleColor,UITextAttributeTextShadowColor,[NSValue valueWithUIOffset:UIOffsetMake(0, 0)],UITextAttributeTextShadowOffset,titleFont, UITextAttributeFont,nil];
     [self.navigationController.navigationBar setTitleTextAttributes:paramDic];
     
     //左侧按钮
-//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [button setFrame:CGRectMake(0, 0, 25, 26)];
-//    [button setBackgroundImage:[UIImage imageNamed:@"aniu_07.png"] forState:UIControlStateNormal];
-//    [button addTarget:self action:@selector(popToLeftMenu) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
-//    self.navigationItem.leftBarButtonItem = leftItem;
-    
+    /*
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setFrame:CGRectMake(0, 0, 25, 26)];
+    [button setBackgroundImage:[UIImage imageNamed:@"aniu_07.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(popToLeftMenu) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    */
     // right
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setFrame:CGRectMake(0, 0, 25, 25)];

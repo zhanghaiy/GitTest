@@ -32,6 +32,13 @@
             self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setFrame:CGRectMake(0, 0, 35, 40)];
+    [button setBackgroundImage:[UIImage imageNamed:@"返回角.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(backToPrePage) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
     _myMagazineTableV = [[UITableView alloc]initWithFrame:CGRectMake(10, 5, kScreenWidth-20, kScreenHeight-80) style:UITableViewStylePlain];
     _myMagazineTableV.delegate = self;
     _myMagazineTableV.dataSource = self;
@@ -40,6 +47,11 @@
     _myMagazineTableV.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_myMagazineTableV];
     
+}
+
+- (void)backToPrePage
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

@@ -41,6 +41,14 @@
         if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
             self.edgesForExtendedLayout = UIRectEdgeNone;
     }
+    // 左侧
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setFrame:CGRectMake(0, 0, 35, 40)];
+    [button setBackgroundImage:[UIImage imageNamed:@"返回角.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(backToPrePage) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
     _myCollectionTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 5, kScreenWidth, kScreenHeight-80) style:UITableViewStylePlain];
     _myCollectionTableView.delegate = self;
     _myCollectionTableView.dataSource = self;
@@ -48,7 +56,11 @@
     _myCollectionTableView.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
     _myCollectionTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_myCollectionTableView];
-    
+}
+
+- (void)backToPrePage
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - UITableViewDelegate
@@ -67,6 +79,7 @@
         cell = [[[NSBundle mainBundle]loadNibNamed:@"MyCollectionCell" owner:self options:0] lastObject];
         cell.target = self;
         cell.action = @selector(deleteMyCollection:);
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
     return cell;

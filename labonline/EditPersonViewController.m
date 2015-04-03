@@ -41,6 +41,14 @@
             self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
+    // 左侧返回按钮
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setFrame:CGRectMake(0, 0, 35, 40)];
+    [button setBackgroundImage:[UIImage imageNamed:@"返回角.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(backToPrePage) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
     UIView *headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kHeadViewHeight)];
     headView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:headView];
@@ -63,6 +71,11 @@
     _myTableV.backgroundColor = [UIColor clearColor];
     _myTableV.separatorColor = [UIColor colorWithWhite:244/255.0 alpha:1];
     [self.view addSubview:_myTableV];
+}
+
+- (void)backToPrePage
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - 修改头像
@@ -130,9 +143,7 @@
     [UIApplication sharedApplication].statusBarHidden = NO;
     
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
-    
     NSData *data;
-    
     if ([mediaType isEqualToString:@"public.image"]){
         //不可直接使用originImage，因为这是没有经过格式化的图片数据，可能会导致选择的图片颠倒或是失真等现象的发生，从UIImagePickerControllerOriginalImage中的Origin可以看出，很原始
         UIImage *originImage = [info objectForKey:UIImagePickerControllerOriginalImage];
