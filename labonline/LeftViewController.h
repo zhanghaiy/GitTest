@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PPRevealSideViewController.h"
 
 @protocol LeftViewControllerDelegate <NSObject>
 

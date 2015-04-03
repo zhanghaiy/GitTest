@@ -8,14 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-#import "PPRevealSideViewController.h"
+#import "YRSideViewController.h"
 
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate,PPRevealSideViewControllerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (nonatomic,strong) PPRevealSideViewController *revealSideViewController;
+
+@property (strong,nonatomic) YRSideViewController *sideViewController;
 
 @end
 
