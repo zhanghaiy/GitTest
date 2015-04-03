@@ -12,7 +12,7 @@
 #import "MyCollectionViewController.h"
 #import "OffLIneVidioViewController.h"
 #import "MyMagazineViewController.h"
-
+#import "EditPersonViewController.h"
 
 @interface PersonCenterViewController ()
 {
@@ -67,6 +67,7 @@
     personImageButton.layer.cornerRadius = kImageBUttonHeight/2;
     personImageButton.layer.borderColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1].CGColor;
     personImageButton.layer.borderWidth = 1;
+    [personImageButton addTarget:self action:@selector(enterPersonEditViewController:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:personImageButton];
     
     // 用户名
@@ -159,6 +160,13 @@
         default:
             break;
     }
+}
+
+#pragma mark - 进入个人中心编辑页
+- (void)enterPersonEditViewController:(UIButton *)btn
+{
+    EditPersonViewController *editVC = [[EditPersonViewController alloc]init];
+    [self.navigationController pushViewController:editVC animated:YES];
 }
 
 #pragma mark - 退出当前账号
