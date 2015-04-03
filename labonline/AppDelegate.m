@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
+#import "LeftViewController.h"
 
 @interface AppDelegate ()
 
@@ -20,13 +21,32 @@
     // Override point for customization after application launch.
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    MainViewController *mainViewController = [[MainViewController alloc]init];
-    UINavigationController *mainNVC = [[UINavigationController alloc]initWithRootViewController:mainViewController];
-    _revealSideViewController = [[PPRevealSideViewController alloc]initWithRootViewController:mainNVC];
-    _revealSideViewController.delegate = self;
-    self.window.rootViewController = _revealSideViewController;
+    self.window.backgroundColor = [UIColor whiteColor];
     
-    NSLog(@"%f %f",self.window.screen.bounds.size.width,self.window.screen.bounds.size.height);
+    MainViewController *mainViewController=[[MainViewController alloc] init];
+    //    mainViewController.view.backgroundColor=[UIColor grayColor];
+    
+    UINavigationController *mainNVC = [[UINavigationController alloc]initWithRootViewController:mainViewController];
+    
+    LeftViewController *leftViewController=[[LeftViewController alloc]initWithNibName:nil bundle:nil];
+    leftViewController.delegate=mainViewController;
+    //    leftViewController.view.backgroundColor=[UIColor brownColor];
+    
+    UIViewController *rightViewController=[[UIViewController alloc]initWithNibName:nil bundle:nil];
+    rightViewController.view.backgroundColor=[UIColor purpleColor];
+    
+    _sideViewController=[[YRSideViewController alloc]initWithNibName:nil bundle:nil];
+    _sideViewController.rootViewController=mainNVC;
+    _sideViewController.leftViewController=leftViewController;
+    _sideViewController.rightViewController=rightViewController;
+    
+    
+    _sideViewController.leftViewShowWidth=240;
+    _sideViewController.needSwipeShowMenu=true;//默认开启的可滑动展示
+    //动画效果可以被自己自定义，具体请看api
+    
+    
+    self.window.rootViewController=_sideViewController;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
