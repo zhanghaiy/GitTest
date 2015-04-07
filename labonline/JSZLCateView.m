@@ -30,6 +30,7 @@
 
 - (void)createCategoryLable
 {
+     _headTitleLable.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1];
     NSInteger index = 0;
     NSInteger lableWidth = (self.bounds.size.width-50)/4;
     for (int i = 0; i < 2; i ++)

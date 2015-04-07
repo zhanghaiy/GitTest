@@ -118,6 +118,14 @@
     [self.navigationController pushViewController:mainDetailVC animated:YES];
 }
 
+#pragma mark - 图片轮播-->进入详情
+- (void)pictureShowMethod:(PictureShowView *)pictureShowV
+{
+    // 进入技术专栏详情（通用的）
+    JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+    detailVC.titleStr = @"文章详情";
+    [self.navigationController pushViewController:detailVC animated:YES];
+}
 #pragma mark - 进入技术专栏界面
 - (void)enterJSZLVireController:(JSZLCateView *)jSZLCateView
 {
@@ -133,18 +141,8 @@
         JiShuZhuanLanViewController *jszlVC = [[JiShuZhuanLanViewController alloc]init];
         [self.navigationController pushViewController:jszlVC animated:YES];
     }
-    
-}
 
-#pragma mark - 图片轮播-->进入详情
-- (void)pictureShowMethod:(PictureShowView *)pictureShowV
-{
-    // 进入技术专栏详情（通用的）
-    JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
-    detailVC.titleStr = @"文章详情";
-    [self.navigationController pushViewController:detailVC animated:YES];
 }
-
 #pragma mark - 搜索
 - (void)enterSearchViewController
 {
@@ -191,12 +189,6 @@
 
 }
 
-#pragma mark - 往期按钮点击事件
-- (void)preButtonClicked
-{
-    MenuViewController *menuVC=[[MenuViewController alloc] init];
-    [self.navigationController pushViewController:menuVC animated:YES];
-}
 
 #pragma mark - 放大图片
 - (void)enLargeImage:(MainNewView *)mainNewView
