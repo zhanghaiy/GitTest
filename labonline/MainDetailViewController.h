@@ -10,4 +10,6 @@
 
 @interface MainDetailViewController : UIViewController
 
+@property (nonatomic,strong) NSArray *iamgesArray;
+
 @end

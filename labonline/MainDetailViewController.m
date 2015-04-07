@@ -18,6 +18,12 @@
 #define kDownLoadButtonTag 88
 #define kBrowseButtonTag 89
 #define kWangQiButtonTag 90
+#define kImageButtonTag 123
+
+#define kShowImagesViewTag 333
+#define kShowScrollViewTag 334
+#define kPageControlTag 335
+#define kImageViewHeight 80
 
 
 @interface MainDetailViewController ()<UIScrollViewDelegate>
@@ -25,6 +31,8 @@
 @end
 
 @implementation MainDetailViewController
+
+
 
 - (void)viewDidLoad
 {
@@ -101,6 +109,7 @@
     shouCangLable.font = [UIFont systemFontOfSize:kTwoFontSize];
     [scrollV addSubview:shouCangLable];
     // 大小
+    /*
     UILabel *sizeLable = [[UILabel alloc]initWithFrame:CGRectMake(20+KCoverButtonWidth, 75,backViewWidth-20-KCoverButtonWidth, 20)];
     sizeLable.text = @"大小：10M";
     sizeLable.textAlignment = NSTextAlignmentLeft;
@@ -118,11 +127,10 @@
     youLanLable.textColor = [UIColor colorWithRed:232/255.0 green:21/255.0 blue:37/255.0 alpha:1];
     youLanLable.font = [UIFont systemFontOfSize:kTwoFontSize];
     [scrollV addSubview:youLanLable];
-    // 按钮公用属性
-    UIColor *borderColor = [UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1];
-    UIColor *backColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
-    UIColor *textColor = [UIColor colorWithRed:124/255.0 green:124/255.0 blue:124/255.0 alpha:1];
+     */
+    
     //下载
+    /*
     UIButton *downLoadButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [downLoadButton setFrame:CGRectMake(KCoverButtonWidth+20, 120, 48, 22)];
     [downLoadButton setTitle:@"下载" forState:UIControlStateNormal];
@@ -136,9 +144,14 @@
     downLoadButton.tag = kDownLoadButtonTag;
     [downLoadButton addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [scrollV addSubview:downLoadButton];
+     */
+    // 按钮公用属性
+    UIColor *borderColor = [UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1];
+    UIColor *backColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
+    UIColor *textColor = [UIColor colorWithRed:124/255.0 green:124/255.0 blue:124/255.0 alpha:1];
     //阅读
     UIButton *browseButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [browseButton setFrame:CGRectMake(KCoverButtonWidth+20+55, 120, 48, 22)];
+    [browseButton setFrame:CGRectMake(KCoverButtonWidth+20, 120, 48, 22)];
     [browseButton setTitle:@"阅读" forState:UIControlStateNormal];
     [browseButton setTitleColor:textColor forState:UIControlStateNormal];
     browseButton.titleLabel.font = [UIFont systemFontOfSize:kOneFontSize];
@@ -152,7 +165,7 @@
     [scrollV addSubview:browseButton];
     // 往期
     UIButton *wangQiButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [wangQiButton setFrame:CGRectMake(KCoverButtonWidth+20+55+55, 120, 48, 22)];
+    [wangQiButton setFrame:CGRectMake(KCoverButtonWidth+20+55, 120, 48, 22)];
     [wangQiButton setTitle:@"往期" forState:UIControlStateNormal];
     [wangQiButton setTitleColor:textColor forState:UIControlStateNormal];
     wangQiButton.titleLabel.font = [UIFont systemFontOfSize:kOneFontSize];
@@ -165,10 +178,23 @@
     [wangQiButton addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [scrollV addSubview:wangQiButton];
     
+    NSInteger wid = backV.frame.size.width;
+    NSInteger btnWidth = (wid-20)/5;
+    NSInteger btnHeight = kImageViewHeight;
+    for (int i = 0; i < _iamgesArray.count; i ++)
+    {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.tag = kImageButtonTag + i;
+        [btn setFrame:CGRectMake(10+i*btnWidth, 155, btnWidth, btnHeight)];
+        [btn setBackgroundImage:[UIImage imageNamed:[_iamgesArray objectAtIndex:i]] forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(imageButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [scrollV addSubview:btn];
+    }
+
     
     NSString *desStr = @"    美国国家安全局发表声明说，当天上午9时左右，两名化装成女性的男子驱车试图冲击位于马里兰州米德堡的国家安全局总部大门，国家安全局保卫人员开枪阻挡，车上一名男子被当场打死，另一人受重伤。一名国家安全局警官在事件中受伤。\n   美国国家安全局发表声明说，当天上午9时左右，两名化装成女性的男子驱车试图冲击位于马里兰州米德堡的国家安全局总部大门，国家安全局保卫人员开枪阻挡，车上一名男子被当场打死，另一人受重伤。一名国家安全局警官在事件中受伤。\n   美国国家安全局发表声明说，当天上午9时左右，两名化装成女性的男子驱车试图冲击位于马里兰州米德堡的国家安全局总部大门，国家安全局保卫人员开枪阻挡，车上一名男子被当场打死，另一人受重伤。一名国家安全局警官在事件中受伤。\n美国国家安全局发表声明说，当天上午9时左右，两名化装成女性的男子驱车试图冲击位于马里兰州米德堡的国家安全局总部大门，国家安全局保卫人员开枪阻挡，车上一名男子被当场打死，另一人受重伤。一名国家安全局警官在事件中受伤。\n美国国家安全局发表声明说，当天上午9时左右，两名化装成女性的男子驱车试图冲击位于马里兰州米德堡的国家安全局总部大门，国家安全局保卫人员开枪阻挡，车上一名男子被当场打死，另一人受重伤。一名国家安全局警官在事件中受伤。\n   美国国家安全局发表声明说，当天上午9时左右，两名化装成女性的男子驱车试图冲击位于马里兰州米德堡的国家安全局总部大门，国家安全局保卫人员开枪阻挡，车上一名男子被当场打死，另一人受重伤。一名国家安全局警官在事件中受伤。\n     美国国家安全局发表声明说，当天上午9时左右，两名化装成女性的男子驱车试图冲击位于马里兰州米德堡的国家安全局总部大门，国家安全局保卫人员开枪阻挡，车上一名男子被当场打死，另一人受重伤。一名国家安全局警官在事件中受伤。";
     CGRect rect = [desStr boundingRectWithSize:CGSizeMake(backViewWidth-20, 99999)options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:kOneFontSize]} context:nil];
-    UILabel *desLab = [[UILabel alloc]initWithFrame:CGRectMake(10, 150,backViewWidth-20, rect.size.height)];
+    UILabel *desLab = [[UILabel alloc]initWithFrame:CGRectMake(10, 170+kImageViewHeight,backViewWidth-20, rect.size.height)];
     desLab.text = desStr;
     desLab.textAlignment = NSTextAlignmentLeft;
     desLab.numberOfLines = 0;
@@ -176,11 +202,71 @@
     desLab.font = [UIFont systemFontOfSize:kOneFontSize];
     [scrollV addSubview:desLab];
     
-    if (backViewheight-150-rect.size.height<=10)
+    if (backViewheight-170-kImageViewHeight-rect.size.height<=10)
     {
-        scrollV.contentSize = CGSizeMake(0, 150+rect.size.height+20);
+        scrollV.contentSize = CGSizeMake(0, 170+kImageViewHeight+rect.size.height+20);
     }
 }
+
+- (void)imageButtonClicked:(UIButton *)btn
+{
+    [self createShowImagesViewWithDataArray:_iamgesArray andIndex:btn.tag - kImageButtonTag];
+}
+
+#pragma mark --创建展示图片的View
+- (void)createShowImagesViewWithDataArray:(NSArray *)array andIndex:(NSInteger)index
+{
+    self.navigationController.navigationBarHidden = YES;
+    UIView *showImgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+    showImgView.backgroundColor = [UIColor colorWithRed:222/255.0 green:222/255.0 blue:222/255.0 alpha:1];
+    showImgView.tag = kShowImagesViewTag;
+    showImgView.backgroundColor = [UIColor colorWithRed:18/255.0 green:28/255.0 blue:31/255.0 alpha:1];
+    [self.view addSubview:showImgView];
+    
+    UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, showImgView.frame.size.height)];
+    scrollView.contentSize = CGSizeMake(kScreenWidth*array.count, kScreenWidth);
+    scrollView.tag = kShowScrollViewTag;
+    scrollView.delegate = self;
+    scrollView.pagingEnabled = YES;
+    scrollView.contentOffset = CGPointMake(kScreenWidth*index, 0);
+    [showImgView addSubview:scrollView];
+    
+    for (int i = 0; i < array.count; i ++)
+    {
+        UIImage *img = [UIImage imageNamed:[array objectAtIndex:i]];
+        NSInteger imageWid = img.size.width;
+        NSInteger imageHeight = img.size.height;
+        if (imageWid>kScreenWidth-20||imageHeight>(kScreenHeight-120))
+        {
+            float level = (float)imageWid/(float)imageHeight;
+            imageWid = kScreenWidth-20;
+            imageHeight = imageWid/level;
+        }
+        UIImageView *imgV = [[UIImageView alloc]initWithFrame:CGRectMake(i*kScreenWidth+(kScreenWidth-imageWid)/2, (kScreenHeight-imageHeight)/2, imageWid, imageHeight)];
+        imgV.image = img;
+        [scrollView addSubview:imgV];
+    }
+    
+    UIPageControl *pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake((kScreenWidth-100)/2, showImgView.frame.size.height-50, 100, 10)];
+    pageControl.tag = kPageControlTag;
+    pageControl.numberOfPages = array.count;
+    pageControl.currentPage = index;
+    pageControl.pageIndicatorTintColor = [UIColor whiteColor];
+    pageControl.currentPageIndicatorTintColor = [UIColor purpleColor];
+    [showImgView addSubview:pageControl];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapImgVMethod)];
+    [showImgView addGestureRecognizer:tap];
+}
+
+#pragma mark --tapMethod
+- (void)tapImgVMethod
+{
+    self.navigationController.navigationBarHidden = NO;
+    UIView *view = (UIScrollView *)[self.view viewWithTag:kShowImagesViewTag];
+    [view removeFromSuperview];
+}
+
 
 - (void)buttonClicked:(UIButton *)btn
 {

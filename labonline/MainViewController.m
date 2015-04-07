@@ -93,6 +93,9 @@
     mainNewV.imageDataArray = @[@"12.jpg",@"pictureShow.png",@"文章缩略图.png",@"pictureShow.png",@"12.jpg"];
     [_backScrollV addSubview:mainNewV];
     
+    UITapGestureRecognizer *tapMainV = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(enterMagazineViewController:)];
+    [mainNewV addGestureRecognizer:tapMainV];
+    
     // 技术专栏
     // 先计算技术专栏的高度
     NSInteger hang = 2;
@@ -105,6 +108,14 @@
     
     _backScrollV.contentSize = CGSizeMake(kScreenWidth, 50+kImageShowViewHeight+kMainNewViewHeight+jSZLHeight);
     _backScrollV.showsVerticalScrollIndicator = NO;
+}
+
+#pragma mark - 进入 MainDetailViewController
+- (void)enterMagazineViewController:(UITapGestureRecognizer *)tap
+{
+    MainDetailViewController *mainDetailVC = [[MainDetailViewController alloc]init];
+    mainDetailVC.iamgesArray = @[@"12.jpg",@"pictureShow.png",@"文章缩略图.png",@"pictureShow.png",@"12.jpg"];;
+    [self.navigationController pushViewController:mainDetailVC animated:YES];
 }
 
 #pragma mark - 进入技术专栏界面
