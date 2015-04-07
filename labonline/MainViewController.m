@@ -74,8 +74,8 @@
     [self.navigationController.navigationBar setTitleTextAttributes:paramDic];
     //左侧按钮
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setFrame:CGRectMake(0, 0, 25, 26)];
-    [button setBackgroundImage:[UIImage imageNamed:@"aniu_07.png"] forState:UIControlStateNormal];
+    [button setFrame:CGRectMake(0, 0, 35, 36)];
+    [button setBackgroundImage:[UIImage imageNamed:@"tubiao_04.png"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(popToLeftMenu) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = leftItem;
@@ -119,6 +119,16 @@
     
     _reloading = NO;
     [self createHeaderView];
+    
+    //在导航视图底添加分割线
+    UIView *navDividingLine = [[UIView alloc] init];
+    if (navDividingLine != nil)
+    {
+        navDividingLine.frame = CGRectMake(0, 0, kScreenWidth, 1);
+        navDividingLine.backgroundColor = [UIColor redColor];
+        [self.view addSubview:navDividingLine];
+    }
+
 }
 
 #pragma mark - 图片轮播-->进入详情

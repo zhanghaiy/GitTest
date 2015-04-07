@@ -78,14 +78,14 @@
     
     [self createHomePageBTN];
     
-    //在导航视图底添加分割线
-    UIView *navDividingLine = [[UIView alloc] init];
-    if (navDividingLine != nil)
-    {
-        navDividingLine.frame = CGRectMake(0, 0, WidthOfScreen, 1);
-        navDividingLine.backgroundColor = [UIColor redColor];
-        [self.view addSubview:navDividingLine];
-    }
+//    //在导航视图底添加分割线
+//    UIView *navDividingLine = [[UIView alloc] init];
+//    if (navDividingLine != nil)
+//    {
+//        navDividingLine.frame = CGRectMake(0, 0, WidthOfScreen, 1);
+//        navDividingLine.backgroundColor = [UIColor redColor];
+//        [self.view addSubview:navDividingLine];
+//    }
     
 }
 #pragma mark - 返回上一页
