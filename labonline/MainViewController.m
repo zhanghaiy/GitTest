@@ -98,10 +98,12 @@
     
     // 技术专栏
     // 先计算技术专栏的高度
-    NSInteger hang = 2;
+    NSArray *cateArray = @[@"生物检验",@"物理研究",@"生物检验",@"物理研究",@"生物检验",@"物理研究"];// 模拟数据
+    NSInteger hang = cateArray.count%4?cateArray.count/4+1:cateArray.count/4;
     NSInteger jSZLHeight = kJSZLHeadHeight + hang*kJSZLAloneHeight;
     JSZLCateView *jSZLCateV = [[[NSBundle mainBundle]loadNibNamed:@"JSZLCateView" owner:self options:0] lastObject];
     jSZLCateV.frame = CGRectMake(5, 25+kImageShowViewHeight+kMainNewViewHeight, kScreenWidth-10, jSZLHeight);
+    jSZLCateV.cateDataArray = cateArray;
     jSZLCateV.target = self;
     jSZLCateV.action = @selector(enterJSZLVireController:);
     [_backScrollV addSubview:jSZLCateV];

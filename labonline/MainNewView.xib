@@ -11,37 +11,69 @@
             <rect key="frame" x="0.0" y="0.0" width="310" height="240"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="wangqi.png" translatesAutoresizingMaskIntoConstraints="NO" id="3Ps-Yj-M0c">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wangqi.png" translatesAutoresizingMaskIntoConstraints="NO" id="3Ps-Yj-M0c">
                     <rect key="frame" x="10" y="10" width="120" height="150"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="120" id="R8h-fq-zMg"/>
+                        <constraint firstAttribute="height" constant="150" id="U1c-wG-bhH"/>
+                    </constraints>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rbA-H7-RYQ">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rbA-H7-RYQ">
                     <rect key="frame" x="140" y="15" width="45" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="45" id="9vw-0z-20j"/>
+                        <constraint firstAttribute="height" constant="20" id="dji-aK-tUd"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="New">
                         <color key="titleColor" red="1" green="0.1915859607" blue="0.13115258390000001" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="宝洁医疗诊断相机" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zbk-Bw-0RQ">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="宝洁医疗诊断相机" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zbk-Bw-0RQ">
                     <rect key="frame" x="140" y="35" width="160" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="cJ7-l4-rjT"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="期次：2015.03.18" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LiV-c8-ScV">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="期次：2015.03.18" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LiV-c8-ScV">
                     <rect key="frame" x="140" y="60" width="160" height="15"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="15" id="mMA-Bs-6HJ"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="昨天，百集系列剧《中华百家姓·起源故事》在郑州举行发布会，宣布“拜谒根脉圣地·溯源中华姓氏”中原寻根行活动启动，将通过晚报征" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bzV-af-lyZ">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="昨天，百集系列剧《中华百家姓·起源故事》在郑州举行发布会，宣布“拜谒根脉圣地·溯源中华姓氏”中原寻根行活动启动，将通过晚报征" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bzV-af-lyZ">
                     <rect key="frame" x="140" y="75" width="160" height="85"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="85" id="kOI-bM-PBs"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="3Ps-Yj-M0c" firstAttribute="top" secondItem="t6e-rf-KsY" secondAttribute="top" constant="10" id="21Q-aO-CHf"/>
+                <constraint firstItem="Zbk-Bw-0RQ" firstAttribute="leading" secondItem="3Ps-Yj-M0c" secondAttribute="trailing" constant="10" id="5hv-qs-zyl"/>
+                <constraint firstAttribute="trailing" secondItem="LiV-c8-ScV" secondAttribute="trailing" constant="10" id="8ef-dF-hbE"/>
+                <constraint firstItem="rbA-H7-RYQ" firstAttribute="leading" secondItem="3Ps-Yj-M0c" secondAttribute="trailing" constant="10" id="Cgc-Ul-vZb"/>
+                <constraint firstItem="3Ps-Yj-M0c" firstAttribute="leading" secondItem="t6e-rf-KsY" secondAttribute="leading" constant="10" id="EMw-y2-IeP"/>
+                <constraint firstItem="LiV-c8-ScV" firstAttribute="top" secondItem="Zbk-Bw-0RQ" secondAttribute="bottom" id="FUK-N6-FYS"/>
+                <constraint firstItem="Zbk-Bw-0RQ" firstAttribute="top" secondItem="rbA-H7-RYQ" secondAttribute="bottom" id="JP3-5c-MTO"/>
+                <constraint firstAttribute="trailing" secondItem="bzV-af-lyZ" secondAttribute="trailing" constant="10" id="SLy-Uy-WQi"/>
+                <constraint firstItem="LiV-c8-ScV" firstAttribute="leading" secondItem="3Ps-Yj-M0c" secondAttribute="trailing" constant="10" id="TF7-Is-NOK"/>
+                <constraint firstItem="bzV-af-lyZ" firstAttribute="top" secondItem="LiV-c8-ScV" secondAttribute="bottom" id="gV9-Nq-kOJ"/>
+                <constraint firstItem="rbA-H7-RYQ" firstAttribute="top" secondItem="t6e-rf-KsY" secondAttribute="top" constant="15" id="hS6-q0-jI7"/>
+                <constraint firstItem="bzV-af-lyZ" firstAttribute="leading" secondItem="3Ps-Yj-M0c" secondAttribute="trailing" constant="10" id="mfH-vG-mfC"/>
+                <constraint firstAttribute="trailing" secondItem="Zbk-Bw-0RQ" secondAttribute="trailing" constant="10" id="v80-Bm-ej2"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="desLable" destination="bzV-af-lyZ" id="aN2-SA-AdE"/>

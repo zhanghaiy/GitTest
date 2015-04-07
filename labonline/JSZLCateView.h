@@ -16,5 +16,6 @@
 @property (nonatomic,assign) id target;
 @property (nonatomic,assign) SEL action;
 @property (nonatomic,assign) BOOL enterMoreVC;
+@property (nonatomic,strong) NSArray *cateDataArray;// 模拟数据
 
 @end

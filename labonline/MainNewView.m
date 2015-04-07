@@ -57,6 +57,7 @@
 #pragma mark - 点击放大图片
 - (void)btnClicked:(UIButton *)btn
 {
+    _clickImageIndex = btn.tag - kImageButtonTag;
     // 图片按钮点击事件
     if ([_target respondsToSelector:_action])
     {

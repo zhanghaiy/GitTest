@@ -12,7 +12,9 @@
 #define kCategoryLableHeight 70
 #define kCateLableTag 555
 #define kTitleLableTag 999
-
+{
+    NSInteger _sumWidth;
+}
 
 - (void)awakeFromNib
 {
@@ -25,6 +27,11 @@
     _headButton.layer.cornerRadius = 3;
     _headTitleLable.textColor = [UIColor colorWithRed:217/255.0 green:0 blue:6/255.0 alpha:1];
     _headTitleLable.backgroundColor = [UIColor colorWithWhite:238/255.0 alpha:1];
+}
+
+- (void)setCateDataArray:(NSArray *)cateDataArray
+{
+    _cateDataArray = cateDataArray;
     [self createCategoryLable];
 }
 
@@ -33,27 +40,37 @@
      _headTitleLable.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1];
     NSInteger index = 0;
     NSInteger lableWidth = (self.bounds.size.width-50)/4;
-    for (int i = 0; i < 2; i ++)
+    NSInteger hang = 2;
+    if (_cateDataArray.count<=8)
+    {
+        hang = _cateDataArray.count%4?_cateDataArray.count/4+1:_cateDataArray.count/4;
+    }
+    
+    for (int i = 0; i < hang; i ++)
     {
         for (int j = 0; j < 4; j ++)
         {
-            UILabel *cateLab = [[UILabel alloc]initWithFrame:CGRectMake(10+j*(lableWidth+10), 40+i*(kCategoryLableHeight+10), lableWidth, kCategoryLableHeight)];
-            cateLab.text = @"生物检验";
-            cateLab.tag = kCateLableTag+index;
-            cateLab.textAlignment = NSTextAlignmentCenter;
-            cateLab.textColor = [UIColor colorWithRed:90/255.0 green:90/255.0 blue:90/255.0 alpha:1];
-            cateLab.font = [UIFont systemFontOfSize:kTwoFontSize];
-            cateLab.layer.masksToBounds = YES;
-            cateLab.layer.cornerRadius = 5;
-            cateLab.layer.borderWidth = 1;
-            cateLab.layer.borderColor = [UIColor colorWithWhite:241/255.0 alpha:1].CGColor;
-            cateLab.userInteractionEnabled = YES;
-            [self addSubview:cateLab];
-            
-            UITapGestureRecognizer *tapCateLab = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapCateLableMethod:)];
-            [cateLab addGestureRecognizer:tapCateLab];
-            
-            index ++;
+            if (_cateDataArray.count > i*4+j)
+            {
+                UILabel *cateLab = [[UILabel alloc]initWithFrame:CGRectMake(10+j*(lableWidth+10), 40+i*(kCategoryLableHeight+10), lableWidth, kCategoryLableHeight)];
+//                cateLab.text = @"生物检验";
+                cateLab.text = [_cateDataArray objectAtIndex:index];
+                cateLab.tag = kCateLableTag+index;
+                cateLab.textAlignment = NSTextAlignmentCenter;
+                cateLab.textColor = [UIColor colorWithRed:90/255.0 green:90/255.0 blue:90/255.0 alpha:1];
+                cateLab.font = [UIFont systemFontOfSize:kTwoFontSize];
+                cateLab.layer.masksToBounds = YES;
+                cateLab.layer.cornerRadius = 5;
+                cateLab.layer.borderWidth = 1;
+                cateLab.layer.borderColor = [UIColor colorWithWhite:241/255.0 alpha:1].CGColor;
+                cateLab.userInteractionEnabled = YES;
+                [self addSubview:cateLab];
+                
+                UITapGestureRecognizer *tapCateLab = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapCateLableMethod:)];
+                [cateLab addGestureRecognizer:tapCateLab];
+                
+                index ++;
+            }
         }
     }
 }
