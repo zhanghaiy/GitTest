@@ -19,7 +19,8 @@ typedef enum
     MainPage = 0,
     JiShuZhuanLan,
     WangQi,
-    PersonCenter
+    PersonCenter,
+    SettingCenter
 }ResourceType;
 
 #define kOneFontSize 13

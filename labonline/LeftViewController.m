@@ -67,13 +67,23 @@
     UIButton *settingButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [settingButton setFrame:CGRectMake(20, kScreenHeight-80, kSettingButtonHeight, kSettingButtonHeight)];
     [settingButton setBackgroundImage:[UIImage imageNamed:@"设置按钮.png"] forState:UIControlStateNormal];
+    [settingButton addTarget:self action:@selector(setButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:settingButton];
     
     UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(25+kSettingButtonHeight, kScreenHeight-80, 60, kSettingButtonHeight)];
     lable.text = @"设置";
     lable.textColor = [UIColor whiteColor];
     lable.font = [UIFont systemFontOfSize:kOneFontSize];
+    lable.userInteractionEnabled = YES;
     [self.view addSubview:lable];
+    
+    UITapGestureRecognizer *tapSettingLable = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(setButtonClicked)];
+    [lable addGestureRecognizer:tapSettingLable];
+}
+
+- (void)setButtonClicked
+{
+    [self.delegate pushViewControllerWithIndex:SettingCenter];
 }
 
 #pragma mark - UITableViewDelegate
@@ -132,7 +142,8 @@
     [self.delegate pushViewControllerWithIndex:indexPath.section];
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }

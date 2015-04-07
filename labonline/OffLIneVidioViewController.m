@@ -8,11 +8,12 @@
 
 #import "OffLIneVidioViewController.h"
 #import "OffLineVidioCell.h"
-
+#import <MediaPlayer/MediaPlayer.h>
 
 @interface OffLIneVidioViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_vidioTableView;
+     MPMoviePlayerViewController *_playerController;
 }
 @end
 
@@ -70,6 +71,53 @@
 {
     // 播放离线视频
     NSLog(@"播放离线视频");
+    NSString *audioPath = [[NSBundle mainBundle]pathForResource:@"1" ofType:@"mp4"];
+    [self playerPlayVidioWithPath:audioPath];
+}
+
+#pragma mark - 根据路径播放视频
+- (void)playerPlayVidioWithPath:(NSString *)path
+{
+    if (path.length == 0)
+    {
+        NSLog(@"没有视频资源");
+        return;
+    }
+    NSURL *vidioUrl;
+    if ([path hasPrefix:@"http://"]||[path hasPrefix:@"https://"])
+    {
+        // 远程地址
+        vidioUrl = [NSURL URLWithString:path];
+    }
+    else
+    {
+        // 本地路径
+        vidioUrl = [NSURL fileURLWithPath:path];
+    }
+    if (_playerController == nil)
+    {
+        _playerController = [[MPMoviePlayerViewController alloc]initWithContentURL:vidioUrl];
+        _playerController.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
+        [self presentViewController:_playerController animated:YES completion:^{
+            
+        }];
+    }
+    [_playerController.moviePlayer play];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playFinished) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
+}
+
+#pragma mark- 播放结束
+- (void)playFinished
+{
+    // 播放完毕
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
+    // 停止播放 并销毁
+    if (_playerController)
+    {
+        [_playerController.moviePlayer stop];
+        _playerController = nil;
+    }
 }
 
 - (void)didReceiveMemoryWarning {

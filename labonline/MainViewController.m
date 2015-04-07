@@ -21,6 +21,7 @@
 #import "JiShuZhuanLanDetailViewController.h"
 #import "JiShuZhuanLanMoreViewController.h"
 
+#import "SettingCenterViewController.h"
 // 下拉刷新
 #import "PersonCenterViewController.h"
 
@@ -183,6 +184,12 @@
         {
             PersonCenterViewController *personVC = [[PersonCenterViewController alloc]init];
             [self.navigationController pushViewController:personVC animated:YES];
+        }
+            break;
+        case SettingCenter:
+        {
+            SettingCenterViewController *settingVC = [[SettingCenterViewController alloc]init];
+            [self.navigationController pushViewController:settingVC animated:YES];
         }
             break;
         default:
