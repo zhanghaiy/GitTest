@@ -95,6 +95,7 @@
         cell.target = self;
         cell.jszlViewClickedAction = @selector(enterDetailViewController:);
         cell.buttonClickSelector = @selector(enterMoreViewController:);
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
 
     return cell;
