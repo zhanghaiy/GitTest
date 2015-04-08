@@ -27,6 +27,7 @@
 
 #import "YRSideViewController.h"
 #import "AppDelegate.h"
+#import "LoginViewController.h"
 
 @interface MainViewController ()<UITableViewDelegate,UITableViewDataSource,LeftViewControllerDelegate,EGORefreshTableHeaderDelegate,MainCellDelegate>
 {
@@ -153,6 +154,8 @@
 {
     AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
     YRSideViewController *sideViewController=[delegate sideViewController];
+//    LoginViewController *loginVC=(LoginViewController*)[[UIApplication sharedApplication] delegate];
+//    YRSideViewController *sideViewController=[loginVC sideViewController];
     [sideViewController hideSideViewController:YES];
     
     if (type == PDFType)

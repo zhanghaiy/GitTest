@@ -24,28 +24,28 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
-//    MainViewController *mainViewController=[[MainViewController alloc] init];
-//    //    mainViewController.view.backgroundColor=[UIColor grayColor];
-//    
-//    UINavigationController *mainNVC = [[UINavigationController alloc]initWithRootViewController:mainViewController];
-//    
-//    LeftViewController *leftViewController=[[LeftViewController alloc]initWithNibName:nil bundle:nil];
-//    leftViewController.delegate=mainViewController;
-//    //    leftViewController.view.backgroundColor=[UIColor brownColor];
-//    
-//    UIViewController *rightViewController=[[UIViewController alloc]initWithNibName:nil bundle:nil];
-//    rightViewController.view.backgroundColor=[UIColor purpleColor];
-//    
-//    _sideViewController=[[YRSideViewController alloc]initWithNibName:nil bundle:nil];
-//    _sideViewController.rootViewController=mainNVC;
-//    _sideViewController.leftViewController=leftViewController;
-//    _sideViewController.rightViewController=rightViewController;
-//    
-//    
-//    _sideViewController.leftViewShowWidth=240;
-//    _sideViewController.needSwipeShowMenu=true;//默认开启的可滑动展示
-//    //动画效果可以被自己自定义，具体请看api
-//    
+    MainViewController *mainViewController=[[MainViewController alloc] init];
+    //    mainViewController.view.backgroundColor=[UIColor grayColor];
+    
+    UINavigationController *mainNVC = [[UINavigationController alloc]initWithRootViewController:mainViewController];
+    
+    LeftViewController *leftViewController=[[LeftViewController alloc]initWithNibName:nil bundle:nil];
+    leftViewController.delegate=mainViewController;
+    //    leftViewController.view.backgroundColor=[UIColor brownColor];
+    
+    UIViewController *rightViewController=[[UIViewController alloc]initWithNibName:nil bundle:nil];
+    rightViewController.view.backgroundColor=[UIColor purpleColor];
+    
+    _sideViewController=[[YRSideViewController alloc]initWithNibName:nil bundle:nil];
+    _sideViewController.rootViewController=mainNVC;
+    _sideViewController.leftViewController=leftViewController;
+    _sideViewController.rightViewController=rightViewController;
+    
+    
+    _sideViewController.leftViewShowWidth=240;
+    _sideViewController.needSwipeShowMenu=true;//默认开启的可滑动展示
+    //动画效果可以被自己自定义，具体请看api
+//
 //    
 //    self.window.rootViewController=_sideViewController;
 //    
@@ -53,6 +53,7 @@
 //    [self.window makeKeyAndVisible];
     
     LoginViewController *loginVC=[[LoginViewController alloc] initWithNibName:nil bundle:nil];
+    loginVC.sideViewController=_sideViewController;
     self.window.rootViewController=loginVC;
 
     [self.window makeKeyAndVisible];
