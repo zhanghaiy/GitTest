@@ -26,7 +26,7 @@
 #import "PersonCenterViewController.h"
 
 #import "SearchViewController.h"
-
+#import "NavigationButton.h"
 
 #import "YRSideViewController.h"
 #import "AppDelegate.h"
@@ -70,12 +70,12 @@
     UIFont *titleFont = [UIFont systemFontOfSize:16];
     NSDictionary *paramDic = [NSDictionary dictionaryWithObjectsAndKeys:titleColor, UITextAttributeTextColor,titleColor, UITextAttributeTextShadowColor,[NSValue valueWithUIOffset:UIOffsetMake(0, 0)],UITextAttributeTextShadowOffset,titleFont, UITextAttributeFont,nil];
     [self.navigationController.navigationBar setTitleTextAttributes:paramDic];
+    
     // right
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setFrame:CGRectMake(0, 0, 25, 25)];
-    [rightBtn setBackgroundImage:[UIImage imageNamed:@"aniu_09.png"] forState:UIControlStateNormal];
-    [rightBtn addTarget:self action:@selector(enterSearchViewController) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
+    NavigationButton *rightButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25) andBackImageWithName:@"aniu_09.png"];
+    rightButton.delegate = self;
+    rightButton.action = @selector(enterSearchVC);
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem = rightItem;
     
     _backScrollV = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-65)];
@@ -150,7 +150,7 @@
 }
 
 #pragma mark - 搜索
-- (void)enterSearchViewController
+- (void)enterSearchVC
 {
     // 搜索
     NSLog(@"enterSearchViewController");

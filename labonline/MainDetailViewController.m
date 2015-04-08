@@ -108,44 +108,9 @@
     shouCangLable.textColor = [UIColor colorWithRed:117/255.0 green:117/255.0 blue:117/255.0 alpha:1];
     shouCangLable.font = [UIFont systemFontOfSize:kTwoFontSize];
     [scrollV addSubview:shouCangLable];
-    // 大小
-    /*
-    UILabel *sizeLable = [[UILabel alloc]initWithFrame:CGRectMake(20+KCoverButtonWidth, 75,backViewWidth-20-KCoverButtonWidth, 20)];
-    sizeLable.text = @"大小：10M";
-    sizeLable.textAlignment = NSTextAlignmentLeft;
-    sizeLable.textColor = [UIColor colorWithRed:117/255.0 green:117/255.0 blue:117/255.0 alpha:1];
-    sizeLable.font = [UIFont systemFontOfSize:kTwoFontSize];
-    [scrollV addSubview:sizeLable];
+   
     
-    UIImageView *youLanImgV = [[UIImageView alloc]initWithFrame:CGRectMake(20+KCoverButtonWidth, 97,16, 15)];
-    youLanImgV.image = [UIImage imageNamed:@"游览.png"];
-    [scrollV addSubview:youLanImgV];
-    // 游览数
-    UILabel *youLanLable = [[UILabel alloc]initWithFrame:CGRectMake(40+KCoverButtonWidth, 99,backViewWidth-20-KCoverButtonWidth, 15)];
-    youLanLable.text = @"3215";
-    youLanLable.textAlignment = NSTextAlignmentLeft;
-    youLanLable.textColor = [UIColor colorWithRed:232/255.0 green:21/255.0 blue:37/255.0 alpha:1];
-    youLanLable.font = [UIFont systemFontOfSize:kTwoFontSize];
-    [scrollV addSubview:youLanLable];
-     */
-    
-    //下载
-    /*
-    UIButton *downLoadButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [downLoadButton setFrame:CGRectMake(KCoverButtonWidth+20, 120, 48, 22)];
-    [downLoadButton setTitle:@"下载" forState:UIControlStateNormal];
-    downLoadButton.titleLabel.font = [UIFont systemFontOfSize:kOneFontSize];
-    [downLoadButton setTitleColor:textColor forState:UIControlStateNormal];
-    downLoadButton.layer.masksToBounds = YES;
-    downLoadButton.layer.cornerRadius = 10;
-    downLoadButton.layer.borderColor = borderColor.CGColor;
-    downLoadButton.layer.borderWidth = 1;
-    downLoadButton.backgroundColor = backColor;
-    downLoadButton.tag = kDownLoadButtonTag;
-    [downLoadButton addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [scrollV addSubview:downLoadButton];
-     */
-    // 按钮公用属性
+        // 按钮公用属性
     UIColor *borderColor = [UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1];
     UIColor *backColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
     UIColor *textColor = [UIColor colorWithRed:124/255.0 green:124/255.0 blue:124/255.0 alpha:1];
@@ -308,6 +273,15 @@
     NSLog(@"enterSearchViewController");
 }
 
+#pragma mark --UIScrollViewDelegate Methods
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView.tag == kShowScrollViewTag)
+    {
+        UIPageControl *pageControl = (UIPageControl *)[self.view viewWithTag:kPageControlTag];
+        pageControl.currentPage = scrollView.contentOffset.x/kScreenWidth;
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -117,7 +117,7 @@
 		FD9A76FD1ACBF1B0007ACC11 /* MyCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9A76FC1ACBF1B0007ACC11 /* MyCommentCell.m */; };
 		FD9A76FF1ACBF1E6007ACC11 /* MyCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD9A76FE1ACBF1E6007ACC11 /* MyCommentCell.xib */; };
 		FDA91DE71AD4BB1200734E1B /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA91DE61AD4BB1200734E1B /* SearchViewController.m */; };
-		FDA91DED1AD4CB3300734E1B /* SearchButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA91DEC1AD4CB3300734E1B /* SearchButton.m */; };
+		FDA91DF31AD4F98100734E1B /* NavigationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA91DF21AD4F98100734E1B /* NavigationButton.m */; };
 		FDB7CD3B1ACA6E86007BAF79 /* PDFBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB7CD3A1ACA6E86007BAF79 /* PDFBrowserViewController.m */; };
 		FDB7CD3E1ACA96FD007BAF79 /* MainListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB7CD3D1ACA96FD007BAF79 /* MainListViewController.m */; };
 		FDB7CD411ACA970D007BAF79 /* MainDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB7CD401ACA970D007BAF79 /* MainDetailViewController.m */; };
@@ -300,8 +300,8 @@
 		FD9A76FE1ACBF1E6007ACC11 /* MyCommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyCommentCell.xib; sourceTree = "<group>"; };
 		FDA91DE51AD4BB1200734E1B /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		FDA91DE61AD4BB1200734E1B /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
-		FDA91DEB1AD4CB3300734E1B /* SearchButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchButton.h; sourceTree = "<group>"; };
-		FDA91DEC1AD4CB3300734E1B /* SearchButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchButton.m; sourceTree = "<group>"; };
+		FDA91DF11AD4F98100734E1B /* NavigationButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationButton.h; sourceTree = "<group>"; };
+		FDA91DF21AD4F98100734E1B /* NavigationButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationButton.m; sourceTree = "<group>"; };
 		FDB7CD391ACA6E86007BAF79 /* PDFBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDFBrowserViewController.h; sourceTree = "<group>"; };
 		FDB7CD3A1ACA6E86007BAF79 /* PDFBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDFBrowserViewController.m; sourceTree = "<group>"; };
 		FDB7CD3C1ACA96FD007BAF79 /* MainListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainListViewController.h; sourceTree = "<group>"; };
@@ -377,8 +377,6 @@
 			isa = PBXGroup;
 			children = (
 				FD53B16E1AC24F13008EE13F /* HeaderFile.h */,
-				FDA91DEB1AD4CB3300734E1B /* SearchButton.h */,
-				FDA91DEC1AD4CB3300734E1B /* SearchButton.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -793,6 +791,8 @@
 			children = (
 				FDA91DE51AD4BB1200734E1B /* SearchViewController.h */,
 				FDA91DE61AD4BB1200734E1B /* SearchViewController.m */,
+				FDA91DF11AD4F98100734E1B /* NavigationButton.h */,
+				FDA91DF21AD4F98100734E1B /* NavigationButton.m */,
 			);
 			name = "搜索";
 			sourceTree = "<group>";
@@ -974,6 +974,7 @@
 				FD8B56641ACE7AF8009F5E15 /* MainViewController.m in Sources */,
 				FD8AE2E31ACE2A2000A4A5B6 /* EditSubViewController.m in Sources */,
 				FD47C81B1AC5386E00846AC9 /* JSZLEvaluationViewController.m in Sources */,
+				FDA91DF31AD4F98100734E1B /* NavigationButton.m in Sources */,
 				042C46741AC2815300D36C8F /* MenuViewController.m in Sources */,
 				FD96C8E71AC146480002778A /* PictureShowView.m in Sources */,
 				FD462E5A1ACD2DB2001AC895 /* OffLineVidioCell.m in Sources */,
@@ -1007,7 +1008,6 @@
 				FD8AE2DF1ACE230100A4A5B6 /* PersonEditCell.m in Sources */,
 				FD558D081AC3B11D00DA42FF /* JiShuZhuanLanSubView.m in Sources */,
 				FD8AE3251ACE679500A4A5B6 /* MainNewView.m in Sources */,
-				FDA91DED1AD4CB3300734E1B /* SearchButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
