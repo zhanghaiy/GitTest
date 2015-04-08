@@ -25,6 +25,9 @@
 // 下拉刷新
 #import "PersonCenterViewController.h"
 
+#import "SearchViewController.h"
+
+
 #import "YRSideViewController.h"
 #import "AppDelegate.h"
 
@@ -144,13 +147,15 @@
         JiShuZhuanLanViewController *jszlVC = [[JiShuZhuanLanViewController alloc]init];
         [self.navigationController pushViewController:jszlVC animated:YES];
     }
-
 }
+
 #pragma mark - 搜索
 - (void)enterSearchViewController
 {
     // 搜索
     NSLog(@"enterSearchViewController");
+    SearchViewController *searchVC = [[SearchViewController alloc]init];
+    [self.navigationController pushViewController:searchVC animated:YES];
 }
 
 #pragma mark - LeftViewControllerDelegate(侧滑回到主页)
