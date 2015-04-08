@@ -13,6 +13,9 @@
 #import "OffLIneVidioViewController.h"
 #import "MyMagazineViewController.h"
 #import "EditPersonViewController.h"
+#import "MainViewController.h"
+#import "YRSideViewController.h"
+#import "AppDelegate.h"
 
 @interface PersonCenterViewController ()
 {
@@ -46,7 +49,9 @@
     }
     // 左侧返回按钮
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setFrame:CGRectMake(0, 0, 35, 40)];
+    [button setFrame:CGRectMake(0, 0, 35, 36)];
+    [button setBackgroundImage:[UIImage imageNamed:@"tubiao_04.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(popToLeftMenu) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = leftItem;
     // right
@@ -116,7 +121,13 @@
         [_dataArray addObject:dict];
     }
 }
-
+#pragma mark - 左侧菜单
+-(void)popToLeftMenu
+{
+    AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
+    YRSideViewController *sideViewController=[delegate sideViewController];
+    [sideViewController showLeftViewController:YES];
+}
 #pragma mark - 进入不同分组
 - (void)enterSibColume:(PersonColumeView *)columeV
 {
@@ -171,6 +182,10 @@
 - (void)outCurrentUser
 {
     // 退出当前账号
+    MainViewController *m=[[MainViewController alloc] init];
+    [self.navigationController pushViewController:m animated:YES];
+    //    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
     
 }
 

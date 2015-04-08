@@ -78,6 +78,15 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem = rightItem;
     
+    //在导航视图底添加分割线
+    UIView *navDividingLine = [[UIView alloc] init];
+    if (navDividingLine != nil)
+    {
+        navDividingLine.frame = CGRectMake(0, 0, kScreenWidth, 1);
+        navDividingLine.backgroundColor = [UIColor redColor];
+        [self.view addSubview:navDividingLine];
+    }
+    
     _backScrollV = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-65)];
     _backScrollV.delegate =self;
     [self.view addSubview:_backScrollV];

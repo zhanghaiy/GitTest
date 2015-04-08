@@ -11,6 +11,8 @@
 #import "JiShuZhuanLanCell.h"
 #import "JiShuZhuanLanMoreViewController.h"
 #import "JiShuZhuanLanDetailViewController.h"
+#import "YRSideViewController.h"
+#import "AppDelegate.h"
 
 @interface JiShuZhuanLanViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -44,6 +46,10 @@
     {
         [button setBackgroundImage:[UIImage imageNamed:@"aniu_07.png"] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(popToPrePage) forControlEvents:UIControlEventTouchUpInside];
+    }else{
+        [button setFrame:CGRectMake(0, 0, 35, 36)];
+        [button setBackgroundImage:[UIImage imageNamed:@"tubiao_04.png"] forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(popToLeftMenu) forControlEvents:UIControlEventTouchUpInside];
     }
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = leftItem;
@@ -137,7 +143,13 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
-
+#pragma mark - 左侧菜单
+-(void)popToLeftMenu
+{
+    AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
+    YRSideViewController *sideViewController=[delegate sideViewController];
+    [sideViewController showLeftViewController:YES];
+}
 - (void)enterSearchViewController
 {
     // 进入搜索界面
