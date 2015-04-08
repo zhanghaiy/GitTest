@@ -173,7 +173,7 @@
     AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
     YRSideViewController *sideViewController=[delegate sideViewController];
     [sideViewController hideSideViewController:YES];
-    [self.navigationController popToRootViewControllerAnimated:NO];
+//    [self.navigationController popToRootViewControllerAnimated:NO];
     switch (type) {
         case MainPage:
         {

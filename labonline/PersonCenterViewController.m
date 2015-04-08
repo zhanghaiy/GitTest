@@ -182,11 +182,11 @@
 - (void)outCurrentUser
 {
     // 退出当前账号
-    MainViewController *m=[[MainViewController alloc] init];
-    [self.navigationController pushViewController:m animated:YES];
-    //    [self.navigationController popToRootViewControllerAnimated:YES];
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
+//    MainViewController *m=[[MainViewController alloc] init];
+//    [self.navigationController pushViewController:m animated:YES];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }];
 }
 
 
