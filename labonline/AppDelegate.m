@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "LeftViewController.h"
 #import "MainViewController.h"
+#import "LoginViewController.h"
 
 @interface AppDelegate ()
 
@@ -29,7 +30,7 @@
     UINavigationController *mainNVC = [[UINavigationController alloc]initWithRootViewController:mainViewController];
     
     LeftViewController *leftViewController=[[LeftViewController alloc]initWithNibName:nil bundle:nil];
-    leftViewController.delegate = mainViewController;
+    leftViewController.delegate=mainViewController;
     //    leftViewController.view.backgroundColor=[UIColor brownColor];
     
     UIViewController *rightViewController=[[UIViewController alloc]initWithNibName:nil bundle:nil];
@@ -44,11 +45,17 @@
     _sideViewController.leftViewShowWidth=240;
     _sideViewController.needSwipeShowMenu=true;//默认开启的可滑动展示
     //动画效果可以被自己自定义，具体请看api
+    //
+    //
+    //    self.window.rootViewController=_sideViewController;
+    //
+    //    self.window.backgroundColor = [UIColor whiteColor];
+    //    [self.window makeKeyAndVisible];
     
+    LoginViewController *loginVC=[[LoginViewController alloc] initWithNibName:nil bundle:nil];
+    loginVC.sideViewController=_sideViewController;
+    self.window.rootViewController=loginVC;
     
-    self.window.rootViewController=_sideViewController;
-    
-    self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
 }

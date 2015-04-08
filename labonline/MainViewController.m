@@ -70,6 +70,13 @@
     UIFont *titleFont = [UIFont systemFontOfSize:16];
     NSDictionary *paramDic = [NSDictionary dictionaryWithObjectsAndKeys:titleColor, UITextAttributeTextColor,titleColor, UITextAttributeTextShadowColor,[NSValue valueWithUIOffset:UIOffsetMake(0, 0)],UITextAttributeTextShadowOffset,titleFont, UITextAttributeFont,nil];
     [self.navigationController.navigationBar setTitleTextAttributes:paramDic];
+    //左侧按钮
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setFrame:CGRectMake(0, 0, 35, 36)];
+    [button setBackgroundImage:[UIImage imageNamed:@"tubiao_04.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(popToLeftMenu) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = leftItem;
     // right
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setFrame:CGRectMake(0, 0, 25, 25)];
@@ -77,6 +84,15 @@
     [rightBtn addTarget:self action:@selector(enterSearchViewController) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
+    
+    //在导航视图底添加分割线
+    UIView *navDividingLine = [[UIView alloc] init];
+    if (navDividingLine != nil)
+    {
+        navDividingLine.frame = CGRectMake(0, 0, kScreenWidth, 1);
+        navDividingLine.backgroundColor = [UIColor redColor];
+        [self.view addSubview:navDividingLine];
+    }
     
     _backScrollV = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-65)];
     _backScrollV.delegate =self;

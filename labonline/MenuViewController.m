@@ -7,6 +7,8 @@
 //
 
 #import "MenuViewController.h"
+#import "YRSideViewController.h"
+#import "AppDelegate.h"
 
 @interface MenuViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
@@ -54,6 +56,10 @@
     {
         [button setBackgroundImage:[UIImage imageNamed:@"aniu_07.png"] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(popToPrePage) forControlEvents:UIControlEventTouchUpInside];
+    }else{
+        [button setFrame:CGRectMake(0, 0, 35, 36)];
+        [button setBackgroundImage:[UIImage imageNamed:@"tubiao_04.png"] forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(popToLeftMenu) forControlEvents:UIControlEventTouchUpInside];
     }
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = leftItem;
@@ -83,7 +89,7 @@
     
     [self createMenu];
     
-    [self createHomePageBTN];
+//    [self createHomePageBTN];
     
     //在导航视图底添加分割线
     UIView *navDividingLine = [[UIView alloc] init];
@@ -105,6 +111,13 @@
 - (void)enterSearchViewController
 {
     // 搜索
+}
+#pragma mark - 左侧菜单
+-(void)popToLeftMenu
+{
+    AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
+    YRSideViewController *sideViewController=[delegate sideViewController];
+    [sideViewController showLeftViewController:YES];
 }
 -(void)createMenu{
     NSArray *arT = @[@"2015", @"2014", @"2013", @"2012", @"2011", @"2010", @"2009", @"2008", @"2007", @"2006"];
@@ -134,7 +147,7 @@
     [self addView2Page:_scrollV count:[arT count] frame:CGRectZero];
     
 }
-#pragma 生成首页按钮
+#pragma 生成首页按钮 已被注消
 -(void)createHomePageBTN{
     UIButton *preButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [preButton setFrame:CGRectMake(kScreenWidth-kMainPreButtonWidth-10, kScreenHeight-kMainPreButtonWidth-80, kMainPreButtonWidth, kMainPreButtonWidth)];
