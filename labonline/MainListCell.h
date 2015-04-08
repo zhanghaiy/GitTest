@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface MainListCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIButton *categoryTitleButton;
+@property (weak, nonatomic) IBOutlet UIView *baseBackView;
 
 @property (nonatomic,strong) NSArray *listArray;
 @property (nonatomic,assign) id target;

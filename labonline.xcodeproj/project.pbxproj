@@ -131,6 +131,9 @@
 		FDA91DE71AD4BB1200734E1B /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA91DE61AD4BB1200734E1B /* SearchViewController.m */; };
 		FDA91DF31AD4F98100734E1B /* NavigationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA91DF21AD4F98100734E1B /* NavigationButton.m */; };
 		FDA91DF71AD5085400734E1B /* tubiao_04.png in Resources */ = {isa = PBXBuildFile; fileRef = FDA91DF61AD5085400734E1B /* tubiao_04.png */; };
+		FDA91DF91AD50F5000734E1B /* MainListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDA91DF81AD50F5000734E1B /* MainListCell.xib */; };
+		FDA91DFB1AD5156100734E1B /* 分类按钮back.png in Resources */ = {isa = PBXBuildFile; fileRef = FDA91DFA1AD5156100734E1B /* 分类按钮back.png */; };
+		FDA91DFF1AD5169900734E1B /* ShowPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA91DFE1AD5169900734E1B /* ShowPicture.m */; };
 		FDB7CD3B1ACA6E86007BAF79 /* PDFBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB7CD3A1ACA6E86007BAF79 /* PDFBrowserViewController.m */; };
 		FDB7CD3E1ACA96FD007BAF79 /* MainListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB7CD3D1ACA96FD007BAF79 /* MainListViewController.m */; };
 		FDB7CD411ACA970D007BAF79 /* MainDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB7CD401ACA970D007BAF79 /* MainDetailViewController.m */; };
@@ -330,6 +333,10 @@
 		FDA91DF11AD4F98100734E1B /* NavigationButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationButton.h; sourceTree = "<group>"; };
 		FDA91DF21AD4F98100734E1B /* NavigationButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationButton.m; sourceTree = "<group>"; };
 		FDA91DF61AD5085400734E1B /* tubiao_04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tubiao_04.png; sourceTree = "<group>"; };
+		FDA91DF81AD50F5000734E1B /* MainListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainListCell.xib; sourceTree = "<group>"; };
+		FDA91DFA1AD5156100734E1B /* 分类按钮back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "分类按钮back.png"; sourceTree = "<group>"; };
+		FDA91DFD1AD5169900734E1B /* ShowPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowPicture.h; sourceTree = "<group>"; };
+		FDA91DFE1AD5169900734E1B /* ShowPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowPicture.m; sourceTree = "<group>"; };
 		FDB7CD391ACA6E86007BAF79 /* PDFBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDFBrowserViewController.h; sourceTree = "<group>"; };
 		FDB7CD3A1ACA6E86007BAF79 /* PDFBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDFBrowserViewController.m; sourceTree = "<group>"; };
 		FDB7CD3C1ACA96FD007BAF79 /* MainListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainListViewController.h; sourceTree = "<group>"; };
@@ -465,6 +472,7 @@
 			children = (
 				FD9A76AE1ACB86F7007ACC11 /* MainListCell.h */,
 				FD9A76AF1ACB86F7007ACC11 /* MainListCell.m */,
+				FDA91DF81AD50F5000734E1B /* MainListCell.xib */,
 				FD8AE3231ACE679500A4A5B6 /* MainNewView.h */,
 				FD8AE3241ACE679500A4A5B6 /* MainNewView.m */,
 				FD8AE3261ACE67A900A4A5B6 /* MainNewView.xib */,
@@ -507,6 +515,7 @@
 		FD558CF41AC3A62900DA42FF /* 切图（安卓） */ = {
 			isa = PBXGroup;
 			children = (
+				FDA91DFA1AD5156100734E1B /* 分类按钮back.png */,
 				FDA91DF61AD5085400734E1B /* tubiao_04.png */,
 				043C77201AD4F0B500B0DEAC /* 登录 */,
 				FD5D3BF81AD3BF2800A6F60E /* 设置 */,
@@ -700,7 +709,6 @@
 				FD558CE61AC39E8300DA42FF /* 侧滑菜单 */,
 				FD558CE71AC39EA000DA42FF /* 技术专栏更多界面 */,
 				042C46711AC280B600D36C8F /* 往期 */,
-				FD96C8B91AC10AB90002778A /* 图片轮播 */,
 				FD96C8D41AC132200002778A /* PDF阅读 */,
 				FD96C8B81AC10A9C0002778A /* 视频播放 */,
 			);
@@ -795,6 +803,8 @@
 		FD96C9331AC179600002778A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FDA91DFC1AD5167700734E1B /* 图片阅览 */,
+				FD96C8B91AC10AB90002778A /* 图片轮播 */,
 				FD9A76F41ACBD3B6007ACC11 /* 个人中心 */,
 				FD558CEE1AC3A40F00DA42FF /* 技术专栏 */,
 				FD558CEC1AC3A32C00DA42FF /* 往期 */,
@@ -854,6 +864,15 @@
 				FDA91DF21AD4F98100734E1B /* NavigationButton.m */,
 			);
 			name = "搜索";
+			sourceTree = "<group>";
+		};
+		FDA91DFC1AD5167700734E1B /* 图片阅览 */ = {
+			isa = PBXGroup;
+			children = (
+				FDA91DFD1AD5169900734E1B /* ShowPicture.h */,
+				FDA91DFE1AD5169900734E1B /* ShowPicture.m */,
+			);
+			name = "图片阅览";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -980,6 +999,7 @@
 				FD558D181AC3E89300DA42FF /* JiShuZhuanLanMoreCell.xib in Resources */,
 				FD558CF31AC3A43B00DA42FF /* JiShuZhuanLanCell.xib in Resources */,
 				FD558D611AC4098F00DA42FF /* grayArrow@2x.png in Resources */,
+				FDA91DFB1AD5156100734E1B /* 分类按钮back.png in Resources */,
 				FD47C8171AC5316300846AC9 /* 评价.png in Resources */,
 				FD8AE2E01ACE230100A4A5B6 /* PersonEditCell.xib in Resources */,
 				FD462E511ACCE022001AC895 /* 确定.png in Resources */,
@@ -994,6 +1014,7 @@
 				FD5D3C061AD3BF2800A6F60E /* UserFeedBack.png in Resources */,
 				043C772F1AD4F15D00B0DEAC /* anniu_07.png in Resources */,
 				FD558CF81AC3A62900DA42FF /* pictureShow.png in Resources */,
+				FDA91DF91AD50F5000734E1B /* MainListCell.xib in Resources */,
 				FD462E521ACCE022001AC895 /* 删除.png in Resources */,
 				FD558CFA1AC3A62900DA42FF /* 游览.png in Resources */,
 				FD9A76EF1ACBD2B1007ACC11 /* 离线视频.png in Resources */,
@@ -1064,6 +1085,7 @@
 				FDB7CD3E1ACA96FD007BAF79 /* MainListViewController.m in Sources */,
 				04FE4C421ACD328D00A922DA /* AFHTTPRequestOperation.m in Sources */,
 				04FE4C4A1ACD328D00A922DA /* AFURLSessionManager.m in Sources */,
+				FDA91DFF1AD5169900734E1B /* ShowPicture.m in Sources */,
 				FDB7CD411ACA970D007BAF79 /* MainDetailViewController.m in Sources */,
 				FD558D171AC3E89300DA42FF /* JiShuZhuanLanMoreCell.m in Sources */,
 				FD9A76F71ACBD3CF007ACC11 /* PersonColumeView.m in Sources */,

@@ -9,6 +9,8 @@
 #import "MainDetailViewController.h"
 #import "MainListViewController.h"
 #import "MenuViewController.h"
+#import "ShowPicture.h"
+#import "SearchViewController.h"
 
 
 #define kBackViewTag 55
@@ -25,14 +27,11 @@
 #define kPageControlTag 335
 #define kImageViewHeight 80
 
-
 @interface MainDetailViewController ()<UIScrollViewDelegate>
 
 @end
 
 @implementation MainDetailViewController
-
-
 
 - (void)viewDidLoad
 {
@@ -46,20 +45,17 @@
             self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
-    // 左侧返回按钮
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setFrame:CGRectMake(0, 0, 35, 40)];
-    [button setBackgroundImage:[UIImage imageNamed:@"返回角.png"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(backToPrePage) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+    // 左侧按钮
+    NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 35, 40) andBackImageWithName:@"返回角.png"];
+    leftButton.delegate = self;
+    leftButton.action = @selector(backToPrePage);
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
-   
     // right
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setFrame:CGRectMake(0, 0, 25, 25)];
-    [rightBtn setBackgroundImage:[UIImage imageNamed:@"aniu_09.png"] forState:UIControlStateNormal];
-    [rightBtn addTarget:self action:@selector(enterSearchViewController) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
+    NavigationButton *rightButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25) andBackImageWithName:@"aniu_09.png"];
+    rightButton.delegate = self;
+    rightButton.action = @selector(enterSearchVCFromDetail);
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem = rightItem;
     
     // 底部背景
@@ -108,9 +104,8 @@
     shouCangLable.textColor = [UIColor colorWithRed:117/255.0 green:117/255.0 blue:117/255.0 alpha:1];
     shouCangLable.font = [UIFont systemFontOfSize:kTwoFontSize];
     [scrollV addSubview:shouCangLable];
-   
     
-        // 按钮公用属性
+    // 按钮公用属性
     UIColor *borderColor = [UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1];
     UIColor *backColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
     UIColor *textColor = [UIColor colorWithRed:124/255.0 green:124/255.0 blue:124/255.0 alpha:1];
@@ -173,66 +168,22 @@
     }
 }
 
+#pragma mark - 放大图片
 - (void)imageButtonClicked:(UIButton *)btn
 {
-    [self createShowImagesViewWithDataArray:_iamgesArray andIndex:btn.tag - kImageButtonTag];
-}
-
-#pragma mark --创建展示图片的View
-- (void)createShowImagesViewWithDataArray:(NSArray *)array andIndex:(NSInteger)index
-{
     self.navigationController.navigationBarHidden = YES;
-    UIView *showImgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
-    showImgView.backgroundColor = [UIColor colorWithRed:222/255.0 green:222/255.0 blue:222/255.0 alpha:1];
-    showImgView.tag = kShowImagesViewTag;
-    showImgView.backgroundColor = [UIColor colorWithRed:18/255.0 green:28/255.0 blue:31/255.0 alpha:1];
-    [self.view addSubview:showImgView];
-    
-    UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, showImgView.frame.size.height)];
-    scrollView.contentSize = CGSizeMake(kScreenWidth*array.count, kScreenWidth);
-    scrollView.tag = kShowScrollViewTag;
-    scrollView.delegate = self;
-    scrollView.pagingEnabled = YES;
-    scrollView.contentOffset = CGPointMake(kScreenWidth*index, 0);
-    [showImgView addSubview:scrollView];
-    
-    for (int i = 0; i < array.count; i ++)
-    {
-        UIImage *img = [UIImage imageNamed:[array objectAtIndex:i]];
-        NSInteger imageWid = img.size.width;
-        NSInteger imageHeight = img.size.height;
-        if (imageWid>kScreenWidth-20||imageHeight>(kScreenHeight-120))
-        {
-            float level = (float)imageWid/(float)imageHeight;
-            imageWid = kScreenWidth-20;
-            imageHeight = imageWid/level;
-        }
-        UIImageView *imgV = [[UIImageView alloc]initWithFrame:CGRectMake(i*kScreenWidth+(kScreenWidth-imageWid)/2, (kScreenHeight-imageHeight)/2, imageWid, imageHeight)];
-        imgV.image = img;
-        [scrollView addSubview:imgV];
-    }
-    
-    UIPageControl *pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake((kScreenWidth-100)/2, showImgView.frame.size.height-50, 100, 10)];
-    pageControl.tag = kPageControlTag;
-    pageControl.numberOfPages = array.count;
-    pageControl.currentPage = index;
-    pageControl.pageIndicatorTintColor = [UIColor whiteColor];
-    pageControl.currentPageIndicatorTintColor = [UIColor purpleColor];
-    [showImgView addSubview:pageControl];
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapImgVMethod)];
-    [showImgView addGestureRecognizer:tap];
+    ShowPicture *pictureV = [[ShowPicture alloc]initWithFrame:self.view.bounds];
+    [pictureV setSelectedIndex:btn.tag-kImageButtonTag andImageDataArray:_iamgesArray];
+    pictureV.target = self;
+    pictureV.action = @selector(pictureCallBack);
+    [self.view addSubview:pictureV];
 }
-
-#pragma mark --tapMethod
-- (void)tapImgVMethod
+- (void)pictureCallBack
 {
     self.navigationController.navigationBarHidden = NO;
-    UIView *view = (UIScrollView *)[self.view viewWithTag:kShowImagesViewTag];
-    [view removeFromSuperview];
 }
 
-
+#pragma mark - 按钮点击事件
 - (void)buttonClicked:(UIButton *)btn
 {
     switch (btn.tag)
@@ -261,26 +212,19 @@
     }
 }
 
+#pragma mark - 返回上一页
 - (void)backToPrePage
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark - 搜索
-- (void)enterSearchViewController
+#pragma mark - 进入搜索界面
+- (void)enterSearchVCFromDetail
 {
     // 搜索
     NSLog(@"enterSearchViewController");
-}
-
-#pragma mark --UIScrollViewDelegate Methods
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if (scrollView.tag == kShowScrollViewTag)
-    {
-        UIPageControl *pageControl = (UIPageControl *)[self.view viewWithTag:kPageControlTag];
-        pageControl.currentPage = scrollView.contentOffset.x/kScreenWidth;
-    }
+    SearchViewController *searchVC = [[SearchViewController alloc]init];
+    [self.navigationController pushViewController:searchVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

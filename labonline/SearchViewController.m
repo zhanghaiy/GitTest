@@ -8,11 +8,19 @@
 
 #import "SearchViewController.h"
 
-@interface SearchViewController ()<UITextFieldDelegate>
-
+@interface SearchViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate>
+{
+    NSArray *_moNiDataArray;// 标签的数据
+    NSArray *_searchDataArray;//模拟搜索回来的数据
+    UITextField *searchTextField;
+    NSInteger _markHeaderHeight;
+    UITableView *_tableV;
+}
 @end
 
 @implementation SearchViewController
+#define kTouViewHeight 35
+#define kMarkButtonTag 66
 
 - (void)viewDidLoad
 {
@@ -21,25 +29,123 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UITextField *searchTextField = [[UITextField alloc]initWithFrame:CGRectMake(10, 70, kScreenWidth-90, 30)];
+    // 左侧按钮
+    NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 35, 36) andBackImageWithName:@"返回角.png"];
+    leftButton.delegate = self;
+    leftButton.action = @selector(popBack);
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
+    searchTextField = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 30)];
     searchTextField.borderStyle = UITextBorderStyleRoundedRect;
     searchTextField.keyboardType = UIKeyboardTypeNamePhonePad;
     searchTextField.delegate = self;
     searchTextField.clearButtonMode = UITextFieldViewModeAlways;
-    [self.view addSubview:searchTextField];
+    self.navigationItem.titleView = searchTextField;
     
     UIButton *searchBUtton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [searchBUtton setFrame:CGRectMake(kScreenWidth-70, 70, 60, 30)];
+    [searchBUtton setFrame:CGRectMake(0, 0, 50, 25)];
     [searchBUtton setTitle:@"搜文章" forState:UIControlStateNormal];
     searchBUtton.layer.masksToBounds = YES;
-    searchBUtton.layer.cornerRadius = 15;
-    searchBUtton.titleLabel.font =[UIFont systemFontOfSize:kOneFontSize];
+    searchBUtton.layer.cornerRadius = 10;
+    searchBUtton.titleLabel.font =[UIFont systemFontOfSize:kTwoFontSize];
     searchBUtton.backgroundColor = [UIColor colorWithRed:217/255.0 green:0 blue:36/255.0 alpha:1];
     [searchBUtton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.view addSubview:searchBUtton];
+    [searchBUtton addTarget:self action:@selector(searchMethod) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:searchBUtton];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
+    _moNiDataArray = @[@"耳鼻",@"口腔",@"肿瘤研究",@"临床医师",@"医生",@"宝洁医疗诊断"];
+    UIView *touView  = [[UIView alloc]initWithFrame:CGRectMake(0, 70, kScreenWidth, kTouViewHeight)];
+    NSInteger jugeWidth = 10;
+    NSInteger hang = 0;
+    for (int i = 0; i < _moNiDataArray.count; i ++)
+    {
+        NSInteger currentWidth = [self heightFromText:[_moNiDataArray objectAtIndex:i]];
+        if (jugeWidth+currentWidth > kScreenWidth-10)
+        {
+            jugeWidth = 10;
+            hang ++;
+        }
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setTitle:[_moNiDataArray objectAtIndex:i] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor colorWithWhite:128/255.0 alpha:1] forState:UIControlStateNormal];
+        [btn setFrame:CGRectMake(jugeWidth, 5+kTouViewHeight*hang, currentWidth, kTouViewHeight-10)];
+        btn.titleLabel.font = [UIFont systemFontOfSize:kOneFontSize];
+        btn.layer.masksToBounds = YES;
+        btn.layer.cornerRadius = (kTouViewHeight-10)/2;
+        btn.backgroundColor = [UIColor colorWithWhite:238/255.0 alpha:1];
+        btn.tag = kMarkButtonTag + i;
+        [btn addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [touView addSubview:btn];
+        jugeWidth += currentWidth+20;
+    }
+    _markHeaderHeight = kTouViewHeight*(hang+1);
+    touView.frame = CGRectMake(0, 70, kScreenWidth, _markHeaderHeight);
+    
+    _tableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-64) style:UITableViewStylePlain];
+    _tableV.delegate = self;
+    _tableV.dataSource = self;
+    _tableV.tableHeaderView = touView;
+    [self.view addSubview:_tableV];
     
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return _searchDataArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+     static NSString *cellId = @"cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    if (cell == nil)
+    {
+        cell = [[UITableViewCell alloc]init];
+    }
+    
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100;
+}
+
+#pragma mark - 标签点击事件
+- (void)buttonClicked:(UIButton *)btn
+{
+    searchTextField.text = [_moNiDataArray objectAtIndex:btn.tag - kMarkButtonTag];
+}
+
+#pragma mark - 计算宽度
+- (NSInteger)heightFromText:(NSString *)text
+{
+     CGRect rect = [text boundingRectWithSize:CGSizeMake(9999, 20)options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:kOneFontSize]} context:nil];
+    NSLog(@"%f",rect.size.width);
+    NSInteger width = rect.size.width+10;
+    return width;
+}
+
+#pragma mark - 搜索
+- (void)searchMethod
+{
+    // 搜索
+    _searchDataArray = @[@"模拟",@"测试"];
+    [_tableV reloadData];
+}
+
+#pragma mark - 返回上一页
+- (void)popBack
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {

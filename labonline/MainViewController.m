@@ -7,28 +7,22 @@
 //
 
 #import "MainViewController.h"
-#import "LeftViewController.h"
-#import "VidioPlayerViewController.h"
-// pdf
-#import "PDFBrowserViewController.h"
-// 轮播
-#import "PictureShowView.h"
-#import "MainNewView.h"
-#import "JSZLCateView.h"
-#import "MainDetailViewController.h"
-// 技术专栏
-#import "JiShuZhuanLanViewController.h"
-#import "JiShuZhuanLanDetailViewController.h"
-#import "JiShuZhuanLanMoreViewController.h"
 
-#import "SettingCenterViewController.h"
-// 下拉刷新
-#import "PersonCenterViewController.h"
+#import "DeviceManager.h"       // 版本信息
+#import "LeftViewController.h"  // 左侧
+#import "ShowPicture.h"         // 放大图View
+#import "PictureShowView.h"     // 轮播图 View
+#import "MainNewView.h"         // 最新杂志View
+#import "JSZLCateView.h"        // 技术专栏分类
 
-#import "SearchViewController.h"
-#import "NavigationButton.h"
-
-#import "YRSideViewController.h"
+#import "MainDetailViewController.h"            // 主页详情（杂志详情）
+#import "JiShuZhuanLanViewController.h"         // 技术专栏
+#import "JiShuZhuanLanDetailViewController.h"   // 技术专栏详情
+#import "JiShuZhuanLanMoreViewController.h"     // 技术专栏更多
+#import "SettingCenterViewController.h"         // 设置
+#import "SearchViewController.h"                // 搜索
+#import "PersonCenterViewController.h"          // 下拉刷新
+#import "YRSideViewController.h"                // 侧滑
 #import "AppDelegate.h"
 
 @interface MainViewController ()<LeftViewControllerDelegate,UIScrollViewDelegate>
@@ -38,53 +32,31 @@
 @end
 
 @implementation MainViewController
-#define kImageShowViewHeight 150
-#define kMainPreButtonWidth 60
-#define kMainCellHeight 200
-#define kJiShuZhuanLanCellHeight 245
-#define kShowImagesViewTag 333
-#define kShowScrollViewTag 334
-#define kPageControlTag 335
-#define kImageButtonTag 112233
-
+// 图片轮播View高度
+#define kTopImageShowViewHeight 150
+// 最新杂志View 高度
 #define kMainNewViewHeight 240
+// 技术专栏分类单位行高
 #define kJSZLAloneHeight 80
+// 技术专栏头部高度
 #define kJSZLHeadHeight 40
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    self.title = @"医检在线";
+    if ([DeviceManager deviceVersion]>=7)
+    {
+        //界面调整
+        if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
+        {
+            self.edgesForExtendedLayout = UIRectEdgeNone;
+        }
+    }
+
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:216/255.0 green:0 blue:0 alpha:1]}];
     self.view.backgroundColor = [UIColor colorWithWhite:244/255.0 alpha:1];
     self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
-    
-    //界面调整
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
-    {
-        if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
-            self.edgesForExtendedLayout = UIRectEdgeNone;
-    }
-    //修改标题颜色 其中 UITextAttributeTextColor和UITextAttributeFont 属性是文字颜色和字体
-    UIColor *titleColor = [UIColor colorWithRed:215/255.0 green:0 blue:37/255.0 alpha:1];
-    UIFont *titleFont = [UIFont systemFontOfSize:16];
-    NSDictionary *paramDic = [NSDictionary dictionaryWithObjectsAndKeys:titleColor, UITextAttributeTextColor,titleColor, UITextAttributeTextShadowColor,[NSValue valueWithUIOffset:UIOffsetMake(0, 0)],UITextAttributeTextShadowOffset,titleFont, UITextAttributeFont,nil];
-    [self.navigationController.navigationBar setTitleTextAttributes:paramDic];
-    
-    // 左侧返回按钮
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setFrame:CGRectMake(0, 0, 35, 36)];
-    [button setBackgroundImage:[UIImage imageNamed:@"tubiao_04.png"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(popToLeftMenu) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
-    self.navigationItem.leftBarButtonItem = leftItem;
-    
-    // right
-    NavigationButton *rightButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25) andBackImageWithName:@"aniu_09.png"];
-    rightButton.delegate = self;
-    rightButton.action = @selector(enterSearchVC);
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
-    self.navigationItem.rightBarButtonItem = rightItem;
+    self.title = @"医检在线";
     
     //在导航视图底添加分割线
     UIView *navDividingLine = [[UIView alloc] init];
@@ -94,13 +66,27 @@
         navDividingLine.backgroundColor = [UIColor redColor];
         [self.view addSubview:navDividingLine];
     }
+
+    // 左侧按钮
+    NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 30, 30) andBackImageWithName:@"tubiao_04.png"];
+    leftButton.delegate = self;
+    leftButton.action = @selector(popToLeftMenu);
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    // right
+    NavigationButton *rightButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25) andBackImageWithName:@"aniu_09.png"];
+    rightButton.delegate = self;
+    rightButton.action = @selector(enterSearchVC);
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
     
     _backScrollV = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-65)];
     _backScrollV.delegate =self;
     [self.view addSubview:_backScrollV];
     
      // 图片轮播View
-    PictureShowView *pictureV = [[PictureShowView alloc]initWithFrame:CGRectMake(5, 5, kScreenWidth-10, kImageShowViewHeight)];
+    PictureShowView *pictureV = [[PictureShowView alloc]initWithFrame:CGRectMake(5, 5, kScreenWidth-10, kTopImageShowViewHeight)];
     pictureV.imageInfoArray = @[@"",@"",@"",@"",@""];
     pictureV.target = self;
     pictureV.action = @selector(pictureShowMethod:);
@@ -108,7 +94,7 @@
     
     // 最新杂志
     MainNewView *mainNewV = [[[NSBundle mainBundle]loadNibNamed:@"MainNewView" owner:self options:0] lastObject];
-    mainNewV.frame = CGRectMake(5, 15+kImageShowViewHeight, kScreenWidth-10, kMainNewViewHeight);
+    mainNewV.frame = CGRectMake(5, 15+kTopImageShowViewHeight, kScreenWidth-10, kMainNewViewHeight);
     mainNewV.target = self;
     mainNewV.action = @selector(enLargeImage:);
     mainNewV.imageDataArray = @[@"12.jpg",@"pictureShow.png",@"文章缩略图.png",@"pictureShow.png",@"12.jpg"];
@@ -123,13 +109,13 @@
     NSInteger hang = cateArray.count%4?cateArray.count/4+1:cateArray.count/4;
     NSInteger jSZLHeight = kJSZLHeadHeight + hang*kJSZLAloneHeight;
     JSZLCateView *jSZLCateV = [[[NSBundle mainBundle]loadNibNamed:@"JSZLCateView" owner:self options:0] lastObject];
-    jSZLCateV.frame = CGRectMake(5, 25+kImageShowViewHeight+kMainNewViewHeight, kScreenWidth-10, jSZLHeight);
+    jSZLCateV.frame = CGRectMake(5, 25+kTopImageShowViewHeight+kMainNewViewHeight, kScreenWidth-10, jSZLHeight);
     jSZLCateV.cateDataArray = cateArray;
     jSZLCateV.target = self;
     jSZLCateV.action = @selector(enterJSZLVireController:);
     [_backScrollV addSubview:jSZLCateV];
     
-    _backScrollV.contentSize = CGSizeMake(kScreenWidth, 50+kImageShowViewHeight+kMainNewViewHeight+jSZLHeight);
+    _backScrollV.contentSize = CGSizeMake(kScreenWidth, 50+kTopImageShowViewHeight+kMainNewViewHeight+jSZLHeight);
     _backScrollV.showsVerticalScrollIndicator = NO;
 }
 
@@ -232,72 +218,17 @@
 #pragma mark - 放大图片
 - (void)enLargeImage:(MainNewView *)mainNewView
 {
-    [self createShowImagesViewWithDataArray:mainNewView.imageDataArray andIndex:mainNewView.clickImageIndex];
-}
-
-#pragma mark --创建展示图片的View
-- (void)createShowImagesViewWithDataArray:(NSArray *)array andIndex:(NSInteger)index
-{
     self.navigationController.navigationBarHidden = YES;
-    UIView *showImgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
-    showImgView.backgroundColor = [UIColor colorWithRed:222/255.0 green:222/255.0 blue:222/255.0 alpha:1];
-    showImgView.tag = kShowImagesViewTag;
-    showImgView.backgroundColor = [UIColor colorWithRed:18/255.0 green:28/255.0 blue:31/255.0 alpha:1];
-    [self.view addSubview:showImgView];
-    
-    UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, showImgView.frame.size.height)];
-    scrollView.contentSize = CGSizeMake(kScreenWidth*array.count, kScreenWidth);
-    scrollView.tag = kShowScrollViewTag;
-    scrollView.delegate = self;
-    scrollView.pagingEnabled = YES;
-    scrollView.contentOffset = CGPointMake(kScreenWidth*index, 0);
-    [showImgView addSubview:scrollView];
-    
-    for (int i = 0; i < array.count; i ++)
-    {
-        UIImage *img = [UIImage imageNamed:[array objectAtIndex:i]];
-        NSInteger imageWid = img.size.width;
-        NSInteger imageHeight = img.size.height;
-        if (imageWid>kScreenWidth-20||imageHeight>(kScreenHeight-120))
-        {
-            float level = (float)imageWid/(float)imageHeight;
-            imageWid = kScreenWidth-20;
-            imageHeight = imageWid/level;
-        }
-        UIImageView *imgV = [[UIImageView alloc]initWithFrame:CGRectMake(i*kScreenWidth+(kScreenWidth-imageWid)/2, (kScreenHeight-imageHeight)/2, imageWid, imageHeight)];
-        imgV.image = img;
-        [scrollView addSubview:imgV];
-    }
-    
-    UIPageControl *pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake((kScreenWidth-100)/2, showImgView.frame.size.height-50, 100, 10)];
-    pageControl.tag = kPageControlTag;
-    pageControl.numberOfPages = array.count;
-    pageControl.currentPage = index;
-    pageControl.pageIndicatorTintColor = [UIColor whiteColor];
-    pageControl.currentPageIndicatorTintColor = [UIColor purpleColor];
-    [showImgView addSubview:pageControl];
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapImgVMethod)];
-    [showImgView addGestureRecognizer:tap];
+    ShowPicture *pictureV = [[ShowPicture alloc]initWithFrame:self.view.bounds];
+    [pictureV setSelectedIndex:mainNewView.clickImageIndex andImageDataArray:mainNewView.imageDataArray];
+    pictureV.target = self;
+    pictureV.action = @selector(pictureCallBack);
+    [self.view addSubview:pictureV];
 }
 
-#pragma mark --tapMethod
-- (void)tapImgVMethod
+- (void)pictureCallBack
 {
     self.navigationController.navigationBarHidden = NO;
-    UIView *view = (UIScrollView *)[self.view viewWithTag:kShowImagesViewTag];
-    [view removeFromSuperview];
-}
-
-
-#pragma mark --UIScrollViewDelegate Methods
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if (scrollView.tag == kShowScrollViewTag)
-    {
-        UIPageControl *pageControl = (UIPageControl *)[self.view viewWithTag:kPageControlTag];
-        pageControl.currentPage = scrollView.contentOffset.x/kScreenWidth;
-    }
 }
 
 

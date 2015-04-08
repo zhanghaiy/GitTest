@@ -119,7 +119,7 @@
 }
 
 #pragma mark - 搜索
-- (void)enterSearchViewController
+- (void)enterSearchVC
 {
     // 搜索
     NSLog(@"enterSearchViewController");

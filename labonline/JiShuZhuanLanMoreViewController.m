@@ -9,6 +9,7 @@
 #import "JiShuZhuanLanMoreViewController.h"
 #import "JiShuZhuanLanMoreCell.h"
 #import "JiShuZhuanLanDetailViewController.h"
+#import "SearchViewController.h"
 
 @interface JiShuZhuanLanMoreViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -27,20 +28,17 @@
     self.view.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
     
     // 设置左右按钮
-    // left
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setFrame:CGRectMake(0, 0, 25, 26)];
-    [button setBackgroundImage:[UIImage imageNamed:@"aniu_07.png"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(popToPrePage) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+    // 左侧按钮
+    NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 26) andBackImageWithName:@"aniu_07.png"];
+    leftButton.delegate = self;
+    leftButton.action = @selector(popToPrePage);
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
-    
     // right
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setFrame:CGRectMake(0, 0, 25, 25)];
-    [rightBtn setBackgroundImage:[UIImage imageNamed:@"aniu_09.png"] forState:UIControlStateNormal];
-    [rightBtn addTarget:self action:@selector(enterSearchViewController) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
+    NavigationButton *rightButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25) andBackImageWithName:@"aniu_09.png"];
+    rightButton.delegate = self;
+    rightButton.action = @selector(enterSearchViewController);
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem = rightItem;
     
     //界面调整
@@ -70,7 +68,8 @@
 - (void)enterSearchViewController
 {
     // 搜索
-    NSLog(@"enterSearchViewController");
+    SearchViewController *searchVC = [[SearchViewController alloc]init];
+    [self.navigationController pushViewController:searchVC animated:YES];
 }
 
 

@@ -10,6 +10,7 @@
 #define labonline_HeaderFile_h
 
 #import "DeviceManager.h"
+#import "NavigationButton.h"
 
 #define kScreenWidth  [DeviceManager currentScreenWidth]
 #define kScreenHeight  [DeviceManager currentScreenHeight]

@@ -13,6 +13,7 @@
 #import "JiShuZhuanLanDetailViewController.h"
 #import "YRSideViewController.h"
 #import "AppDelegate.h"
+#import "SearchViewController.h"
 
 @interface JiShuZhuanLanViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -39,28 +40,29 @@
             self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
-    // left
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setFrame:CGRectMake(0, 0, 25, 26)];
-    if (!_enterFromHome)
+    // 设置左右按钮
+    // 左侧按钮
+    NavigationButton *leftButton;
+    if (_enterFromHome)
     {
-        [button setBackgroundImage:[UIImage imageNamed:@"aniu_07.png"] forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(popToPrePage) forControlEvents:UIControlEventTouchUpInside];
-    }else{
-        [button setFrame:CGRectMake(0, 0, 35, 36)];
-        [button setBackgroundImage:[UIImage imageNamed:@"tubiao_04.png"] forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(popToLeftMenu) forControlEvents:UIControlEventTouchUpInside];
+        leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 30, 30) andBackImageWithName:@"tubiao_04.png"];
+        leftButton.action = @selector(popToLeftMenu);
     }
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+    else
+    {
+        leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 26) andBackImageWithName:@"aniu_07.png"];
+        leftButton.action = @selector(popToPrePage);
+    }
+    leftButton.delegate = self;
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
-    
     // right
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setFrame:CGRectMake(0, 0, 25, 25)];
-    [rightBtn setBackgroundImage:[UIImage imageNamed:@"aniu_09.png"] forState:UIControlStateNormal];
-    [rightBtn addTarget:self action:@selector(enterSearchViewController) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
+    NavigationButton *rightButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25) andBackImageWithName:@"aniu_09.png"];
+    rightButton.delegate = self;
+    rightButton.action = @selector(enterSearchViewController);
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem = rightItem;
+    
     
     UIView *headerV = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenHeight, kImageShowViewHeight+10)];
     headerV.backgroundColor = [UIColor clearColor];
@@ -153,6 +155,8 @@
 - (void)enterSearchViewController
 {
     // 进入搜索界面
+    SearchViewController *searchVC = [[SearchViewController alloc]init];
+    [self.navigationController pushViewController:searchVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

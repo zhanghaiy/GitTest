@@ -8,7 +8,7 @@
 
 #import "JiShuZhuanLanDetailViewController.h"
 #import "JSZLEvaluationViewController.h"
-
+#import "SearchViewController.h"
 
 @interface JiShuZhuanLanDetailViewController ()<UIWebViewDelegate>
 {
@@ -26,30 +26,18 @@
     // Do any additional setup after loading the view.
     
     self.title = @"文章详情";
-
-    self.view.backgroundColor = [UIColor whiteColor];
-    // 左侧返回按钮
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setFrame:CGRectMake(0, 0, 25, 26)];
-    [button setBackgroundImage:[UIImage imageNamed:@"aniu_07.png"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(backToPrePage) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+    // 左侧按钮
+    NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 26) andBackImageWithName:@"aniu_07.png"];
+    leftButton.delegate = self;
+    leftButton.action = @selector(popToPrePage);
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
-    
     // right
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setFrame:CGRectMake(0, 0, 25, 25)];
-    [rightBtn setBackgroundImage:[UIImage imageNamed:@"aniu_09.png"] forState:UIControlStateNormal];
-    [rightBtn addTarget:self action:@selector(enterSearchViewController) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
+    NavigationButton *rightButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25) andBackImageWithName:@"aniu_09.png"];
+    rightButton.delegate = self;
+    rightButton.action = @selector(enterSearchViewController);
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem = rightItem;
-    
-//    //界面调整
-//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
-//    {
-//        if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
-//            self.edgesForExtendedLayout = UIRectEdgeNone;
-//    }
     
     // 底部工具栏
     UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, kScreenHeight - kToolBarHeight, kScreenWidth, kToolBarHeight)];
@@ -119,7 +107,7 @@
 }
 
 #pragma mark - 上一页
-- (void)backToPrePage
+- (void)popToPrePage
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -128,7 +116,8 @@
 - (void)enterSearchViewController
 {
     // 搜索
-    NSLog(@"enterSearchViewController");
+    SearchViewController *searchVC = [[SearchViewController alloc]init];
+    [self.navigationController pushViewController:searchVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
