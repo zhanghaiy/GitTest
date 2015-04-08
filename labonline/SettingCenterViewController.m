@@ -8,7 +8,8 @@
 
 #import "SettingCenterViewController.h"
 #import "SettingCell.h"
-
+#import "YRSideViewController.h"
+#import "AppDelegate.h"
 
 @interface SettingCenterViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -29,8 +30,9 @@
     
     // 左侧返回按钮
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setFrame:CGRectMake(0, 0, 35, 40)];
-    [button setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+    [button setFrame:CGRectMake(0, 0, 35, 36)];
+    [button setBackgroundImage:[UIImage imageNamed:@"tubiao_04.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(popToLeftMenu) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = leftItem;
     
@@ -45,7 +47,13 @@
     [self.view addSubview:listtableV];
     
 }
-
+#pragma mark - 左侧菜单
+-(void)popToLeftMenu
+{
+    AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
+    YRSideViewController *sideViewController=[delegate sideViewController];
+    [sideViewController showLeftViewController:YES];
+}
 - (void)makeUpDataArray
 {
     NSArray *textArray = @[@"Wifi环境下加载图片",@"夜间模式",@"清除缓存",@"分享给好友",@"字体大小",@"版本更新",@"用户反馈",@"关于我们"];
