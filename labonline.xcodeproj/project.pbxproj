@@ -138,6 +138,8 @@
 		FDB7CD3E1ACA96FD007BAF79 /* MainListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB7CD3D1ACA96FD007BAF79 /* MainListViewController.m */; };
 		FDB7CD411ACA970D007BAF79 /* MainDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB7CD401ACA970D007BAF79 /* MainDetailViewController.m */; };
 		FDB7CD431ACAAE95007BAF79 /* 返回角.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB7CD421ACAAE95007BAF79 /* 返回角.png */; };
+		FDC430E21AD60C05006AC165 /* SearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC430E01AD60C05006AC165 /* SearchCell.m */; };
+		FDC430E31AD60C05006AC165 /* SearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDC430E11AD60C05006AC165 /* SearchCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -344,6 +346,9 @@
 		FDB7CD3F1ACA970D007BAF79 /* MainDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainDetailViewController.h; sourceTree = "<group>"; };
 		FDB7CD401ACA970D007BAF79 /* MainDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainDetailViewController.m; sourceTree = "<group>"; };
 		FDB7CD421ACAAE95007BAF79 /* 返回角.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "返回角.png"; sourceTree = "<group>"; };
+		FDC430DF1AD60C05006AC165 /* SearchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchCell.h; sourceTree = "<group>"; };
+		FDC430E01AD60C05006AC165 /* SearchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchCell.m; sourceTree = "<group>"; };
+		FDC430E11AD60C05006AC165 /* SearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -862,6 +867,9 @@
 				FDA91DE61AD4BB1200734E1B /* SearchViewController.m */,
 				FDA91DF11AD4F98100734E1B /* NavigationButton.h */,
 				FDA91DF21AD4F98100734E1B /* NavigationButton.m */,
+				FDC430DF1AD60C05006AC165 /* SearchCell.h */,
+				FDC430E01AD60C05006AC165 /* SearchCell.m */,
+				FDC430E11AD60C05006AC165 /* SearchCell.xib */,
 			);
 			name = "搜索";
 			sourceTree = "<group>";
@@ -987,6 +995,7 @@
 				FD558CF91AC3A62900DA42FF /* 搜索.png in Resources */,
 				FD5D3C081AD3BF2800A6F60E /* wifi.png in Resources */,
 				FD462E491ACCDF6B001AC895 /* MyCollectionCell.xib in Resources */,
+				FDC430E31AD60C05006AC165 /* SearchCell.xib in Resources */,
 				FD462E5E1ACD2FC1001AC895 /* 播放.png in Resources */,
 				FD9A76F11ACBD2B1007ACC11 /* 我的评论.png in Resources */,
 				FD558D5D1AC4098F00DA42FF /* blackArrow@2x.png in Resources */,
@@ -1070,6 +1079,7 @@
 				042C46741AC2815300D36C8F /* MenuViewController.m in Sources */,
 				FD96C8E71AC146480002778A /* PictureShowView.m in Sources */,
 				FD462E5A1ACD2DB2001AC895 /* OffLineVidioCell.m in Sources */,
+				FDC430E21AD60C05006AC165 /* SearchCell.m in Sources */,
 				FDB7CD3B1ACA6E86007BAF79 /* PDFBrowserViewController.m in Sources */,
 				FD96C8B21AC10A3A0002778A /* LeftViewController.m in Sources */,
 				FD8AE2D61ACE1BAC00A4A5B6 /* EditPersonViewController.m in Sources */,

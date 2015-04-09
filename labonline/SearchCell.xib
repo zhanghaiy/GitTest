@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7525" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7516"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="SearchCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Z8-Is-djV">
+                        <rect key="frame" x="10" y="5" width="300" height="50"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="白洁医疗诊断相机" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bNb-2k-nd2">
+                                <rect key="frame" x="10" y="5" width="280" height="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="生物检验" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jke-Vm-J9U">
+                                <rect key="frame" x="10" y="25" width="214" height="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="游览.png" translatesAutoresizingMaskIntoConstraints="NO" id="3Ib-F5-Doe">
+                                <rect key="frame" x="230" y="25" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="pVZ-m5-f16"/>
+                                    <constraint firstAttribute="height" constant="20" id="xFf-q7-wAI"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="32145" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fMl-Xb-gDX">
+                                <rect key="frame" x="255" y="31" width="45" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="D9h-aR-TlC"/>
+                                    <constraint firstAttribute="width" constant="45" id="urc-7n-hvF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="bNb-2k-nd2" secondAttribute="trailing" constant="10" id="1Tm-ML-2sF"/>
+                            <constraint firstItem="bNb-2k-nd2" firstAttribute="leading" secondItem="6Z8-Is-djV" secondAttribute="leading" constant="10" id="BB1-an-Xv9"/>
+                            <constraint firstAttribute="bottom" secondItem="fMl-Xb-gDX" secondAttribute="bottom" constant="4" id="FbP-8o-5Vf"/>
+                            <constraint firstItem="jke-Vm-J9U" firstAttribute="leading" secondItem="6Z8-Is-djV" secondAttribute="leading" constant="10" id="OXR-Aa-E0n"/>
+                            <constraint firstItem="bNb-2k-nd2" firstAttribute="top" secondItem="6Z8-Is-djV" secondAttribute="top" constant="5" id="PgS-WO-gml"/>
+                            <constraint firstItem="fMl-Xb-gDX" firstAttribute="leading" secondItem="3Ib-F5-Doe" secondAttribute="trailing" constant="5" id="SuN-kY-6Xt"/>
+                            <constraint firstAttribute="bottom" secondItem="3Ib-F5-Doe" secondAttribute="bottom" constant="5" id="UJe-uX-w0k"/>
+                            <constraint firstAttribute="bottom" secondItem="jke-Vm-J9U" secondAttribute="bottom" constant="5" id="Uz8-QB-i0v"/>
+                            <constraint firstItem="3Ib-F5-Doe" firstAttribute="top" secondItem="bNb-2k-nd2" secondAttribute="bottom" id="bqx-99-sVo"/>
+                            <constraint firstItem="3Ib-F5-Doe" firstAttribute="leading" secondItem="jke-Vm-J9U" secondAttribute="trailing" constant="6" id="gBY-s6-AhH"/>
+                            <constraint firstItem="jke-Vm-J9U" firstAttribute="top" secondItem="bNb-2k-nd2" secondAttribute="bottom" id="tBz-rB-UJC"/>
+                            <constraint firstAttribute="trailing" secondItem="fMl-Xb-gDX" secondAttribute="trailing" id="zbN-Qw-Xcs"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="6Z8-Is-djV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="84S-6e-foY"/>
+                    <constraint firstAttribute="bottom" secondItem="6Z8-Is-djV" secondAttribute="bottom" constant="4" id="ES8-Ha-7eV"/>
+                    <constraint firstItem="6Z8-Is-djV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Okq-cu-lTG"/>
+                    <constraint firstAttribute="trailing" secondItem="6Z8-Is-djV" secondAttribute="trailing" constant="10" id="bg9-jF-ZeU"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="LookCountLable" destination="fMl-Xb-gDX" id="RiQ-gW-r29"/>
+                <outlet property="backView" destination="6Z8-Is-djV" id="50x-CS-YZt"/>
+                <outlet property="detailLable" destination="jke-Vm-J9U" id="iSP-2m-Lji"/>
+                <outlet property="titleLable" destination="bNb-2k-nd2" id="aRC-G5-OBa"/>
+            </connections>
+            <point key="canvasLocation" x="312" y="145"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="游览.png" width="38" height="29"/>
+    </resources>
+</document>
