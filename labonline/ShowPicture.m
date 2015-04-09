@@ -75,10 +75,9 @@
 #pragma mark --tapMethod
 - (void)tapImgVMethod
 {
-    [self removeFromSuperview];
     if ([_target respondsToSelector:_action])
     {
-        [_target performSelector:_action withObject:nil afterDelay:NO];
+        [_target performSelector:_action withObject:self afterDelay:NO];
     }
 }
 

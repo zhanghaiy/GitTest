@@ -222,12 +222,13 @@
     ShowPicture *pictureV = [[ShowPicture alloc]initWithFrame:self.view.bounds];
     [pictureV setSelectedIndex:mainNewView.clickImageIndex andImageDataArray:mainNewView.imageDataArray];
     pictureV.target = self;
-    pictureV.action = @selector(pictureCallBack);
+    pictureV.action = @selector(pictureCallBack:);
     [self.view addSubview:pictureV];
 }
 
-- (void)pictureCallBack
+- (void)pictureCallBack:(ShowPicture *)picV
 {
+    [picV removeFromSuperview];
     self.navigationController.navigationBarHidden = NO;
 }
 

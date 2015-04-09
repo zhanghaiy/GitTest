@@ -15,16 +15,11 @@
     // Initialization code
 }
 
-- (void)setDataDict:(NSDictionary *)dataDict
+- (void)fillDataWithIndex:(NSInteger)index andDataArray:(NSArray *)array
 {
-    _dataDict = dataDict;
-    [self fillTheData];
-}
-
-- (void)setCellIndex:(NSInteger)cellIndex
-{
-    _cellIndex = cellIndex;
-    if (_cellIndex < 2)
+    _cellIndex = index;
+    _dataArray = array;
+    if (_cellIndex < 1)
     {
         _onOrOffSwich.hidden = NO;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -32,17 +27,14 @@
     else
     {
         _onOrOffSwich.hidden = YES;
-        if (_cellIndex >= 5)
+        if (_cellIndex >= _dataArray.count-3)
         {
             self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
     }
-}
-
-- (void)fillTheData
-{
-    _subImageView.image = [UIImage imageNamed:[_dataDict objectForKey:@"ImageName"]];
-    _textLable.text = [_dataDict objectForKey:@"TEXT"];
+    NSDictionary *dic = [_dataArray objectAtIndex:index];
+    _subImageView.image = [UIImage imageNamed:[dic objectForKey:@"ImageName"]];
+    _textLable.text = [dic objectForKey:@"TEXT"];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

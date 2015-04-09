@@ -15,7 +15,8 @@
 @property (weak, nonatomic) IBOutlet UISwitch *onOrOffSwich;
 - (IBAction)onOrOffSwitchValueChanged:(id)sender;
 
-@property (nonatomic,strong) NSDictionary *dataDict;
+@property (nonatomic,strong) NSArray *dataArray;
 @property (nonatomic,assign) NSInteger cellIndex;
+- (void)fillDataWithIndex:(NSInteger)index andDataArray:(NSArray *)array;
 
 @end

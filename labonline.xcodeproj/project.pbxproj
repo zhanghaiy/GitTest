@@ -140,6 +140,10 @@
 		FDB7CD431ACAAE95007BAF79 /* 返回角.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB7CD421ACAAE95007BAF79 /* 返回角.png */; };
 		FDC430E21AD60C05006AC165 /* SearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC430E01AD60C05006AC165 /* SearchCell.m */; };
 		FDC430E31AD60C05006AC165 /* SearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDC430E11AD60C05006AC165 /* SearchCell.xib */; };
+		FDC430E61AD616BC006AC165 /* AboutMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC430E51AD616BC006AC165 /* AboutMeViewController.m */; };
+		FDC430E81AD61B22006AC165 /* 杂志图.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC430E71AD61B22006AC165 /* 杂志图.png */; };
+		FDC430EB1AD62684006AC165 /* ShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC430EA1AD62684006AC165 /* ShareView.m */; };
+		FDC430ED1AD62693006AC165 /* ShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDC430EC1AD62693006AC165 /* ShareView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -349,6 +353,12 @@
 		FDC430DF1AD60C05006AC165 /* SearchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchCell.h; sourceTree = "<group>"; };
 		FDC430E01AD60C05006AC165 /* SearchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchCell.m; sourceTree = "<group>"; };
 		FDC430E11AD60C05006AC165 /* SearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchCell.xib; sourceTree = "<group>"; };
+		FDC430E41AD616BC006AC165 /* AboutMeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutMeViewController.h; sourceTree = "<group>"; };
+		FDC430E51AD616BC006AC165 /* AboutMeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutMeViewController.m; sourceTree = "<group>"; };
+		FDC430E71AD61B22006AC165 /* 杂志图.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "杂志图.png"; sourceTree = "<group>"; };
+		FDC430E91AD62684006AC165 /* ShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareView.h; sourceTree = "<group>"; };
+		FDC430EA1AD62684006AC165 /* ShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareView.m; sourceTree = "<group>"; };
+		FDC430EC1AD62693006AC165 /* ShareView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShareView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -520,6 +530,7 @@
 		FD558CF41AC3A62900DA42FF /* 切图（安卓） */ = {
 			isa = PBXGroup;
 			children = (
+				FDC430E71AD61B22006AC165 /* 杂志图.png */,
 				FDA91DFA1AD5156100734E1B /* 分类按钮back.png */,
 				FDA91DF61AD5085400734E1B /* tubiao_04.png */,
 				043C77201AD4F0B500B0DEAC /* 登录 */,
@@ -612,9 +623,8 @@
 			children = (
 				FD5D3BF51AD3ACC200A6F60E /* SettingCenterViewController.h */,
 				FD5D3BF61AD3ACC200A6F60E /* SettingCenterViewController.m */,
-				FD5D3C091AD3C15000A6F60E /* SettingCell.h */,
-				FD5D3C0A1AD3C15000A6F60E /* SettingCell.m */,
-				FD5D3C0B1AD3C15000A6F60E /* SettingCell.xib */,
+				FDC430E41AD616BC006AC165 /* AboutMeViewController.h */,
+				FDC430E51AD616BC006AC165 /* AboutMeViewController.m */,
 			);
 			name = "设置";
 			sourceTree = "<group>";
@@ -808,6 +818,7 @@
 		FD96C9331AC179600002778A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FDC430EE1AD62C7A006AC165 /* 设置 */,
 				FDA91DFC1AD5167700734E1B /* 图片阅览 */,
 				FD96C8B91AC10AB90002778A /* 图片轮播 */,
 				FD9A76F41ACBD3B6007ACC11 /* 个人中心 */,
@@ -881,6 +892,19 @@
 				FDA91DFE1AD5169900734E1B /* ShowPicture.m */,
 			);
 			name = "图片阅览";
+			sourceTree = "<group>";
+		};
+		FDC430EE1AD62C7A006AC165 /* 设置 */ = {
+			isa = PBXGroup;
+			children = (
+				FD5D3C091AD3C15000A6F60E /* SettingCell.h */,
+				FD5D3C0A1AD3C15000A6F60E /* SettingCell.m */,
+				FD5D3C0B1AD3C15000A6F60E /* SettingCell.xib */,
+				FDC430E91AD62684006AC165 /* ShareView.h */,
+				FDC430EA1AD62684006AC165 /* ShareView.m */,
+				FDC430EC1AD62693006AC165 /* ShareView.xib */,
+			);
+			name = "设置";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1020,6 +1044,8 @@
 				FD5D3C071AD3BF2800A6F60E /* versionUpdate.png in Resources */,
 				FD558D5C1AC4098F00DA42FF /* blackArrow.png in Resources */,
 				043C77301AD4F15D00B0DEAC /* beij.png in Resources */,
+				FDC430E81AD61B22006AC165 /* 杂志图.png in Resources */,
+				FDC430ED1AD62693006AC165 /* ShareView.xib in Resources */,
 				FD5D3C061AD3BF2800A6F60E /* UserFeedBack.png in Resources */,
 				043C772F1AD4F15D00B0DEAC /* anniu_07.png in Resources */,
 				FD558CF81AC3A62900DA42FF /* pictureShow.png in Resources */,
@@ -1076,6 +1102,7 @@
 				FD8AE2E31ACE2A2000A4A5B6 /* EditSubViewController.m in Sources */,
 				FD47C81B1AC5386E00846AC9 /* JSZLEvaluationViewController.m in Sources */,
 				FDA91DF31AD4F98100734E1B /* NavigationButton.m in Sources */,
+				FDC430EB1AD62684006AC165 /* ShareView.m in Sources */,
 				042C46741AC2815300D36C8F /* MenuViewController.m in Sources */,
 				FD96C8E71AC146480002778A /* PictureShowView.m in Sources */,
 				FD462E5A1ACD2DB2001AC895 /* OffLineVidioCell.m in Sources */,
@@ -1103,6 +1130,7 @@
 				04FE4C461ACD328D00A922DA /* AFSecurityPolicy.m in Sources */,
 				FD9A76FD1ACBF1B0007ACC11 /* MyCommentCell.m in Sources */,
 				04FE4C491ACD328D00A922DA /* AFURLResponseSerialization.m in Sources */,
+				FDC430E61AD616BC006AC165 /* AboutMeViewController.m in Sources */,
 				04FE4C481ACD328D00A922DA /* AFURLRequestSerialization.m in Sources */,
 				FD9A76B01ACB86F7007ACC11 /* MainListCell.m in Sources */,
 				FD96C8C31AC1107C0002778A /* VidioPlayerViewController.m in Sources */,

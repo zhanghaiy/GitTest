@@ -10,11 +10,14 @@
 #import "SettingCell.h"
 #import "YRSideViewController.h"
 #import "AppDelegate.h"
+#import "AboutMeViewController.h"
+#import "ShareView.h"
 
-@interface SettingCenterViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface SettingCenterViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
     UITableView *listtableV;
     NSMutableArray *_listArray;
+    BOOL _upLoading;
 }
 @end
 
@@ -56,7 +59,7 @@
 }
 - (void)makeUpDataArray
 {
-    NSArray *textArray = @[@"Wifi环境下加载图片",@"夜间模式",@"清除缓存",@"分享给好友",@"字体大小",@"版本更新",@"用户反馈",@"关于我们"];
+    NSArray *textArray = @[@"夜间模式",@"清除缓存",@"分享给好友",@"版本更新",@"用户反馈",@"关于我们"];
     NSArray *imageNameArray = @[@"wifi.png",@"night.png",@"removeCache.png",@"share.png",@"fontSize.png",@"versionUpdate.png",@"UserFeedBack.png",@"about.png"];
     _listArray = [[NSMutableArray alloc]init];
     for (int i = 0; i < textArray.count; i ++)
@@ -79,17 +82,124 @@
     {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"SettingCell" owner:self options:0] lastObject];
     }
-    cell.cellIndex = indexPath.row;
+    [cell fillDataWithIndex:indexPath.row andDataArray:_listArray];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.dataDict = [_listArray objectAtIndex:indexPath.row];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //
+    switch (indexPath.row)
+    {
+        case 0:
+        {
+            // 夜间模式
+        }
+            break;
+        case 1:
+        {
+            // 清除缓存
+        }
+            break;
+        case 2:
+        {
+            // 分享
+            [self createShareView];
+        }
+            break;
+        case 3:
+        {
+             // 版本更新
+            // 首先判断当前的版本是否是最新版本
+            NSInteger currentIndex = 0;// 1最新 0 不是最新
+            _upLoading = currentIndex?NO:YES;
+            NSString *title = @"版本升级";
+            NSArray *messageArr = @[@"发现新版本",@"当前是最新版本"];
+            NSArray *cancelTitleArr = @[@"升级",@"确定"];
+            NSString *otherTitle = @"取消";
+            [self  createAlertViewWithTitle:title Message:[messageArr objectAtIndex:currentIndex] cancelTitle:[cancelTitleArr objectAtIndex:currentIndex] otherTitle:currentIndex?nil:otherTitle];
+
+        }
+            break;
+        case 4:
+        {
+            //用户反馈
+        }
+            break;
+        case 5:
+        {
+            // 关于我们
+            // 关于我们
+            AboutMeViewController *aboutMeVC = [[AboutMeViewController alloc]init];
+            [self.navigationController pushViewController:aboutMeVC animated:YES];
+        }
+            break;
+        case 6:
+        {
+            
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
+#pragma mark - 分享View
+- (void)createShareView
+{
+    UIView *darkV = [[UIView alloc]initWithFrame:self.view.bounds];
+    darkV.backgroundColor = [UIColor colorWithWhite:14/255.0 alpha:0.5];
+    darkV.tag = 11223344;
+    [self.view addSubview:darkV];
+    
+    ShareView *shareV = [[[NSBundle mainBundle]loadNibNamed:@"ShareView" owner:self options:0] lastObject];
+    shareV.frame = CGRectMake(0, kScreenHeight-150, kScreenWidth, 150);
+    shareV.backgroundColor = [UIColor colorWithWhite:248/255.0 alpha:1];
+    shareV.target = self;
+    shareV.action = @selector(shareCallBack);
+    [self.view addSubview:shareV];
+}
+
+- (void)shareCallBack
+{
+    UIView *darkV = [self.view viewWithTag:11223344];
+    [darkV removeFromSuperview];
+    [self createAlertViewWithTitle:@"分享" Message:@"分享暂时未完成" cancelTitle:@"确定" otherTitle:nil];
+}
+
+#pragma mark - 警告框
+- (void)createAlertViewWithTitle:(NSString *)title Message:(NSString *)message cancelTitle:(NSString *)cancelTitle otherTitle:(NSString *)otherTitle
+{
+    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:title message:message delegate:self cancelButtonTitle:cancelTitle otherButtonTitles:otherTitle, nil];
+    [alertV show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex)
+    {
+        case 0:
+            if (_upLoading)
+            {
+                // 升级
+            }
+            else
+            {
+               // 确定
+            }
+            break;
+        case 1:
+            // 取消
+            
+            break;
+        default:
+            break;
+    }
+    
+}
+
+#pragma mark - UITableView Delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 40;
