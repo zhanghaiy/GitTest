@@ -45,16 +45,15 @@
     _sideViewController.leftViewShowWidth=240;
     _sideViewController.needSwipeShowMenu=true;//默认开启的可滑动展示
     //动画效果可以被自己自定义，具体请看api
-    //
-    //
-    //    self.window.rootViewController=_sideViewController;
-    //
-    //    self.window.backgroundColor = [UIColor whiteColor];
-    //    [self.window makeKeyAndVisible];
-    
-    LoginViewController *loginVC=[[LoginViewController alloc] initWithNibName:nil bundle:nil];
-    loginVC.sideViewController=_sideViewController;
-    self.window.rootViewController=loginVC;
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    NSString *name = [userDefault objectForKey:@"userName"];
+    if (name==nil) {
+        LoginViewController *loginVC=[[LoginViewController alloc] initWithNibName:nil bundle:nil];
+        loginVC.sideViewController=_sideViewController;
+        self.window.rootViewController=loginVC;
+    }else{
+        self.window.rootViewController=_sideViewController;
+    }
     
     [self.window makeKeyAndVisible];
     return YES;
