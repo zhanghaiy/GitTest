@@ -19,18 +19,10 @@
 {
     _cellIndex = index;
     _dataArray = array;
-    if (_cellIndex < 1)
+    _onOrOffSwich.hidden = YES;
+    if (_cellIndex >= _dataArray.count-3)
     {
-        _onOrOffSwich.hidden = NO;
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
-    else
-    {
-        _onOrOffSwich.hidden = YES;
-        if (_cellIndex >= _dataArray.count-3)
-        {
-            self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }
+        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     NSDictionary *dic = [_dataArray objectAtIndex:index];
     _subImageView.image = [UIImage imageNamed:[dic objectForKey:@"ImageName"]];

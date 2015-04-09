@@ -145,6 +145,14 @@
 		FDC430E81AD61B22006AC165 /* 杂志图.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC430E71AD61B22006AC165 /* 杂志图.png */; };
 		FDC430EB1AD62684006AC165 /* ShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC430EA1AD62684006AC165 /* ShareView.m */; };
 		FDC430ED1AD62693006AC165 /* ShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDC430EC1AD62693006AC165 /* ShareView.xib */; };
+		FDC430F11AD673DA006AC165 /* UserCallBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC430F01AD673DA006AC165 /* UserCallBackViewController.m */; };
+		FDC431061AD687F2006AC165 /* QQ.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC431001AD687F2006AC165 /* QQ.png */; };
+		FDC431071AD687F2006AC165 /* QQ空间.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC431011AD687F2006AC165 /* QQ空间.png */; };
+		FDC431081AD687F2006AC165 /* 人人.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC431021AD687F2006AC165 /* 人人.png */; };
+		FDC431091AD687F2006AC165 /* 微信.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC431031AD687F2006AC165 /* 微信.png */; };
+		FDC4310A1AD687F2006AC165 /* 新浪微博.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC431041AD687F2006AC165 /* 新浪微博.png */; };
+		FDC4310B1AD687F2006AC165 /* 朋友圈.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC431051AD687F2006AC165 /* 朋友圈.png */; };
+		FDC4310F1AD6893B006AC165 /* QQ邮箱.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC4310E1AD6893B006AC165 /* QQ邮箱.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -362,6 +370,15 @@
 		FDC430E91AD62684006AC165 /* ShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareView.h; sourceTree = "<group>"; };
 		FDC430EA1AD62684006AC165 /* ShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareView.m; sourceTree = "<group>"; };
 		FDC430EC1AD62693006AC165 /* ShareView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShareView.xib; sourceTree = "<group>"; };
+		FDC430EF1AD673DA006AC165 /* UserCallBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCallBackViewController.h; sourceTree = "<group>"; };
+		FDC430F01AD673DA006AC165 /* UserCallBackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCallBackViewController.m; sourceTree = "<group>"; };
+		FDC431001AD687F2006AC165 /* QQ.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QQ.png; sourceTree = "<group>"; };
+		FDC431011AD687F2006AC165 /* QQ空间.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QQ空间.png"; sourceTree = "<group>"; };
+		FDC431021AD687F2006AC165 /* 人人.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "人人.png"; sourceTree = "<group>"; };
+		FDC431031AD687F2006AC165 /* 微信.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "微信.png"; sourceTree = "<group>"; };
+		FDC431041AD687F2006AC165 /* 新浪微博.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "新浪微博.png"; sourceTree = "<group>"; };
+		FDC431051AD687F2006AC165 /* 朋友圈.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "朋友圈.png"; sourceTree = "<group>"; };
+		FDC4310E1AD6893B006AC165 /* QQ邮箱.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QQ邮箱.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -533,6 +550,7 @@
 		FD558CF41AC3A62900DA42FF /* 切图（安卓） */ = {
 			isa = PBXGroup;
 			children = (
+				FDC430FF1AD687F2006AC165 /* 分享图标 */,
 				FDC430E71AD61B22006AC165 /* 杂志图.png */,
 				FDA91DFA1AD5156100734E1B /* 分类按钮back.png */,
 				FDA91DF61AD5085400734E1B /* tubiao_04.png */,
@@ -628,6 +646,8 @@
 				FD5D3BF61AD3ACC200A6F60E /* SettingCenterViewController.m */,
 				FDC430E41AD616BC006AC165 /* AboutMeViewController.h */,
 				FDC430E51AD616BC006AC165 /* AboutMeViewController.m */,
+				FDC430EF1AD673DA006AC165 /* UserCallBackViewController.h */,
+				FDC430F01AD673DA006AC165 /* UserCallBackViewController.m */,
 			);
 			name = "设置";
 			sourceTree = "<group>";
@@ -912,6 +932,20 @@
 			name = "设置";
 			sourceTree = "<group>";
 		};
+		FDC430FF1AD687F2006AC165 /* 分享图标 */ = {
+			isa = PBXGroup;
+			children = (
+				FDC4310E1AD6893B006AC165 /* QQ邮箱.png */,
+				FDC431001AD687F2006AC165 /* QQ.png */,
+				FDC431011AD687F2006AC165 /* QQ空间.png */,
+				FDC431021AD687F2006AC165 /* 人人.png */,
+				FDC431031AD687F2006AC165 /* 微信.png */,
+				FDC431041AD687F2006AC165 /* 新浪微博.png */,
+				FDC431051AD687F2006AC165 /* 朋友圈.png */,
+			);
+			path = "分享图标";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -999,6 +1033,7 @@
 				043C772D1AD4F15D00B0DEAC /* 注册按钮_05.png in Resources */,
 				042C467B1AC297F600D36C8F /* wangqi.png in Resources */,
 				FD558D0F1AC3E1A500DA42FF /* aniu_07.png in Resources */,
+				FDC431081AD687F2006AC165 /* 人人.png in Resources */,
 				FD462E5B1ACD2DB2001AC895 /* OffLineVidioCell.xib in Resources */,
 				FD5D3C051AD3BF2800A6F60E /* share.png in Resources */,
 				FD47C8201AC53A3300846AC9 /* JSZLEvaluationCell.xib in Resources */,
@@ -1013,6 +1048,7 @@
 				FD7901231ACA490D00D908EA /* 12.jpg in Resources */,
 				FD558D101AC3E1A500DA42FF /* aniu_09.png in Resources */,
 				FD96C8E11AC13A3E0002778A /* 1.mp4 in Resources */,
+				FDC4310F1AD6893B006AC165 /* QQ邮箱.png in Resources */,
 				FD5D3C021AD3BF2800A6F60E /* fontSize.png in Resources */,
 				FD8B56701ACE9BD6009F5E15 /* OK.png in Resources */,
 				FD462E531ACCE022001AC895 /* 我的收藏背景.png in Resources */,
@@ -1038,6 +1074,7 @@
 				FD558CF31AC3A43B00DA42FF /* JiShuZhuanLanCell.xib in Resources */,
 				FD558D611AC4098F00DA42FF /* grayArrow@2x.png in Resources */,
 				FDA91DFB1AD5156100734E1B /* 分类按钮back.png in Resources */,
+				FDC431091AD687F2006AC165 /* 微信.png in Resources */,
 				FD47C8171AC5316300846AC9 /* 评价.png in Resources */,
 				FD8AE2E01ACE230100A4A5B6 /* PersonEditCell.xib in Resources */,
 				FD462E511ACCE022001AC895 /* 确定.png in Resources */,
@@ -1046,6 +1083,7 @@
 				FD558D1A1AC4001600DA42FF /* 33.jpg in Resources */,
 				FD8B566E1ACE858C009F5E15 /* JSZLCateView.xib in Resources */,
 				FD558CFF1AC3A6A300DA42FF /* 新消息提醒_05.png in Resources */,
+				FDC431071AD687F2006AC165 /* QQ空间.png in Resources */,
 				FD5D3C071AD3BF2800A6F60E /* versionUpdate.png in Resources */,
 				FD558D5C1AC4098F00DA42FF /* blackArrow.png in Resources */,
 				043C77301AD4F15D00B0DEAC /* beij.png in Resources */,
@@ -1054,10 +1092,12 @@
 				FD5D3C061AD3BF2800A6F60E /* UserFeedBack.png in Resources */,
 				043C772F1AD4F15D00B0DEAC /* anniu_07.png in Resources */,
 				FD558CF81AC3A62900DA42FF /* pictureShow.png in Resources */,
+				FDC4310A1AD687F2006AC165 /* 新浪微博.png in Resources */,
 				FDA91DF91AD50F5000734E1B /* MainListCell.xib in Resources */,
 				FD462E521ACCE022001AC895 /* 删除.png in Resources */,
 				FD558CFA1AC3A62900DA42FF /* 游览.png in Resources */,
 				FD9A76EF1ACBD2B1007ACC11 /* 离线视频.png in Resources */,
+				FDC4310B1AD687F2006AC165 /* 朋友圈.png in Resources */,
 				FD462E611ACD3E90001AC895 /* 左侧列.png in Resources */,
 				FD9A76F21ACBD2B1007ACC11 /* 我的收藏.png in Resources */,
 				FD9A76F31ACBD2B1007ACC11 /* 我的杂志.png in Resources */,
@@ -1067,6 +1107,7 @@
 				FD558D631AC4098F00DA42FF /* whiteArrow@2x.png in Resources */,
 				FD5D3C0D1AD3C15000A6F60E /* SettingCell.xib in Resources */,
 				FD47C8161AC5316300846AC9 /* 分享.png in Resources */,
+				FDC431061AD687F2006AC165 /* QQ.png in Resources */,
 				FD462E4F1ACCE022001AC895 /* 弹出框.png in Resources */,
 				043C77321AD4F15D00B0DEAC /* shurukuang_05.png in Resources */,
 				FD8AE3271ACE67A900A4A5B6 /* MainNewView.xib in Resources */,
@@ -1121,6 +1162,7 @@
 				04FE4C451ACD328D00A922DA /* AFNetworkReachabilityManager.m in Sources */,
 				04FE4C471ACD328D00A922DA /* AFURLConnectionOperation.m in Sources */,
 				FD558D5B1AC4098F00DA42FF /* EGORefreshTableHeaderView.m in Sources */,
+				FDC430F11AD673DA006AC165 /* UserCallBackViewController.m in Sources */,
 				043C77381AD4F1A000B0DEAC /* LoginViewController.m in Sources */,
 				FD9A76B41ACBC929007ACC11 /* PersonCenterViewController.m in Sources */,
 				FD8AE3221ACE658300A4A5B6 /* JiShuZhuanLanViewController.m in Sources */,
