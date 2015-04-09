@@ -110,6 +110,7 @@
     {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"SearchCell" owner:self options:0] lastObject];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.titleLable.text = [_searchDataArray objectAtIndex:indexPath.row];
     return cell;
 }
