@@ -16,6 +16,7 @@
 #import "MainViewController.h"
 #import "YRSideViewController.h"
 #import "AppDelegate.h"
+#import "LoginViewController.h"
 
 @interface PersonCenterViewController ()
 {
@@ -182,11 +183,19 @@
 - (void)outCurrentUser
 {
     // 退出当前账号
-//    MainViewController *m=[[MainViewController alloc] init];
-//    [self.navigationController pushViewController:m animated:YES];
-    [self dismissViewControllerAnimated:YES completion:^{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    //移除UserDefaults中存储的用户信息
+    [userDefaults removeObjectForKey:@"userName"];
+    
+    AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
+    if ([delegate.window.rootViewController isKindOfClass:[LoginViewController class]]) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }];
+    }else{
         [self.navigationController popToRootViewControllerAnimated:YES];
-    }];
+    }
+
 }
 
 
