@@ -24,6 +24,7 @@
 		043C77381AD4F1A000B0DEAC /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043C77351AD4F1A000B0DEAC /* LoginViewController.m */; };
 		043C77391AD4F1A000B0DEAC /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043C77371AD4F1A000B0DEAC /* RegisterViewController.m */; };
 		043C773B1AD4F1D700B0DEAC /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 043C773A1AD4F1D700B0DEAC /* MainStoryboard.storyboard */; };
+		043EE7161AD6501800B194EB /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 043EE7151AD6501800B194EB /* UserModel.m */; };
 		04E37C6E1ACD28EB00045E64 /* YRSideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E37C6D1ACD28EB00045E64 /* YRSideViewController.m */; };
 		04FE4C421ACD328D00A922DA /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4C2E1ACD328D00A922DA /* AFHTTPRequestOperation.m */; };
 		04FE4C431ACD328D00A922DA /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4C301ACD328D00A922DA /* AFHTTPRequestOperationManager.m */; };
@@ -168,6 +169,8 @@
 		043C77361AD4F1A000B0DEAC /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		043C77371AD4F1A000B0DEAC /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		043C773A1AD4F1D700B0DEAC /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
+		043EE7141AD6501800B194EB /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
+		043EE7151AD6501800B194EB /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
 		04E37C6C1ACD28EB00045E64 /* YRSideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRSideViewController.h; sourceTree = "<group>"; };
 		04E37C6D1ACD28EB00045E64 /* YRSideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRSideViewController.m; sourceTree = "<group>"; };
 		04FE4C2D1ACD328D00A922DA /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -778,6 +781,8 @@
 		FD96C8CF1AC116D70002778A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				043EE7141AD6501800B194EB /* UserModel.h */,
+				043EE7151AD6501800B194EB /* UserModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1067,6 +1072,7 @@
 				FD9A76FD1ACBF1B0007ACC11 /* MyCommentCell.m in Sources */,
 				04FE4C491ACD328D00A922DA /* AFURLResponseSerialization.m in Sources */,
 				04FE4C481ACD328D00A922DA /* AFURLRequestSerialization.m in Sources */,
+				043EE7161AD6501800B194EB /* UserModel.m in Sources */,
 				FD9A76B01ACB86F7007ACC11 /* MainListCell.m in Sources */,
 				FD96C8C31AC1107C0002778A /* VidioPlayerViewController.m in Sources */,
 				042C46791AC2976200D36C8F /* WangQiCell.m in Sources */,

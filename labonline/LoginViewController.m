@@ -82,6 +82,10 @@
 //    _sideViewController.needSwipeShowMenu=true;//默认开启的可滑动展示
         //动画效果可以被自己自定义，具体请看api
     
+    NSString *username=_userNameTxt.text;
+    NSUserDefaults *userDe=[NSUserDefaults standardUserDefaults];
+    [userDe setObject:username forKey:@"userName"];
+    
     [self presentViewController:_sideViewController animated:YES completion:nil];
 }
 @end
