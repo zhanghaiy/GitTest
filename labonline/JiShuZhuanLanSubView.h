@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *youLanCountsLable;
 @property (weak, nonatomic) IBOutlet UIImageView *youLanImgV;
 
+@property (nonatomic,strong) NSDictionary *subDict;
 
 @end

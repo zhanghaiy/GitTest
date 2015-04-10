@@ -14,9 +14,14 @@
 #import "YRSideViewController.h"
 #import "AppDelegate.h"
 #import "SearchViewController.h"
+#import "NetManager.h"
+
 
 @interface JiShuZhuanLanViewController ()<UITableViewDataSource,UITableViewDelegate>
-
+{
+    UITableView *jiShuZhuanLanTableView;
+    NSArray *_articleListArray;
+}
 @end
 
 @implementation JiShuZhuanLanViewController
@@ -67,20 +72,49 @@
     UIView *headerV = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenHeight, kImageShowViewHeight+10)];
     headerV.backgroundColor = [UIColor clearColor];
     PictureShowView *pictureV = [[PictureShowView alloc]initWithFrame:CGRectMake(10, 5, kScreenWidth-20, kImageShowViewHeight)];
-    pictureV.imageInfoArray = @[@"",@"",@"",@"",@""];
     pictureV.target = self;
+    pictureV.imageInfoArray = @[];
     pictureV.action = @selector(pictureShowMethod:);
     pictureV.backgroundColor = [UIColor whiteColor];
     [headerV addSubview:pictureV];
     
-    UITableView *jiShuZhuanLanTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-65) style:UITableViewStylePlain];
+    jiShuZhuanLanTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-65) style:UITableViewStylePlain];
     jiShuZhuanLanTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     jiShuZhuanLanTableView.delegate = self;
     jiShuZhuanLanTableView.dataSource = self;
     jiShuZhuanLanTableView.showsVerticalScrollIndicator = NO;
     jiShuZhuanLanTableView.tableHeaderView = headerV;
     [self.view addSubview:jiShuZhuanLanTableView];
+    
+    [self requestMainDataWithURLString:kJSZLUrlString];
 }
+
+#pragma mark - 网络请求
+#pragma mark -- 开始请求
+- (void)requestMainDataWithURLString:(NSString *)urlStr
+{
+    NetManager *netManager = [[NetManager alloc]init];
+    netManager.delegate = self;
+    netManager.action = @selector(requestFinished:);
+    [netManager requestDataWithUrlString:urlStr];
+}
+#pragma mark --网络请求完成
+- (void)requestFinished:(NetManager *)netManager
+{
+    if (netManager.downLoadData)
+    {
+        // 成功
+        // 解析
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
+        _articleListArray = [[dict objectForKey:@"data"] objectForKey:@"articleList"];
+        [jiShuZhuanLanTableView reloadData];
+    }
+    else
+    {
+        // 失败
+    }
+}
+
 
 #pragma mark - UITableView Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -90,7 +124,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return _articleListArray.count>=5?5:_articleListArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -105,7 +139,7 @@
         cell.buttonClickSelector = @selector(enterMoreViewController:);
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-
+    cell.articleDict = [_articleListArray objectAtIndex:indexPath.row];
     return cell;
 }
 

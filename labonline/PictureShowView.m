@@ -8,6 +8,7 @@
 
 #import "PictureShowView.h"
 #import "DeviceManager.h"
+#import "UIImageView+WebCache.h"
 
 @implementation PictureShowView
 {
@@ -18,9 +19,9 @@
     UILabel *_titleLab;
     UIScrollView *_imageScroll;
     NSTimer *_mainTimer;
+    UIView *_downV;
 }
 #define kPageControlWidth 80
-#define ImageCounts 5
 #define kImageViewTag 5555
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -35,28 +36,7 @@
     return self;
 }
 
-- (void)setImageInfoArray:(NSArray *)imageInfoArray
-{
-    _imageInfoArray = imageInfoArray;
-    [self createImageView];
-    _mainTimer = [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(timerMethod) userInfo:nil repeats:YES];
-}
-
-
-- (void)timerMethod
-{
-    // 定时器
-    if (_currentPage<_imageInfoArray.count-1)
-    {
-        _currentPage++;
-    }
-    else if ((_imageInfoArray.count-1)== _currentPage)
-    {
-        _currentPage = 0;
-    }
-    [self changePicture];
-}
-
+#pragma mark - 搭建UI控件
 - (void)makeUpContent
 {
     width = self.bounds.size.width;
@@ -64,47 +44,74 @@
     _currentPage = 0;
     self.backgroundColor = [UIColor whiteColor];
     _imageScroll = [[UIScrollView alloc]initWithFrame:self.bounds];
-    _imageScroll.contentSize = CGSizeMake(width*ImageCounts, 0);
+    _imageScroll.contentSize = CGSizeMake(width, 0);
     _imageScroll.pagingEnabled = YES;
     _imageScroll.delegate = self;
     _imageScroll.showsHorizontalScrollIndicator = NO;
     [self addSubview:_imageScroll];
     
-    
-    UIView *downV = [[UIView alloc]initWithFrame:CGRectMake(0, height-30, width, 30)];
-    downV.backgroundColor = [UIColor colorWithRed:169/255.0 green:168/255.0 blue:168/255.0 alpha:0.5];
-    [self addSubview:downV];
+    _downV = [[UIView alloc]initWithFrame:CGRectMake(0, height-30, width, 30)];
+    _downV.backgroundColor = [UIColor colorWithRed:169/255.0 green:168/255.0 blue:168/255.0 alpha:0.5];
+    [self addSubview:_downV];
     
     _pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(width-kPageControlWidth, 10, kPageControlWidth-10, 10)];
-    _pageControl.numberOfPages = ImageCounts;
+    _pageControl.numberOfPages = 1;
     _pageControl.currentPage = 0;
-    [downV addSubview:_pageControl];
+    [_downV addSubview:_pageControl];
     
     _titleLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, width-kPageControlWidth, 30)];
     _titleLab.textAlignment = NSTextAlignmentLeft;
-    _titleLab.text = @"北大医院个性化服务医疗体系";
     _titleLab.textColor = [UIColor whiteColor];
     _titleLab.font = [UIFont systemFontOfSize:13];
     _titleLab.numberOfLines = 0;
-    [downV addSubview:_titleLab];
+    [_downV addSubview:_titleLab];
 }
 
+
+#pragma mark - 数据赋值
+- (void)setImageInfoArray:(NSArray *)imageInfoArray
+{
+    _imageInfoArray = imageInfoArray;
+    [self createImageView];
+    if (_imageInfoArray.count != 0)
+    {
+        _mainTimer = [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(timerMethod) userInfo:nil repeats:YES];
+    }
+    else
+    {
+        _titleLab.hidden = YES;
+        _pageControl.hidden = YES;
+        _downV.hidden = YES;
+    }
+}
+
+#pragma mark - 根据数据创建轮播图
 - (void)createImageView
 {
-    NSArray *colorArr = [self makeUpColorArray];
-    for (int i = 0; i < colorArr.count; i ++)
+    for (int i = 0; i < _imageInfoArray.count; i ++)
     {
+        NSDictionary *dict = [_imageInfoArray objectAtIndex:i];
         UIImageView *imgV = [[UIImageView alloc]initWithFrame:CGRectMake(width*i, 0, width, height)];
         imgV.layer.masksToBounds = YES;
         imgV.layer.cornerRadius = 5;
-//        imgV.image = [UIImage imageNamed:@"pictureShow.png"];
-        imgV.backgroundColor = [[self makeUpColorArray] objectAtIndex:i];
         imgV.tag = kImageViewTag+i;
         imgV.userInteractionEnabled = YES;
         [_imageScroll addSubview:imgV];
-        
+        [imgV setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"pictureurl"]] placeholderImage:[UIImage imageNamed:nil]];// 加载时显示加载图片 pictureurl
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapImageMethod:)];
         [imgV addGestureRecognizer:tap];
+        _pageControl.numberOfPages = _imageInfoArray.count;
+    }
+    if (_imageInfoArray.count == 0)
+    {
+        // 显示默认图
+        _pageControl.numberOfPages = 1;
+        UIImageView *imgV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, width, height)];
+        imgV.layer.masksToBounds = YES;
+        imgV.backgroundColor = [UIColor purpleColor];
+        imgV.layer.cornerRadius = 5;
+        imgV.userInteractionEnabled = YES;
+        [_imageScroll addSubview:imgV];
     }
 }
 
@@ -119,15 +126,19 @@
     }
 }
 
-- (NSArray *)makeUpColorArray
+#pragma mark - 定时器转换图片
+- (void)timerMethod
 {
-    UIColor *color = [UIColor colorWithRed:143/255.0 green:205/255.0 blue:201/255.0 alpha:1];
-    UIColor *color1 = [UIColor colorWithRed:134/255.0 green:208/255.0 blue:249/255.0 alpha:1];
-    UIColor *color2 = [UIColor colorWithRed:69/255.0 green:93/255.0 blue:135/255.0 alpha:1];
-    UIColor *color3 = [UIColor colorWithRed:143/255.0 green:205/255.0 blue:201/255.0 alpha:1];
-     UIColor *color4 = [UIColor colorWithRed:134/255.0 green:208/255.0 blue:249/255.0 alpha:1];
-    NSArray *colorArray = @[color,color1,color2,color3,color4];
-    return colorArray;
+    // 定时器
+    if (_currentPage<_imageInfoArray.count-1)
+    {
+        _currentPage++;
+    }
+    else if ((_imageInfoArray.count-1)== _currentPage)
+    {
+        _currentPage = 0;
+    }
+    [self changePicture];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -141,10 +152,11 @@
 #pragma mark - 变换图片与标题
 - (void)changePicture
 {
+    NSDictionary *subDict = [_imageInfoArray objectAtIndex:_currentPage];
     float y = _imageScroll.contentOffset.y;
     _imageScroll.contentOffset = CGPointMake(_currentPage*width, y);
     _pageControl.currentPage = _currentPage;
-    _titleLab.text = [NSString stringWithFormat:@"杂志的标题%ld",_currentPage];
+    _titleLab.text = [subDict objectForKey:@"title"];
 }
 
 

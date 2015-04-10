@@ -18,6 +18,7 @@
 @property (nonatomic,assign) id target;
 @property (nonatomic,assign) SEL action;
 @property (nonatomic,strong) NSArray *imageDataArray;// 模拟数据
+@property (nonatomic,strong) NSDictionary *mainMagazineDict;
 @property (nonatomic,assign) NSInteger clickImageIndex;
 
 @end

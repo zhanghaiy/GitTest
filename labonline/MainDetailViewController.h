@@ -10,6 +10,7 @@
 
 @interface MainDetailViewController : UIViewController
 
-@property (nonatomic,strong) NSArray *iamgesArray;
+@property (nonatomic,strong) NSArray *imagesArray;
+@property (nonatomic,strong) NSDictionary *detailDict;
 
 @end
