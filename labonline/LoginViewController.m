@@ -10,6 +10,7 @@
 #import "LeftViewController.h"
 #import "MainViewController.h"
 #import "AppDelegate.h"
+#import "UserModel.h"
 
 @interface LoginViewController ()
 
@@ -30,13 +31,7 @@
     [super viewDidLoad];
     _userNameTxt.delegate=self;
     _passwordTxt.delegate=self;
-    
-//    if (_sideViewController==nil) {
-//        AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
-//        YRSideViewController *sideViewController=[delegate sideViewController];
-//        _sideViewController=sideViewController;
-//    }
-    // Do any additional setup after loading the view.
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -61,9 +56,41 @@
 
 - (IBAction)doLogin:(id)sender {
     NSString *username=_userNameTxt.text;
-    NSUserDefaults *userDe=[NSUserDefaults standardUserDefaults];
-    [userDe setObject:username forKey:@"userName"];
+    NSString *password=_passwordTxt.text;
+//    UserModel *um=[[UserModel alloc] init];
     
-    [self presentViewController:_sideViewController animated:YES completion:nil];
+    NSString *loginUrl=[COCIM_INTERFACE_LOGIN stringByAppendingFormat:@"?username=%@&password=%@",username,password];
+//    NSLog(@"%@",loginUrl);
+    [AFNetworkTool netWorkStatus];
+    [AFNetworkTool JSONDataWithUrl:loginUrl success:^(id json) {
+        int respCode=[[json objectForKey:@"respCode"] intValue];
+        if (respCode==1000) {
+//            NSDictionary *data=[[json objectForKey:@"userinfo"] objectAtIndex:0];
+//            
+//            [um setValuesForKeysWithDictionary:data];
+//            NSLog(@"%@",um);
+            
+            NSUserDefaults *userDe=[NSUserDefaults standardUserDefaults];
+            [userDe setObject:username forKey:@"userName"];
+            [userDe synchronize];
+            
+            [self presentViewController:_sideViewController animated:YES completion:nil];
+        }else{
+            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"登录" message:@"用户名密码错误" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            [alert show];
+        }
+        // 提示:NSURLConnection异步方法回调,是在子线程
+        // 得到回调之后,通常更新UI,是在主线程
+        //        NSLog(@"%@", [NSThread currentThread]);
+    } fail:^{
+        NSLog(@"请求失败");
+    }];
+    
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    _userNameTxt.text=@"";
+    _passwordTxt.text=@"";
 }
 @end

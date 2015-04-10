@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "YRSideViewController.h"
+#import "AFNetworkTool.h"
 
 @interface LoginViewController : UIViewController<UITextFieldDelegate>
 

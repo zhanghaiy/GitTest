@@ -15,6 +15,9 @@
 
 @end
 
+NSString *const COCIM_SERVER_PATH = @"http://192.168.0.153:8181/labonline";
+NSString *const COCIM_INTERFACE_LOGIN =  @"http://192.168.0.153:8181/labonline/hyController/login.do";
+
 @implementation AppDelegate
 
 
