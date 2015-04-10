@@ -17,5 +17,6 @@
 @property (strong,nonatomic) YRSideViewController *sideViewController;
 
 - (IBAction)doLogin:(id)sender;
+- (IBAction)doRegister:(id)sender;
 
 @end

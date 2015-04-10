@@ -17,6 +17,7 @@
 
 NSString *const COCIM_SERVER_PATH = @"http://192.168.0.153:8181/labonline";
 NSString *const COCIM_INTERFACE_LOGIN =  @"http://192.168.0.153:8181/labonline/hyController/login.do";
+NSString *const COCIM_INTERFACE_REG=@"http://192.168.0.153:8181/labonline/hyController/insertHyyh.do";
 
 @implementation AppDelegate
 
@@ -50,13 +51,13 @@ NSString *const COCIM_INTERFACE_LOGIN =  @"http://192.168.0.153:8181/labonline/h
     //动画效果可以被自己自定义，具体请看api
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     NSString *name = [userDefault objectForKey:@"userName"];
-    if (name==nil) {
-        LoginViewController *loginVC=[[LoginViewController alloc] initWithNibName:nil bundle:nil];
-        loginVC.sideViewController=_sideViewController;
-        self.window.rootViewController=loginVC;
-    }else{
+//    if (name==nil) {
+//        LoginViewController *loginVC=[[LoginViewController alloc] initWithNibName:nil bundle:nil];
+//        loginVC.sideViewController=_sideViewController;
+//        self.window.rootViewController=loginVC;
+//    }else{
         self.window.rootViewController=_sideViewController;
-    }
+//    }
     
     [self.window makeKeyAndVisible];
     return YES;

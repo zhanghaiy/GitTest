@@ -24,6 +24,7 @@
 #import "PersonCenterViewController.h"          // 下拉刷新
 #import "YRSideViewController.h"                // 侧滑
 #import "AppDelegate.h"
+#import "LoginViewController.h"
 
 @interface MainViewController ()<LeftViewControllerDelegate,UIScrollViewDelegate>
 {
@@ -204,8 +205,10 @@
             break;
         case SettingCenter:
         {
-            SettingCenterViewController *settingVC = [[SettingCenterViewController alloc]init];
-            [self.navigationController pushViewController:settingVC animated:YES];
+//            SettingCenterViewController *settingVC = [[SettingCenterViewController alloc]init];
+//            [self.navigationController pushViewController:settingVC animated:YES];
+            LoginViewController *loginVC=[[LoginViewController alloc]init];
+            [self presentViewController:loginVC animated:YES completion:nil];
         }
             break;
         default:

@@ -11,6 +11,7 @@
 #import "MainViewController.h"
 #import "AppDelegate.h"
 #import "UserModel.h"
+#import "RegisterViewController.h"
 
 @interface LoginViewController ()
 
@@ -74,7 +75,8 @@
             [userDe setObject:username forKey:@"userName"];
             [userDe synchronize];
             
-            [self presentViewController:_sideViewController animated:YES completion:nil];
+//            [self presentViewController:_sideViewController animated:YES completion:nil];
+            [self dismissViewControllerAnimated:YES completion:nil];
         }else{
             UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"登录" message:@"用户名密码错误" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
             [alert show];
@@ -87,6 +89,12 @@
     }];
     
     
+}
+
+- (IBAction)doRegister:(id)sender {
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//    RegisterViewController *reVC=[[RegisterViewController alloc] initWithNibName:nil bundle:nil];
+//    [self presentViewController:reVC animated:YES completion:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

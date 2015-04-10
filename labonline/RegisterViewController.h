@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface RegisterViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UITextField *nickName;
+@property (weak, nonatomic) IBOutlet UITextField *username;
+@property (weak, nonatomic) IBOutlet UITextField *password;
+@property (weak, nonatomic) IBOutlet UITextField *email;
+@property (weak, nonatomic) IBOutlet UITextField *phone;
 
 - (IBAction)DoRegister:(id)sender;
 @end
