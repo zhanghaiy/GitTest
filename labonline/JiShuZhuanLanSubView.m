@@ -28,7 +28,8 @@
     _subDict = subDict;
     _titleLable.text = [_subDict objectForKey:@"title"];
     _fromLable.text = [_subDict objectForKey:@"type"];
-    _youLanCountsLable.text = [_subDict objectForKey:@"seenum"];
+    _youLanCountsLable.text = [NSString stringWithFormat:@"%ld",[[_subDict objectForKey:@"seenum"] integerValue]];
+    ;
 }
 
 /*

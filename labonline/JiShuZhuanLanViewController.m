@@ -27,6 +27,8 @@
 @implementation JiShuZhuanLanViewController
 #define kImageShowViewHeight 150
 #define kCellHeight 245
+#define kCellBaseHeight 45
+#define kCellAloneArticalHeight 40
 
 
 
@@ -117,10 +119,10 @@
 
 
 #pragma mark - UITableView Delegate
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+//{
+//    return 1;
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -172,7 +174,10 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return kCellHeight;
+    NSArray *subArr = [[_articleListArray objectAtIndex:indexPath.row] objectForKey:@"article"];
+    NSInteger count = (subArr.count>5)?5:subArr.count;
+    NSLog(@"%ld",count);
+    return kCellBaseHeight + kCellAloneArticalHeight*count;
 }
 
 - (void)popToPrePage

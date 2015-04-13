@@ -66,6 +66,7 @@
     {
         counts = 5;
     }
+    NSLog(@"_______%ld",counts);
     for (int i = 0; i < counts; i ++)
     {
         NSDictionary *subDict = [_articleArray objectAtIndex:i];
