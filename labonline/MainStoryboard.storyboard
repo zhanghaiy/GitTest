@@ -58,7 +58,8 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="qSa-YR-xkG" kind="show" id="RU9-BM-EDf"/>
+                                    <action selector="doRegister:" destination="ccG-Bx-Gjs" eventType="touchUpInside" id="Kst-UO-xVP"/>
+                                    <segue destination="qSa-YR-xkG" kind="show" id="svT-Lm-IDY"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lfL-es-q9J">
@@ -113,7 +114,7 @@
         <!--Register View Controller-->
         <scene sceneID="D5z-ES-7bg">
             <objects>
-                <viewController id="qSa-YR-xkG" customClass="RegisterViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="registerV" id="qSa-YR-xkG" customClass="RegisterViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="daP-l7-GOh"/>
                         <viewControllerLayoutGuide type="bottom" id="C6Y-Wo-f12"/>
@@ -339,6 +340,13 @@
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="email" destination="GwW-9d-8HH" id="IgI-Gh-ag1"/>
+                        <outlet property="nickName" destination="cwV-hg-WVS" id="5ZR-Nj-B2u"/>
+                        <outlet property="password" destination="uAm-CI-Hzp" id="EfJ-XE-snu"/>
+                        <outlet property="phone" destination="A59-3D-TxD" id="22q-da-cpk"/>
+                        <outlet property="username" destination="gaq-2u-U9J" id="ejl-ug-3sk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a4O-bD-DC5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

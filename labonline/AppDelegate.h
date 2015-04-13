@@ -18,5 +18,9 @@
 
 @property (strong,nonatomic) YRSideViewController *sideViewController;
 
+extern NSString *const COCIM_SERVER_PATH;
+extern NSString *const COCIM_INTERFACE_LOGIN;
+extern NSString *const COCIM_INTERFACE_REG;
+
 @end
 

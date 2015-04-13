@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "YRSideViewController.h"
+#import "AFNetworkTool.h"
 
 @interface LoginViewController : UIViewController<UITextFieldDelegate>
 
@@ -16,5 +17,6 @@
 @property (strong,nonatomic) YRSideViewController *sideViewController;
 
 - (IBAction)doLogin:(id)sender;
+- (IBAction)doRegister:(id)sender;
 
 @end

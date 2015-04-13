@@ -186,15 +186,16 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     //移除UserDefaults中存储的用户信息
     [userDefaults removeObjectForKey:@"userName"];
+    [userDefaults synchronize];
     
-    AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
-    if ([delegate.window.rootViewController isKindOfClass:[LoginViewController class]]) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            [self.navigationController popToRootViewControllerAnimated:YES];
-        }];
-    }else{
+//    AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
+//    if ([delegate.window.rootViewController isKindOfClass:[LoginViewController class]]) {
+//        [self dismissViewControllerAnimated:YES completion:^{
+//            [self.navigationController popToRootViewControllerAnimated:YES];
+//        }];
+//    }else{
         [self.navigationController popToRootViewControllerAnimated:YES];
-    }
+//    }
 
 }
 

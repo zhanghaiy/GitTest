@@ -24,6 +24,7 @@
 #import "PersonCenterViewController.h"          // 下拉刷新
 #import "YRSideViewController.h"                // 侧滑
 #import "AppDelegate.h"
+#import "LoginViewController.h"
 
 #import "NetManager.h"   // 网络请求
 
@@ -268,8 +269,10 @@
             break;
         case SettingCenter:
         {
-            SettingCenterViewController *settingVC = [[SettingCenterViewController alloc]init];
-            [self.navigationController pushViewController:settingVC animated:YES];
+//            SettingCenterViewController *settingVC = [[SettingCenterViewController alloc]init];
+//            [self.navigationController pushViewController:settingVC animated:YES];
+            LoginViewController *loginVC=[[LoginViewController alloc]init];
+            [self presentViewController:loginVC animated:YES completion:nil];
         }
             break;
         default:
