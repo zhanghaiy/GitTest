@@ -8,11 +8,12 @@
 
 #import "MyCollectionViewController.h"
 #import "MyCollectionCell.h"
-
+#import "NetManager.h"
 
 @interface MyCollectionViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_myCollectionTableView;
+    NSArray *_collectionArray;
 }
 
 @end
@@ -34,7 +35,7 @@
     
     self.title = @"我的收藏";
     self.view.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
-    
+//    _userId = @"529EEF8D5991473488DB877F100B2A01";
     //界面调整
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
     {
@@ -56,7 +57,40 @@
     _myCollectionTableView.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
     _myCollectionTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_myCollectionTableView];
+ 
+//    [self requestDataWithUrlString:[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,kUserId]];
 }
+
+- (void)requestDataWithUrlString:(NSString *)urlString
+{
+    NetManager *netManager = [[NetManager alloc]init];
+    netManager.delegate = self;
+    netManager.action = @selector(netManagerCallBack:);
+    [netManager requestDataWithUrlString:urlString];
+}
+
+- (void)netManagerCallBack:(NetManager *)netManager
+{
+    if (netManager.failError)
+    {
+        // 失败
+    }
+    else if (netManager.downLoadData)
+    {
+       // 成功
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
+        NSInteger respCode = [[dic objectForKey:@"respCode"] integerValue];
+        if (respCode == 1000)
+        {
+            // 成功
+            _collectionArray= [dic objectForKey:@"list"];
+            [_myCollectionTableView reloadData];
+            // 数据为空
+        }
+    }
+}
+
+
 
 - (void)backToPrePage
 {
@@ -64,15 +98,15 @@
 }
 
 #pragma mark - UITableViewDelegate
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 10;
+//    return _collectionArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifer = @"";
+    static NSString *cellIdentifer = @"MyCollectionCell";
     MyCollectionCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifer];
     if (cell == nil)
     {
@@ -81,7 +115,7 @@
         cell.action = @selector(deleteMyCollection:);
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    
+    cell.infoDict = [_collectionArray objectAtIndex:indexPath.row];
     return cell;
 }
 

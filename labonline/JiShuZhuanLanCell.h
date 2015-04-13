@@ -15,6 +15,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
 - (IBAction)moreButtonClicked:(id)sender;
 
+@property (nonatomic,strong) NSDictionary *articleDict;
+
 @property (nonatomic) id target;
 @property (nonatomic) SEL buttonClickSelector;
 @property (nonatomic) SEL jszlViewClickedAction;

@@ -83,6 +83,16 @@
 		FD558D611AC4098F00DA42FF /* grayArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD558D581AC4098F00DA42FF /* grayArrow@2x.png */; };
 		FD558D621AC4098F00DA42FF /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FD558D591AC4098F00DA42FF /* whiteArrow.png */; };
 		FD558D631AC4098F00DA42FF /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD558D5A1AC4098F00DA42FF /* whiteArrow@2x.png */; };
+		FD5CC55D1AD762BD008986F0 /* NetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5CC55C1AD762BD008986F0 /* NetManager.m */; };
+		FD5CC6451AD7B8A1008986F0 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = FD5CC6311AD7B8A0008986F0 /* LICENSE */; };
+		FD5CC6461AD7B8A1008986F0 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = FD5CC6321AD7B8A0008986F0 /* README.md */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FD5CC6471AD7B8A1008986F0 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5CC6341AD7B8A0008986F0 /* SDImageCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FD5CC6481AD7B8A1008986F0 /* SDWebImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5CC6381AD7B8A0008986F0 /* SDWebImageDecoder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FD5CC6491AD7B8A1008986F0 /* SDWebImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5CC63A1AD7B8A0008986F0 /* SDWebImageDownloader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FD5CC64A1AD7B8A1008986F0 /* SDWebImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5CC63D1AD7B8A1008986F0 /* SDWebImageManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FD5CC64B1AD7B8A1008986F0 /* SDWebImagePrefetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5CC6401AD7B8A1008986F0 /* SDWebImagePrefetcher.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FD5CC64C1AD7B8A1008986F0 /* UIButton+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5CC6421AD7B8A1008986F0 /* UIButton+WebCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FD5CC64D1AD7B8A1008986F0 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5CC6441AD7B8A1008986F0 /* UIImageView+WebCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FD5D3BF71AD3ACC200A6F60E /* SettingCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5D3BF61AD3ACC200A6F60E /* SettingCenterViewController.m */; };
 		FD5D3C011AD3BF2800A6F60E /* about.png in Resources */ = {isa = PBXBuildFile; fileRef = FD5D3BF91AD3BF2800A6F60E /* about.png */; };
 		FD5D3C021AD3BF2800A6F60E /* fontSize.png in Resources */ = {isa = PBXBuildFile; fileRef = FD5D3BFA1AD3BF2800A6F60E /* fontSize.png */; };
@@ -145,6 +155,14 @@
 		FDC430E81AD61B22006AC165 /* 杂志图.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC430E71AD61B22006AC165 /* 杂志图.png */; };
 		FDC430EB1AD62684006AC165 /* ShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC430EA1AD62684006AC165 /* ShareView.m */; };
 		FDC430ED1AD62693006AC165 /* ShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDC430EC1AD62693006AC165 /* ShareView.xib */; };
+		FDC430F11AD673DA006AC165 /* UserCallBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC430F01AD673DA006AC165 /* UserCallBackViewController.m */; };
+		FDC431061AD687F2006AC165 /* QQ.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC431001AD687F2006AC165 /* QQ.png */; };
+		FDC431071AD687F2006AC165 /* QQ空间.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC431011AD687F2006AC165 /* QQ空间.png */; };
+		FDC431081AD687F2006AC165 /* 人人.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC431021AD687F2006AC165 /* 人人.png */; };
+		FDC431091AD687F2006AC165 /* 微信.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC431031AD687F2006AC165 /* 微信.png */; };
+		FDC4310A1AD687F2006AC165 /* 新浪微博.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC431041AD687F2006AC165 /* 新浪微博.png */; };
+		FDC4310B1AD687F2006AC165 /* 朋友圈.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC431051AD687F2006AC165 /* 朋友圈.png */; };
+		FDC4310F1AD6893B006AC165 /* QQ邮箱.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC4310E1AD6893B006AC165 /* QQ邮箱.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -267,6 +285,28 @@
 		FD558D581AC4098F00DA42FF /* grayArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayArrow@2x.png"; sourceTree = "<group>"; };
 		FD558D591AC4098F00DA42FF /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
 		FD558D5A1AC4098F00DA42FF /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
+		FD5CC55B1AD762BD008986F0 /* NetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetManager.h; sourceTree = "<group>"; };
+		FD5CC55C1AD762BD008986F0 /* NetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetManager.m; sourceTree = "<group>"; };
+		FD5CC6311AD7B8A0008986F0 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		FD5CC6321AD7B8A0008986F0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		FD5CC6331AD7B8A0008986F0 /* SDImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDImageCache.h; sourceTree = "<group>"; };
+		FD5CC6341AD7B8A0008986F0 /* SDImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDImageCache.m; sourceTree = "<group>"; };
+		FD5CC6351AD7B8A0008986F0 /* SDImageCacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDImageCacheDelegate.h; sourceTree = "<group>"; };
+		FD5CC6361AD7B8A0008986F0 /* SDWebImageCompat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageCompat.h; sourceTree = "<group>"; };
+		FD5CC6371AD7B8A0008986F0 /* SDWebImageDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDecoder.h; sourceTree = "<group>"; };
+		FD5CC6381AD7B8A0008986F0 /* SDWebImageDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageDecoder.m; sourceTree = "<group>"; };
+		FD5CC6391AD7B8A0008986F0 /* SDWebImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDownloader.h; sourceTree = "<group>"; };
+		FD5CC63A1AD7B8A0008986F0 /* SDWebImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageDownloader.m; sourceTree = "<group>"; };
+		FD5CC63B1AD7B8A1008986F0 /* SDWebImageDownloaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDownloaderDelegate.h; sourceTree = "<group>"; };
+		FD5CC63C1AD7B8A1008986F0 /* SDWebImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageManager.h; sourceTree = "<group>"; };
+		FD5CC63D1AD7B8A1008986F0 /* SDWebImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageManager.m; sourceTree = "<group>"; };
+		FD5CC63E1AD7B8A1008986F0 /* SDWebImageManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageManagerDelegate.h; sourceTree = "<group>"; };
+		FD5CC63F1AD7B8A1008986F0 /* SDWebImagePrefetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImagePrefetcher.h; sourceTree = "<group>"; };
+		FD5CC6401AD7B8A1008986F0 /* SDWebImagePrefetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImagePrefetcher.m; sourceTree = "<group>"; };
+		FD5CC6411AD7B8A1008986F0 /* UIButton+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+WebCache.h"; sourceTree = "<group>"; };
+		FD5CC6421AD7B8A1008986F0 /* UIButton+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+WebCache.m"; sourceTree = "<group>"; };
+		FD5CC6431AD7B8A1008986F0 /* UIImageView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+WebCache.h"; sourceTree = "<group>"; };
+		FD5CC6441AD7B8A1008986F0 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		FD5D3BF51AD3ACC200A6F60E /* SettingCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingCenterViewController.h; sourceTree = "<group>"; };
 		FD5D3BF61AD3ACC200A6F60E /* SettingCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingCenterViewController.m; sourceTree = "<group>"; };
 		FD5D3BF91AD3BF2800A6F60E /* about.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = about.png; sourceTree = "<group>"; };
@@ -362,6 +402,15 @@
 		FDC430E91AD62684006AC165 /* ShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareView.h; sourceTree = "<group>"; };
 		FDC430EA1AD62684006AC165 /* ShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareView.m; sourceTree = "<group>"; };
 		FDC430EC1AD62693006AC165 /* ShareView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShareView.xib; sourceTree = "<group>"; };
+		FDC430EF1AD673DA006AC165 /* UserCallBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCallBackViewController.h; sourceTree = "<group>"; };
+		FDC430F01AD673DA006AC165 /* UserCallBackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCallBackViewController.m; sourceTree = "<group>"; };
+		FDC431001AD687F2006AC165 /* QQ.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QQ.png; sourceTree = "<group>"; };
+		FDC431011AD687F2006AC165 /* QQ空间.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QQ空间.png"; sourceTree = "<group>"; };
+		FDC431021AD687F2006AC165 /* 人人.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "人人.png"; sourceTree = "<group>"; };
+		FDC431031AD687F2006AC165 /* 微信.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "微信.png"; sourceTree = "<group>"; };
+		FDC431041AD687F2006AC165 /* 新浪微博.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "新浪微博.png"; sourceTree = "<group>"; };
+		FDC431051AD687F2006AC165 /* 朋友圈.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "朋友圈.png"; sourceTree = "<group>"; };
+		FDC4310E1AD6893B006AC165 /* QQ邮箱.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QQ邮箱.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -533,6 +582,7 @@
 		FD558CF41AC3A62900DA42FF /* 切图（安卓） */ = {
 			isa = PBXGroup;
 			children = (
+				FDC430FF1AD687F2006AC165 /* 分享图标 */,
 				FDC430E71AD61B22006AC165 /* 杂志图.png */,
 				FDA91DFA1AD5156100734E1B /* 分类按钮back.png */,
 				FDA91DF61AD5085400734E1B /* tubiao_04.png */,
@@ -621,6 +671,33 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		FD5CC6301AD7B8A0008986F0 /* SDWebImage */ = {
+			isa = PBXGroup;
+			children = (
+				FD5CC6311AD7B8A0008986F0 /* LICENSE */,
+				FD5CC6321AD7B8A0008986F0 /* README.md */,
+				FD5CC6331AD7B8A0008986F0 /* SDImageCache.h */,
+				FD5CC6341AD7B8A0008986F0 /* SDImageCache.m */,
+				FD5CC6351AD7B8A0008986F0 /* SDImageCacheDelegate.h */,
+				FD5CC6361AD7B8A0008986F0 /* SDWebImageCompat.h */,
+				FD5CC6371AD7B8A0008986F0 /* SDWebImageDecoder.h */,
+				FD5CC6381AD7B8A0008986F0 /* SDWebImageDecoder.m */,
+				FD5CC6391AD7B8A0008986F0 /* SDWebImageDownloader.h */,
+				FD5CC63A1AD7B8A0008986F0 /* SDWebImageDownloader.m */,
+				FD5CC63B1AD7B8A1008986F0 /* SDWebImageDownloaderDelegate.h */,
+				FD5CC63C1AD7B8A1008986F0 /* SDWebImageManager.h */,
+				FD5CC63D1AD7B8A1008986F0 /* SDWebImageManager.m */,
+				FD5CC63E1AD7B8A1008986F0 /* SDWebImageManagerDelegate.h */,
+				FD5CC63F1AD7B8A1008986F0 /* SDWebImagePrefetcher.h */,
+				FD5CC6401AD7B8A1008986F0 /* SDWebImagePrefetcher.m */,
+				FD5CC6411AD7B8A1008986F0 /* UIButton+WebCache.h */,
+				FD5CC6421AD7B8A1008986F0 /* UIButton+WebCache.m */,
+				FD5CC6431AD7B8A1008986F0 /* UIImageView+WebCache.h */,
+				FD5CC6441AD7B8A1008986F0 /* UIImageView+WebCache.m */,
+			);
+			path = SDWebImage;
+			sourceTree = "<group>";
+		};
 		FD5D3BF41AD3ACA000A6F60E /* 设置 */ = {
 			isa = PBXGroup;
 			children = (
@@ -628,6 +705,8 @@
 				FD5D3BF61AD3ACC200A6F60E /* SettingCenterViewController.m */,
 				FDC430E41AD616BC006AC165 /* AboutMeViewController.h */,
 				FDC430E51AD616BC006AC165 /* AboutMeViewController.m */,
+				FDC430EF1AD673DA006AC165 /* UserCallBackViewController.h */,
+				FDC430F01AD673DA006AC165 /* UserCallBackViewController.m */,
 			);
 			name = "设置";
 			sourceTree = "<group>";
@@ -754,9 +833,12 @@
 		FD96C8B51AC10A660002778A /* Net */ = {
 			isa = PBXGroup;
 			children = (
+				FD5CC6301AD7B8A0008986F0 /* SDWebImage */,
 				FD8AE2E41ACE31CB00A4A5B6 /* AFNetworkTool.h */,
 				FD8AE2E51ACE31CB00A4A5B6 /* AFNetworkTool.m */,
 				04FE4C2C1ACD328D00A922DA /* AFNetworking */,
+				FD5CC55B1AD762BD008986F0 /* NetManager.h */,
+				FD5CC55C1AD762BD008986F0 /* NetManager.m */,
 			);
 			name = Net;
 			sourceTree = "<group>";
@@ -912,6 +994,20 @@
 			name = "设置";
 			sourceTree = "<group>";
 		};
+		FDC430FF1AD687F2006AC165 /* 分享图标 */ = {
+			isa = PBXGroup;
+			children = (
+				FDC4310E1AD6893B006AC165 /* QQ邮箱.png */,
+				FDC431001AD687F2006AC165 /* QQ.png */,
+				FDC431011AD687F2006AC165 /* QQ空间.png */,
+				FDC431021AD687F2006AC165 /* 人人.png */,
+				FDC431031AD687F2006AC165 /* 微信.png */,
+				FDC431041AD687F2006AC165 /* 新浪微博.png */,
+				FDC431051AD687F2006AC165 /* 朋友圈.png */,
+			);
+			path = "分享图标";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -999,6 +1095,7 @@
 				043C772D1AD4F15D00B0DEAC /* 注册按钮_05.png in Resources */,
 				042C467B1AC297F600D36C8F /* wangqi.png in Resources */,
 				FD558D0F1AC3E1A500DA42FF /* aniu_07.png in Resources */,
+				FDC431081AD687F2006AC165 /* 人人.png in Resources */,
 				FD462E5B1ACD2DB2001AC895 /* OffLineVidioCell.xib in Resources */,
 				FD5D3C051AD3BF2800A6F60E /* share.png in Resources */,
 				FD47C8201AC53A3300846AC9 /* JSZLEvaluationCell.xib in Resources */,
@@ -1013,6 +1110,7 @@
 				FD7901231ACA490D00D908EA /* 12.jpg in Resources */,
 				FD558D101AC3E1A500DA42FF /* aniu_09.png in Resources */,
 				FD96C8E11AC13A3E0002778A /* 1.mp4 in Resources */,
+				FDC4310F1AD6893B006AC165 /* QQ邮箱.png in Resources */,
 				FD5D3C021AD3BF2800A6F60E /* fontSize.png in Resources */,
 				FD8B56701ACE9BD6009F5E15 /* OK.png in Resources */,
 				FD462E531ACCE022001AC895 /* 我的收藏背景.png in Resources */,
@@ -1023,6 +1121,7 @@
 				FD558D5E1AC4098F00DA42FF /* blueArrow.png in Resources */,
 				FD558CF91AC3A62900DA42FF /* 搜索.png in Resources */,
 				FD5D3C081AD3BF2800A6F60E /* wifi.png in Resources */,
+				FD5CC6451AD7B8A1008986F0 /* LICENSE in Resources */,
 				FD462E491ACCDF6B001AC895 /* MyCollectionCell.xib in Resources */,
 				FDC430E31AD60C05006AC165 /* SearchCell.xib in Resources */,
 				FD462E5E1ACD2FC1001AC895 /* 播放.png in Resources */,
@@ -1038,6 +1137,7 @@
 				FD558CF31AC3A43B00DA42FF /* JiShuZhuanLanCell.xib in Resources */,
 				FD558D611AC4098F00DA42FF /* grayArrow@2x.png in Resources */,
 				FDA91DFB1AD5156100734E1B /* 分类按钮back.png in Resources */,
+				FDC431091AD687F2006AC165 /* 微信.png in Resources */,
 				FD47C8171AC5316300846AC9 /* 评价.png in Resources */,
 				FD8AE2E01ACE230100A4A5B6 /* PersonEditCell.xib in Resources */,
 				FD462E511ACCE022001AC895 /* 确定.png in Resources */,
@@ -1046,6 +1146,7 @@
 				FD558D1A1AC4001600DA42FF /* 33.jpg in Resources */,
 				FD8B566E1ACE858C009F5E15 /* JSZLCateView.xib in Resources */,
 				FD558CFF1AC3A6A300DA42FF /* 新消息提醒_05.png in Resources */,
+				FDC431071AD687F2006AC165 /* QQ空间.png in Resources */,
 				FD5D3C071AD3BF2800A6F60E /* versionUpdate.png in Resources */,
 				FD558D5C1AC4098F00DA42FF /* blackArrow.png in Resources */,
 				043C77301AD4F15D00B0DEAC /* beij.png in Resources */,
@@ -1054,10 +1155,12 @@
 				FD5D3C061AD3BF2800A6F60E /* UserFeedBack.png in Resources */,
 				043C772F1AD4F15D00B0DEAC /* anniu_07.png in Resources */,
 				FD558CF81AC3A62900DA42FF /* pictureShow.png in Resources */,
+				FDC4310A1AD687F2006AC165 /* 新浪微博.png in Resources */,
 				FDA91DF91AD50F5000734E1B /* MainListCell.xib in Resources */,
 				FD462E521ACCE022001AC895 /* 删除.png in Resources */,
 				FD558CFA1AC3A62900DA42FF /* 游览.png in Resources */,
 				FD9A76EF1ACBD2B1007ACC11 /* 离线视频.png in Resources */,
+				FDC4310B1AD687F2006AC165 /* 朋友圈.png in Resources */,
 				FD462E611ACD3E90001AC895 /* 左侧列.png in Resources */,
 				FD9A76F21ACBD2B1007ACC11 /* 我的收藏.png in Resources */,
 				FD9A76F31ACBD2B1007ACC11 /* 我的杂志.png in Resources */,
@@ -1067,6 +1170,7 @@
 				FD558D631AC4098F00DA42FF /* whiteArrow@2x.png in Resources */,
 				FD5D3C0D1AD3C15000A6F60E /* SettingCell.xib in Resources */,
 				FD47C8161AC5316300846AC9 /* 分享.png in Resources */,
+				FDC431061AD687F2006AC165 /* QQ.png in Resources */,
 				FD462E4F1ACCE022001AC895 /* 弹出框.png in Resources */,
 				043C77321AD4F15D00B0DEAC /* shurukuang_05.png in Resources */,
 				FD8AE3271ACE67A900A4A5B6 /* MainNewView.xib in Resources */,
@@ -1089,11 +1193,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				04E37C6E1ACD28EB00045E64 /* YRSideViewController.m in Sources */,
+				FD5CC55D1AD762BD008986F0 /* NetManager.m in Sources */,
 				FD462E441ACCDE1F001AC895 /* MyCollectionViewController.m in Sources */,
 				FD8B566C1ACE8578009F5E15 /* JSZLCateView.m in Sources */,
 				FD5D3C0C1AD3C15000A6F60E /* SettingCell.m in Sources */,
 				FD96C88C1AC109E00002778A /* AppDelegate.m in Sources */,
 				FD558CF21AC3A43B00DA42FF /* JiShuZhuanLanCell.m in Sources */,
+				FD5CC6481AD7B8A1008986F0 /* SDWebImageDecoder.m in Sources */,
+				FD5CC6471AD7B8A1008986F0 /* SDImageCache.m in Sources */,
 				FD462E641ACD584C001AC895 /* MyMagazineViewController.m in Sources */,
 				FD558D131AC3E74600DA42FF /* JiShuZhuanLanMoreViewController.m in Sources */,
 				04FE4C431ACD328D00A922DA /* AFHTTPRequestOperationManager.m in Sources */,
@@ -1109,8 +1216,11 @@
 				FD47C81B1AC5386E00846AC9 /* JSZLEvaluationViewController.m in Sources */,
 				FDA91DF31AD4F98100734E1B /* NavigationButton.m in Sources */,
 				FDC430EB1AD62684006AC165 /* ShareView.m in Sources */,
+				FD5CC6491AD7B8A1008986F0 /* SDWebImageDownloader.m in Sources */,
+				FD5CC6461AD7B8A1008986F0 /* README.md in Sources */,
 				042C46741AC2815300D36C8F /* MenuViewController.m in Sources */,
 				FD96C8E71AC146480002778A /* PictureShowView.m in Sources */,
+				FD5CC64C1AD7B8A1008986F0 /* UIButton+WebCache.m in Sources */,
 				FD462E5A1ACD2DB2001AC895 /* OffLineVidioCell.m in Sources */,
 				FDC430E21AD60C05006AC165 /* SearchCell.m in Sources */,
 				FDB7CD3B1ACA6E86007BAF79 /* PDFBrowserViewController.m in Sources */,
@@ -1120,7 +1230,9 @@
 				FD5D3BF71AD3ACC200A6F60E /* SettingCenterViewController.m in Sources */,
 				04FE4C451ACD328D00A922DA /* AFNetworkReachabilityManager.m in Sources */,
 				04FE4C471ACD328D00A922DA /* AFURLConnectionOperation.m in Sources */,
+				FD5CC64D1AD7B8A1008986F0 /* UIImageView+WebCache.m in Sources */,
 				FD558D5B1AC4098F00DA42FF /* EGORefreshTableHeaderView.m in Sources */,
+				FDC430F11AD673DA006AC165 /* UserCallBackViewController.m in Sources */,
 				043C77381AD4F1A000B0DEAC /* LoginViewController.m in Sources */,
 				FD9A76B41ACBC929007ACC11 /* PersonCenterViewController.m in Sources */,
 				FD8AE3221ACE658300A4A5B6 /* JiShuZhuanLanViewController.m in Sources */,
@@ -1139,11 +1251,13 @@
 				FDC430E61AD616BC006AC165 /* AboutMeViewController.m in Sources */,
 				04FE4C481ACD328D00A922DA /* AFURLRequestSerialization.m in Sources */,
 				FD9A76B01ACB86F7007ACC11 /* MainListCell.m in Sources */,
+				FD5CC64A1AD7B8A1008986F0 /* SDWebImageManager.m in Sources */,
 				FD96C8C31AC1107C0002778A /* VidioPlayerViewController.m in Sources */,
 				042C46791AC2976200D36C8F /* WangQiCell.m in Sources */,
 				FD96C8891AC109E00002778A /* main.m in Sources */,
 				FD9A76FA1ACBE711007ACC11 /* MyCommentViewController.m in Sources */,
 				FD8AE2DF1ACE230100A4A5B6 /* PersonEditCell.m in Sources */,
+				FD5CC64B1AD7B8A1008986F0 /* SDWebImagePrefetcher.m in Sources */,
 				FD558D081AC3B11D00DA42FF /* JiShuZhuanLanSubView.m in Sources */,
 				FD8AE3251ACE679500A4A5B6 /* MainNewView.m in Sources */,
 			);

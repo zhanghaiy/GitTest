@@ -21,8 +21,18 @@ typedef enum
     JiShuZhuanLan,
     WangQi,
     PersonCenter,
-    SettingCenter
+    SettingCenter,
+    LogIn,
+    Register
 }ResourceType;
+
+// 我的收藏接口 参数 userid
+#define kMyCollectionUrlString @"http://192.168.0.153:8181/labonline/hyController/queryWdscList.do"
+#define kUserId @"529EEF8D5991473488DB877F100B2A01"
+#define kJSZLUrlString @"http://192.168.0.153:8181/labonline/indexController/queryJszlList.do"
+
+// 主页接口 无参数
+#define kMainUrlString @"http://192.168.0.153:8181/labonline/indexController/queryList.do"
 
 #define kOneFontSize 13
 #define kTwoFontSize 12

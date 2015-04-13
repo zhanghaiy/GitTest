@@ -26,7 +26,7 @@
     _headButton.layer.masksToBounds = YES;
     _headButton.layer.cornerRadius = 3;
     _headTitleLable.textColor = [UIColor colorWithRed:217/255.0 green:0 blue:6/255.0 alpha:1];
-//    _headTitleLable.backgroundColor = [UIColor colorWithWhite:238/255.0 alpha:1];
+    _headTitleLable.backgroundColor = [UIColor colorWithWhite:238/255.0 alpha:1];
 }
 
 - (void)setCateDataArray:(NSArray *)cateDataArray
@@ -37,7 +37,7 @@
 
 - (void)createCategoryLable
 {
-     _headTitleLable.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1];
+     _headTitleLable.backgroundColor = [UIColor colorWithWhite:238/255.0 alpha:1];
     NSInteger index = 0;
     NSInteger lableWidth = (self.bounds.size.width-50)/4;
     NSInteger hang = 2;
@@ -45,19 +45,19 @@
     {
         hang = _cateDataArray.count%4?_cateDataArray.count/4+1:_cateDataArray.count/4;
     }
-    
     for (int i = 0; i < hang; i ++)
     {
         for (int j = 0; j < 4; j ++)
         {
             if (_cateDataArray.count > i*4+j)
             {
+                NSDictionary *subDict = [_cateDataArray objectAtIndex:index];
                 UILabel *cateLab = [[UILabel alloc]initWithFrame:CGRectMake(10+j*(lableWidth+10), 40+i*(kCategoryLableHeight+10), lableWidth, kCategoryLableHeight)];
-//                cateLab.text = @"生物检验";
-                cateLab.text = [_cateDataArray objectAtIndex:index];
+                cateLab.text = [subDict objectForKey:@"columnname"];
+//                cateLab.text = [_cateDataArray objectAtIndex:index];
                 cateLab.tag = kCateLableTag+index;
                 cateLab.textAlignment = NSTextAlignmentCenter;
-                cateLab.textColor = [UIColor colorWithRed:90/255.0 green:90/255.0 blue:90/255.0 alpha:1];
+//                cateLab.textColor = [UIColor colorWithRed:90/255.0 green:90/255.0 blue:90/255.0 alpha:1];
                 cateLab.font = [UIFont systemFontOfSize:kTwoFontSize];
                 cateLab.layer.masksToBounds = YES;
                 cateLab.layer.cornerRadius = 5;

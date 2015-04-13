@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 - (IBAction)deleteButtonClicked:(id)sender;
 
+@property (nonatomic,strong) NSDictionary *infoDict;
+
 @property (nonatomic,assign) id target;
 @property (nonatomic,assign) SEL action;
 

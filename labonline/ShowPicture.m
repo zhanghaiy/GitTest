@@ -7,6 +7,8 @@
 //
 
 #import "ShowPicture.h"
+#import "UIImageView+WebCache.h"
+
 
 #define kPageControlTag 222
 #define kScrollViewTag 223
@@ -46,7 +48,11 @@
     
     for (int i = 0; i < _imageDataArray.count; i ++)
     {
-        UIImage *img = [UIImage imageNamed:[_imageDataArray objectAtIndex:i]];
+        UIImageView *imgV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0,kScreenWidth, 100)];
+        [imgV setImageWithURL:[NSURL URLWithString:[_imageDataArray objectAtIndex:i]]];
+        [scrollView addSubview:imgV];
+        
+        UIImage *img = imgV.image;
         NSInteger imageWid = img.size.width;
         NSInteger imageHeight = img.size.height;
         if (imageWid>wid-20||imageHeight>(height-120))
@@ -55,9 +61,7 @@
             imageWid = wid-20;
             imageHeight = imageWid/level;
         }
-        UIImageView *imgV = [[UIImageView alloc]initWithFrame:CGRectMake(i*wid+(wid-imageWid)/2, (kScreenHeight-imageHeight)/2, imageWid, imageHeight)];
-        imgV.image = img;
-        [scrollView addSubview:imgV];
+        imgV.frame = CGRectMake(i*wid+(wid-imageWid)/2, (kScreenHeight-imageHeight)/2, imageWid, imageHeight);
     }
     
     UIPageControl *pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake((wid-100)/2, height-50, 100, 10)];

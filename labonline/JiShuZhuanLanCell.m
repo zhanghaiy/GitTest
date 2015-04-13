@@ -13,6 +13,7 @@
 {
     NSInteger _selfViewWidth;
     NSInteger _selfViewHeight;
+    NSArray *_articleArray;
 }
 
 #define kJiShuZhuanLanSubViewTag 222
@@ -35,7 +36,7 @@
     _topImgView.backgroundColor = [UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1];
     _topImgView.layer.masksToBounds = YES;
     _topImgView.layer.cornerRadius = 3;
-    [self createJSZLSubViewWithCounts:5];
+//    [self createJSZLSubViewWithCounts:5];
     //
     UIColor *redColor = [UIColor colorWithRed:232/255.0 green:0 blue:13/255.0 alpha:1];
     _titleLable.textColor = redColor;
@@ -43,6 +44,19 @@
     [_moreButton setTitleColor:redColor forState:UIControlStateNormal];
     _moreButton.titleLabel.font = [UIFont systemFontOfSize:kOneFontSize];
 }
+
+- (void)setArticleDict:(NSDictionary *)articleDict
+{
+    _articleDict = articleDict;
+    _titleLable.text = [_articleDict objectForKey:@"type"];
+    _articleArray = [_articleDict objectForKey:@"article"];
+    if (_articleArray.count<=5)
+    {
+        _moreButton.hidden = YES;
+    }
+    [self createJSZLSubViewWithCounts:_articleArray.count];
+}
+
 
 #pragma mark - 循环创建JiShuZhuanLanSubView 
 // 最多5个
@@ -52,11 +66,14 @@
     {
         counts = 5;
     }
+    NSLog(@"_______%ld",counts);
     for (int i = 0; i < counts; i ++)
     {
+        NSDictionary *subDict = [_articleArray objectAtIndex:i];
         JiShuZhuanLanSubView *jiShuZLView = [[[NSBundle mainBundle]loadNibNamed:@"JiShuZhuanLanSubView" owner:self options:0] lastObject];
         jiShuZLView.tag = kJiShuZhuanLanSubViewTag+i;
         jiShuZLView.frame = CGRectMake(11, 35+i*40, kScreenWidth-22, 39);
+        jiShuZLView.subDict = subDict;
         [self addSubview:jiShuZLView];
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapMethod:)];

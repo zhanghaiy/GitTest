@@ -25,10 +25,19 @@
 #import "YRSideViewController.h"                // 侧滑
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import "RegisterViewController.h"
+
+#import "NetManager.h"   // 网络请求
+
 
 @interface MainViewController ()<LeftViewControllerDelegate,UIScrollViewDelegate>
 {
     UIScrollView *_backScrollV;
+    JSZLCateView *_jSZLCateV;
+    PictureShowView *_pictureV;
+    MainNewView *_mainNewV;
+    NSDictionary *_newMagazineDict;
+    NSMutableArray *_newMagazineImageArray;
 }
 @end
 
@@ -87,35 +96,90 @@
     [self.view addSubview:_backScrollV];
     
      // 图片轮播View
-    PictureShowView *pictureV = [[PictureShowView alloc]initWithFrame:CGRectMake(5, 5, kScreenWidth-10, kTopImageShowViewHeight)];
-    pictureV.imageInfoArray = @[@"",@"",@"",@"",@""];
-    pictureV.target = self;
-    pictureV.action = @selector(pictureShowMethod:);
-    [_backScrollV addSubview:pictureV];
+    _pictureV = [[PictureShowView alloc]initWithFrame:CGRectMake(5, 5, kScreenWidth-10, kTopImageShowViewHeight)];
+    _pictureV.target = self;
+    _pictureV.action = @selector(pictureShowMethod:);
+    [_backScrollV addSubview:_pictureV];
     
     // 最新杂志
-    MainNewView *mainNewV = [[[NSBundle mainBundle]loadNibNamed:@"MainNewView" owner:self options:0] lastObject];
-    mainNewV.frame = CGRectMake(5, 15+kTopImageShowViewHeight, kScreenWidth-10, kMainNewViewHeight);
-    mainNewV.target = self;
-    mainNewV.action = @selector(enLargeImage:);
-    mainNewV.imageDataArray = @[@"12.jpg",@"pictureShow.png",@"文章缩略图.png",@"pictureShow.png",@"12.jpg"];
-    [_backScrollV addSubview:mainNewV];
+    _mainNewV = [[[NSBundle mainBundle]loadNibNamed:@"MainNewView" owner:self options:0] lastObject];
+    _mainNewV.frame = CGRectMake(5, 15+kTopImageShowViewHeight, kScreenWidth-10, kMainNewViewHeight);
+    _mainNewV.target = self;
+    _mainNewV.action = @selector(enLargeImage:);
+    [_backScrollV addSubview:_mainNewV];
     
     UITapGestureRecognizer *tapMainV = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(enterMagazineViewController:)];
-    [mainNewV addGestureRecognizer:tapMainV];
+    [_mainNewV addGestureRecognizer:tapMainV];
     
     // 技术专栏
     // 先计算技术专栏的高度
-    NSArray *cateArray = @[@"生物检验",@"物理研究",@"生物检验",@"物理研究",@"生物检验",@"物理研究"];// 模拟数据
-    NSInteger hang = cateArray.count%4?cateArray.count/4+1:cateArray.count/4;
-    NSInteger jSZLHeight = kJSZLHeadHeight + hang*kJSZLAloneHeight;
-    JSZLCateView *jSZLCateV = [[[NSBundle mainBundle]loadNibNamed:@"JSZLCateView" owner:self options:0] lastObject];
-    jSZLCateV.frame = CGRectMake(5, 25+kTopImageShowViewHeight+kMainNewViewHeight, kScreenWidth-10, jSZLHeight);
-    jSZLCateV.cateDataArray = cateArray;
-    jSZLCateV.target = self;
-    jSZLCateV.action = @selector(enterJSZLVireController:);
-    [_backScrollV addSubview:jSZLCateV];
     
+    _jSZLCateV = [[[NSBundle mainBundle]loadNibNamed:@"JSZLCateView" owner:self options:0] lastObject];
+    _jSZLCateV.frame = CGRectMake(5, 25+kTopImageShowViewHeight+kMainNewViewHeight, kScreenWidth-10, kJSZLAloneHeight);
+    _jSZLCateV.target = self;
+    _jSZLCateV.action = @selector(enterJSZLVireController:);
+    [_backScrollV addSubview:_jSZLCateV];
+    
+    [self requestMainDataWithURLString:kMainUrlString];
+}
+
+
+
+#pragma mark - 网络请求
+#pragma mark -- 开始请求
+- (void)requestMainDataWithURLString:(NSString *)urlStr
+{
+    NetManager *netManager = [[NetManager alloc]init];
+    netManager.delegate = self;
+    netManager.action = @selector(requestFinished:);
+    [netManager requestDataWithUrlString:urlStr];
+}
+#pragma mark --网络请求完成
+- (void)requestFinished:(NetManager *)netManager
+{
+    if (netManager.downLoadData)
+    {
+        // 成功
+        // 解析
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
+        [self addControlsWithDictionary:[dict objectForKey:@"data"]];
+    }
+    else
+    {
+        // 失败
+    }
+}
+
+#pragma mark --根据数据来添加UI控件
+- (void)addControlsWithDictionary:(NSDictionary *)dict
+{
+    // 最新主题的数据
+    _newMagazineDict = [[dict objectForKey:@"newMagazineList"] objectAtIndex:0];
+    NSInteger imageCount = [[_newMagazineDict objectForKey:@"picturenum"] integerValue];
+    _newMagazineImageArray = [[NSMutableArray alloc]init];
+    for (int i = 1; i <= imageCount; i ++)
+    {
+        NSString *key = [NSString stringWithFormat:@"pictureurl%d",i];
+        NSString *imageUrl = [_newMagazineDict objectForKey:key];
+        [_newMagazineImageArray addObject:imageUrl];
+    }
+    _mainNewV.imageDataArray = _newMagazineImageArray;
+    _mainNewV.mainMagazineDict = _newMagazineDict;
+    
+    // 轮播图片数据
+    NSArray *pictureShowArray = [dict objectForKey:@"pictureList"];
+    _pictureV.imageInfoArray = pictureShowArray;
+    
+    // 技术专栏标签
+    NSArray *jSZLArray = [dict objectForKey:@"technologyList"];
+    NSInteger hang = jSZLArray.count%4?jSZLArray.count/4+1:jSZLArray.count/4;
+    NSInteger jSZLHeight = kJSZLHeadHeight + hang*kJSZLAloneHeight;
+    CGRect rect = _jSZLCateV.frame;
+    rect.size.height = jSZLHeight;
+    _jSZLCateV.frame = rect;
+    _jSZLCateV.cateDataArray = jSZLArray;
+    
+    // 改变scrollView可滑动
     _backScrollV.contentSize = CGSizeMake(kScreenWidth, 50+kTopImageShowViewHeight+kMainNewViewHeight+jSZLHeight);
     _backScrollV.showsVerticalScrollIndicator = NO;
 }
@@ -132,7 +196,8 @@
 - (void)enterMagazineViewController:(UITapGestureRecognizer *)tap
 {
     MainDetailViewController *mainDetailVC = [[MainDetailViewController alloc]init];
-    mainDetailVC.iamgesArray = @[@"12.jpg",@"pictureShow.png",@"文章缩略图.png",@"pictureShow.png",@"12.jpg"];;
+    mainDetailVC.imagesArray = _newMagazineImageArray;
+    mainDetailVC.detailDict = _newMagazineDict;
     [self.navigationController pushViewController:mainDetailVC animated:YES];
 }
 
@@ -147,6 +212,7 @@
 #pragma mark - 进入技术专栏界面
 - (void)enterJSZLVireController:(JSZLCateView *)jSZLCateView
 {
+    NSLog(@"进入技术专栏界面");
     if (jSZLCateView.enterMoreVC)
     {
         // 更多界面
@@ -180,7 +246,7 @@
     switch (type) {
         case MainPage:
         {
-            
+            // 主页
         }
             break;
         case JiShuZhuanLan:
@@ -205,18 +271,29 @@
             break;
         case SettingCenter:
         {
-//            SettingCenterViewController *settingVC = [[SettingCenterViewController alloc]init];
-//            [self.navigationController pushViewController:settingVC animated:YES];
+            SettingCenterViewController *settingVC = [[SettingCenterViewController alloc]init];
+            [self.navigationController pushViewController:settingVC animated:YES];
+            
+        }
+            break;
+            case LogIn:
+        {
+            // 登陆
             LoginViewController *loginVC=[[LoginViewController alloc]init];
             [self presentViewController:loginVC animated:YES completion:nil];
+        }
+            break;
+        case Register:
+        {
+            // 注册
+            RegisterViewController *registerVC = [[RegisterViewController alloc]init];
+            [self presentViewController:registerVC animated:YES completion:nil];
         }
             break;
         default:
             break;
     }
-
 }
-
 
 #pragma mark - 放大图片
 - (void)enLargeImage:(MainNewView *)mainNewView
@@ -229,13 +306,12 @@
     [self.view addSubview:pictureV];
 }
 
+#pragma mark - 删除图片展示View
 - (void)pictureCallBack:(ShowPicture *)picV
 {
     [picV removeFromSuperview];
     self.navigationController.navigationBarHidden = NO;
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

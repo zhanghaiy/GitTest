@@ -33,4 +33,39 @@
 }
 */
 
+- (IBAction)QQButtonClicked:(id)sender
+{
+    // QQ
+    [self tapClicked];
+}
+
+- (IBAction)QzoneButtonClicked:(id)sender
+{
+    // Qzone 空间
+    [self tapClicked];
+}
+
+- (IBAction)WeChatButtonClicked:(id)sender
+{
+    // 微信
+    [self tapClicked];
+}
+- (IBAction)momentsButtonClicked:(id)sender
+{
+    // 朋友圈
+    [self tapClicked];
+}
+
+- (IBAction)EMailButtonClicked:(id)sender
+{
+    // 邮箱
+    [self tapClicked];
+}
+
+- (IBAction)SinaWebButtonClicked:(id)sender
+{
+    // 新浪微博
+    [self tapClicked];
+}
+
 @end

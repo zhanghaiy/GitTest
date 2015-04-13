@@ -9,6 +9,18 @@
 #import <UIKit/UIKit.h>
 
 @interface ShareView : UIView
+@property (weak, nonatomic) IBOutlet UIButton *QQButton;
+@property (weak, nonatomic) IBOutlet UIButton *QzoneButton;
+@property (weak, nonatomic) IBOutlet UIButton *WeChatButton;
+@property (weak, nonatomic) IBOutlet UIButton *momentsButton;
+@property (weak, nonatomic) IBOutlet UIButton *EMailButton;
+@property (weak, nonatomic) IBOutlet UIButton *SinaWebButton;
+- (IBAction)QQButtonClicked:(id)sender;
+- (IBAction)QzoneButtonClicked:(id)sender;
+- (IBAction)WeChatButtonClicked:(id)sender;
+- (IBAction)momentsButtonClicked:(id)sender;
+- (IBAction)EMailButtonClicked:(id)sender;
+- (IBAction)SinaWebButtonClicked:(id)sender;
 
 @property (nonatomic,assign) id target;
 @property (nonatomic,assign) SEL action;

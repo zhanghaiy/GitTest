@@ -7,6 +7,8 @@
 //
 
 #import "MainNewView.h"
+#import "UIButton+WebCache.h"
+#import "UIImageView+WebCache.h"
 
 @implementation MainNewView
 #define kImageButtonTag 112233
@@ -29,6 +31,15 @@
     _desLable.textColor = [UIColor colorWithWhite:177/255.0 alpha:1];
 }
 
+- (void)setMainMagazineDict:(NSDictionary *)mainMagazineDict
+{
+    _mainMagazineDict = mainMagazineDict;
+    [_magazineImageV setImageWithURL:[NSURL URLWithString:[_mainMagazineDict objectForKey:@"pictureurl"]] placeholderImage:nil];
+    _magazineTitleLable.text = [_mainMagazineDict objectForKey:@"title"];
+    _qiCiLable.text = [_mainMagazineDict objectForKey:@"qc"];
+    _desLable.text = [_mainMagazineDict objectForKey:@"content"];
+}
+
 - (void)setImageDataArray:(NSArray *)imageDataArray
 {
     _imageDataArray = imageDataArray;
@@ -48,7 +59,7 @@
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.tag = kImageButtonTag + i;
         [btn setFrame:CGRectMake(10+i*btnWidth, hei-btnHeight-10, btnWidth, btnHeight)];
-        [btn setBackgroundImage:[UIImage imageNamed:[_imageDataArray objectAtIndex:i]] forState:UIControlStateNormal];
+        [btn setImageWithURL:[NSURL URLWithString:[_imageDataArray objectAtIndex:i]]];
         [btn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:btn];
     }

@@ -147,6 +147,7 @@
     _searchDataArray = @[@"宝洁医疗诊断相机设计",@"心脑血管疾病",@"临床医学实验汇总",@"宝洁医疗诊断相机设计",@"宝洁医疗诊断相机设计",@"宝洁医疗诊断相机设计",@"心脑血管疾病",@"临床医学实验汇总",@"宝洁医疗诊断相机设计",@"宝洁医疗诊断相机设计"];
     [_tableV reloadData];
     _tableV.tableHeaderView = nil;
+    [searchTextField resignFirstResponder];
 }
 
 #pragma mark - 返回上一页

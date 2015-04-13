@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "AboutMeViewController.h"
 #import "ShareView.h"
+#import "UserCallBackViewController.h"
 
 @interface SettingCenterViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
@@ -59,8 +60,8 @@
 }
 - (void)makeUpDataArray
 {
-    NSArray *textArray = @[@"夜间模式",@"清除缓存",@"分享给好友",@"版本更新",@"用户反馈",@"关于我们"];
-    NSArray *imageNameArray = @[@"wifi.png",@"night.png",@"removeCache.png",@"share.png",@"fontSize.png",@"versionUpdate.png",@"UserFeedBack.png",@"about.png"];
+    NSArray *textArray = @[@"清除缓存",@"分享给好友",@"版本更新",@"用户反馈",@"关于我们"];
+    NSArray *imageNameArray = @[@"removeCache.png",@"share.png",@"versionUpdate.png",@"UserFeedBack.png",@"about.png"];
     _listArray = [[NSMutableArray alloc]init];
     for (int i = 0; i < textArray.count; i ++)
     {
@@ -93,21 +94,16 @@
     {
         case 0:
         {
-            // 夜间模式
-        }
-            break;
-        case 1:
-        {
             // 清除缓存
         }
             break;
-        case 2:
+        case 1:
         {
             // 分享
             [self createShareView];
         }
             break;
-        case 3:
+        case 2:
         {
              // 版本更新
             // 首先判断当前的版本是否是最新版本
@@ -121,12 +117,14 @@
 
         }
             break;
-        case 4:
+        case 3:
         {
             //用户反馈
+            UserCallBackViewController *callBackVC = [[UserCallBackViewController alloc]init];
+            [self.navigationController pushViewController:callBackVC animated:YES];
         }
             break;
-        case 5:
+        case 4:
         {
             // 关于我们
             // 关于我们
@@ -134,12 +132,6 @@
             [self.navigationController pushViewController:aboutMeVC animated:YES];
         }
             break;
-        case 6:
-        {
-            
-        }
-            break;
-            
         default:
             break;
     }
@@ -154,7 +146,7 @@
     [self.view addSubview:darkV];
     
     ShareView *shareV = [[[NSBundle mainBundle]loadNibNamed:@"ShareView" owner:self options:0] lastObject];
-    shareV.frame = CGRectMake(0, kScreenHeight-150, kScreenWidth, 150);
+    shareV.frame = CGRectMake(0, kScreenHeight-220, kScreenWidth, 220);
     shareV.backgroundColor = [UIColor colorWithWhite:248/255.0 alpha:1];
     shareV.target = self;
     shareV.action = @selector(shareCallBack);
@@ -165,7 +157,6 @@
 {
     UIView *darkV = [self.view viewWithTag:11223344];
     [darkV removeFromSuperview];
-    [self createAlertViewWithTitle:@"分享" Message:@"分享暂时未完成" cancelTitle:@"确定" otherTitle:nil];
 }
 
 #pragma mark - 警告框

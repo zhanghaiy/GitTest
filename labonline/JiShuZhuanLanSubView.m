@@ -23,6 +23,14 @@
     _youLanCountsLable.font = [UIFont systemFontOfSize:kTwoFontSize];
 }
 
+- (void)setSubDict:(NSDictionary *)subDict
+{
+    _subDict = subDict;
+    _titleLable.text = [_subDict objectForKey:@"title"];
+    _fromLable.text = [_subDict objectForKey:@"type"];
+    _youLanCountsLable.text = [NSString stringWithFormat:@"%ld",[[_subDict objectForKey:@"seenum"] integerValue]];
+    ;
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.
