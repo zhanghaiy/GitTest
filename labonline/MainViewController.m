@@ -25,8 +25,10 @@
 #import "YRSideViewController.h"                // 侧滑
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import "RegisterViewController.h"
 
 #import "NetManager.h"   // 网络请求
+
 
 @interface MainViewController ()<LeftViewControllerDelegate,UIScrollViewDelegate>
 {
@@ -269,18 +271,29 @@
             break;
         case SettingCenter:
         {
-//            SettingCenterViewController *settingVC = [[SettingCenterViewController alloc]init];
-//            [self.navigationController pushViewController:settingVC animated:YES];
+            SettingCenterViewController *settingVC = [[SettingCenterViewController alloc]init];
+            [self.navigationController pushViewController:settingVC animated:YES];
+            
+        }
+            break;
+            case LogIn:
+        {
+            // 登陆
             LoginViewController *loginVC=[[LoginViewController alloc]init];
             [self presentViewController:loginVC animated:YES completion:nil];
+        }
+            break;
+        case Register:
+        {
+            // 注册
+            RegisterViewController *registerVC = [[RegisterViewController alloc]init];
+            [self presentViewController:registerVC animated:YES completion:nil];
         }
             break;
         default:
             break;
     }
-
 }
-
 
 #pragma mark - 放大图片
 - (void)enLargeImage:(MainNewView *)mainNewView
@@ -298,8 +311,6 @@
     [picV removeFromSuperview];
     self.navigationController.navigationBarHidden = NO;
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

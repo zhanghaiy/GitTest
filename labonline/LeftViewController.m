@@ -13,6 +13,8 @@
     NSMutableArray *_titleCateArray;
     UITableView *_cateTableView;
     UIView *_headLogedView;// 头视图
+    UIView *_logedV;
+    UIView *_notLogedV;
     BOOL _logined;// 判断是否登录
 }
 @end
@@ -34,6 +36,7 @@
 #pragma mark - 登陆后的头视图
 - (void)createLoginHeadView
 {
+    _logedV = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kLeftWidth, kHeadViewHeight)];
     // 头像
     UIImageView *headImgV = [[UIImageView alloc]initWithFrame:CGRectMake((kLeftWidth-kCircleHeight)/2, 30, kCircleHeight, kCircleHeight)];
     headImgV.backgroundColor = [UIColor clearColor];
@@ -41,26 +44,28 @@
     headImgV.layer.cornerRadius = kCircleHeight/2;
     headImgV.layer.borderWidth = 3;
     headImgV.layer.borderColor = [UIColor colorWithRed:162/255.0 green:203/255.0 blue:205/255.0 alpha:1].CGColor;
-    [_headLogedView addSubview:headImgV];
+    [_logedV addSubview:headImgV];
     
     UIButton *userImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [userImageButton setFrame:CGRectMake((kLeftWidth-kImageHeight)/2, 30+(kCircleHeight-kImageHeight)/2, kImageHeight, kImageHeight)];
     [userImageButton setBackgroundImage:[UIImage imageNamed:@"33.jpg"] forState:UIControlStateNormal];
     userImageButton.layer.masksToBounds = YES;
     userImageButton.layer.cornerRadius = kImageHeight/2;
-    [_headLogedView addSubview:userImageButton];
+    [_logedV addSubview:userImageButton];
     
     UILabel *nameLab = [[UILabel alloc]initWithFrame:CGRectMake(10, 35+kCircleHeight, kLeftWidth-20, 30)];
     nameLab.text = @"愤怒的老牛";
     nameLab.textAlignment = NSTextAlignmentCenter;
     nameLab.textColor = [UIColor whiteColor];
     nameLab.font = [UIFont systemFontOfSize:15];
-    [_headLogedView addSubview:nameLab];
+    [_logedV addSubview:nameLab];
 }
 
 #pragma mark - 未登陆时的头视图
 - (void)createNotLoginView
 {
+    _notLogedV = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kLeftWidth, kHeadViewHeight)];
+    
     NSArray *buttonTitltArr = @[@"登陆",@"注册"];
     for (int i = 0; i < buttonTitltArr.count; i ++)
     {
@@ -77,7 +82,7 @@
         button.tag = kLoginButtonTag +i;
         [button addTarget:self action:@selector(logButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [button addTarget:self action:@selector(clickedDown:) forControlEvents:UIControlEventTouchDown];
-        [_headLogedView addSubview:button];
+        [_notLogedV addSubview:button];
     }
 }
 
@@ -91,19 +96,17 @@
     imgV.image = [UIImage imageNamed:@"左侧列.png"];
     imgV.userInteractionEnabled = YES;
     [self.view addSubview:imgV];
+    [self createLoginHeadView];
+    [self createNotLoginView];
     
-    // 模拟数据 假设已经登陆
-    _logined = NO;
-    _headLogedView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kLeftWidth, kHeadViewHeight)];
-    if (_logined)
+    NSUserDefaults *userDe=[NSUserDefaults standardUserDefaults];
+    if ([userDe objectForKey:@"userName"])
     {
-        // 登陆
-        [self createLoginHeadView];
+        _logined = YES;
     }
     else
     {
-        //未登录
-        [self createNotLoginView];
+        _logined = NO;
     }
     
     _titleCateArray = [[NSMutableArray alloc]initWithObjects:@"首页",@"技术专栏",@"杂志",@"用户中心", nil];
@@ -113,7 +116,16 @@
     _cateTableView.dataSource = self;
     _cateTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _cateTableView.backgroundColor = [UIColor clearColor];
-    _cateTableView.tableHeaderView = _headLogedView;
+    if (_logined)
+    {
+        // 登陆
+        _cateTableView.tableHeaderView = _logedV;
+    }
+    else
+    {
+        //未登录
+        _cateTableView.tableHeaderView = _notLogedV;
+    }
     [imgV addSubview:_cateTableView];
     
     
@@ -135,6 +147,27 @@
     [lable addGestureRecognizer:tapSettingLable];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    // 模拟数据 假设已经登陆
+    NSUserDefaults *userDe=[NSUserDefaults standardUserDefaults];
+    if ([userDe objectForKey:@"userName"])
+    {
+        _logined = YES;
+        // 登陆
+        _cateTableView.tableHeaderView = _logedV;
+    }
+    else
+    {
+        _logined = NO;
+        //未登录
+        _cateTableView.tableHeaderView = _notLogedV;
+    }
+    [_cateTableView reloadData];
+}
+
 #pragma mark -- 登录注册按钮按下时调用该方法
 - (void)clickedDown:(UIButton *)btn
 {
@@ -149,11 +182,11 @@
     {
         case kLoginButtonTag:
             // 登陆
-            
+            [self.delegate pushViewControllerWithIndex:LogIn];
             break;
         case kLoginButtonTag+1:
             // 注册
-            
+            [self.delegate pushViewControllerWithIndex:Register];
             break;
  
         default:

@@ -21,7 +21,9 @@ typedef enum
     JiShuZhuanLan,
     WangQi,
     PersonCenter,
-    SettingCenter
+    SettingCenter,
+    LogIn,
+    Register
 }ResourceType;
 
 // 我的收藏接口 参数 userid
