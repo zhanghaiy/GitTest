@@ -164,6 +164,7 @@
             // 视频
             detailVC.vidioUrl = [dict objectForKey:@"urlvideo"];
         }
+        detailVC.articalID = [dict objectForKey:@"articleid"];
         detailVC.htmlUrl = [dict objectForKey:@"urlhtml"];
         detailVC.titleStr = [dict objectForKey:@"type"];
         [self.navigationController pushViewController:detailVC animated:YES];
@@ -190,6 +191,7 @@
             // 视频
             detailVC.vidioUrl = [jszlSubV.subDict objectForKey:@"urlvideo"];
         }
+        detailVC.articalID = [jszlSubV.subDict objectForKey:@"articleid"];
         detailVC.htmlUrl = [jszlSubV.subDict objectForKey:@"urlhtml"];
         detailVC.titleStr = [jszlSubV.subDict objectForKey:@"type"];
         [self.navigationController pushViewController:detailVC animated:YES];
@@ -202,7 +204,8 @@
     // 进入更多
     // 更多 跳转页面
     JiShuZhuanLanMoreViewController *moreVC = [[JiShuZhuanLanMoreViewController alloc]init];
-    moreVC.moreArticalDict = [_articleListArray objectAtIndex:cell.dataIndex];
+//    moreVC.moreArticalDict = [_articleListArray objectAtIndex:cell.dataIndex];
+    moreVC.typeId = [[_articleListArray objectAtIndex:cell.dataIndex] objectForKey:@"type_id"];
     [self.navigationController pushViewController:moreVC animated:YES];
 }
 

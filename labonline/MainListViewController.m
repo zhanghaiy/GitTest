@@ -134,6 +134,7 @@
             // 视频
             detailVC.vidioUrl = [dict objectForKey:@"urlvideo"];
         }
+        detailVC.articalID = [dict objectForKey:@"articleid"];
         detailVC.htmlUrl = [dict objectForKey:@"urlhtml"];
         detailVC.titleStr = [dict objectForKey:@"type"];
         [self.navigationController pushViewController:detailVC animated:YES];

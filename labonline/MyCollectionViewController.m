@@ -58,7 +58,7 @@
     _myCollectionTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_myCollectionTableView];
  
-//    [self requestDataWithUrlString:[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,kUserId]];
+    [self requestDataWithUrlString:[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,kUserId]];
 }
 
 - (void)requestDataWithUrlString:(NSString *)urlString
@@ -100,8 +100,8 @@
 #pragma mark - UITableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
-//    return _collectionArray.count;
+//    return 10;
+    return _collectionArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -11,7 +11,7 @@
 #import "JiShuZhuanLanDetailViewController.h"
 #import "SearchViewController.h"
 #import "PDFBrowserViewController.h"
-
+#import "NetManager.h"
 
 @interface JiShuZhuanLanMoreViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -23,11 +23,38 @@
 @implementation JiShuZhuanLanMoreViewController
 
 
-- (void)setMoreArticalDict:(NSDictionary *)moreArticalDict
+//- (void)setMoreArticalDict:(NSDictionary *)moreArticalDict
+//{
+//    _moreArticalDict = moreArticalDict;
+//    _articalArray = [_moreArticalDict objectForKey:@"article"];
+//}
+
+#pragma mark - 网络请求
+#pragma mark -- 开始请求
+- (void)requestMainDataWithURLString:(NSString *)urlStr
 {
-    _moreArticalDict = moreArticalDict;
-    _articalArray = [_moreArticalDict objectForKey:@"article"];
+    NetManager *netManager = [[NetManager alloc]init];
+    netManager.delegate = self;
+    netManager.action = @selector(requestFinished:);
+    [netManager requestDataWithUrlString:urlStr];
 }
+#pragma mark --网络请求完成
+- (void)requestFinished:(NetManager *)netManager
+{
+    if (netManager.downLoadData)
+    {
+        // 成功
+        // 解析
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
+        _articalArray = [[dict objectForKey:@"data"] objectForKey:@"article"];
+        [_tableView reloadData];
+    }
+    else
+    {
+        // 失败
+    }
+}
+
 
 - (void)viewDidLoad
 {
@@ -65,6 +92,9 @@
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
     
+    // @"91373A20A20449E08E45EEA0C9E512ER"
+//    _typeId = @"91373A20A20449E08E45EEA0C9E512ER";
+    [self requestMainDataWithURLString:[NSString stringWithFormat:kJSZLMoreUrlString,_typeId]];
 }
 
 #pragma mark - 返回上一页
@@ -121,6 +151,7 @@
             // 视频
             detailVC.vidioUrl = [subDic objectForKey:@"urlvideo"];
         }
+        detailVC.articalID = [subDic objectForKey:@"articleid"];
         detailVC.htmlUrl = [subDic objectForKey:@"urlhtml"];
         detailVC.titleStr = [subDic objectForKey:@"type"];
         [self.navigationController pushViewController:detailVC animated:YES];

@@ -100,6 +100,7 @@
     if ([_target respondsToSelector:_action])
     {
         _enterMoreVC = YES;
+        _selectedIndex = tapLable.tag - kCateLableTag;
         [_target performSelector:_action withObject:self afterDelay:NO];
     }
 }

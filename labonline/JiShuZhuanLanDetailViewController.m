@@ -9,6 +9,8 @@
 #import "JiShuZhuanLanDetailViewController.h"
 #import "JSZLEvaluationViewController.h"
 #import "SearchViewController.h"
+#import "NetManager.h"
+
 
 @interface JiShuZhuanLanDetailViewController ()<UIWebViewDelegate>
 {
@@ -72,6 +74,33 @@
     [_webV loadRequest:request];
 }
 
+#pragma mark - 网络请求
+#pragma mark -- 开始请求
+- (void)requestMainDataWithURLString:(NSString *)urlStr
+{
+    NetManager *netManager = [[NetManager alloc]init];
+    netManager.delegate = self;
+    netManager.action = @selector(requestFinished:);
+    [netManager requestDataWithUrlString:urlStr];
+}
+
+#pragma mark --网络请求完成
+- (void)requestFinished:(NetManager *)netManager
+{
+    if (netManager.downLoadData)
+    {
+        // 成功
+        // 解析
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
+        
+    }
+    else
+    {
+        // 失败
+    }
+}
+
+
 #pragma mark - 按钮点击事件
 - (void)buttonClicked:(UIButton *)btn
 {
@@ -81,12 +110,16 @@
         case 0:
         {
            // 收藏
+            NSString *userId = @"529EEF8D5991473488DB877F100B2A01";
+            NSString *urlStr = [NSString stringWithFormat:@"%@?userid=%@&articleid=%@",kCollectionUrl,userId,_articalID];
+            [self requestMainDataWithURLString:urlStr];
         }
             break;
         case 1:
         {
             // 评价
             JSZLEvaluationViewController *jszlEvaluVC = [[JSZLEvaluationViewController alloc]init];
+            jszlEvaluVC.articalId = _articalID;// 9185
             [self.navigationController pushViewController:jszlEvaluVC animated:YES];
         }
             break;

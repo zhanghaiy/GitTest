@@ -9,12 +9,14 @@
 #import "JSZLEvaluationViewController.h"
 #import "JSZLEvaluationCell.h"
 #import "SearchViewController.h"
+#import "NetManager.h"
+
 
 @interface JSZLEvaluationViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 {
     UITableView *_evalueTableV;
     UIView *downV;//底部评价View
-    NSArray *_dataArray;// 模拟数据 为了计算cell高度
+    NSArray *_listArray;// 模拟数据 为了计算cell高度
 }
 @end
 
@@ -50,13 +52,13 @@
         if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
             self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-    _dataArray = @[@"我们每一个生活在这个世界的人，总有一个思维时刻在催促着你前行，在前进的路上我们总是自觉或不自觉地调整着自己努力的方向。因为我们正在明白，在你的面前始终有一个你目前无法达到的目标，这个目标就象一剂强心针，将你的肾上腺素调到最亢奋的状态。以至于我们常常在目标之中却无端地失去了目标。",@"写的不错。。。。。。",@"一般般",@"因为我们正在明白，在你的面前始终有一个你目前无法达到的目标，这个目标就象一剂强心针，将你的肾上腺素调到最亢奋的状态。以至于我们常常在目标之中却无端地失去了目标"];
+//    _dataArray = @[@"我们每一个生活在这个世界的人，总有一个思维时刻在催促着你前行，在前进的路上我们总是自觉或不自觉地调整着自己努力的方向。因为我们正在明白，在你的面前始终有一个你目前无法达到的目标，这个目标就象一剂强心针，将你的肾上腺素调到最亢奋的状态。以至于我们常常在目标之中却无端地失去了目标。",@"写的不错。。。。。。",@"一般般",@"因为我们正在明白，在你的面前始终有一个你目前无法达到的目标，这个目标就象一剂强心针，将你的肾上腺素调到最亢奋的状态。以至于我们常常在目标之中却无端地失去了目标"];
     _evalueTableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-64-kDownViewHeight) style:UITableViewStylePlain];
     _evalueTableV.delegate = self;
     _evalueTableV.dataSource = self;
     [self.view addSubview:_evalueTableV];
     
-    downV = [[UIView alloc]initWithFrame:CGRectMake(0, kScreenHeight-kDownViewHeight, kScreenWidth, kDownViewHeight)];
+    downV = [[UIView alloc]initWithFrame:CGRectMake(0, kScreenHeight-kDownViewHeight-64, kScreenWidth, kDownViewHeight)];
     downV.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
     [self.view addSubview:downV];
     // 文本框
@@ -82,7 +84,37 @@
     [downV addSubview:sendButton];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    
+    [self requestMainDataWithURLString:[NSString stringWithFormat:kEvalueationURLString,_articalId]];
 }
+
+#pragma mark - 网络请求
+#pragma mark -- 开始请求
+- (void)requestMainDataWithURLString:(NSString *)urlStr
+{
+    NetManager *netManager = [[NetManager alloc]init];
+    netManager.delegate = self;
+    netManager.action = @selector(requestFinished:);
+    [netManager requestDataWithUrlString:urlStr];
+}
+#pragma mark --网络请求完成
+- (void)requestFinished:(NetManager *)netManager
+{
+    if (netManager.downLoadData)
+    {
+        // 成功
+        // 解析
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
+        _listArray = [dict objectForKey:@"list"];
+        [_evalueTableV reloadData];
+    }
+    else
+    {
+        // 失败
+    }
+}
+
+
 
 #pragma mark - 发送按钮点击事件
 - (void)sendButtonClicked:(UIButton *)btn
@@ -140,7 +172,7 @@
 #pragma mark - UITableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _dataArray.count;
+    return _listArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -152,7 +184,8 @@
         cell = [[[NSBundle mainBundle]loadNibNamed:@"JSZLEvaluationCell" owner:self options:0] lastObject];
     }
     cell.cellHeight = [self countCellHeightOfIndex:indexPath.row];
-    cell.evaluationLable.text = [_dataArray objectAtIndex:indexPath.row];
+//    cell.evaluationLable.text = [[_listArray objectAtIndex:indexPath.row] objectForKey:@"text"];
+    cell.evaluDict = [_listArray objectAtIndex:indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -172,7 +205,7 @@
 - (NSInteger)countCellHeightOfIndex:(NSInteger)index
 {
     // 根据索引找到当前cell的数据str 暂时假数据
-    NSString *cellString = [_dataArray objectAtIndex:index];
+    NSString *cellString = [[_listArray objectAtIndex:index] objectForKey:@"text"];
     NSInteger textWidth = kScreenWidth-kCellHeight;
     CGRect rect = [cellString boundingRectWithSize:CGSizeMake(textWidth, 99999)options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil];
     NSInteger height = rect.size.height+35;

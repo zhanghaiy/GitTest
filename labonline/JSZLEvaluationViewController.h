@@ -10,4 +10,6 @@
 
 @interface JSZLEvaluationViewController : UIViewController
 
+@property (nonatomic,copy) NSString *articalId;
+
 @end
