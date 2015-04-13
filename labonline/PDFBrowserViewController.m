@@ -8,6 +8,8 @@
 
 #import "PDFBrowserViewController.h"
 #import <QuickLook/QuickLook.h>
+#import "NetManager.h"
+
 
 @interface PDFBrowserViewController ()<UIWebViewDelegate,QLPreviewControllerDataSource,QLPreviewControllerDelegate>
 {
@@ -24,7 +26,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title = _fileName;
+    self.title = @"PDF文件预览";
     _back = NO;
     // left
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -38,7 +40,7 @@
     UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [saveButton setFrame:CGRectMake(0, 0, 50, 30)];
     saveButton.titleLabel.font = [UIFont systemFontOfSize:15];
-    [saveButton setTitle:@"保存" forState:UIControlStateNormal];
+    [saveButton setTitle:@"下载" forState:UIControlStateNormal];
     [saveButton addTarget:self action:@selector(saveButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [saveButton setTitleColor:[UIColor colorWithRed:217/255.0 green:5/255.0 blue:41/255.0 alpha:1] forState:UIControlStateNormal];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:saveButton];
@@ -84,8 +86,29 @@
 - (void)saveButtonClicked:(UIButton *)btn
 {
     [self saveCurrentFile];
+//    [self downLoadPdfFile];
+}
+/*
+- (void)downLoadPdfFile
+{
+    NetManager *netManager = [[NetManager alloc]init];
+    netManager.delegate = self;
+    netManager.action = @selector(pdfDownloaded:);
+    [netManager requestDataWithUrlString:_filePath];
 }
 
+- (void)pdfDownloaded:(NetManager *)netRequest
+{
+    NSLog(@"下载回来");
+    if (netRequest.downLoadData)
+    {
+        //
+        NSString *path = [NSString stringWithFormat:@"%@/%@",[self localFilePath],[[NSURL URLWithString:_filePath] lastPathComponent]];
+        [netRequest.downLoadData writeToFile:path atomically:YES];
+        NSLog(@"%@",path);
+    }
+}
+*/
 #pragma mark - UIWebViewDelegate
 #pragma mark -- 失败
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
@@ -124,13 +147,14 @@
         {
             NSError *error = nil;
             [fileData writeToFile:toPath options:NSDataWritingAtomic error:&error];
+            NSLog(@"%@",toPath);
             if (error != nil)
             {
                 NSLog(@"Failed to save the file: %@", [error description]);
             }
             else
             {
-                UIAlertView *filenameAlert = [[UIAlertView alloc] initWithTitle:@"保存文件到本地" message:[NSString stringWithFormat:@"文件：%@ 保存成功", filename] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                UIAlertView *filenameAlert = [[UIAlertView alloc] initWithTitle:@"保存文件到本地" message:[NSString stringWithFormat:@"文件：%@ 下载成功", filename] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
                 [filenameAlert show];
             }
         }
@@ -150,6 +174,17 @@
 - (NSString*)localFilePath
 {
     NSString *documentsPath = [NSHomeDirectory() stringByAppendingString:@"Documents/LocalFile"];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL isDir = FALSE;
+    BOOL isDirExist = [fileManager fileExistsAtPath:documentsPath isDirectory:&isDir];
+    if (isDirExist == NO)
+    {
+        BOOL bCreateDir = [fileManager createDirectoryAtPath:documentsPath withIntermediateDirectories:YES attributes:nil error:nil];
+        if(!bCreateDir)
+        {
+            NSLog(@"Create Audio Directory Failed.");
+        }
+    }
     return documentsPath;
 }
 

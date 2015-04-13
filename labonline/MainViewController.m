@@ -29,6 +29,8 @@
 
 #import "NetManager.h"   // 网络请求
 
+#import "PDFBrowserViewController.h"
+#import "JiShuZhuanLanDetailViewController.h"
 
 @interface MainViewController ()<LeftViewControllerDelegate,UIScrollViewDelegate>
 {
@@ -204,10 +206,29 @@
 #pragma mark - 图片轮播-->进入详情
 - (void)pictureShowMethod:(PictureShowView *)pictureShowV
 {
-    // 进入技术专栏详情（通用的）
-    JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
-    detailVC.titleStr = @"文章详情";
-    [self.navigationController pushViewController:detailVC animated:YES];
+    NSDictionary *dict = [[pictureShowV.imageInfoArray objectAtIndex:pictureShowV.imageIndex] objectForKey:@"articleinfo"];
+   
+    if ([[dict objectForKey:@"urlpdf"] length]>5)
+    {
+        // PDF 跳转PDF页面
+        NSLog(@"跳转PDF页面");
+        PDFBrowserViewController *pdfBrowseVC = [[PDFBrowserViewController alloc]init];
+        pdfBrowseVC.filePath = [dict objectForKey:@"urlpdf"];
+        [self.navigationController pushViewController:pdfBrowseVC animated:YES];
+    }
+    else if ([[dict objectForKey:@"urlhtml"] length]>5)
+    {
+        // html
+        JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+        if ([[dict objectForKey:@"urlvideo"] length]>5)
+        {
+            // 视频
+            detailVC.vidioUrl = [dict objectForKey:@"urlvideo"];
+        }
+        detailVC.htmlUrl = [dict objectForKey:@"urlhtml"];
+        detailVC.titleStr = [dict objectForKey:@"type"];
+        [self.navigationController pushViewController:detailVC animated:YES];
+    }
 }
 #pragma mark - 进入技术专栏界面
 - (void)enterJSZLVireController:(JSZLCateView *)jSZLCateView
@@ -243,7 +264,8 @@
     YRSideViewController *sideViewController=[delegate sideViewController];
     [sideViewController hideSideViewController:YES];
     [self.navigationController popToRootViewControllerAnimated:NO];
-    switch (type) {
+    switch (type)
+    {
         case MainPage:
         {
             // 主页

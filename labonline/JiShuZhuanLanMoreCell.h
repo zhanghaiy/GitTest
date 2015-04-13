@@ -11,10 +11,12 @@
 
 @interface JiShuZhuanLanMoreCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLable;
-
 @property (weak, nonatomic) IBOutlet UILabel *detailLable;
 @property (weak, nonatomic) IBOutlet UIButton *youLanButton;
 @property (weak, nonatomic) IBOutlet UILabel *youLanCountsLable;
 @property (weak, nonatomic) IBOutlet UIView *backView;
+
+
+@property (nonatomic,strong) NSDictionary *subDict;
 
 @end

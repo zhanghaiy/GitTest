@@ -10,14 +10,24 @@
 #import "JiShuZhuanLanMoreCell.h"
 #import "JiShuZhuanLanDetailViewController.h"
 #import "SearchViewController.h"
+#import "PDFBrowserViewController.h"
+
 
 @interface JiShuZhuanLanMoreViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_tableView;
+    NSArray *_articalArray;
 }
 @end
 
 @implementation JiShuZhuanLanMoreViewController
+
+
+- (void)setMoreArticalDict:(NSDictionary *)moreArticalDict
+{
+    _moreArticalDict = moreArticalDict;
+    _articalArray = [_moreArticalDict objectForKey:@"article"];
+}
 
 - (void)viewDidLoad
 {
@@ -76,7 +86,7 @@
 #pragma mark - UITableView Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return _articalArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -86,16 +96,35 @@
     if (cell == nil)
     {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"JiShuZhuanLanMoreCell" owner:self options:0] lastObject];
-        
     }
+    cell.subDict = [_articalArray objectAtIndex:indexPath.row];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
-    detailVC.titleStr = @"技术专栏";
-    [self.navigationController pushViewController:detailVC animated:YES];
+    NSDictionary *subDic = [_articalArray objectAtIndex:indexPath.row];
+    if ([[subDic objectForKey:@"urlpdf"] length]>5)
+    {
+       // PDF 跳转PDF页面
+        NSLog(@"跳转PDF页面");
+        PDFBrowserViewController *pdfBrowseVC = [[PDFBrowserViewController alloc]init];
+        pdfBrowseVC.filePath = [subDic objectForKey:@"urlpdf"];
+        [self.navigationController pushViewController:pdfBrowseVC animated:YES];
+    }
+    else if ([[subDic objectForKey:@"urlhtml"] length]>5)
+    {
+        // html
+        JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+        if ([[subDic objectForKey:@"urlvideo"] length]>5)
+        {
+            // 视频
+            detailVC.vidioUrl = [subDic objectForKey:@"urlvideo"];
+        }
+        detailVC.htmlUrl = [subDic objectForKey:@"urlhtml"];
+        detailVC.titleStr = [subDic objectForKey:@"type"];
+        [self.navigationController pushViewController:detailVC animated:YES];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

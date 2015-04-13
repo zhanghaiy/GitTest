@@ -72,6 +72,7 @@
 - (void)setImageInfoArray:(NSArray *)imageInfoArray
 {
     _imageInfoArray = imageInfoArray;
+    _imageScroll.contentSize = CGSizeMake(width*imageInfoArray.count, 0);
     [self createImageView];
     if (_imageInfoArray.count != 0)
     {
@@ -119,7 +120,7 @@
 - (void)tapImageMethod:(UITapGestureRecognizer *)tap
 {
     NSLog(@"点击图片进入详情");
-    _imageIndex = tap.view.tag=kImageViewTag;
+    _imageIndex = tap.view.tag-kImageViewTag;
     if ([self.target respondsToSelector:self.action])
     {
         [self.target performSelector:self.action withObject:self withObject:nil];

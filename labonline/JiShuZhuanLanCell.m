@@ -45,6 +45,16 @@
     _moreButton.titleLabel.font = [UIFont systemFontOfSize:kOneFontSize];
 }
 
+- (void)setDataIndex:(NSInteger)dataIndex
+{
+    _dataIndex = dataIndex;
+}
+
+- (void)setCurrentArticalIndex:(NSInteger)currentArticalIndex
+{
+    _currentArticalIndex = currentArticalIndex;
+}
+
 - (void)setArticleDict:(NSDictionary *)articleDict
 {
     _articleDict = articleDict;
@@ -74,6 +84,7 @@
         jiShuZLView.tag = kJiShuZhuanLanSubViewTag+i;
         jiShuZLView.frame = CGRectMake(11, 35+i*40, kScreenWidth-22, 39);
         jiShuZLView.subDict = subDict;
+        jiShuZLView.index = i;
         [self addSubview:jiShuZLView];
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapMethod:)];
@@ -95,6 +106,8 @@
     if ([tapView isKindOfClass:[JiShuZhuanLanSubView class]])
     {
         JiShuZhuanLanSubView *jszlSunV = (JiShuZhuanLanSubView *)tapView;
+        _currentArticalIndex = jszlSunV.tag - kJiShuZhuanLanSubViewTag;
+        NSLog(@"!!!!!!!%ld",_currentArticalIndex);
         if ([self.target respondsToSelector:self.jszlViewClickedAction])
         {
             [self.target performSelector:self.jszlViewClickedAction withObject:jszlSunV afterDelay:NO];

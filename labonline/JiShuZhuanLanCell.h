@@ -16,7 +16,8 @@
 - (IBAction)moreButtonClicked:(id)sender;
 
 @property (nonatomic,strong) NSDictionary *articleDict;
-
+@property (nonatomic,assign) NSInteger currentArticalIndex;
+@property (nonatomic,assign) NSInteger dataIndex;
 @property (nonatomic) id target;
 @property (nonatomic) SEL buttonClickSelector;
 @property (nonatomic) SEL jszlViewClickedAction;

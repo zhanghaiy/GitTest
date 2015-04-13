@@ -10,6 +10,8 @@
 
 @interface JiShuZhuanLanDetailViewController : UIViewController
 
+@property (nonatomic,copy) NSString *vidioUrl;
 @property (nonatomic,copy) NSString *titleStr;
+@property (nonatomic,copy) NSString *htmlUrl;
 
 @end

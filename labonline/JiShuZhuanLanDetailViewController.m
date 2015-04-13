@@ -25,7 +25,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title = @"文章详情";
+    self.title = _titleStr;
     // 左侧按钮
     NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 26) andBackImageWithName:@"aniu_07.png"];
     leftButton.delegate = self;
@@ -67,7 +67,7 @@
     // webView
     _webV = [[UIWebView alloc]initWithFrame:CGRectMake(0, 64, kScreenWidth, kScreenHeight-64-kToolBarHeight)];
     _webV.delegate = self;
-    NSURLRequest *request =[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.baidu.com"]];
+    NSURLRequest *request =[NSURLRequest requestWithURL:[NSURL URLWithString:_htmlUrl]];
     [self.view addSubview:_webV];
     [_webV loadRequest:request];
 }

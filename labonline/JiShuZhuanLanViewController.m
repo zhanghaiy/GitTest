@@ -9,13 +9,14 @@
 #import "JiShuZhuanLanViewController.h"
 #import "PictureShowView.h"
 #import "JiShuZhuanLanCell.h"
+#import "JiShuZhuanLanSubView.h"
 #import "JiShuZhuanLanMoreViewController.h"
 #import "JiShuZhuanLanDetailViewController.h"
 #import "YRSideViewController.h"
 #import "AppDelegate.h"
 #import "SearchViewController.h"
 #import "NetManager.h"
-
+#import "PDFBrowserViewController.h"
 
 @interface JiShuZhuanLanViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -119,11 +120,6 @@
 
 
 #pragma mark - UITableView Delegate
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-//{
-//    return 1;
-//}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _articleListArray.count>=5?5:_articleListArray.count;
@@ -141,6 +137,7 @@
         cell.buttonClickSelector = @selector(enterMoreViewController:);
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+    cell.dataIndex = indexPath.row;
     cell.articleDict = [_articleListArray objectAtIndex:indexPath.row];
     return cell;
 }
@@ -148,19 +145,59 @@
 #pragma mark - 图片轮播-->进入详情
 - (void)pictureShowMethod:(PictureShowView *)pictureShowV
 {
+    NSDictionary *dict = [[pictureShowV.imageInfoArray objectAtIndex:pictureShowV.imageIndex] objectForKey:@"articleinfo"];
+    
+    if ([[dict objectForKey:@"urlpdf"] length]>5)
+    {
+        // PDF 跳转PDF页面
+        NSLog(@"跳转PDF页面");
+        PDFBrowserViewController *pdfBrowseVC = [[PDFBrowserViewController alloc]init];
+        pdfBrowseVC.filePath = [dict objectForKey:@"urlpdf"];
+        [self.navigationController pushViewController:pdfBrowseVC animated:YES];
+    }
+    else if ([[dict objectForKey:@"urlhtml"] length]>5)
+    {
+        // html
+        JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+        if ([[dict objectForKey:@"urlvideo"] length]>5)
+        {
+            // 视频
+            detailVC.vidioUrl = [dict objectForKey:@"urlvideo"];
+        }
+        detailVC.htmlUrl = [dict objectForKey:@"urlhtml"];
+        detailVC.titleStr = [dict objectForKey:@"type"];
+        [self.navigationController pushViewController:detailVC animated:YES];
+    }
     // 进入技术专栏详情（通用的）
-    JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
-    detailVC.titleStr = @"文章详情";
-    [self.navigationController pushViewController:detailVC animated:YES];
+//    JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+//    detailVC.titleStr = @"文章详情";
+//    [self.navigationController pushViewController:detailVC animated:YES];
 }
 
 #pragma mark -- 跳转到技术专栏详情界面
-- (void)enterDetailViewController:(JiShuZhuanLanCell *)cell
+- (void)enterDetailViewController:(JiShuZhuanLanSubView *)jszlSubV
 {
-    // 进入详情
-    JiShuZhuanLanDetailViewController *jSZLDetailVC = [[JiShuZhuanLanDetailViewController alloc]init];
-    jSZLDetailVC.titleStr = @"生物检验";
-    [self.navigationController pushViewController:jSZLDetailVC animated:YES];
+    if ([[jszlSubV.subDict objectForKey:@"urlpdf"] length]>5)
+    {
+        // PDF 跳转PDF页面
+        NSLog(@"跳转PDF页面");
+        PDFBrowserViewController *pdfBrowseVC = [[PDFBrowserViewController alloc]init];
+        pdfBrowseVC.filePath = [jszlSubV.subDict objectForKey:@"urlpdf"];
+        [self.navigationController pushViewController:pdfBrowseVC animated:YES];
+    }
+    else if ([[jszlSubV.subDict objectForKey:@"urlhtml"] length]>5)
+    {
+        // html
+        JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+        if ([[jszlSubV.subDict objectForKey:@"urlvideo"] length]>5)
+        {
+            // 视频
+            detailVC.vidioUrl = [jszlSubV.subDict objectForKey:@"urlvideo"];
+        }
+        detailVC.htmlUrl = [jszlSubV.subDict objectForKey:@"urlhtml"];
+        detailVC.titleStr = [jszlSubV.subDict objectForKey:@"type"];
+        [self.navigationController pushViewController:detailVC animated:YES];
+    }
 }
 
 #pragma mark --跳转到技术专栏更多界面
@@ -169,6 +206,7 @@
     // 进入更多
     // 更多 跳转页面
     JiShuZhuanLanMoreViewController *moreVC = [[JiShuZhuanLanMoreViewController alloc]init];
+    moreVC.moreArticalDict = [_articleListArray objectAtIndex:cell.dataIndex];
     [self.navigationController pushViewController:moreVC animated:YES];
 }
 
