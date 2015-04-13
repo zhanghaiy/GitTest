@@ -246,7 +246,7 @@
     switch (type) {
         case MainPage:
         {
-            
+            // 主页
         }
             break;
         case JiShuZhuanLan:
@@ -306,6 +306,7 @@
     [self.view addSubview:pictureV];
 }
 
+#pragma mark - 删除图片展示View
 - (void)pictureCallBack:(ShowPicture *)picV
 {
     [picV removeFromSuperview];
