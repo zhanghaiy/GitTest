@@ -17,8 +17,7 @@
                         <rect key="frame" x="20" y="5" width="80" height="25"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="80" id="PrZ-k3-Cho"/>
-                            <constraint firstAttribute="height" constant="25" id="aqs-qC-ARg"/>
+                            <constraint firstAttribute="height" constant="25" id="YF5-70-B8R"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <state key="normal" title="生物检验">
@@ -32,12 +31,13 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="6Rw-s5-oJH" firstAttribute="leading" secondItem="v49-pf-hvJ" secondAttribute="leading" constant="10" id="HP3-GT-fP1"/>
-                    <constraint firstAttribute="trailing" secondItem="6Rw-s5-oJH" secondAttribute="trailing" constant="10" id="XtL-Dq-eRt"/>
-                    <constraint firstItem="lem-uO-dI8" firstAttribute="leading" secondItem="v49-pf-hvJ" secondAttribute="leading" constant="20" id="ZTP-AN-PgW"/>
-                    <constraint firstItem="6Rw-s5-oJH" firstAttribute="top" secondItem="lem-uO-dI8" secondAttribute="bottom" id="g0d-6q-AIU"/>
-                    <constraint firstItem="lem-uO-dI8" firstAttribute="top" secondItem="v49-pf-hvJ" secondAttribute="top" constant="5" id="lGd-Du-YBq"/>
-                    <constraint firstAttribute="bottom" secondItem="6Rw-s5-oJH" secondAttribute="bottom" constant="4" id="sBU-eY-1Mx"/>
+                    <constraint firstAttribute="bottom" secondItem="6Rw-s5-oJH" secondAttribute="bottom" constant="4" id="4Ag-Qb-VHM"/>
+                    <constraint firstItem="6Rw-s5-oJH" firstAttribute="leading" secondItem="v49-pf-hvJ" secondAttribute="leading" constant="10" id="C3S-6V-VYn"/>
+                    <constraint firstAttribute="trailing" secondItem="lem-uO-dI8" secondAttribute="trailing" constant="220" id="EHq-Nc-cE7"/>
+                    <constraint firstItem="lem-uO-dI8" firstAttribute="top" secondItem="v49-pf-hvJ" secondAttribute="top" constant="5" id="RSS-sl-48a"/>
+                    <constraint firstAttribute="trailing" secondItem="6Rw-s5-oJH" secondAttribute="trailing" constant="10" id="ent-7C-BiM"/>
+                    <constraint firstItem="lem-uO-dI8" firstAttribute="leading" secondItem="v49-pf-hvJ" secondAttribute="leading" constant="20" id="oWX-sQ-jBd"/>
+                    <constraint firstItem="6Rw-s5-oJH" firstAttribute="top" secondItem="lem-uO-dI8" secondAttribute="bottom" id="xeD-ve-VTm"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

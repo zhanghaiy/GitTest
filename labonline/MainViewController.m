@@ -125,8 +125,6 @@
     [self requestMainDataWithURLString:kMainUrlString];
 }
 
-
-
 #pragma mark - 网络请求
 #pragma mark -- 开始请求
 - (void)requestMainDataWithURLString:(NSString *)urlStr

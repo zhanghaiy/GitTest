@@ -12,7 +12,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *categoryTitleButton;
 @property (weak, nonatomic) IBOutlet UIView *baseBackView;
 
-@property (nonatomic,strong) NSArray *listArray;
+@property (nonatomic,strong) NSDictionary *listDict;
+@property (nonatomic,assign) NSInteger selectedIndex;
 @property (nonatomic,assign) id target;
 @property (nonatomic,assign) SEL action;
 

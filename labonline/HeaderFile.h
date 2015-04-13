@@ -33,7 +33,8 @@ typedef enum
 
 // 主页接口 无参数
 #define kMainUrlString @"http://192.168.0.153:8181/labonline/indexController/queryList.do"
-
+// 主页杂志的阅读接口 左侧杂志接口
+#define kMainListUrlString @"http://192.168.0.153:8181/labonline/zzwzController/queryList.do"
 #define kOneFontSize 13
 #define kTwoFontSize 12
 #define kThreeFontSize 11

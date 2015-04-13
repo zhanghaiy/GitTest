@@ -168,10 +168,6 @@
         detailVC.titleStr = [dict objectForKey:@"type"];
         [self.navigationController pushViewController:detailVC animated:YES];
     }
-    // 进入技术专栏详情（通用的）
-//    JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
-//    detailVC.titleStr = @"文章详情";
-//    [self.navigationController pushViewController:detailVC animated:YES];
 }
 
 #pragma mark -- 跳转到技术专栏详情界面
