@@ -147,7 +147,8 @@
 {
     _currentPage = scrollView.contentOffset.x/width;
     _pageControl.currentPage = _currentPage;
-    _titleLab.text = [NSString stringWithFormat:@"杂志的标题%ld",_currentPage];
+    NSDictionary *subDict = [_imageInfoArray objectAtIndex:_currentPage];
+    _titleLab.text = [subDict objectForKey:@"title"];;
 }
 
 #pragma mark - 变换图片与标题

@@ -119,7 +119,7 @@
             }
             else
             {
-                [self createAlertViewWithMessage:@"收藏失败"];
+                [self createAlertViewWithMessage:[dict objectForKey:@"remark"]];
             }
         }
         else
@@ -133,46 +133,48 @@
         _downLoadVidio = NO;
         UIView *loadingV = [self.view viewWithTag:1111];
         [loadingV removeFromSuperview];
-        NSString *fileName = [[_vidioUrl componentsSeparatedByString:@"/"] lastObject];
-        NSString *toPath = [NSString stringWithFormat:@"%@/%@",[PathManager getCatePathWithType:VidioPath],fileName];
-        NSLog(@"~~~~~~~~~文件下载~~~~~~~~~%@~~~~~~~~~~~~~~~",toPath);
-        if (toPath)
+        if (netManager.downLoadData)
         {
-           BOOL exit = [netManager.downLoadData writeToFile:toPath atomically:YES];
-            if (exit)
+            NSString *fileName = [[_vidioUrl componentsSeparatedByString:@"/"] lastObject];
+            NSString *toPath = [NSString stringWithFormat:@"%@/%@",[PathManager getCatePathWithType:VidioPath],fileName];
+            NSLog(@"~~~~~~~~~文件下载~~~~~~~~~%@~~~~~~~~~~~~~~~",toPath);
+            if (toPath)
             {
-                [self createAlertViewWithMessage:@"文件下载成功"];
-                NSDictionary *currentDownloadVidio = @{@"VidioName":fileName,@"VidioPath":toPath,@"title":[_articalDic objectForKey:@"title"],@"type":[_articalDic objectForKey:@"type"]};
-                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                NSMutableArray *downloadVidioArray = [[NSMutableArray alloc]init];
-                [downloadVidioArray addObject:currentDownloadVidio];
-                if ([defaults objectForKey:@"VidioList"])
+                BOOL exit = [netManager.downLoadData writeToFile:toPath atomically:YES];
+                if (exit)
                 {
-                    NSLog(@"本地已有缓存视频");
-                    NSArray *savedArray = [defaults objectForKey:@"VidioList"];
-                    for (NSDictionary *dic in savedArray)
+                    [self createAlertViewWithMessage:@"文件下载成功"];
+                    NSDictionary *currentDownloadVidio = @{@"VidioName":fileName,@"VidioPath":toPath,@"title":[_articalDic objectForKey:@"title"],@"type":[_articalDic objectForKey:@"type"]};
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    NSMutableArray *downloadVidioArray = [[NSMutableArray alloc]init];
+                    [downloadVidioArray addObject:currentDownloadVidio];
+                    if ([defaults objectForKey:@"VidioList"])
                     {
-                        [downloadVidioArray addObject:dic];
+                        NSLog(@"本地已有缓存视频");
+                        NSArray *savedArray = [defaults objectForKey:@"VidioList"];
+                        for (NSDictionary *dic in savedArray)
+                        {
+                            [downloadVidioArray addObject:dic];
+                        }
                     }
+                    [defaults setObject:downloadVidioArray forKey:@"VidioList"];
+                    [defaults synchronize];
                 }
-                [defaults setObject:downloadVidioArray forKey:@"VidioList"];
-                [defaults synchronize];
+                else
+                {
+                    [self createAlertViewWithMessage:@"文件写入本地失败"];
+                }
             }
             else
             {
-                [self createAlertViewWithMessage:@"文件写入本地失败"];
+                [self createAlertViewWithMessage:@"文件存储路径不存在"];
             }
         }
         else
         {
-            [self createAlertViewWithMessage:@"文件存储路径不存在"];
+            [self createAlertViewWithMessage:@"文件下载失败,请检查网络"];
         }
     }
-    else
-    {
-        [self createAlertViewWithMessage:@"文件下载失败"];
-    }
-    
 }
 
 - (void)createAlertViewWithMessage:(NSString *)message
