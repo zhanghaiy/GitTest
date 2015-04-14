@@ -151,9 +151,7 @@
             // 视频
             detailVC.vidioUrl = [subDic objectForKey:@"urlvideo"];
         }
-        detailVC.articalID = [subDic objectForKey:@"articleid"];
-        detailVC.htmlUrl = [subDic objectForKey:@"urlhtml"];
-        detailVC.titleStr = [subDic objectForKey:@"type"];
+        detailVC.articalDic = subDic;
         [self.navigationController pushViewController:detailVC animated:YES];
     }
 }

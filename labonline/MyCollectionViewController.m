@@ -14,6 +14,9 @@
 {
     UITableView *_myCollectionTableView;
     NSArray *_collectionArray;
+    BOOL _deleteCollection;
+    NSString *_articalId;
+    NSString *_userid;
 }
 
 @end
@@ -35,7 +38,7 @@
     
     self.title = @"我的收藏";
     self.view.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
-//    _userId = @"529EEF8D5991473488DB877F100B2A01";
+    _deleteCollection = NO;
     //界面调整
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
     {
@@ -58,9 +61,12 @@
     _myCollectionTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_myCollectionTableView];
  
+    // 获取收藏列表
     [self requestDataWithUrlString:[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,kUserId]];
 }
 
+#pragma mark - 网络请求
+#pragma mark --- 开始请求
 - (void)requestDataWithUrlString:(NSString *)urlString
 {
     NetManager *netManager = [[NetManager alloc]init];
@@ -68,41 +74,50 @@
     netManager.action = @selector(netManagerCallBack:);
     [netManager requestDataWithUrlString:urlString];
 }
-
+#pragma mark --- 网络回调
 - (void)netManagerCallBack:(NetManager *)netManager
 {
-    if (netManager.failError)
+    if (_deleteCollection)
     {
-        // 失败
+        // 删除收藏
     }
-    else if (netManager.downLoadData)
+    else
     {
-       // 成功
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
-        NSInteger respCode = [[dic objectForKey:@"respCode"] integerValue];
-        if (respCode == 1000)
+        // 我的收藏列表
+        if (netManager.failError)
+        {
+            // 失败
+        }
+        else if (netManager.downLoadData)
         {
             // 成功
-            _collectionArray= [dic objectForKey:@"list"];
-            [_myCollectionTableView reloadData];
-            // 数据为空
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
+            NSInteger respCode = [[dic objectForKey:@"respCode"] integerValue];
+            if (respCode == 1000)
+            {
+                // 成功
+                _collectionArray= [dic objectForKey:@"list"];
+                [_myCollectionTableView reloadData];
+                // 数据为空
+            }
         }
     }
 }
 
 
-
+#pragma mark - 返回上一页
 - (void)backToPrePage
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - UITableViewDelegate
+#pragma mark -- 个数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _collectionArray.count;
 }
-
+#pragma mark -- 绘制cell
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifer = @"MyCollectionCell";
@@ -114,15 +129,18 @@
         cell.action = @selector(deleteMyCollection:);
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+    cell.cellIndex = indexPath.row;
     cell.infoDict = [_collectionArray objectAtIndex:indexPath.row];
     return cell;
 }
 
+#pragma mark --高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 66;
 }
 
+#pragma mark --点击cell
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
      // 阅读
@@ -132,11 +150,14 @@
 #pragma mark - MyCollectionCell callBack
 - (void)deleteMyCollection:(MyCollectionCell *)cell
 {
-    // 删除收藏
+    /* 删除收藏
+    http://192.168.0.153:8181/labonline/hyController/deleteWdsc.do?userid=5&articleid=6
+     */
+    _articalId = [[_collectionArray objectAtIndex:cell.cellIndex] objectForKey:@"articleid"];
     [self createDeleteView];
 }
 
-#pragma mark - 删除弹出框
+#pragma mark - 创建删除弹出框
 - (void)createDeleteView
 {
     UIView *askV = [[UIView alloc]initWithFrame:CGRectMake((kScreenWidth-kAskViewWidth)/2, (kScreenHeight-kAskViewWidth)/2, kAskViewWidth, kAskViewHeight)];
@@ -151,7 +172,7 @@
     
     NSInteger space = (kAskViewWidth-kSuresButtonHeight*2)/3;
     UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftBtn.tag = kSureButtonTag;
+    leftBtn.tag = kNOtSureButtonTag;
     [leftBtn setFrame:CGRectMake(space, 20, kSuresButtonHeight, kSuresButtonHeight)];
     [leftBtn setBackgroundImage:[UIImage imageNamed:@"取消.png"] forState:UIControlStateNormal];
     [leftBtn addTarget:self action:@selector(sureButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -159,35 +180,43 @@
     
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setFrame:CGRectMake(kAskViewWidth-kSuresButtonHeight-space, 20, 60, 60)];
-    rightBtn.tag = kNOtSureButtonTag;
+    rightBtn.tag = kSureButtonTag;
     [rightBtn setBackgroundImage:[UIImage imageNamed:@"确定.png"] forState:UIControlStateNormal];
     [rightBtn addTarget:self action:@selector(sureButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [askV addSubview:rightBtn];
 }
 
+#pragma mark - 是否删除
 - (void)sureButtonClicked:(UIButton *)btn
 {
-    UIView *askV = (UIView *)[self.view viewWithTag:kAskViewTag];
-    [askV removeFromSuperview];
     switch (btn.tag)
     {
         case kSureButtonTag:
         {
             // 删除
+            /* 删除收藏
+             http://192.168.0.153:8181/labonline/hyController/deleteWdsc.do?userid=5&articleid=6
+             */
+            NSString *urlString = [NSString stringWithFormat:@"%@?userid=%@&articleid=%@",kDeleteCollectionUrl,kUserId,_articalId];
+            [self requestDataWithUrlString:urlString];
         }
             break;
         case kNOtSureButtonTag:
         {
             // 取消
+            
         }
             break;
             
         default:
             break;
     }
+    UIView *askV = (UIView *)[self.view viewWithTag:kAskViewTag];
+    [askV removeFromSuperview];
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }

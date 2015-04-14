@@ -11,6 +11,7 @@
 #import "SearchViewController.h"
 #import "NetManager.h"
 
+#import "AFNetworkTool.h"
 
 @interface JSZLEvaluationViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 {
@@ -92,6 +93,7 @@
     
     _requestEvalueList = YES;
     [self requestMainDataWithURLString:[NSString stringWithFormat:kEvalueationURLString,_articalId]];
+    NSLog(@"%@",[NSString stringWithFormat:kEvalueationURLString,_articalId]);
 }
 
 #pragma mark - 网络请求
@@ -106,29 +108,6 @@
 #pragma mark --网络请求完成
 - (void)requestFinished:(NetManager *)netManager
 {
-    
-    if (netManager.downLoadData)
-    {
-        // 成功
-        // 解析
-        if (_commitEvalue)
-        {
-            // 评价
-            _commitEvalue = NO;
-            
-        }
-        else if (_requestEvalueList)
-        {
-            _requestEvalueList = NO;
-            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
-            _listArray = [dict objectForKey:@"list"];
-            [_evalueTableV reloadData];
-        }
-    }
-    else
-    {
-        // 失败
-    }
     if (_commitEvalue)
     {
         // 评价
@@ -136,6 +115,9 @@
         if (netManager.downLoadData)
         {
            // 成功
+            [self removeLoadingView];
+            _requestEvalueList = YES;
+            [self requestMainDataWithURLString:[NSString stringWithFormat:kEvalueationURLString,_articalId]];
         }
         else if (netManager.failError)
         {
@@ -145,6 +127,7 @@
     }
     else if (_requestEvalueList)
     {
+        NSLog(@"_requestEvalueList");
         _requestEvalueList = NO;
         if (netManager.downLoadData)
         {
@@ -172,18 +155,48 @@
         http://192.168.0.153:8181/labonline/hyController/insertPl.do
         参数 articleid userid text
      */
-    NSString *evaluContent = textField.text;
+    // 编码
+    NSString *evaluContent = [textField.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     if ([evaluContent length]!=0)
     {
         NSString *urlStr = [NSString stringWithFormat:@"%@?articleid=%@&userid=%@&text=%@",kCommitEvaluationUrl,_articalId,kUserId,evaluContent];
         _commitEvalue = YES;
         [self requestMainDataWithURLString:urlStr];
+        
+        [self createLoadingView];
+//        NSDictionary *dic = @{@"articleid":_articalId,@"userid":kUserId,@"text":evaluContent};
+//        [AFNetworkTool postJSONWithUrl:kCommitEvaluationUrl parameters:dic success:^(id responseObject) {
+//            NSLog(@"成功");
+//        } fail:^{
+//            NSLog(@"失败");
+//        }];
     }
     else
     {
         UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"警告" message:@"评论不可为空" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alertV show];
     }
+}
+
+- (void)createLoadingView
+{
+    UIView *loadingV = [[UIView alloc]initWithFrame:CGRectMake(20, 20, kScreenWidth-40, 200)];
+    loadingV.tag = 1234;
+    loadingV.center = CGPointMake(kScreenWidth/2, kScreenHeight*2/3);
+    loadingV.backgroundColor = [UIColor colorWithWhite:200/255.0 alpha:1];
+    [self.view addSubview:loadingV];
+    
+    UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake((kScreenWidth-40-30)/2, 20, 30, 30)];
+    activity.backgroundColor = [UIColor blackColor];
+    activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    [loadingV addSubview:activity];
+    [activity startAnimating];
+}
+
+- (void)removeLoadingView
+{
+    UIView *loadingV = [self.view viewWithTag:1234];
+    [loadingV removeFromSuperview];
 }
 
 #pragma mark - 搜索
@@ -241,7 +254,6 @@
         cell = [[[NSBundle mainBundle]loadNibNamed:@"JSZLEvaluationCell" owner:self options:0] lastObject];
     }
     cell.cellHeight = [self countCellHeightOfIndex:indexPath.row];
-//    cell.evaluationLable.text = [[_listArray objectAtIndex:indexPath.row] objectForKey:@"text"];
     cell.evaluDict = [_listArray objectAtIndex:indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;

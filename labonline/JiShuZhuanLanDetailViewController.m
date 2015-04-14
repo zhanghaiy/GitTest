@@ -10,11 +10,15 @@
 #import "JSZLEvaluationViewController.h"
 #import "SearchViewController.h"
 #import "NetManager.h"
+#import "PathManager.h"
+#import "UIView+Category.h"
 
 
 @interface JiShuZhuanLanDetailViewController ()<UIWebViewDelegate>
 {
     UIWebView *_webV;
+    BOOL _collection;
+    BOOL _downLoadVidio;
 }
 @end
 
@@ -22,6 +26,15 @@
 
 #define kToolBarHeight 60
 #define kSubItemsTag 68
+
+- (void)setArticalDic:(NSDictionary *)articalDic
+{
+    _articalDic = articalDic;
+    _articalID = [_articalDic objectForKey:@"articleid"];
+    _htmlUrl = [_articalDic objectForKey:@"urlhtml"];
+    _titleStr = [_articalDic objectForKey:@"type"];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -72,6 +85,9 @@
     NSURLRequest *request =[NSURLRequest requestWithURL:[NSURL URLWithString:_htmlUrl]];
     [self.view addSubview:_webV];
     [_webV loadRequest:request];
+    
+    _downLoadVidio = NO;
+    _collection = NO;
 }
 
 #pragma mark - 网络请求
@@ -87,19 +103,83 @@
 #pragma mark --网络请求完成
 - (void)requestFinished:(NetManager *)netManager
 {
-    if (netManager.downLoadData)
+    if (_collection)
     {
-        // 成功
-        // 解析
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
-        
+        _collection = NO;
+        // 收藏
+        if (netManager.downLoadData)
+        {
+            // 成功
+            // 解析
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
+            if ([[dict objectForKey:@"respCode"] integerValue] == 1000)
+            {
+                // 收藏成功
+                [self createAlertViewWithMessage:@"收藏成功"];
+            }
+            else
+            {
+                [self createAlertViewWithMessage:@"收藏失败"];
+            }
+        }
+        else
+        {
+            // 失败
+        }
+    }
+    else if (_downLoadVidio)
+    {
+       // 下载
+        _downLoadVidio = NO;
+        UIView *loadingV = [self.view viewWithTag:1111];
+        [loadingV removeFromSuperview];
+        NSString *fileName = [[_vidioUrl componentsSeparatedByString:@"/"] lastObject];
+        NSString *toPath = [NSString stringWithFormat:@"%@/%@",[PathManager getCatePathWithType:VidioPath],fileName];
+        NSLog(@"~~~~~~~~~文件下载~~~~~~~~~%@~~~~~~~~~~~~~~~",toPath);
+        if (toPath)
+        {
+           BOOL exit = [netManager.downLoadData writeToFile:toPath atomically:YES];
+            if (exit)
+            {
+                [self createAlertViewWithMessage:@"文件下载成功"];
+                NSDictionary *currentDownloadVidio = @{@"VidioName":fileName,@"VidioPath":toPath,@"title":[_articalDic objectForKey:@"title"],@"type":[_articalDic objectForKey:@"type"]};
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                NSMutableArray *downloadVidioArray = [[NSMutableArray alloc]init];
+                [downloadVidioArray addObject:currentDownloadVidio];
+                if ([defaults objectForKey:@"VidioList"])
+                {
+                    NSLog(@"本地已有缓存视频");
+                    NSArray *savedArray = [defaults objectForKey:@"VidioList"];
+                    for (NSDictionary *dic in savedArray)
+                    {
+                        [downloadVidioArray addObject:dic];
+                    }
+                }
+                [defaults setObject:downloadVidioArray forKey:@"VidioList"];
+                [defaults synchronize];
+            }
+            else
+            {
+                [self createAlertViewWithMessage:@"文件写入本地失败"];
+            }
+        }
+        else
+        {
+            [self createAlertViewWithMessage:@"文件存储路径不存在"];
+        }
     }
     else
     {
-        // 失败
+        [self createAlertViewWithMessage:@"文件下载失败"];
     }
+    
 }
 
+- (void)createAlertViewWithMessage:(NSString *)message
+{
+    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alertV show];
+}
 
 #pragma mark - 按钮点击事件
 - (void)buttonClicked:(UIButton *)btn
@@ -110,8 +190,8 @@
         case 0:
         {
            // 收藏
-            NSString *userId = @"529EEF8D5991473488DB877F100B2A01";
-            NSString *urlStr = [NSString stringWithFormat:@"%@?userid=%@&articleid=%@",kCollectionUrl,userId,_articalID];
+            _collection = YES;
+            NSString *urlStr = [NSString stringWithFormat:@"%@?userid=%@&articleid=%@",kCollectionUrl,kUserId,_articalID];
             [self requestMainDataWithURLString:urlStr];
         }
             break;
@@ -132,6 +212,21 @@
         case 3:
         {
             // 下载
+            _downLoadVidio = YES;
+            if ([_vidioUrl length])
+            {
+                // 下载视频
+                [self requestMainDataWithURLString:_vidioUrl];
+                // 加载View
+                UIView *loadingV = [UIView createLoadingView];
+                loadingV.tag = 1111;
+                loadingV.center = CGPointMake(kScreenWidth/2, kScreenHeight*1/2);
+                [self.view addSubview:loadingV];
+            }
+            else
+            {
+                [self createAlertViewWithMessage:@"暂无视频"];
+            }
         }
             break;
         default:

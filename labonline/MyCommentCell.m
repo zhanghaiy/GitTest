@@ -7,6 +7,8 @@
 //
 
 #import "MyCommentCell.h"
+#import "UIButton+WebCache.h"
+
 
 @implementation MyCommentCell
 
@@ -54,6 +56,27 @@
 //    _userNameLable.frame = CGRectMake(80, 15, width-90, 15);
 //    _desLable.frame = CGRectMake(80, 30, width-90, cellHeight-);
 //    _timeLable.frame = CGRectMake(80, 30+desLableHeight, width-90, 10);
+}
+
+- (void)setEvaluDict:(NSDictionary *)evaluDict
+{
+    _evaluDict = evaluDict;
+    // 控件赋值
+    [self fillControls];
+}
+
+- (void)fillControls
+{
+    // 头像 昵称 (从本地获取)
+//    [_userImageButton setImageWithURL:[NSURL URLWithString:[_evaluDict objectForKey:@""]] placeholderImage:[UIImage imageNamed:@"33.jpg"]];
+//    _userNameLable.text = [_evaluDict objectForKey:@"user_screennam"];
+    _userNameLable.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
+    // 上传评论时 编码 所以此处解码
+    _desLable.text = [[_evaluDict objectForKey:@"text"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    _timeLable.text = [_evaluDict objectForKey:@"created_at"];
+    NSDictionary *articalDic = [_evaluDict objectForKey:@"articleinfo"];
+    _workTitleLable.text = [articalDic objectForKey:@"title"];
+    _fromLable.text = [articalDic objectForKey:@"magazinename"];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

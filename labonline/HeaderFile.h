@@ -26,8 +26,14 @@ typedef enum
     Register
 }ResourceType;
 
+typedef enum
+{
+    VidioPath = 0,
+    PDFPath,
+    DataPath
+}PathType;
 
-#define kUserId @"529EEF8D5991473488DB877F100B2A01"
+#define kUserId @"E3874C4463734AC08E6084F3D09F3D47"
 // 技术专栏主页
 #define kJSZLUrlString @"http://192.168.0.153:8181/labonline/indexController/queryJszlList.do"
 // 技术专栏更多
@@ -41,10 +47,16 @@ typedef enum
 #define kEvalueationURLString @"http://192.168.0.153:8181/labonline/hyController/queryWzplList.do?articleid=%@"
 // 提交评论接口 articleid userid text
 #define kCommitEvaluationUrl @"http://192.168.0.153:8181/labonline/hyController/insertPl.do"
+// 我的评论 参数 userid
+#define kMyEvaluationUrl @"http://192.168.0.153:8181/labonline/hyController/queryPlList.do?userid=%@"
+
 // 收藏接口 参数userid  articleid
 #define kCollectionUrl @"http://192.168.0.153:8181/labonline/hyController/insertWdsc.do"
 // 我的收藏接口 参数 userid
 #define kMyCollectionUrlString @"http://192.168.0.153:8181/labonline/hyController/queryWdscList.do"
+// 删除收藏 参数userid  articleid
+#define kDeleteCollectionUrl @"http://192.168.0.153:8181/labonline/hyController/deleteWdsc.do"
+
 
 #define kOneFontSize 13
 #define kTwoFontSize 12
