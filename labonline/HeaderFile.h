@@ -26,8 +26,7 @@ typedef enum
     Register
 }ResourceType;
 
-// 我的收藏接口 参数 userid
-#define kMyCollectionUrlString @"http://192.168.0.153:8181/labonline/hyController/queryWdscList.do"
+
 #define kUserId @"529EEF8D5991473488DB877F100B2A01"
 // 技术专栏主页
 #define kJSZLUrlString @"http://192.168.0.153:8181/labonline/indexController/queryJszlList.do"
@@ -40,11 +39,12 @@ typedef enum
 #define kMainListUrlString @"http://192.168.0.153:8181/labonline/zzwzController/queryList.do"
 // 评论界面接口 9185
 #define kEvalueationURLString @"http://192.168.0.153:8181/labonline/hyController/queryWzplList.do?articleid=%@"
-#define kCommitEvaluationUrl @""
-
+// 提交评论接口 articleid userid text
+#define kCommitEvaluationUrl @"http://192.168.0.153:8181/labonline/hyController/insertPl.do"
 // 收藏接口 参数userid  articleid
 #define kCollectionUrl @"http://192.168.0.153:8181/labonline/hyController/insertWdsc.do"
-
+// 我的收藏接口 参数 userid
+#define kMyCollectionUrlString @"http://192.168.0.153:8181/labonline/hyController/queryWdscList.do"
 
 #define kOneFontSize 13
 #define kTwoFontSize 12

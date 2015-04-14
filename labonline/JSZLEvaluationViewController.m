@@ -17,6 +17,8 @@
     UITableView *_evalueTableV;
     UIView *downV;//底部评价View
     NSArray *_listArray;// 模拟数据 为了计算cell高度
+    BOOL _commitEvalue;
+    BOOL _requestEvalueList;
 }
 @end
 
@@ -32,6 +34,9 @@
     // Do any additional setup after loading the view.
     self.title = @"技术专栏评价界面";
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    _requestEvalueList = NO;
+    _commitEvalue = NO;
     
     // 左侧按钮
     NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 26) andBackImageWithName:@"aniu_07.png"];
@@ -85,6 +90,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
     
+    _requestEvalueList = YES;
     [self requestMainDataWithURLString:[NSString stringWithFormat:kEvalueationURLString,_articalId]];
 }
 
@@ -100,33 +106,84 @@
 #pragma mark --网络请求完成
 - (void)requestFinished:(NetManager *)netManager
 {
+    
     if (netManager.downLoadData)
     {
         // 成功
         // 解析
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
-        _listArray = [dict objectForKey:@"list"];
-        [_evalueTableV reloadData];
+        if (_commitEvalue)
+        {
+            // 评价
+            _commitEvalue = NO;
+            
+        }
+        else if (_requestEvalueList)
+        {
+            _requestEvalueList = NO;
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
+            _listArray = [dict objectForKey:@"list"];
+            [_evalueTableV reloadData];
+        }
     }
     else
     {
         // 失败
     }
+    if (_commitEvalue)
+    {
+        // 评价
+        _commitEvalue = NO;
+        if (netManager.downLoadData)
+        {
+           // 成功
+        }
+        else if (netManager.failError)
+        {
+           // 失败
+        }
+        
+    }
+    else if (_requestEvalueList)
+    {
+        _requestEvalueList = NO;
+        if (netManager.downLoadData)
+        {
+            //
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
+            _listArray = [dict objectForKey:@"list"];
+            [_evalueTableV reloadData];
+        }
+        else if (netManager.failError)
+        {
+           // 失败
+        }
+    }
 }
-
-
 
 #pragma mark - 发送按钮点击事件
 - (void)sendButtonClicked:(UIButton *)btn
 {
-     //发送按钮
-    NSLog(@"发送按钮点击事件");
+     NSLog(@"发送按钮点击事件");
     // 收键盘
     UITextField *textField = (UITextField *)[self.view viewWithTag:kTextFieldTag];
     [textField resignFirstResponder];
-    // 提交评论 提交成功后重新网络请求 刷新数据（可以看到自己评论的）
-//    NSString *evaluContent = textField.text;
-    
+    /*
+        提交评论 提交成功后重新网络请求 刷新数据（可以看到自己评论的）
+        http://192.168.0.153:8181/labonline/hyController/insertPl.do
+        参数 articleid userid text
+     */
+    NSString *evaluContent = textField.text;
+    if ([evaluContent length]!=0)
+    {
+        NSString *urlStr = [NSString stringWithFormat:@"%@?articleid=%@&userid=%@&text=%@",kCommitEvaluationUrl,_articalId,kUserId,evaluContent];
+        _commitEvalue = YES;
+        [self requestMainDataWithURLString:urlStr];
+    }
+    else
+    {
+        UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"警告" message:@"评论不可为空" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alertV show];
+    }
 }
 
 #pragma mark - 搜索
