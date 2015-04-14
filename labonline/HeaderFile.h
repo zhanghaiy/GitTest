@@ -33,6 +33,13 @@ typedef enum
     DataPath
 }PathType;
 
+typedef enum
+{
+    UserName = 0,
+    Telephone,
+    EMail
+}AlterType;
+
 #define kUserId @"E3874C4463734AC08E6084F3D09F3D47"
 // 技术专栏主页
 #define kJSZLUrlString @"http://192.168.0.153:8181/labonline/indexController/queryJszlList.do"
@@ -56,6 +63,13 @@ typedef enum
 #define kMyCollectionUrlString @"http://192.168.0.153:8181/labonline/hyController/queryWdscList.do"
 // 删除收藏 参数userid  articleid
 #define kDeleteCollectionUrl @"http://192.168.0.153:8181/labonline/hyController/deleteWdsc.do"
+
+// 修改昵称 参数 userid screenname
+#define kAlterUserNameURL @"http://192.168.0.153:8181/labonline/hyController/updateNc.do"
+// 修改电话 参数 userid tel
+#define kAlterTelephoneURL @"http://192.168.0.153:8181/labonline/hyController/updateSjh.do"
+// 修改邮箱 参数 userid email
+#define kAlterEmailURL @"http://192.168.0.153:8181/labonline/hyController/updateYx.do"
 
 
 #define kOneFontSize 13

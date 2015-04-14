@@ -10,10 +10,10 @@
 #import "PersonEditCell.h"
 #import "EditSubViewController.h"
 
-@interface EditPersonViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface EditPersonViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,EditSubViewControllerDelegate>
 {
     UITableView *_myTableV;
-    NSArray *_baseDataArray;
+    NSMutableArray *_baseDataArray;
     UIButton *imageBtn;
 }
 @end
@@ -71,7 +71,7 @@
     [imageBtn addTarget:self action:@selector(selectImage:) forControlEvents:UIControlEventTouchUpInside];
     [headView addSubview:imageBtn];
     
-    _baseDataArray = @[@{@"Title":@"昵称",@"Content":@"幸福的小猫米"},@{@"Title":@"手机号",@"Content":@"15210065926"},@{@"Title":@"E-mail",@"Content":@"845602196@qq.com"}];
+    _baseDataArray = [[NSMutableArray alloc]initWithObjects:@{@"Title":@"昵称",@"Content":@"幸福的小猫米"},@{@"Title":@"手机号",@"Content":@"15210065926"},@{@"Title":@"E-mail",@"Content":@"845602196@qq.com"}, nil];
     _myTableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 1+kHeadViewHeight, kScreenWidth, kScreenHeight-200) style:UITableViewStylePlain];
     _myTableV.delegate = self;
     _myTableV.dataSource = self;
@@ -203,8 +203,18 @@
 {
     NSDictionary *dict = [_baseDataArray objectAtIndex:indexPath.row];
     EditSubViewController *subVC = [[EditSubViewController alloc]init];
+    subVC.delegate = self;
     subVC.dataDict = dict;
+    subVC.alterType = indexPath.row;
     [self.navigationController pushViewController:subVC animated:YES];
+}
+
+- (void)reloadNewInfoWithString:(NSString *)string andAlterType:(NSInteger)alterType
+{
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc]initWithDictionary:[_baseDataArray objectAtIndex:alterType]];
+    [dict setObject:string forKey:@"Content"];
+    [_baseDataArray replaceObjectAtIndex:alterType withObject:dict];
+    [_myTableV reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

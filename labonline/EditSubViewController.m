@@ -7,16 +7,18 @@
 //
 
 #import "EditSubViewController.h"
+#import "NetManager.h"
+#import "UIView+Category.h"
 
-
-
-@interface EditSubViewController ()<UITextFieldDelegate>
-
+@interface EditSubViewController ()<UITextFieldDelegate,UIAlertViewDelegate>
+{
+    BOOL _success;
+}
 @end
 
 @implementation EditSubViewController
 #define kTextFieldTag 123
-
+#define KloadingViewTag 12345
 
 - (void)viewDidLoad
 {
@@ -73,7 +75,81 @@
 - (void)alertFinished
 {
     // 修改完成
-    [self.navigationController popViewControllerAnimated:YES];
+    NSString *userId = kUserId;
+    UITextField *textField = (UITextField *)[self.view viewWithTag:kTextFieldTag];
+    NSString *text = [textField.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSArray *baseUrlArray = @[kAlterUserNameURL,kAlterTelephoneURL,kAlterEmailURL];
+    NSArray *paramsArray = @[@"screenname",@"tel",@"email"];
+    NSString *urlString = [NSString stringWithFormat:@"%@?userid=%@&%@=%@",[baseUrlArray objectAtIndex:_alterType],userId,[paramsArray objectAtIndex:_alterType],text];;
+    [self requestDataWithUrlString:urlString];
+    [self ceateLoadingV];
+}
+
+- (void)ceateLoadingV
+{
+    UIView *loadingView = [UIView createLoadingView];
+    loadingView.center = CGPointMake(kScreenWidth/2, kScreenHeight/2);
+    loadingView.tag = KloadingViewTag;
+    [self.view addSubview:loadingView];
+}
+
+- (void)removeLoadView
+{
+    UIView *loadV = [self.view viewWithTag:KloadingViewTag];
+    [loadV removeFromSuperview];
+}
+
+#pragma mark - 网络请求
+#pragma mark --- 开始请求
+- (void)requestDataWithUrlString:(NSString *)urlString
+{
+    NetManager *netManager = [[NetManager alloc]init];
+    netManager.delegate = self;
+    netManager.action = @selector(netManagerCallBack:);
+    [netManager requestDataWithUrlString:urlString];
+}
+#pragma mark --- 网络回调
+- (void)netManagerCallBack:(NetManager *)netManager
+{
+    // 我的评论列表
+    [self removeLoadView];
+    if (netManager.failError)
+    {
+        // 失败
+    }
+    else if (netManager.downLoadData)
+    {
+        // 成功
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
+        NSInteger respCode = [[dic objectForKey:@"respCode"] integerValue];
+        if (respCode == 1000)
+        {
+            // 成功
+            _success = YES;
+            [self createAlertViewWithMessage:[NSString stringWithFormat:@"%@修改成功",[_dataDict objectForKey:@"Title"]]];
+        }
+        else
+        {
+            _success = NO;
+            [self createAlertViewWithMessage:[NSString stringWithFormat:@"%@修改失败",[_dataDict objectForKey:@"Title"]]];
+        }
+    }
+}
+
+- (void)createAlertViewWithMessage:(NSString *)message
+{
+    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alertV show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    UITextField *textField = (UITextField *)[self.view viewWithTag:kTextFieldTag];
+    if (_success)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+        [self.delegate reloadNewInfoWithString:textField.text andAlterType:_alterType];
+    }
 }
 
 #pragma mark - 收键盘
