@@ -136,6 +136,7 @@
     }
 }
 
+#pragma mark - 创建alertView
 - (void)createAlertViewWithMessage:(NSString *)message
 {
     UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];

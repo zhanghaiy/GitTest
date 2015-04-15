@@ -72,7 +72,7 @@
 //    _userNameLable.text = [_evaluDict objectForKey:@"user_screennam"];
     _userNameLable.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
     // 上传评论时 编码 所以此处解码
-    _desLable.text = [[_evaluDict objectForKey:@"text"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    _desLable.text = [_evaluDict objectForKey:@"text"] ;//[[_evaluDict objectForKey:@"text"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     _timeLable.text = [_evaluDict objectForKey:@"created_at"];
     NSDictionary *articalDic = [_evaluDict objectForKey:@"articleinfo"];
     _workTitleLable.text = [articalDic objectForKey:@"title"];

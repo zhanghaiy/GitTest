@@ -26,7 +26,7 @@
     _headButton.layer.masksToBounds = YES;
     _headButton.layer.cornerRadius = 3;
     _headTitleLable.textColor = [UIColor colorWithRed:217/255.0 green:0 blue:6/255.0 alpha:1];
-    _headTitleLable.backgroundColor = [UIColor colorWithWhite:238/255.0 alpha:1];
+    _headTitleLable.backgroundColor = [UIColor clearColor];
 }
 
 - (void)setCateDataArray:(NSArray *)cateDataArray
@@ -37,7 +37,7 @@
 
 - (void)createCategoryLable
 {
-     _headTitleLable.backgroundColor = [UIColor colorWithWhite:238/255.0 alpha:1];
+     _headTitleLable.backgroundColor = [UIColor clearColor];
     NSInteger index = 0;
     NSInteger lableWidth = (self.bounds.size.width-50)/4;
     NSInteger hang = 2;

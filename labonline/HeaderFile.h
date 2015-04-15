@@ -70,7 +70,15 @@ typedef enum
 #define kAlterTelephoneURL @"http://192.168.0.153:8181/labonline/hyController/updateSjh.do"
 // 修改邮箱 参数 userid email
 #define kAlterEmailURL @"http://192.168.0.153:8181/labonline/hyController/updateYx.do"
+// 修改头像 userid  usericon 字符串
+#define kCommitImageUrl @"http://192.168.0.153:8181/labonline/hyController/updateTx.do"
+// 增加阅读数
+#define kAddReadCountsUrl @"http://192.168.0.153:8181/labonline/zzwzController/updateYdl.do?articleid=%@"
 
+// 搜索展示标签接口
+#define kSearchLableUrl @"http://192.168.0.153:8181/labonline/zzbqController/queryBqList.do"
+// 搜索接口 参数 labelid  label
+#define kSearchUrl @"http://192.168.0.153:8181/labonline/zzwzController/querySearchList.do"
 
 #define kOneFontSize 13
 #define kTwoFontSize 12

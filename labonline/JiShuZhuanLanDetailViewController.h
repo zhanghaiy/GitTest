@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+//@protocol JiShuZhuanLanDetailViewControllerDelegate <NSObject>
+//
+//- (void)addReadCounts;
+//
+//@end
+
 @interface JiShuZhuanLanDetailViewController : UIViewController
 
 @property (nonatomic,copy) NSString *vidioUrl;
@@ -15,5 +21,8 @@
 @property (nonatomic,copy) NSString *htmlUrl;
 @property (nonatomic,copy) NSString *articalID;
 @property (nonatomic,strong) NSDictionary *articalDic;
+
+@property (nonatomic,assign) id delegate;
+@property (nonatomic,assign) SEL action;
 
 @end

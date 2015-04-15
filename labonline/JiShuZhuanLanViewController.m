@@ -22,6 +22,9 @@
 {
     UITableView *jiShuZhuanLanTableView;
     NSArray *_articleListArray;
+    NSInteger _currentCellIndex;//进入的cell
+    NSInteger _currentSubVIndex;
+    BOOL _addReadCounts;
 }
 @end
 
@@ -71,7 +74,7 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem = rightItem;
     
-    
+    _addReadCounts = NO;
     UIView *headerV = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenHeight, kImageShowViewHeight+10)];
     headerV.backgroundColor = [UIColor clearColor];
     PictureShowView *pictureV = [[PictureShowView alloc]initWithFrame:CGRectMake(10, 5, kScreenWidth-20, kImageShowViewHeight)];
@@ -138,7 +141,12 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     cell.dataIndex = indexPath.row;
-    cell.articleDict = [_articleListArray objectAtIndex:indexPath.row];
+    if (_addReadCounts&&(indexPath.row == _currentCellIndex))
+    {
+        cell.addReadCounts = YES;
+        cell.currentArticalIndex = _currentSubVIndex;
+    }
+     cell.articleDict = [_articleListArray objectAtIndex:indexPath.row];
     return cell;
 }
 
@@ -153,6 +161,7 @@
         NSLog(@"跳转PDF页面");
         PDFBrowserViewController *pdfBrowseVC = [[PDFBrowserViewController alloc]init];
         pdfBrowseVC.filePath = [dict objectForKey:@"urlpdf"];
+        pdfBrowseVC.articalId = [dict objectForKey:@"articleid"];
         [self.navigationController pushViewController:pdfBrowseVC animated:YES];
     }
     else if ([[dict objectForKey:@"urlhtml"] length]>5)
@@ -164,9 +173,7 @@
             // 视频
             detailVC.vidioUrl = [dict objectForKey:@"urlvideo"];
         }
-        detailVC.articalID = [dict objectForKey:@"articleid"];
-        detailVC.htmlUrl = [dict objectForKey:@"urlhtml"];
-        detailVC.titleStr = [dict objectForKey:@"type"];
+        detailVC.articalDic = dict;
         [self.navigationController pushViewController:detailVC animated:YES];
     }
 }
@@ -174,12 +181,23 @@
 #pragma mark -- 跳转到技术专栏详情界面
 - (void)enterDetailViewController:(JiShuZhuanLanSubView *)jszlSubV
 {
+    // 此处为了增加阅读数
+    if ([jszlSubV.superview isKindOfClass:[JiShuZhuanLanCell class]])
+    {
+        JiShuZhuanLanCell *cell = (JiShuZhuanLanCell *)jszlSubV.superview;
+        _currentCellIndex = cell.dataIndex;
+        _currentSubVIndex = cell.currentArticalIndex;
+    }
+    
     if ([[jszlSubV.subDict objectForKey:@"urlpdf"] length]>5)
     {
         // PDF 跳转PDF页面
         NSLog(@"跳转PDF页面");
         PDFBrowserViewController *pdfBrowseVC = [[PDFBrowserViewController alloc]init];
         pdfBrowseVC.filePath = [jszlSubV.subDict objectForKey:@"urlpdf"];
+        pdfBrowseVC.articalId = [jszlSubV.subDict objectForKey:@"articleid"];
+        pdfBrowseVC.target = self;
+        pdfBrowseVC.action = @selector(addReadCounts);
         [self.navigationController pushViewController:pdfBrowseVC animated:YES];
     }
     else if ([[jszlSubV.subDict objectForKey:@"urlhtml"] length]>5)
@@ -192,6 +210,8 @@
             detailVC.vidioUrl = [jszlSubV.subDict objectForKey:@"urlvideo"];
         }
         detailVC.articalDic = jszlSubV.subDict;
+        detailVC.delegate = self;
+        detailVC.action = @selector(addReadCounts);
         [self.navigationController pushViewController:detailVC animated:YES];
     }
 }
@@ -230,6 +250,12 @@
     // 进入搜索界面
     SearchViewController *searchVC = [[SearchViewController alloc]init];
     [self.navigationController pushViewController:searchVC animated:YES];
+}
+
+- (void)addReadCounts
+{
+    _addReadCounts = YES;
+    [jiShuZhuanLanTableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning

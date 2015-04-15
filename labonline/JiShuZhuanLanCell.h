@@ -16,8 +16,9 @@
 - (IBAction)moreButtonClicked:(id)sender;
 
 @property (nonatomic,strong) NSDictionary *articleDict;
-@property (nonatomic,assign) NSInteger currentArticalIndex;
-@property (nonatomic,assign) NSInteger dataIndex;
+@property (nonatomic,assign) NSInteger currentArticalIndex;// 当前文章的多音
+@property (nonatomic,assign) NSInteger dataIndex;// 当前cell的索引
+@property (nonatomic,assign) BOOL addReadCounts;// 增加阅读数 手动增加
 @property (nonatomic) id target;
 @property (nonatomic) SEL buttonClickSelector;
 @property (nonatomic) SEL jszlViewClickedAction;

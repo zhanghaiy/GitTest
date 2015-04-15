@@ -87,6 +87,12 @@
         jiShuZLView.index = i;
         [self addSubview:jiShuZLView];
         
+        if (_addReadCounts&&(i == _currentArticalIndex))
+        {
+            NSInteger readCounts = [[subDict objectForKey:@"seenum"] integerValue] + 1;
+            jiShuZLView.youLanCountsLable.text = [NSString stringWithFormat:@"%ld",readCounts];
+        }
+        
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapMethod:)];
         [jiShuZLView addGestureRecognizer:tap];
         

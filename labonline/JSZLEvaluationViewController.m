@@ -18,8 +18,7 @@
     UITableView *_evalueTableV;
     UIView *downV;//底部评价View
     NSArray *_listArray;// 模拟数据 为了计算cell高度
-    BOOL _commitEvalue;
-    BOOL _requestEvalueList;
+    BOOL sendFinished;
 }
 @end
 
@@ -35,9 +34,6 @@
     // Do any additional setup after loading the view.
     self.title = @"技术专栏评价界面";
     self.view.backgroundColor = [UIColor whiteColor];
-    
-    _requestEvalueList = NO;
-    _commitEvalue = NO;
     
     // 左侧按钮
     NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 26) andBackImageWithName:@"aniu_07.png"];
@@ -91,7 +87,6 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
     
-    _requestEvalueList = YES;
     [self requestMainDataWithURLString:[NSString stringWithFormat:kEvalueationURLString,_articalId]];
     NSLog(@"%@",[NSString stringWithFormat:kEvalueationURLString,_articalId]);
 }
@@ -108,38 +103,24 @@
 #pragma mark --网络请求完成
 - (void)requestFinished:(NetManager *)netManager
 {
-    if (_commitEvalue)
+    NSLog(@"_requestEvalueList");
+    if (netManager.downLoadData)
     {
-        // 评价
-        _commitEvalue = NO;
-        if (netManager.downLoadData)
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
+        _listArray = [dict objectForKey:@"list"];
+        [_evalueTableV reloadData];
+        if (sendFinished)
         {
-           // 成功
-            [self removeLoadingView];
-            _requestEvalueList = YES;
-            [self requestMainDataWithURLString:[NSString stringWithFormat:kEvalueationURLString,_articalId]];
-        }
-        else if (netManager.failError)
-        {
-           // 失败
+            if (_evalueTableV.contentSize.height>_evalueTableV.frame.size.height)
+            {
+                _evalueTableV.contentOffset = CGPointMake(0, _evalueTableV.contentSize.height-_evalueTableV.frame.size.height);
+            }
         }
         
     }
-    else if (_requestEvalueList)
+    else if (netManager.failError)
     {
-        NSLog(@"_requestEvalueList");
-        _requestEvalueList = NO;
-        if (netManager.downLoadData)
-        {
-            //
-            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
-            _listArray = [dict objectForKey:@"list"];
-            [_evalueTableV reloadData];
-        }
-        else if (netManager.failError)
-        {
-           // 失败
-        }
+        // 失败
     }
 }
 
@@ -159,23 +140,28 @@
     NSString *evaluContent = [textField.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     if ([evaluContent length]!=0)
     {
-        NSString *urlStr = [NSString stringWithFormat:@"%@?articleid=%@&userid=%@&text=%@",kCommitEvaluationUrl,_articalId,kUserId,evaluContent];
-        _commitEvalue = YES;
-        [self requestMainDataWithURLString:urlStr];
-        
-        [self createLoadingView];
-//        NSDictionary *dic = @{@"articleid":_articalId,@"userid":kUserId,@"text":evaluContent};
-//        [AFNetworkTool postJSONWithUrl:kCommitEvaluationUrl parameters:dic success:^(id responseObject) {
-//            NSLog(@"成功");
-//        } fail:^{
-//            NSLog(@"失败");
-//        }];
+        NSDictionary *dic = @{@"articleid":_articalId,@"userid":kUserId,@"text":textField.text};
+        [AFNetworkTool postJSONWithUrl:kCommitEvaluationUrl parameters:dic success:^(id responseObject) {
+            // 成功
+            [self createAlertViewWithMessage:@"评论提交成功"];
+            // 重新请求数据
+            sendFinished = YES;
+            [self requestMainDataWithURLString:[NSString stringWithFormat:kEvalueationURLString,_articalId]];
+        } fail:^{
+            NSLog(@"失败");
+            [self createAlertViewWithMessage:@"评论提交失败"];
+        }];
     }
     else
     {
-        UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"警告" message:@"评论不可为空" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alertV show];
+        [self createAlertViewWithMessage:@"评论不可为空"];
     }
+}
+
+- (void)createAlertViewWithMessage:(NSString *)str
+{
+    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    [alertV show];
 }
 
 - (void)createLoadingView

@@ -8,8 +8,7 @@
 
 #import "PDFBrowserViewController.h"
 #import <QuickLook/QuickLook.h>
-#import "NetManager.h"
-
+#import "AFNetworkTool.h"
 
 @interface PDFBrowserViewController ()<UIWebViewDelegate,QLPreviewControllerDataSource,QLPreviewControllerDelegate>
 {
@@ -46,6 +45,12 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:saveButton];
     self.navigationItem.rightBarButtonItem = rightItem;
     
+    [AFNetworkTool JSONDataWithUrl:[NSString stringWithFormat:kAddReadCountsUrl,_articalId] success:^(id json) {
+         NSLog(@"success");
+    } fail:^{
+        NSLog(@"fail");
+    }];
+    
     // 判断本地是否存在
     NSString *path = [NSString stringWithFormat:@"%@/%@",[self localFilePath],[[NSURL URLWithString:_filePath] lastPathComponent]];
     BOOL exit = [[NSFileManager defaultManager] fileExistsAtPath:path];
@@ -80,6 +85,10 @@
 - (void)popToPrePage
 {
     [self.navigationController popViewControllerAnimated:NO];
+    if ([self.target respondsToSelector:self.action])
+    {
+        [_target performSelector:_action withObject:nil afterDelay:NO];
+    }
 }
 
 #pragma mark - 保存按钮

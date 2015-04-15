@@ -14,6 +14,7 @@
 
 - (void)requestDataWithUrlString:(NSString *)urlString
 {
+    NSLog(@"~~~~~~~~~~requestDataWithUrlString");
     NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];

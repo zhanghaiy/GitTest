@@ -9,12 +9,16 @@
 #import "EditPersonViewController.h"
 #import "PersonEditCell.h"
 #import "EditSubViewController.h"
+//#import "NetManager.h"
+#import "AFNetworkTool.h"
 
-@interface EditPersonViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,EditSubViewControllerDelegate>
+@interface EditPersonViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,EditSubViewControllerDelegate,UIAlertViewDelegate>
 {
     UITableView *_myTableV;
     NSMutableArray *_baseDataArray;
     UIButton *imageBtn;
+    UIImage *_currentImage;
+    BOOL _commitSuccess;
 }
 @end
 
@@ -32,6 +36,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    _commitSuccess = NO;
     self.title = @"个人编辑";
     self.view.backgroundColor = [UIColor colorWithWhite:244/255.0 alpha:1];
     //界面调整
@@ -83,9 +88,46 @@
 
 - (void)alertFinished
 {
-    // 修改完成
-    [self.navigationController popViewControllerAnimated:YES];
+    // 修改完成  http://192.168.0.153:8181/labonline/hyController/updateTx.do?userid=80BE983A9EBC4B079247C4DDA518C2A8&usericon=dfwsvwsvedwvds
+    
+    NSData *_data = UIImageJPEGRepresentation(_currentImage, 0.3);
+    NSString *encodedImageStr = [_data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
+    NSString *imageString = [encodedImageStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *dic = @{@"userid":kUserId,@"usericon":imageString};
+    [AFNetworkTool postJSONWithUrl:kCommitImageUrl parameters:dic success:^(id responseObject)
+    {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+        NSInteger respCode = [[dic objectForKey:@"respCode"] integerValue];
+        if (respCode == 1000)
+        {
+            // 成功
+            _commitSuccess = YES;
+        }
+        else
+        {
+            _commitSuccess = NO;
+        }
+        [self createAlertViewWithMessage:[dic objectForKey:@"remark"]];
+    } fail:^{
+       [self createAlertViewWithMessage:[dic objectForKey:@"修改失败"]];
+    }];
 }
+
+#pragma mark - 创建alertView
+- (void)createAlertViewWithMessage:(NSString *)message
+{
+    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alertV show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (_commitSuccess)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 
 - (void)backToPrePage
 {
@@ -150,8 +192,8 @@
             data = UIImagePNGRepresentation(scaleImage);
         }
         //将二进制数据生成UIImage
-        UIImage *image = [UIImage imageWithData:data];
-        [imageBtn setBackgroundImage:image forState:UIControlStateNormal];
+        _currentImage = [UIImage imageWithData:data];
+        [imageBtn setBackgroundImage:_currentImage forState:UIControlStateNormal];
         NSLog(@"~~~~~~图片~~~~~~~");
     }
 }

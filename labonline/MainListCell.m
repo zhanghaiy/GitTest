@@ -67,6 +67,10 @@
         // 游览数
         UILabel *youLanLable = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth-50, 13+i*30,30, 12)];
         youLanLable.text = [NSString stringWithFormat:@"%ld",[[subDic objectForKey:@"seenum"] integerValue]];
+        if (_addReadCounts&&(_selectedIndex == i))
+        {
+            youLanLable.text = [NSString stringWithFormat:@"%ld",[[subDic objectForKey:@"seenum"] integerValue]+1];
+        }
         youLanLable.textAlignment = NSTextAlignmentLeft;
         youLanLable.textColor = [UIColor colorWithRed:232/255.0 green:21/255.0 blue:37/255.0 alpha:1];
         youLanLable.font = [UIFont systemFontOfSize:kThreeFontSize];

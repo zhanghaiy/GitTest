@@ -17,6 +17,9 @@
 {
     UITableView *_listTableView;
     NSArray *_listArray;
+    BOOL _addReadCounts;
+    NSInteger _currentCellIndex;
+    NSInteger _selectedIndex;
 }
 @end
 
@@ -43,6 +46,7 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem = rightItem;
     
+    _addReadCounts = NO;
 //    _listArray = @[@"心脑血管疾病预防",@"宝洁医疗诊断相机设计",@"医学世界",@"心脑血管疾病预防"];
     _listTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-10) style:UITableViewStylePlain];
     _listTableView.delegate = self;
@@ -102,7 +106,14 @@
         cell.target = self;
         cell.action = @selector(enterDetail:);
     }
+    
+    if (_addReadCounts && _currentCellIndex == indexPath.row)
+    {
+        cell.addReadCounts = YES;
+        cell.selectedIndex = _selectedIndex;
+    }
     cell.listDict = [_listArray objectAtIndex:indexPath.row];
+    cell.cellIndex = indexPath.row;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -116,6 +127,8 @@
 #pragma mark - 进入文章详情
 - (void)enterDetail:(MainListCell *)cell
 {
+    _currentCellIndex = cell.cellIndex;
+    _selectedIndex = cell.selectedIndex;
     NSDictionary *dict = [[cell.listDict objectForKey:@"article"] objectAtIndex:cell.selectedIndex];
     if ([[dict objectForKey:@"urlpdf"] length]>5)
     {
@@ -123,6 +136,9 @@
         NSLog(@"跳转PDF页面");
         PDFBrowserViewController *pdfBrowseVC = [[PDFBrowserViewController alloc]init];
         pdfBrowseVC.filePath = [dict objectForKey:@"urlpdf"];
+        pdfBrowseVC.articalId = [dict objectForKey:@"articleid"];
+        pdfBrowseVC.target = self;
+        pdfBrowseVC.action = @selector(addReadCounts);
         [self.navigationController pushViewController:pdfBrowseVC animated:YES];
     }
     else if ([[dict objectForKey:@"urlhtml"] length]>5)
@@ -134,9 +150,9 @@
             // 视频
             detailVC.vidioUrl = [dict objectForKey:@"urlvideo"];
         }
-        detailVC.articalID = [dict objectForKey:@"articleid"];
-        detailVC.htmlUrl = [dict objectForKey:@"urlhtml"];
-        detailVC.titleStr = [dict objectForKey:@"type"];
+        detailVC.delegate = self;
+        detailVC.action = @selector(addReadCounts);
+        detailVC.articalDic = dict;
         [self.navigationController pushViewController:detailVC animated:YES];
     }
 }
@@ -154,6 +170,12 @@
     NSLog(@"enterSearchViewController");
     SearchViewController *searchVC = [[SearchViewController alloc]init];
     [self.navigationController pushViewController:searchVC animated:YES];
+}
+
+- (void)addReadCounts
+{
+    _addReadCounts = YES;
+    [_listTableView reloadData];
 }
 
 

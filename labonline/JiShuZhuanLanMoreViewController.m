@@ -17,17 +17,13 @@
 {
     UITableView *_tableView;
     NSArray *_articalArray;
+    NSInteger _currentEnterCell;//进入的cell
+    BOOL _addReadCounts;
 }
 @end
 
 @implementation JiShuZhuanLanMoreViewController
 
-
-//- (void)setMoreArticalDict:(NSDictionary *)moreArticalDict
-//{
-//    _moreArticalDict = moreArticalDict;
-//    _articalArray = [_moreArticalDict objectForKey:@"article"];
-//}
 
 #pragma mark - 网络请求
 #pragma mark -- 开始请求
@@ -63,7 +59,6 @@
     
     self.title = @"生物检验";
     self.view.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
-    
     // 设置左右按钮
     // 左侧按钮
     NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 26) andBackImageWithName:@"aniu_07.png"];
@@ -84,6 +79,8 @@
         if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
             self.edgesForExtendedLayout = UIRectEdgeNone;
     }
+    _addReadCounts = NO;
+
     // tableView
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 10,kScreenWidth, kScreenHeight-75) style:UITableViewStylePlain];
     _tableView.delegate = self;
@@ -128,11 +125,16 @@
         cell = [[[NSBundle mainBundle]loadNibNamed:@"JiShuZhuanLanMoreCell" owner:self options:0] lastObject];
     }
     cell.subDict = [_articalArray objectAtIndex:indexPath.row];
+    if (_addReadCounts&&(indexPath.row==_currentEnterCell))
+    {
+        cell.youLanCountsLable.text = [NSString stringWithFormat:@"%ld",[[[_articalArray objectAtIndex:indexPath.row] objectForKey:@"seenum"] integerValue]+1];
+    }
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    _currentEnterCell = indexPath.row;
     NSDictionary *subDic = [_articalArray objectAtIndex:indexPath.row];
     if ([[subDic objectForKey:@"urlpdf"] length]>5)
     {
@@ -140,6 +142,9 @@
         NSLog(@"跳转PDF页面");
         PDFBrowserViewController *pdfBrowseVC = [[PDFBrowserViewController alloc]init];
         pdfBrowseVC.filePath = [subDic objectForKey:@"urlpdf"];
+        pdfBrowseVC.articalId = [subDic objectForKey:@"articleid"];
+        pdfBrowseVC.target = self;
+        pdfBrowseVC.action = @selector(addReadCounts);
         [self.navigationController pushViewController:pdfBrowseVC animated:YES];
     }
     else if ([[subDic objectForKey:@"urlhtml"] length]>5)
@@ -152,6 +157,8 @@
             detailVC.vidioUrl = [subDic objectForKey:@"urlvideo"];
         }
         detailVC.articalDic = subDic;
+        detailVC.delegate = self;
+        detailVC.action = @selector(addReadCounts);
         [self.navigationController pushViewController:detailVC animated:YES];
     }
 }
@@ -161,6 +168,12 @@
     return 55;
 }
 
+
+- (void)addReadCounts
+{
+    _addReadCounts = YES;
+    [_tableView reloadData];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

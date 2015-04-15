@@ -10,6 +10,9 @@
 
 @interface PDFBrowserViewController : UIViewController
 
+@property (nonatomic,assign) id target;
+@property (nonatomic,assign) SEL action;
+@property (nonatomic,copy) NSString *articalId;
 @property (nonatomic,copy) NSString *filePath;
 //@property (nonatomic,copy) NSString *fileName;
 

@@ -19,6 +19,7 @@
     UIWebView *_webV;
     BOOL _collection;
     BOOL _downLoadVidio;
+    BOOL _addReadCounts;
 }
 @end
 
@@ -88,6 +89,9 @@
     
     _downLoadVidio = NO;
     _collection = NO;
+    // 增加阅读数
+    _addReadCounts = YES;
+    [self requestMainDataWithURLString:[NSString stringWithFormat:kAddReadCountsUrl,_articalID]];
 }
 
 #pragma mark - 网络请求
@@ -175,6 +179,10 @@
             [self createAlertViewWithMessage:@"文件下载失败,请检查网络"];
         }
     }
+    else if (_addReadCounts)
+    {
+        _addReadCounts = NO;
+    }
 }
 
 - (void)createAlertViewWithMessage:(NSString *)message
@@ -240,6 +248,10 @@
 - (void)popToPrePage
 {
     [self.navigationController popViewControllerAnimated:YES];
+    if ([_delegate respondsToSelector:_action])
+    {
+        [_delegate performSelector:_action withObject:nil afterDelay:NO];
+    }
 }
 
 #pragma mark - 搜索
