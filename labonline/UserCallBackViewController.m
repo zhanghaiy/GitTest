@@ -7,8 +7,10 @@
 //
 
 #import "UserCallBackViewController.h"
+#import "AFNetworkTool.h"
 
-@interface UserCallBackViewController ()<UITextViewDelegate>
+
+@interface UserCallBackViewController ()<UITextViewDelegate,UIAlertViewDelegate>
 {
     UITextView *textV;
 }
@@ -70,7 +72,29 @@
     sendBtn.layer.cornerRadius = 5;
     sendBtn.layer.borderWidth = 1;
     sendBtn.layer.borderColor = [UIColor colorWithWhite:230/255.0 alpha:1].CGColor;
+    [sendBtn addTarget:self action:@selector(sendBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:sendBtn];
+}
+
+- (void)sendBtnClicked
+{
+        NSDictionary *paramDic = @{@"userid":kUserId,@"feedbackcontent":textV.text};
+        [AFNetworkTool postJSONWithUrl:kUserCallBackUrl parameters:paramDic success:^(id responseObject) {
+           // 用户提交反馈成功
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+            if ([dic objectForKey:@"respCode"])
+            {
+                UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:@"提交成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [alertV show];
+            }
+        } fail:^{
+            //
+        }];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event

@@ -80,6 +80,11 @@ typedef enum
 // 搜索接口 参数 labelid  label
 #define kSearchUrl @"http://192.168.0.153:8181/labonline/zzwzController/querySearchList.do"
 
+// 系统升级
+#define kSysUpdataUrl @"http://192.168.0.153:8181/labonline/hyController/queryBbList.do"
+// 用户反馈
+#define kUserCallBackUrl @"http://192.168.0.153:8181/labonline/hyController/insertFk.do"
+
 #define kOneFontSize 13
 #define kTwoFontSize 12
 #define kThreeFontSize 11

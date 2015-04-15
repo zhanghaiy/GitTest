@@ -12,4 +12,7 @@
 
 + (UIView *)createLoadingView;
 
++ (void)addLoadingViewInView:(UIView *)superView;
++ (void)removeLoadingVIewInView:(UIView *)superV;
+
 @end

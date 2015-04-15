@@ -37,5 +37,20 @@
     return loadingView;
 }
 
++ (void)addLoadingViewInView:(UIView *)superView
+{
+    UIActivityIndicatorView *activityV = [[UIActivityIndicatorView alloc]initWithFrame:superView.bounds];
+    activityV.tag = 1122;
+    activityV.backgroundColor = [UIColor colorWithRed:46/255.0 green:55/255.0 blue:88/255.0 alpha:0.8];
+    activityV.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    [superView addSubview:activityV];
+    [activityV startAnimating];
+}
+
++(void)removeLoadingVIewInView:(UIView *)superV
+{
+    UIActivityIndicatorView *activityV = (UIActivityIndicatorView *)[superV viewWithTag:1122];
+    [activityV removeFromSuperview];
+}
 
 @end

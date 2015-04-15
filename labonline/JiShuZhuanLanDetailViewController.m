@@ -85,6 +85,7 @@
     _webV.delegate = self;
     NSURLRequest *request =[NSURLRequest requestWithURL:[NSURL URLWithString:_htmlUrl]];
     [self.view addSubview:_webV];
+    NSLog(@"~~~~~~%@",_htmlUrl);
     [_webV loadRequest:request];
     
     _downLoadVidio = NO;
