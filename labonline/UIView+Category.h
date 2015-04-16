@@ -10,9 +10,7 @@
 
 @interface UIView (Category)
 
-+ (UIView *)createLoadingView;
-
++(void)removeLoadingVIewInView:(UIView *)superV;
 + (void)addLoadingViewInView:(UIView *)superView;
-+ (void)removeLoadingVIewInView:(UIView *)superV;
 
 @end

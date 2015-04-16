@@ -12,6 +12,7 @@
 #import "SearchViewController.h"
 #import "NetManager.h"
 #import "PDFBrowserViewController.h"
+#import "UIView+Category.h"
 
 @interface MainListViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -66,10 +67,13 @@
     netManager.delegate = self;
     netManager.action = @selector(requestFinished:);
     [netManager requestDataWithUrlString:urlStr];
+     [UIView addLoadingViewInView:self.view];
 }
 #pragma mark --网络请求完成
 - (void)requestFinished:(NetManager *)netManager
 {
+    // 删除加载View
+    [UIView removeLoadingVIewInView:self.view];
     if (netManager.downLoadData)
     {
         // 成功

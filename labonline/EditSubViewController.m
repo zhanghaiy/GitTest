@@ -7,8 +7,9 @@
 //
 
 #import "EditSubViewController.h"
-#import "NetManager.h"
+//#import "NetManager.h"
 #import "UIView+Category.h"
+#import "AFNetworkTool.h"
 
 @interface EditSubViewController ()<UITextFieldDelegate,UIAlertViewDelegate>
 {
@@ -77,50 +78,14 @@
     // 修改完成
     NSString *userId = kUserId;
     UITextField *textField = (UITextField *)[self.view viewWithTag:kTextFieldTag];
-    NSString *text = [textField.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSArray *baseUrlArray = @[kAlterUserNameURL,kAlterTelephoneURL,kAlterEmailURL];
     NSArray *paramsArray = @[@"screenname",@"tel",@"email"];
-    NSString *urlString = [NSString stringWithFormat:@"%@?userid=%@&%@=%@",[baseUrlArray objectAtIndex:_alterType],userId,[paramsArray objectAtIndex:_alterType],text];;
-    [self requestDataWithUrlString:urlString];
-    [self ceateLoadingV];
-}
-
-- (void)ceateLoadingV
-{
-    UIView *loadingView = [UIView createLoadingView];
-    loadingView.center = CGPointMake(kScreenWidth/2, kScreenHeight/2);
-    loadingView.tag = KloadingViewTag;
-    [self.view addSubview:loadingView];
-}
-
-- (void)removeLoadView
-{
-    UIView *loadV = [self.view viewWithTag:KloadingViewTag];
-    [loadV removeFromSuperview];
-}
-
-#pragma mark - 网络请求
-#pragma mark --- 开始请求
-- (void)requestDataWithUrlString:(NSString *)urlString
-{
-    NetManager *netManager = [[NetManager alloc]init];
-    netManager.delegate = self;
-    netManager.action = @selector(netManagerCallBack:);
-    [netManager requestDataWithUrlString:urlString];
-}
-#pragma mark --- 网络回调
-- (void)netManagerCallBack:(NetManager *)netManager
-{
-    // 我的评论列表
-    [self removeLoadView];
-    if (netManager.failError)
+    NSDictionary *paramDic = @{@"userid":userId,[paramsArray objectAtIndex:_alterType]:textField.text};
+    [UIView addLoadingViewInView:self.view];
+    [AFNetworkTool postJSONWithUrl:[baseUrlArray objectAtIndex:_alterType] parameters:paramDic success:^(id responseObject)
     {
-        // 失败
-    }
-    else if (netManager.downLoadData)
-    {
-        // 成功
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
+        [UIView removeLoadingVIewInView:self.view];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
         NSInteger respCode = [[dic objectForKey:@"respCode"] integerValue];
         if (respCode == 1000)
         {
@@ -133,7 +98,10 @@
             _success = NO;
             [self createAlertViewWithMessage:[NSString stringWithFormat:@"%@修改失败",[_dataDict objectForKey:@"Title"]]];
         }
-    }
+
+    } fail:^{
+         [UIView removeLoadingVIewInView:self.view];
+    }];
 }
 
 #pragma mark - 创建alertView

@@ -9,9 +9,9 @@
 #import "JSZLEvaluationViewController.h"
 #import "JSZLEvaluationCell.h"
 #import "SearchViewController.h"
-#import "NetManager.h"
-
 #import "AFNetworkTool.h"
+#import "UIView+Category.h"
+
 
 @interface JSZLEvaluationViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 {
@@ -87,26 +87,16 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
     
-    [self requestMainDataWithURLString:[NSString stringWithFormat:kEvalueationURLString,_articalId]];
-    NSLog(@"%@",[NSString stringWithFormat:kEvalueationURLString,_articalId]);
+    [self requestEvaluesList];
 }
 
-#pragma mark - 网络请求
-#pragma mark -- 开始请求
-- (void)requestMainDataWithURLString:(NSString *)urlStr
+- (void)requestEvaluesList
 {
-    NetManager *netManager = [[NetManager alloc]init];
-    netManager.delegate = self;
-    netManager.action = @selector(requestFinished:);
-    [netManager requestDataWithUrlString:urlStr];
-}
-#pragma mark --网络请求完成
-- (void)requestFinished:(NetManager *)netManager
-{
-    NSLog(@"_requestEvalueList");
-    if (netManager.downLoadData)
-    {
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
+    [UIView addLoadingViewInView:self.view];
+    NSDictionary *dic = @{@"articleid":_articalId};
+    [AFNetworkTool postJSONWithUrl:kEvalueationURLString parameters:dic success:^(id responseObject) {
+        [UIView removeLoadingVIewInView:self.view];
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
         _listArray = [dict objectForKey:@"list"];
         [_evalueTableV reloadData];
         if (sendFinished)
@@ -116,12 +106,9 @@
                 _evalueTableV.contentOffset = CGPointMake(0, _evalueTableV.contentSize.height-_evalueTableV.frame.size.height);
             }
         }
-        
-    }
-    else if (netManager.failError)
-    {
-        // 失败
-    }
+    } fail:^{
+        [UIView removeLoadingVIewInView:self.view];
+    }];
 }
 
 #pragma mark - 发送按钮点击事件
@@ -146,7 +133,7 @@
             [self createAlertViewWithMessage:@"评论提交成功"];
             // 重新请求数据
             sendFinished = YES;
-            [self requestMainDataWithURLString:[NSString stringWithFormat:kEvalueationURLString,_articalId]];
+            [self requestEvaluesList];
         } fail:^{
             NSLog(@"失败");
             [self createAlertViewWithMessage:@"评论提交失败"];

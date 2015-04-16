@@ -11,18 +11,19 @@
 #import "AFNetworkTool.h"
 #import "PDFBrowserViewController.h"
 #import "JiShuZhuanLanDetailViewController.h"
+#import "UIView+Category.h"
 
 @interface SearchViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     NSArray *_moNiDataArray;// 标签的数据
-    NSArray *_searchDataArray;//模拟搜索回来的数据
+    NSArray *_searchDataArray;//搜索回来的数据
     UITextField *searchTextField;
-    NSInteger _markHeaderHeight;
+     UIView *touView;// 标签View
+    NSInteger _markHeaderHeight;// 标签View的高度
     UITableView *_tableV;
-    UIView *touView;
-    BOOL _requestLable;
-    NSInteger _markCellIndex;
-    BOOL _addReadCounts;
+    NSInteger _markCellIndex;// 标记当前观看的文章 增加阅读数
+    BOOL _addReadCounts;// 是否增加阅读数
+    BOOL _requestSubLebel;// 请求标签
 }
 @end
 
@@ -71,25 +72,70 @@
     _tableV.tableHeaderView = touView;
     _tableV.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableV];
-    [self requestSubLabel];
+    _requestSubLebel = NO;
 }
 
-#pragma mark - 请求标签
-- (void)requestSubLabel
+#pragma mark - 网络
+#pragma mark -- 请求搜索标签
+- (void)requestTopSubLebel
 {
-    [AFNetworkTool postJSONWithUrl:kSearchLableUrl parameters:nil success:^(id responseObject)
+    _requestSubLebel = YES;
+    [self requestWithUrl:kSearchLableUrl Params:nil];
+}
+
+#pragma mark -- 搜索
+- (void)searchMethod
+{
+    // 搜索
+    [searchTextField resignFirstResponder];
+    NSDictionary *paramDic = @{@"labelid":@"1",@"label":searchTextField.text};
+    [self requestWithUrl:kSearchUrl Params:paramDic];
+}
+
+#pragma mark --网络请求
+- (void)requestWithUrl:(NSString *)url Params:(NSDictionary *)dict
+{
+    [UIView addLoadingViewInView:self.view];
+    [AFNetworkTool postJSONWithUrl:url parameters:dict success:^(id responseObject)
      {
-         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
-         NSLog(@"%@",dict);
-         if ([[dict objectForKey:@"respCode"] integerValue] == 1000)
+         [UIView removeLoadingVIewInView:self.view];
+         if (_requestSubLebel)
          {
-             _moNiDataArray = [[dict objectForKey:@"data"] objectForKey:@"labelList"];
-             [self createSubLables];
-             [_tableV reloadData];
+             // 搜索标签
+             _requestSubLebel = NO;
+             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+             NSLog(@"%@",dict);
+             if ([[dict objectForKey:@"respCode"] integerValue] == 1000)
+             {
+                 _moNiDataArray = [[dict objectForKey:@"data"] objectForKey:@"labelList"];
+                 [self createSubLables];
+                 [_tableV reloadData];
+             }
          }
-        
-    } fail:^{
-        NSLog(@"请求标签失败");
+         else
+         {
+             // 搜索结果
+             NSDictionary *dic =[NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+             NSLog(@"%@",dic);
+             if ([[dic objectForKey:@"respCode"] intValue] == 1000)
+             {
+                 _searchDataArray = [[dic objectForKey:@"data"] objectForKey:@"resultList"];
+                 [_tableV reloadData];
+                 _tableV.tableHeaderView = nil;
+             }
+
+         }
+     } fail:^{
+         [UIView removeLoadingVIewInView:self.view];
+         if (_requestSubLebel)
+         {
+             _requestSubLebel = NO;
+             NSLog(@"请求标签失败");
+         }
+         else
+         {
+            
+         }
     }];
 }
 
@@ -220,26 +266,6 @@
     return width;
 }
 
-#pragma mark - 搜索
-- (void)searchMethod
-{
-    // 搜索
-    [searchTextField resignFirstResponder];
-    NSDictionary *paramDic = @{@"labelid":@"1",@"label":searchTextField.text};
-    [AFNetworkTool postJSONWithUrl:kSearchUrl parameters:paramDic success:^(id responseObject) {
-        
-        NSDictionary *dic =[NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
-        NSLog(@"%@",dic);
-        if ([[dic objectForKey:@"respCode"] intValue] == 1000)
-        {
-            _searchDataArray = [[dic objectForKey:@"data"] objectForKey:@"resultList"];
-            [_tableV reloadData];
-            _tableV.tableHeaderView = nil;
-        }
-    } fail:^{
-        NSLog(@"fail");
-    }];
-}
 
 #pragma mark - 返回上一页
 - (void)popBack

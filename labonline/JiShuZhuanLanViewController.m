@@ -17,6 +17,8 @@
 #import "SearchViewController.h"
 #import "NetManager.h"
 #import "PDFBrowserViewController.h"
+#import "UIView+Category.h"
+
 
 @interface JiShuZhuanLanViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -93,6 +95,7 @@
     [self.view addSubview:jiShuZhuanLanTableView];
     
     [self requestMainDataWithURLString:kJSZLUrlString];
+    
 }
 
 #pragma mark - 网络请求
@@ -103,10 +106,12 @@
     netManager.delegate = self;
     netManager.action = @selector(requestFinished:);
     [netManager requestDataWithUrlString:urlStr];
+    [UIView addLoadingViewInView:self.view];
 }
 #pragma mark --网络请求完成
 - (void)requestFinished:(NetManager *)netManager
 {
+    [UIView removeLoadingVIewInView:self.view];
     if (netManager.downLoadData)
     {
         // 成功

@@ -58,6 +58,9 @@ NSString *const COCIM_INTERFACE_REG=@"http://192.168.0.153:8181/labonline/hyCont
 //    }else{
         self.window.rootViewController=_sideViewController;
 //    }
+
+//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"VidioList"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self.window makeKeyAndVisible];
     return YES;

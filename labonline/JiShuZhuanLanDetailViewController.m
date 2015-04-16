@@ -12,7 +12,7 @@
 #import "NetManager.h"
 #import "PathManager.h"
 #import "UIView+Category.h"
-
+#import <AVFoundation/AVFoundation.h>
 
 @interface JiShuZhuanLanDetailViewController ()<UIWebViewDelegate>
 {
@@ -116,6 +116,7 @@
         {
             // 成功
             // 解析
+            [UIView removeLoadingVIewInView:self.view];
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
             if ([[dict objectForKey:@"respCode"] integerValue] == 1000)
             {
@@ -136,8 +137,7 @@
     {
        // 下载
         _downLoadVidio = NO;
-        UIView *loadingV = [self.view viewWithTag:1111];
-        [loadingV removeFromSuperview];
+        [UIView removeLoadingVIewInView:self.view];
         if (netManager.downLoadData)
         {
             NSString *fileName = [[_vidioUrl componentsSeparatedByString:@"/"] lastObject];
@@ -149,13 +149,15 @@
                 if (exit)
                 {
                     [self createAlertViewWithMessage:@"文件下载成功"];
-                    NSDictionary *currentDownloadVidio = @{@"VidioName":fileName,@"VidioPath":toPath,@"title":[_articalDic objectForKey:@"title"],@"type":[_articalDic objectForKey:@"type"]};
+                    UIImage *image = [self getVidioImageWithVidioPath:toPath];
+                    NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+                    NSDictionary *currentDownloadVidio = @{@"VidioName":fileName,@"VidioPath":toPath,@"title":[_articalDic objectForKey:@"title"],@"type":[_articalDic objectForKey:@"type"],@"image":imageData};
+                    
                     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                     NSMutableArray *downloadVidioArray = [[NSMutableArray alloc]init];
                     [downloadVidioArray addObject:currentDownloadVidio];
                     if ([defaults objectForKey:@"VidioList"])
                     {
-                        NSLog(@"本地已有缓存视频");
                         NSArray *savedArray = [defaults objectForKey:@"VidioList"];
                         for (NSDictionary *dic in savedArray)
                         {
@@ -186,6 +188,31 @@
     }
 }
 
+- (UIImage *)getVidioImageWithVidioPath:(NSString *)videoPath
+
+{
+    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:[NSURL fileURLWithPath:videoPath] options:nil];
+    
+    AVAssetImageGenerator *gen = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+    
+    gen.appliesPreferredTrackTransform = YES;
+    
+    CMTime time = CMTimeMakeWithSeconds(0.0, 600);
+    
+    NSError *error = nil;
+    
+    CMTime actualTime;
+    
+    CGImageRef image = [gen copyCGImageAtTime:time actualTime:&actualTime error:&error];
+    
+    UIImage *thumb = [[UIImage alloc] initWithCGImage:image];
+    
+    CGImageRelease(image);
+    
+    return thumb;
+}
+
+
 - (void)createAlertViewWithMessage:(NSString *)message
 {
     UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
@@ -204,6 +231,7 @@
             _collection = YES;
             NSString *urlStr = [NSString stringWithFormat:@"%@?userid=%@&articleid=%@",kCollectionUrl,kUserId,_articalID];
             [self requestMainDataWithURLString:urlStr];
+            [UIView addLoadingViewInView:self.view];
         }
             break;
         case 1:
@@ -227,12 +255,17 @@
             if ([_vidioUrl length])
             {
                 // 下载视频
-                [self requestMainDataWithURLString:_vidioUrl];
-                // 加载View
-                UIView *loadingV = [UIView createLoadingView];
-                loadingV.tag = 1111;
-                loadingV.center = CGPointMake(kScreenWidth/2, kScreenHeight*1/2);
-                [self.view addSubview:loadingV];
+                NSString *currentVidioName = [[_vidioUrl componentsSeparatedByString:@"/"] lastObject];
+                if ([self localExitCurrentVidioName:currentVidioName])
+                {
+                    [self createAlertViewWithMessage:@"本地已经存在该视频"];
+                }
+                else
+                {
+                    [self requestMainDataWithURLString:_vidioUrl];
+                    // 加载View
+                    [UIView addLoadingViewInView:self.view];
+                }
             }
             else
             {
@@ -243,6 +276,21 @@
         default:
             break;
     }
+}
+
+- (BOOL)localExitCurrentVidioName:(NSString *)vidioName
+{
+    NSArray *arr = [[NSUserDefaults standardUserDefaults] objectForKey:@"VidioList"];
+    for (NSDictionary *dic in arr)
+    {
+        NSString *fileName = [dic objectForKey:@"VidioName"];
+        if ([fileName isEqualToString:vidioName])
+        {
+            // 本地已经存在
+            return YES;
+        }
+    }
+    return NO;
 }
 
 #pragma mark - 上一页

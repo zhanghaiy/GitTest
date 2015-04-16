@@ -9,6 +9,7 @@
 #import "MyCommentViewController.h"
 #import "MyCommentCell.h"
 #import "NetManager.h"
+#import "UIView+Category.h"
 
 @interface MyCommentViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -44,15 +45,8 @@
     [button addTarget:self action:@selector(backToPrePage) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = leftItem;
-    // right
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setFrame:CGRectMake(0, 0, 25, 25)];
-    [rightBtn setBackgroundImage:[UIImage imageNamed:@"aniu_09.png"] forState:UIControlStateNormal];
-    [rightBtn addTarget:self action:@selector(enterSearchVC) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = rightItem;
     
-//    _dataArray = @[@"我们每一个生活在这个世界的人，总有一个思维时刻在催促着你前行，在前进的路上我们总是自觉或不自觉地调整着自己努力的方向。因为我们正在明白，在你的面前始终有一个你目前无法达到的目标，这个目标就象一剂强心针，将你的肾上腺素调到最亢奋的状态。以至于我们常常在目标之中却无端地失去了目标。",@"写的不错。。。。。。",@"一般般因为我们正在明白，在你的面前始终有一个你目前无法达到的目标",@"因为我们正在明白，在你的面前始终有一个你目前无法达到的目标，这个目标就象一剂强心针，将你的肾上腺素调到最亢奋的状态。以至于我们常常在目标之中却无端地失去了目标"];
+    
     _myCommentTableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 10, kScreenWidth, kScreenHeight-10-70) style:UITableViewStylePlain];
     _myCommentTableV.delegate = self;
     _myCommentTableV.dataSource = self;
@@ -61,9 +55,6 @@
     _myCommentTableV.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_myCommentTableV];
     
-    /*
-     http://192.168.0.153:8181/labonline/hyController/queryPlList.do?userid=80BE983A9EBC4B079247C4DDA518C2A8 
-     */
     _userid = kUserId;
     NSString *urlStr = [NSString stringWithFormat:kMyEvaluationUrl,_userid];
     [self requestDataWithUrlString:urlStr];
@@ -77,10 +68,12 @@
     netManager.delegate = self;
     netManager.action = @selector(netManagerCallBack:);
     [netManager requestDataWithUrlString:urlString];
+    [UIView addLoadingViewInView:self.view];
 }
 #pragma mark --- 网络回调
 - (void)netManagerCallBack:(NetManager *)netManager
 {
+    [UIView removeLoadingVIewInView:self.view];
     // 我的评论列表
     if (netManager.failError)
     {
@@ -160,12 +153,6 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark - 搜索
-- (void)enterSearchVC
-{
-    // 搜索
-    NSLog(@"enterSearchViewController");
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

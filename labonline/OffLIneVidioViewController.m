@@ -9,7 +9,7 @@
 #import "OffLIneVidioViewController.h"
 #import "OffLineVidioCell.h"
 #import <MediaPlayer/MediaPlayer.h>
-#import <AVFoundation/AVFoundation.h>
+//#import <AVFoundation/AVFoundation.h>
 
 @interface OffLIneVidioViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -34,6 +34,13 @@
         if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
             self.edgesForExtendedLayout = UIRectEdgeNone;
     }
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setFrame:CGRectMake(0, 0, 35, 40)];
+    [button setBackgroundImage:[UIImage imageNamed:@"返回角.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(backToPrePage) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = leftItem;
     
     _downloadArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"VidioList"];
     
@@ -63,7 +70,7 @@
         cell.action = @selector(playVidioButtonCallBack:);
     }
     NSDictionary *dic = [_downloadArray objectAtIndex:indexPath.row];
-    cell.vidioImgView.image = [self getVidioImageWithVidioPath:[dic objectForKey:@"VidioPath"]];
+    cell.vidioImgView.image = [UIImage imageWithData:[dic objectForKey:@"image"]];//[self getVidioImageWithVidioPath:[dic objectForKey:@"VidioPath"]];
     cell.titleLable.text = [dic objectForKey:@"title"];
     cell.authorLable.text = [dic objectForKey:@"type"];
     cell.index = indexPath.row;
@@ -81,30 +88,40 @@
     // 播放离线视频
     NSLog(@"播放离线视频");
     NSDictionary *dict = [_downloadArray objectAtIndex:offLineCell.index];
+//    NSString *path = [NSString stringWithFormat:@"%@/Documents/MyOff-lineVidio/%@",NSHomeDirectory(),[dict objectForKey:@"VidioName"]];
     [self playerPlayVidioWithPath:[dict objectForKey:@"VidioPath"]];
 }
+
 
 #pragma mark - 根据路径播放视频
 - (void)playerPlayVidioWithPath:(NSString *)path
 {
+    NSLog(@"%@",path);
     if (path.length == 0)
     {
         NSLog(@"没有视频资源");
         return;
     }
-    NSURL *vidioUrl = [NSURL fileURLWithPath:path];
-    
-    if (_playerController == nil)
+    BOOL exit;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&exit])
     {
-        _playerController = [[MPMoviePlayerViewController alloc]initWithContentURL:vidioUrl];
-        _playerController.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
-        [self presentViewController:_playerController animated:YES completion:^{
+        NSLog(@"~~~~~~~~~~~~~~~~~");
+        NSURL *vidioUrl = [NSURL fileURLWithPath:path];
+        
+        if (_playerController == nil)
+        {
+            _playerController = [[MPMoviePlayerViewController alloc]initWithContentURL:vidioUrl];
+            _playerController.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
             
-        }];
+        }
+        [self presentMoviePlayerViewControllerAnimated:_playerController];
+        [_playerController.moviePlayer play]; //MPMoviePlayerPlaybackDidFinishNotification
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playFinished) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
     }
-    [_playerController.moviePlayer play];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playFinished) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
+    else
+    {
+        NSLog(@"#############################");
+    }
 }
 
 #pragma mark- 播放结束
@@ -120,7 +137,12 @@
     }
 }
 
+- (void)backToPrePage
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
+/*
 - (UIImage *)getVidioImageWithVidioPath:(NSString *)videoPath
 
 {
@@ -144,7 +166,7 @@
     
     return thumb;
 }
-
+*/
 
 
 - (void)didReceiveMemoryWarning

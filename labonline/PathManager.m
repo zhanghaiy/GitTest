@@ -14,7 +14,7 @@
 + (NSString *)getCatePathWithType:(PathType)type
 {
     NSArray *typeArr = @[@"MyOff-lineVidio",@"PDF",@"DataRequest"];
-    NSString *path = [NSHomeDirectory() stringByAppendingFormat:@"Documents/%@",[typeArr objectAtIndex:type]];
+    NSString *path = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@",[typeArr objectAtIndex:type]];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     BOOL isDir = FALSE;
     BOOL isDirExist = [fileManager fileExistsAtPath:path isDirectory:&isDir];

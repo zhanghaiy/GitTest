@@ -9,8 +9,8 @@
 #import "EditPersonViewController.h"
 #import "PersonEditCell.h"
 #import "EditSubViewController.h"
-//#import "NetManager.h"
 #import "AFNetworkTool.h"
+#import "UIView+Category.h"
 
 @interface EditPersonViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,EditSubViewControllerDelegate,UIAlertViewDelegate>
 {
@@ -94,8 +94,10 @@
     NSString *encodedImageStr = [_data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
     NSString *imageString = [encodedImageStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *dic = @{@"userid":kUserId,@"usericon":imageString};
+    [UIView addLoadingViewInView:self.view];
     [AFNetworkTool postJSONWithUrl:kCommitImageUrl parameters:dic success:^(id responseObject)
     {
+        [UIView removeLoadingVIewInView:self.view];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
         NSInteger respCode = [[dic objectForKey:@"respCode"] integerValue];
         if (respCode == 1000)
@@ -109,6 +111,7 @@
         }
         [self createAlertViewWithMessage:[dic objectForKey:@"remark"]];
     } fail:^{
+        [UIView removeLoadingVIewInView:self.view];
        [self createAlertViewWithMessage:[dic objectForKey:@"修改失败"]];
     }];
 }

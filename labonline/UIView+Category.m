@@ -7,50 +7,46 @@
 //
 
 #import "UIView+Category.h"
+#import "HZActivityIndicatorView.h"
+
 
 @implementation UIView (Category)
 
-+ (UIView *)createLoadingView
+
++(void)removeLoadingVIewInView:(UIView *)superV
 {
-    NSInteger width = kScreenWidth-20;
-    NSInteger height = 180;
-    UIView *loadingView = [[UIView alloc]initWithFrame:CGRectMake((kScreenWidth-width)/2, 0, width, height)];
-    loadingView.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:1];
-    loadingView.layer.masksToBounds = YES;
-    loadingView.layer.cornerRadius = 5;
-    loadingView.layer.borderColor = [UIColor colorWithRed:66/255.0 green:192/255.0 blue:156/255.0 alpha:1].CGColor;
-    loadingView.layer.borderWidth = 1;
-    
-    UIActivityIndicatorView *activityV = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake((width-120)/2, 20, 120, 120)];
-    activityV.backgroundColor = [UIColor clearColor];
-    activityV.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    [loadingView addSubview:activityV];
-    [activityV startAnimating];
-    
-    UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(0, 130, width, 30)];
-    lable.text = @"正在加载......";
-    lable.font= [UIFont systemFontOfSize:kOneFontSize];
-    lable.numberOfLines = 0;
-    lable.textAlignment = NSTextAlignmentCenter;
-    lable.textColor = [UIColor purpleColor];
-    [loadingView addSubview:lable];
-    return loadingView;
+    UIView *loadingV = [superV viewWithTag:12345];
+    [loadingV removeFromSuperview];
 }
 
 + (void)addLoadingViewInView:(UIView *)superView
 {
-    UIActivityIndicatorView *activityV = [[UIActivityIndicatorView alloc]initWithFrame:superView.bounds];
-    activityV.tag = 1122;
-    activityV.backgroundColor = [UIColor colorWithRed:46/255.0 green:55/255.0 blue:88/255.0 alpha:0.8];
-    activityV.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    [superView addSubview:activityV];
-    [activityV startAnimating];
+    NSInteger wid = superView.frame.size.width;
+    NSInteger height = superView.frame.size.height;
+    UIView *loadingView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, wid, height-64)];//[[UIView alloc]initWithFrame:superView.frame]; //[[UIView alloc]initWithFrame:CGRectMake(0, 0, wid-20, 200)];
+    loadingView.tag = 12345;
+    loadingView.backgroundColor = [UIColor colorWithWhite:100/255.0 alpha:0.6];
+//    loadingView.layer.masksToBounds =  YES;
+//    loadingView.layer.cornerRadius = 5;
+//    loadingView.layer.borderColor = [UIColor colorWithRed:36/255.0 green:57/255.0 blue:121/255.0 alpha:0.8].CGColor;
+//    loadingView.layer.borderWidth = 1;
+//    loadingView.center = CGPointMake(wid/2, height/3);
+    [superView addSubview:loadingView];
+    
+    HZActivityIndicatorView *activityIndicator = [[HZActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+    activityIndicator.backgroundColor = [UIColor clearColor];
+    activityIndicator.opaque = YES;
+    activityIndicator.steps = 16;
+    activityIndicator.finSize = CGSizeMake(8, 40);
+    activityIndicator.indicatorRadius = 20;
+    activityIndicator.stepDuration = 0.100;
+    activityIndicator.color = [UIColor colorWithRed:0.0 green:34.0/255.0 blue:85.0/255.0 alpha:1.000];
+    activityIndicator.roundedCoreners = UIRectCornerTopRight;
+    activityIndicator.cornerRadii = CGSizeMake(10, 10);
+    activityIndicator.center = CGPointMake((NSInteger)wid/2, (height-64)/2);
+    [loadingView addSubview:activityIndicator];
+    [activityIndicator startAnimating];
 }
 
-+(void)removeLoadingVIewInView:(UIView *)superV
-{
-    UIActivityIndicatorView *activityV = (UIActivityIndicatorView *)[superV viewWithTag:1122];
-    [activityV removeFromSuperview];
-}
 
 @end

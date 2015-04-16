@@ -9,6 +9,7 @@
 #import "MyCollectionViewController.h"
 #import "MyCollectionCell.h"
 #import "NetManager.h"
+#import "UIView+Category.h"
 
 @interface MyCollectionViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -73,13 +74,22 @@
     netManager.delegate = self;
     netManager.action = @selector(netManagerCallBack:);
     [netManager requestDataWithUrlString:urlString];
+    [UIView addLoadingViewInView:self.view];
 }
 #pragma mark --- 网络回调
 - (void)netManagerCallBack:(NetManager *)netManager
 {
+    [UIView removeLoadingVIewInView:self.view];
     if (_deleteCollection)
     {
+        _deleteCollection = NO;
         // 删除收藏
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
+        if ([[dic objectForKey:@"respCode"] integerValue] == 1000)
+        {
+            NSLog(@"删除成功");
+            [self requestDataWithUrlString:[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,kUserId]];
+        }
     }
     else
     {
@@ -197,6 +207,7 @@
             /* 删除收藏
              http://192.168.0.153:8181/labonline/hyController/deleteWdsc.do?userid=5&articleid=6
              */
+            _deleteCollection = YES;
             NSString *urlString = [NSString stringWithFormat:@"%@?userid=%@&articleid=%@",kDeleteCollectionUrl,kUserId,_articalId];
             [self requestDataWithUrlString:urlString];
         }

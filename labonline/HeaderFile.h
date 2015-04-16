@@ -51,7 +51,7 @@ typedef enum
 // 主页杂志的阅读接口 左侧杂志接口
 #define kMainListUrlString @"http://192.168.0.153:8181/labonline/zzwzController/queryList.do"
 // 评论界面接口 9185
-#define kEvalueationURLString @"http://192.168.0.153:8181/labonline/hyController/queryWzplList.do?articleid=%@"
+#define kEvalueationURLString @"http://192.168.0.153:8181/labonline/hyController/queryWzplList.do"
 // 提交评论接口 articleid userid text
 #define kCommitEvaluationUrl @"http://192.168.0.153:8181/labonline/hyController/insertPl.do"
 // 我的评论 参数 userid

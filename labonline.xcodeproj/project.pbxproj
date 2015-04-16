@@ -104,6 +104,9 @@
 		FD5D3C081AD3BF2800A6F60E /* wifi.png in Resources */ = {isa = PBXBuildFile; fileRef = FD5D3C001AD3BF2800A6F60E /* wifi.png */; };
 		FD5D3C0C1AD3C15000A6F60E /* SettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5D3C0A1AD3C15000A6F60E /* SettingCell.m */; };
 		FD5D3C0D1AD3C15000A6F60E /* SettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5D3C0B1AD3C15000A6F60E /* SettingCell.xib */; };
+		FD7355C31ADF640F00B5F296 /* HZActivityIndicatorSubclassExample.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7355C01ADF640F00B5F296 /* HZActivityIndicatorSubclassExample.m */; };
+		FD7355C41ADF640F00B5F296 /* HZActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7355C21ADF640F00B5F296 /* HZActivityIndicatorView.m */; };
+		FD7355C81ADFAB3800B5F296 /* RemoveCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7355C71ADFAB3800B5F296 /* RemoveCacheManager.m */; };
 		FD7901231ACA490D00D908EA /* 12.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD7901221ACA490D00D908EA /* 12.jpg */; };
 		FD8AE2D61ACE1BAC00A4A5B6 /* EditPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8AE2D51ACE1BAC00A4A5B6 /* EditPersonViewController.m */; };
 		FD8AE2DF1ACE230100A4A5B6 /* PersonEditCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8AE2DD1ACE230100A4A5B6 /* PersonEditCell.m */; };
@@ -323,6 +326,12 @@
 		FD5D3C091AD3C15000A6F60E /* SettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingCell.h; sourceTree = "<group>"; };
 		FD5D3C0A1AD3C15000A6F60E /* SettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingCell.m; sourceTree = "<group>"; };
 		FD5D3C0B1AD3C15000A6F60E /* SettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingCell.xib; sourceTree = "<group>"; };
+		FD7355BF1ADF640F00B5F296 /* HZActivityIndicatorSubclassExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZActivityIndicatorSubclassExample.h; sourceTree = "<group>"; };
+		FD7355C01ADF640F00B5F296 /* HZActivityIndicatorSubclassExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZActivityIndicatorSubclassExample.m; sourceTree = "<group>"; };
+		FD7355C11ADF640F00B5F296 /* HZActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZActivityIndicatorView.h; sourceTree = "<group>"; };
+		FD7355C21ADF640F00B5F296 /* HZActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZActivityIndicatorView.m; sourceTree = "<group>"; };
+		FD7355C61ADFAB3800B5F296 /* RemoveCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoveCacheManager.h; sourceTree = "<group>"; };
+		FD7355C71ADFAB3800B5F296 /* RemoveCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveCacheManager.m; sourceTree = "<group>"; };
 		FD7901221ACA490D00D908EA /* 12.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 12.jpg; sourceTree = "<group>"; };
 		FD8AE2D41ACE1BAC00A4A5B6 /* EditPersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditPersonViewController.h; sourceTree = "<group>"; };
 		FD8AE2D51ACE1BAC00A4A5B6 /* EditPersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditPersonViewController.m; sourceTree = "<group>"; };
@@ -737,6 +746,26 @@
 			path = "设置";
 			sourceTree = "<group>";
 		};
+		FD7355BE1ADF63EB00B5F296 /* loadingView */ = {
+			isa = PBXGroup;
+			children = (
+				FD7355BF1ADF640F00B5F296 /* HZActivityIndicatorSubclassExample.h */,
+				FD7355C01ADF640F00B5F296 /* HZActivityIndicatorSubclassExample.m */,
+				FD7355C11ADF640F00B5F296 /* HZActivityIndicatorView.h */,
+				FD7355C21ADF640F00B5F296 /* HZActivityIndicatorView.m */,
+			);
+			name = loadingView;
+			sourceTree = "<group>";
+		};
+		FD7355C51ADFAB0500B5F296 /* 清除缓存 */ = {
+			isa = PBXGroup;
+			children = (
+				FD7355C61ADFAB3800B5F296 /* RemoveCacheManager.h */,
+				FD7355C71ADFAB3800B5F296 /* RemoveCacheManager.m */,
+			);
+			name = "清除缓存";
+			sourceTree = "<group>";
+		};
 		FD96C87A1AC109E00002778A = {
 			isa = PBXGroup;
 			children = (
@@ -826,6 +855,7 @@
 		FD96C8B31AC10A560002778A /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				FD7355BE1ADF63EB00B5F296 /* loadingView */,
 				FD558D4C1AC4097F00DA42FF /* 刷新 */,
 				FD96C8BD1AC10C120002778A /* 侧滑 */,
 			);
@@ -898,6 +928,7 @@
 		FD96C8CF1AC116D70002778A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				FD7355C51ADFAB0500B5F296 /* 清除缓存 */,
 				043EE7171AD6611600B194EB /* UserModel.h */,
 				043EE7181AD6611600B194EB /* UserModel.m */,
 				FD97DA1F1ADCE3AD00963FB2 /* PathManager.h */,
@@ -1233,6 +1264,7 @@
 				FDA91DF31AD4F98100734E1B /* NavigationButton.m in Sources */,
 				FDC430EB1AD62684006AC165 /* ShareView.m in Sources */,
 				FD5CC6491AD7B8A1008986F0 /* SDWebImageDownloader.m in Sources */,
+				FD7355C41ADF640F00B5F296 /* HZActivityIndicatorView.m in Sources */,
 				FD5CC6461AD7B8A1008986F0 /* README.md in Sources */,
 				042C46741AC2815300D36C8F /* MenuViewController.m in Sources */,
 				FD96C8E71AC146480002778A /* PictureShowView.m in Sources */,
@@ -1258,7 +1290,9 @@
 				04FE4C4A1ACD328D00A922DA /* AFURLSessionManager.m in Sources */,
 				FDA91DFF1AD5169900734E1B /* ShowPicture.m in Sources */,
 				FDB7CD411ACA970D007BAF79 /* MainDetailViewController.m in Sources */,
+				FD7355C31ADF640F00B5F296 /* HZActivityIndicatorSubclassExample.m in Sources */,
 				FD558D171AC3E89300DA42FF /* JiShuZhuanLanMoreCell.m in Sources */,
+				FD7355C81ADFAB3800B5F296 /* RemoveCacheManager.m in Sources */,
 				FD9A76F71ACBD3CF007ACC11 /* PersonColumeView.m in Sources */,
 				FD8AE2E61ACE31CB00A4A5B6 /* AFNetworkTool.m in Sources */,
 				04FE4C461ACD328D00A922DA /* AFSecurityPolicy.m in Sources */,
