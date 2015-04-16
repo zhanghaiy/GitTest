@@ -9,12 +9,16 @@
 #import "JSZLEvaluationViewController.h"
 #import "JSZLEvaluationCell.h"
 #import "SearchViewController.h"
+#import "AFNetworkTool.h"
+#import "UIView+Category.h"
+
 
 @interface JSZLEvaluationViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 {
     UITableView *_evalueTableV;
     UIView *downV;//底部评价View
-    NSArray *_dataArray;// 模拟数据 为了计算cell高度
+    NSArray *_listArray;// 模拟数据 为了计算cell高度
+    BOOL sendFinished;
 }
 @end
 
@@ -50,13 +54,13 @@
         if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
             self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-    _dataArray = @[@"我们每一个生活在这个世界的人，总有一个思维时刻在催促着你前行，在前进的路上我们总是自觉或不自觉地调整着自己努力的方向。因为我们正在明白，在你的面前始终有一个你目前无法达到的目标，这个目标就象一剂强心针，将你的肾上腺素调到最亢奋的状态。以至于我们常常在目标之中却无端地失去了目标。",@"写的不错。。。。。。",@"一般般",@"因为我们正在明白，在你的面前始终有一个你目前无法达到的目标，这个目标就象一剂强心针，将你的肾上腺素调到最亢奋的状态。以至于我们常常在目标之中却无端地失去了目标"];
+//    _dataArray = @[@"我们每一个生活在这个世界的人，总有一个思维时刻在催促着你前行，在前进的路上我们总是自觉或不自觉地调整着自己努力的方向。因为我们正在明白，在你的面前始终有一个你目前无法达到的目标，这个目标就象一剂强心针，将你的肾上腺素调到最亢奋的状态。以至于我们常常在目标之中却无端地失去了目标。",@"写的不错。。。。。。",@"一般般",@"因为我们正在明白，在你的面前始终有一个你目前无法达到的目标，这个目标就象一剂强心针，将你的肾上腺素调到最亢奋的状态。以至于我们常常在目标之中却无端地失去了目标"];
     _evalueTableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-64-kDownViewHeight) style:UITableViewStylePlain];
     _evalueTableV.delegate = self;
     _evalueTableV.dataSource = self;
     [self.view addSubview:_evalueTableV];
     
-    downV = [[UIView alloc]initWithFrame:CGRectMake(0, kScreenHeight-kDownViewHeight, kScreenWidth, kDownViewHeight)];
+    downV = [[UIView alloc]initWithFrame:CGRectMake(0, kScreenHeight-kDownViewHeight-64, kScreenWidth, kDownViewHeight)];
     downV.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
     [self.view addSubview:downV];
     // 文本框
@@ -82,19 +86,90 @@
     [downV addSubview:sendButton];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    
+    [self requestEvaluesList];
+}
+
+- (void)requestEvaluesList
+{
+    [UIView addLoadingViewInView:self.view];
+    NSDictionary *dic = @{@"articleid":_articalId};
+    [AFNetworkTool postJSONWithUrl:kEvalueationURLString parameters:dic success:^(id responseObject) {
+        [UIView removeLoadingVIewInView:self.view];
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+        _listArray = [dict objectForKey:@"list"];
+        [_evalueTableV reloadData];
+        if (sendFinished)
+        {
+            if (_evalueTableV.contentSize.height>_evalueTableV.frame.size.height)
+            {
+                _evalueTableV.contentOffset = CGPointMake(0, _evalueTableV.contentSize.height-_evalueTableV.frame.size.height);
+            }
+        }
+    } fail:^{
+        [UIView removeLoadingVIewInView:self.view];
+    }];
 }
 
 #pragma mark - 发送按钮点击事件
 - (void)sendButtonClicked:(UIButton *)btn
 {
-     //发送按钮
-    NSLog(@"发送按钮点击事件");
+     NSLog(@"发送按钮点击事件");
     // 收键盘
     UITextField *textField = (UITextField *)[self.view viewWithTag:kTextFieldTag];
     [textField resignFirstResponder];
-    // 提交评论 提交成功后重新网络请求 刷新数据（可以看到自己评论的）
-//    NSString *evaluContent = textField.text;
+    /*
+        提交评论 提交成功后重新网络请求 刷新数据（可以看到自己评论的）
+        http://192.168.0.153:8181/labonline/hyController/insertPl.do
+        参数 articleid userid text
+     */
+    // 编码
+    NSString *evaluContent = [textField.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    if ([evaluContent length]!=0)
+    {
+        NSDictionary *dic = @{@"articleid":_articalId,@"userid":kUserId,@"text":textField.text};
+        [AFNetworkTool postJSONWithUrl:kCommitEvaluationUrl parameters:dic success:^(id responseObject) {
+            // 成功
+            [self createAlertViewWithMessage:@"评论提交成功"];
+            // 重新请求数据
+            sendFinished = YES;
+            [self requestEvaluesList];
+        } fail:^{
+            NSLog(@"失败");
+            [self createAlertViewWithMessage:@"评论提交失败"];
+        }];
+    }
+    else
+    {
+        [self createAlertViewWithMessage:@"评论不可为空"];
+    }
+}
+
+- (void)createAlertViewWithMessage:(NSString *)str
+{
+    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    [alertV show];
+}
+
+- (void)createLoadingView
+{
+    UIView *loadingV = [[UIView alloc]initWithFrame:CGRectMake(20, 20, kScreenWidth-40, 200)];
+    loadingV.tag = 1234;
+    loadingV.center = CGPointMake(kScreenWidth/2, kScreenHeight*2/3);
+    loadingV.backgroundColor = [UIColor colorWithWhite:200/255.0 alpha:1];
+    [self.view addSubview:loadingV];
     
+    UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake((kScreenWidth-40-30)/2, 20, 30, 30)];
+    activity.backgroundColor = [UIColor blackColor];
+    activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    [loadingV addSubview:activity];
+    [activity startAnimating];
+}
+
+- (void)removeLoadingView
+{
+    UIView *loadingV = [self.view viewWithTag:1234];
+    [loadingV removeFromSuperview];
 }
 
 #pragma mark - 搜索
@@ -140,7 +215,7 @@
 #pragma mark - UITableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _dataArray.count;
+    return _listArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -152,7 +227,7 @@
         cell = [[[NSBundle mainBundle]loadNibNamed:@"JSZLEvaluationCell" owner:self options:0] lastObject];
     }
     cell.cellHeight = [self countCellHeightOfIndex:indexPath.row];
-    cell.evaluationLable.text = [_dataArray objectAtIndex:indexPath.row];
+    cell.evaluDict = [_listArray objectAtIndex:indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -172,7 +247,7 @@
 - (NSInteger)countCellHeightOfIndex:(NSInteger)index
 {
     // 根据索引找到当前cell的数据str 暂时假数据
-    NSString *cellString = [_dataArray objectAtIndex:index];
+    NSString *cellString = [[_listArray objectAtIndex:index] objectForKey:@"text"];
     NSInteger textWidth = kScreenWidth-kCellHeight;
     CGRect rect = [cellString boundingRectWithSize:CGSizeMake(textWidth, 99999)options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil];
     NSInteger height = rect.size.height+35;

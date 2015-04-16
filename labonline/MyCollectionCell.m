@@ -25,7 +25,7 @@
     _infoDict = infoDict;
     _titleLable.text = [_infoDict objectForKey:@"title"];
     _fromLable.text = [_infoDict objectForKey:@"source"];
-    _cateLable.text = [_infoDict objectForKey:@"type"];
+//    _cateLable.text = [_infoDict objectForKey:@"type"];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

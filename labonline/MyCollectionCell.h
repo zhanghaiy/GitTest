@@ -17,6 +17,7 @@
 - (IBAction)deleteButtonClicked:(id)sender;
 
 @property (nonatomic,strong) NSDictionary *infoDict;
+@property (nonatomic,assign) NSInteger cellIndex;
 
 @property (nonatomic,assign) id target;
 @property (nonatomic,assign) SEL action;

@@ -200,6 +200,8 @@
         {
             // 文章列表
             MainListViewController *listVC = [[MainListViewController alloc]init];
+            listVC.magazineId = [_detailDict objectForKey:@"id"];
+            NSLog(@"%@",[_detailDict objectForKey:@"id"]);
             [self.navigationController pushViewController:listVC animated:YES];
         }
             break;

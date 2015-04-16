@@ -15,5 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLable;
 
 @property (nonatomic,assign) NSInteger cellHeight;
+@property (nonatomic,strong) NSDictionary *evaluDict;
 
 @end

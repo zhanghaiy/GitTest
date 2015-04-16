@@ -25,7 +25,14 @@
     
 }
 
-
+- (void)setSubDict:(NSDictionary *)subDict
+{
+    _subDict = subDict;
+    
+    _titleLable.text = [_subDict objectForKey:@"title"];
+    _detailLable.text = [NSString stringWithFormat:@"来源：%@",[_subDict objectForKey:@"source"]];
+    _youLanCountsLable.text = [NSString stringWithFormat:@"%ld",[[_subDict objectForKey:@"seenum"] integerValue]];
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

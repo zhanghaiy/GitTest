@@ -7,6 +7,8 @@
 //
 
 #import "JSZLEvaluationCell.h"
+#import "UIButton+WebCache.h"
+
 
 @implementation JSZLEvaluationCell
 
@@ -36,6 +38,16 @@
     _userNameLable.frame = CGRectMake(60, 5, width-70, 15);
     _timeLable.frame = CGRectMake(60, height-15, width-70, 10);
     _evaluationLable.frame = CGRectMake(60, 20, width-70, height-35);
+}
+
+- (void)setEvaluDict:(NSDictionary *)evaluDict
+{
+    _evaluDict = evaluDict;
+    
+    _evaluationLable.text = [[_evaluDict objectForKey:@"text"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    _timeLable.text = [_evaluDict objectForKey:@"created_at"];
+    _userNameLable.text = [_evaluDict objectForKey:@"source"];
+    [_userImageButton setImageWithURL:[NSURL URLWithString:[_evaluDict objectForKey:@"urlsourcepic"]] placeholderImage:[UIImage imageNamed:@"33.jpg"]];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

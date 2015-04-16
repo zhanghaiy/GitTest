@@ -72,6 +72,7 @@
 - (void)setImageInfoArray:(NSArray *)imageInfoArray
 {
     _imageInfoArray = imageInfoArray;
+    _imageScroll.contentSize = CGSizeMake(width*imageInfoArray.count, 0);
     [self createImageView];
     if (_imageInfoArray.count != 0)
     {
@@ -119,7 +120,7 @@
 - (void)tapImageMethod:(UITapGestureRecognizer *)tap
 {
     NSLog(@"点击图片进入详情");
-    _imageIndex = tap.view.tag=kImageViewTag;
+    _imageIndex = tap.view.tag-kImageViewTag;
     if ([self.target respondsToSelector:self.action])
     {
         [self.target performSelector:self.action withObject:self withObject:nil];
@@ -146,7 +147,8 @@
 {
     _currentPage = scrollView.contentOffset.x/width;
     _pageControl.currentPage = _currentPage;
-    _titleLab.text = [NSString stringWithFormat:@"杂志的标题%ld",_currentPage];
+    NSDictionary *subDict = [_imageInfoArray objectAtIndex:_currentPage];
+    _titleLab.text = [subDict objectForKey:@"title"];;
 }
 
 #pragma mark - 变换图片与标题

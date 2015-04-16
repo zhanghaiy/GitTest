@@ -12,7 +12,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *categoryTitleButton;
 @property (weak, nonatomic) IBOutlet UIView *baseBackView;
 
-@property (nonatomic,strong) NSArray *listArray;
+@property (nonatomic,strong) NSDictionary *listDict;
+@property (nonatomic,assign) NSInteger selectedIndex;//被点击的文章索引
+@property (nonatomic,assign) NSInteger cellIndex;
+@property (nonatomic,assign) BOOL addReadCounts;// 增加阅读数
 @property (nonatomic,assign) id target;
 @property (nonatomic,assign) SEL action;
 
