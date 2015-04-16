@@ -8,13 +8,15 @@
 
 #import "MyCommentViewController.h"
 #import "MyCommentCell.h"
-
+#import "NetManager.h"
+#import "UIView+Category.h"
 
 @interface MyCommentViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_myCommentTableV;
     NSInteger _currentCellHeight;
-    NSArray *_dataArray;
+    NSArray *_myCommentArray;
+    NSString *_userid;
 }
 @end
 
@@ -43,15 +45,8 @@
     [button addTarget:self action:@selector(backToPrePage) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = leftItem;
-    // right
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setFrame:CGRectMake(0, 0, 25, 25)];
-    [rightBtn setBackgroundImage:[UIImage imageNamed:@"aniu_09.png"] forState:UIControlStateNormal];
-    [rightBtn addTarget:self action:@selector(enterSearchViewController) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = rightItem;
     
-    _dataArray = @[@"我们每一个生活在这个世界的人，总有一个思维时刻在催促着你前行，在前进的路上我们总是自觉或不自觉地调整着自己努力的方向。因为我们正在明白，在你的面前始终有一个你目前无法达到的目标，这个目标就象一剂强心针，将你的肾上腺素调到最亢奋的状态。以至于我们常常在目标之中却无端地失去了目标。",@"写的不错。。。。。。",@"一般般因为我们正在明白，在你的面前始终有一个你目前无法达到的目标",@"因为我们正在明白，在你的面前始终有一个你目前无法达到的目标，这个目标就象一剂强心针，将你的肾上腺素调到最亢奋的状态。以至于我们常常在目标之中却无端地失去了目标"];
+    
     _myCommentTableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 10, kScreenWidth, kScreenHeight-10-70) style:UITableViewStylePlain];
     _myCommentTableV.delegate = self;
     _myCommentTableV.dataSource = self;
@@ -60,6 +55,46 @@
     _myCommentTableV.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_myCommentTableV];
     
+    _userid = kUserId;
+    NSString *urlStr = [NSString stringWithFormat:kMyEvaluationUrl,_userid];
+    [self requestDataWithUrlString:urlStr];
+}
+
+#pragma mark - 网络请求
+#pragma mark --- 开始请求
+- (void)requestDataWithUrlString:(NSString *)urlString
+{
+    NetManager *netManager = [[NetManager alloc]init];
+    netManager.delegate = self;
+    netManager.action = @selector(netManagerCallBack:);
+    [netManager requestDataWithUrlString:urlString];
+    [UIView addLoadingViewInView:self.view];
+}
+#pragma mark --- 网络回调
+- (void)netManagerCallBack:(NetManager *)netManager
+{
+    [UIView removeLoadingVIewInView:self.view];
+    // 我的评论列表
+    if (netManager.failError)
+    {
+        // 失败
+    }
+    else if (netManager.downLoadData)
+    {
+        // 成功
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
+        NSInteger respCode = [[dic objectForKey:@"respCode"] integerValue];
+        if (respCode == 1000)
+        {
+            // 成功
+            _myCommentArray = [dic objectForKey:@"list"];
+            [_myCommentTableV reloadData];
+        }
+        else
+        {
+           
+        }
+    }
 }
 
 #pragma mark - UITableViewDelegate
@@ -70,7 +105,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _dataArray.count;
+    return _myCommentArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -83,15 +118,15 @@
         cell.backgroundColor = [UIColor clearColor];
     }
     cell.cellHeight = _currentCellHeight;
-    cell.desLable.text = [_dataArray objectAtIndex:indexPath.row];
+    cell.evaluDict = [_myCommentArray objectAtIndex:indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
-    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger countHeight = [self countCellHeightOfString:[_dataArray objectAtIndex:indexPath.row] andWidth:kScreenWidth-100 andFontSize:kTwoFontSize];
+    NSString *des = [[_myCommentArray objectAtIndex:indexPath.row] objectForKey:@"text"];
+    NSInteger countHeight = [self countCellHeightOfString:des andWidth:kScreenWidth-100 andFontSize:kTwoFontSize];
     if (countHeight<=30)
     {
         _currentCellHeight = 125;
@@ -118,12 +153,6 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark - 搜索
-- (void)enterSearchVC
-{
-    // 搜索
-    NSLog(@"enterSearchViewController");
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

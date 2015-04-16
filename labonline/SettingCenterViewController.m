@@ -13,6 +13,8 @@
 #import "AboutMeViewController.h"
 #import "ShareView.h"
 #import "UserCallBackViewController.h"
+#import "AFNetworkTool.h"
+#import "UIView+Category.h"
 
 @interface SettingCenterViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
@@ -106,15 +108,6 @@
         case 2:
         {
              // 版本更新
-            // 首先判断当前的版本是否是最新版本
-            NSInteger currentIndex = 0;// 1最新 0 不是最新
-            _upLoading = currentIndex?NO:YES;
-            NSString *title = @"版本升级";
-            NSArray *messageArr = @[@"发现新版本",@"当前是最新版本"];
-            NSArray *cancelTitleArr = @[@"升级",@"确定"];
-            NSString *otherTitle = @"取消";
-            [self  createAlertViewWithTitle:title Message:[messageArr objectAtIndex:currentIndex] cancelTitle:[cancelTitleArr objectAtIndex:currentIndex] otherTitle:currentIndex?nil:otherTitle];
-
         }
             break;
         case 3:
@@ -171,18 +164,14 @@
     switch (buttonIndex)
     {
         case 0:
-            if (_upLoading)
-            {
-                // 升级
-            }
-            else
-            {
-               // 确定
-            }
+            // 确定
+            
             break;
         case 1:
-            // 取消
+        {
+            // 升级
             
+        }
             break;
         default:
             break;

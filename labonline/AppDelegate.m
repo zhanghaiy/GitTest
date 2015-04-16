@@ -62,6 +62,9 @@ NSString *const COCIM_INTERFACE_PAST_MAGAZINE=@"http://192.168.0.153:8181/labonl
 //    }else{
         self.window.rootViewController=_sideViewController;
 //    }
+
+//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"VidioList"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self.window makeKeyAndVisible];
     

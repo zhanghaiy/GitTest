@@ -9,18 +9,24 @@
 #import "JiShuZhuanLanViewController.h"
 #import "PictureShowView.h"
 #import "JiShuZhuanLanCell.h"
+#import "JiShuZhuanLanSubView.h"
 #import "JiShuZhuanLanMoreViewController.h"
 #import "JiShuZhuanLanDetailViewController.h"
 #import "YRSideViewController.h"
 #import "AppDelegate.h"
 #import "SearchViewController.h"
 #import "NetManager.h"
+#import "PDFBrowserViewController.h"
+#import "UIView+Category.h"
 
 
 @interface JiShuZhuanLanViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *jiShuZhuanLanTableView;
     NSArray *_articleListArray;
+    NSInteger _currentCellIndex;//进入的cell
+    NSInteger _currentSubVIndex;
+    BOOL _addReadCounts;
 }
 @end
 
@@ -70,7 +76,7 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem = rightItem;
     
-    
+    _addReadCounts = NO;
     UIView *headerV = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenHeight, kImageShowViewHeight+10)];
     headerV.backgroundColor = [UIColor clearColor];
     PictureShowView *pictureV = [[PictureShowView alloc]initWithFrame:CGRectMake(10, 5, kScreenWidth-20, kImageShowViewHeight)];
@@ -89,6 +95,7 @@
     [self.view addSubview:jiShuZhuanLanTableView];
     
     [self requestMainDataWithURLString:kJSZLUrlString];
+    
 }
 
 #pragma mark - 网络请求
@@ -99,10 +106,12 @@
     netManager.delegate = self;
     netManager.action = @selector(requestFinished:);
     [netManager requestDataWithUrlString:urlStr];
+    [UIView addLoadingViewInView:self.view];
 }
 #pragma mark --网络请求完成
 - (void)requestFinished:(NetManager *)netManager
 {
+    [UIView removeLoadingVIewInView:self.view];
     if (netManager.downLoadData)
     {
         // 成功
@@ -119,11 +128,6 @@
 
 
 #pragma mark - UITableView Delegate
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-//{
-//    return 1;
-//}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _articleListArray.count>=5?5:_articleListArray.count;
@@ -141,26 +145,80 @@
         cell.buttonClickSelector = @selector(enterMoreViewController:);
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    cell.articleDict = [_articleListArray objectAtIndex:indexPath.row];
+    cell.dataIndex = indexPath.row;
+    if (_addReadCounts&&(indexPath.row == _currentCellIndex))
+    {
+        cell.addReadCounts = YES;
+        cell.currentArticalIndex = _currentSubVIndex;
+    }
+     cell.articleDict = [_articleListArray objectAtIndex:indexPath.row];
     return cell;
 }
 
 #pragma mark - 图片轮播-->进入详情
 - (void)pictureShowMethod:(PictureShowView *)pictureShowV
 {
-    // 进入技术专栏详情（通用的）
-    JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
-    detailVC.titleStr = @"文章详情";
-    [self.navigationController pushViewController:detailVC animated:YES];
+    NSDictionary *dict = [[pictureShowV.imageInfoArray objectAtIndex:pictureShowV.imageIndex] objectForKey:@"articleinfo"];
+    
+    if ([[dict objectForKey:@"urlpdf"] length]>5)
+    {
+        // PDF 跳转PDF页面
+        NSLog(@"跳转PDF页面");
+        PDFBrowserViewController *pdfBrowseVC = [[PDFBrowserViewController alloc]init];
+        pdfBrowseVC.filePath = [dict objectForKey:@"urlpdf"];
+        pdfBrowseVC.articalId = [dict objectForKey:@"articleid"];
+        [self.navigationController pushViewController:pdfBrowseVC animated:YES];
+    }
+    else if ([[dict objectForKey:@"urlhtml"] length]>5)
+    {
+        // html
+        JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+        if ([[dict objectForKey:@"urlvideo"] length]>5)
+        {
+            // 视频
+            detailVC.vidioUrl = [dict objectForKey:@"urlvideo"];
+        }
+        detailVC.articalDic = dict;
+        [self.navigationController pushViewController:detailVC animated:YES];
+    }
 }
 
 #pragma mark -- 跳转到技术专栏详情界面
-- (void)enterDetailViewController:(JiShuZhuanLanCell *)cell
+- (void)enterDetailViewController:(JiShuZhuanLanSubView *)jszlSubV
 {
-    // 进入详情
-    JiShuZhuanLanDetailViewController *jSZLDetailVC = [[JiShuZhuanLanDetailViewController alloc]init];
-    jSZLDetailVC.titleStr = @"生物检验";
-    [self.navigationController pushViewController:jSZLDetailVC animated:YES];
+    // 此处为了增加阅读数
+    if ([jszlSubV.superview isKindOfClass:[JiShuZhuanLanCell class]])
+    {
+        JiShuZhuanLanCell *cell = (JiShuZhuanLanCell *)jszlSubV.superview;
+        _currentCellIndex = cell.dataIndex;
+        _currentSubVIndex = cell.currentArticalIndex;
+    }
+    
+    if ([[jszlSubV.subDict objectForKey:@"urlpdf"] length]>5)
+    {
+        // PDF 跳转PDF页面
+        NSLog(@"跳转PDF页面");
+        PDFBrowserViewController *pdfBrowseVC = [[PDFBrowserViewController alloc]init];
+        pdfBrowseVC.filePath = [jszlSubV.subDict objectForKey:@"urlpdf"];
+        pdfBrowseVC.articalId = [jszlSubV.subDict objectForKey:@"articleid"];
+        pdfBrowseVC.target = self;
+        pdfBrowseVC.action = @selector(addReadCounts);
+        [self.navigationController pushViewController:pdfBrowseVC animated:YES];
+    }
+    else if ([[jszlSubV.subDict objectForKey:@"urlhtml"] length]>5)
+    {
+        // html
+        JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+        if ([[jszlSubV.subDict objectForKey:@"urlvideo"] length]>5)
+        {
+            // 视频
+            detailVC.vidioUrl = [jszlSubV.subDict objectForKey:@"urlvideo"];
+        }
+        detailVC.articalDic = jszlSubV.subDict;
+        detailVC.delegate = self;
+        detailVC.action = @selector(addReadCounts);
+        [self.navigationController pushViewController:detailVC animated:YES];
+    }
 }
 
 #pragma mark --跳转到技术专栏更多界面
@@ -169,6 +227,7 @@
     // 进入更多
     // 更多 跳转页面
     JiShuZhuanLanMoreViewController *moreVC = [[JiShuZhuanLanMoreViewController alloc]init];
+    moreVC.typeId = [[_articleListArray objectAtIndex:cell.dataIndex] objectForKey:@"type_id"];
     [self.navigationController pushViewController:moreVC animated:YES];
 }
 
@@ -196,6 +255,12 @@
     // 进入搜索界面
     SearchViewController *searchVC = [[SearchViewController alloc]init];
     [self.navigationController pushViewController:searchVC animated:YES];
+}
+
+- (void)addReadCounts
+{
+    _addReadCounts = YES;
+    [jiShuZhuanLanTableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning

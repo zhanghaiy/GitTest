@@ -12,6 +12,9 @@
  */
 @interface JiShuZhuanLanMoreViewController : UIViewController
 
-@property (nonatomic,copy) NSString *cateTitle;
+//@property (nonatomic,copy) NSString *cateTitle;
+//@property (nonatomic,strong) NSDictionary *moreArticalDict;
+
+@property (nonatomic,copy) NSString *typeId;
 
 @end

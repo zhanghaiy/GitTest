@@ -14,6 +14,7 @@
 
 @interface JiShuZhuanLanDetailViewController : UIViewController<WXApiDelegate>
 
+@property (nonatomic,copy) NSString *vidioUrl;
 @property (nonatomic,copy) NSString *titleStr;
 @property(nonatomic, strong)TencentOAuth *tencentAuth;
 

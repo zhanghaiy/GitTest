@@ -15,6 +15,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *authorLable;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 - (IBAction)playButtonClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *playButton;
+
+@property (nonatomic,assign) NSInteger index;
 
 @property (nonatomic,assign) id target;
 @property (nonatomic,assign) SEL action;

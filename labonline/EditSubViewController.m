@@ -7,16 +7,19 @@
 //
 
 #import "EditSubViewController.h"
+//#import "NetManager.h"
+#import "UIView+Category.h"
+#import "AFNetworkTool.h"
 
-
-
-@interface EditSubViewController ()<UITextFieldDelegate>
-
+@interface EditSubViewController ()<UITextFieldDelegate,UIAlertViewDelegate>
+{
+    BOOL _success;
+}
 @end
 
 @implementation EditSubViewController
 #define kTextFieldTag 123
-
+#define KloadingViewTag 12345
 
 - (void)viewDidLoad
 {
@@ -73,7 +76,49 @@
 - (void)alertFinished
 {
     // 修改完成
-    [self.navigationController popViewControllerAnimated:YES];
+    NSString *userId = kUserId;
+    UITextField *textField = (UITextField *)[self.view viewWithTag:kTextFieldTag];
+    NSArray *baseUrlArray = @[kAlterUserNameURL,kAlterTelephoneURL,kAlterEmailURL];
+    NSArray *paramsArray = @[@"screenname",@"tel",@"email"];
+    NSDictionary *paramDic = @{@"userid":userId,[paramsArray objectAtIndex:_alterType]:textField.text};
+    [UIView addLoadingViewInView:self.view];
+    [AFNetworkTool postJSONWithUrl:[baseUrlArray objectAtIndex:_alterType] parameters:paramDic success:^(id responseObject)
+    {
+        [UIView removeLoadingVIewInView:self.view];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+        NSInteger respCode = [[dic objectForKey:@"respCode"] integerValue];
+        if (respCode == 1000)
+        {
+            // 成功
+            _success = YES;
+            [self createAlertViewWithMessage:[NSString stringWithFormat:@"%@修改成功",[_dataDict objectForKey:@"Title"]]];
+        }
+        else
+        {
+            _success = NO;
+            [self createAlertViewWithMessage:[NSString stringWithFormat:@"%@修改失败",[_dataDict objectForKey:@"Title"]]];
+        }
+
+    } fail:^{
+         [UIView removeLoadingVIewInView:self.view];
+    }];
+}
+
+#pragma mark - 创建alertView
+- (void)createAlertViewWithMessage:(NSString *)message
+{
+    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alertV show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    UITextField *textField = (UITextField *)[self.view viewWithTag:kTextFieldTag];
+    if (_success)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+        [self.delegate reloadNewInfoWithString:textField.text andAlterType:_alterType];
+    }
 }
 
 #pragma mark - 收键盘

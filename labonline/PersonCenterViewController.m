@@ -63,7 +63,7 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
     
-    // 头像
+    // 头像 本地获取头像和昵称
     UIButton *personImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [personImageButton setFrame:CGRectMake((kScreenWidth-kImageBUttonHeight)/2, 20, kImageBUttonHeight, kImageBUttonHeight)];
     [personImageButton setBackgroundImage:[UIImage imageNamed:@"头像.png"] forState:UIControlStateNormal];

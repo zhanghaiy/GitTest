@@ -124,6 +124,9 @@
 		FD5D3C081AD3BF2800A6F60E /* wifi.png in Resources */ = {isa = PBXBuildFile; fileRef = FD5D3C001AD3BF2800A6F60E /* wifi.png */; };
 		FD5D3C0C1AD3C15000A6F60E /* SettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5D3C0A1AD3C15000A6F60E /* SettingCell.m */; };
 		FD5D3C0D1AD3C15000A6F60E /* SettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5D3C0B1AD3C15000A6F60E /* SettingCell.xib */; };
+		FD7355C31ADF640F00B5F296 /* HZActivityIndicatorSubclassExample.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7355C01ADF640F00B5F296 /* HZActivityIndicatorSubclassExample.m */; };
+		FD7355C41ADF640F00B5F296 /* HZActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7355C21ADF640F00B5F296 /* HZActivityIndicatorView.m */; };
+		FD7355C81ADFAB3800B5F296 /* RemoveCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7355C71ADFAB3800B5F296 /* RemoveCacheManager.m */; };
 		FD7901231ACA490D00D908EA /* 12.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD7901221ACA490D00D908EA /* 12.jpg */; };
 		FD8AE2D61ACE1BAC00A4A5B6 /* EditPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8AE2D51ACE1BAC00A4A5B6 /* EditPersonViewController.m */; };
 		FD8AE2DF1ACE230100A4A5B6 /* PersonEditCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8AE2DD1ACE230100A4A5B6 /* PersonEditCell.m */; };
@@ -147,6 +150,9 @@
 		FD96C8C31AC1107C0002778A /* VidioPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD96C8C21AC1107C0002778A /* VidioPlayerViewController.m */; };
 		FD96C8D21AC116FF0002778A /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD96C8D11AC116FF0002778A /* DeviceManager.m */; };
 		FD96C8E71AC146480002778A /* PictureShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD96C8E61AC146480002778A /* PictureShowView.m */; };
+		FD97DA211ADCE3AD00963FB2 /* PathManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD97DA201ADCE3AD00963FB2 /* PathManager.m */; };
+		FD97DA241ADCF3F000963FB2 /* UIView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = FD97DA231ADCF3F000963FB2 /* UIView+Category.m */; };
+		FD97DA261ADD0EC600963FB2 /* 我的视频.png in Resources */ = {isa = PBXBuildFile; fileRef = FD97DA251ADD0EC600963FB2 /* 我的视频.png */; };
 		FD9A76B01ACB86F7007ACC11 /* MainListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9A76AF1ACB86F7007ACC11 /* MainListCell.m */; };
 		FD9A76B41ACBC929007ACC11 /* PersonCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9A76B31ACBC929007ACC11 /* PersonCenterViewController.m */; };
 		FD9A76EF1ACBD2B1007ACC11 /* 离线视频.png in Resources */ = {isa = PBXBuildFile; fileRef = FD9A76EA1ACBD2B1007ACC11 /* 离线视频.png */; };
@@ -362,6 +368,12 @@
 		FD5D3C091AD3C15000A6F60E /* SettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingCell.h; sourceTree = "<group>"; };
 		FD5D3C0A1AD3C15000A6F60E /* SettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingCell.m; sourceTree = "<group>"; };
 		FD5D3C0B1AD3C15000A6F60E /* SettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingCell.xib; sourceTree = "<group>"; };
+		FD7355BF1ADF640F00B5F296 /* HZActivityIndicatorSubclassExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZActivityIndicatorSubclassExample.h; sourceTree = "<group>"; };
+		FD7355C01ADF640F00B5F296 /* HZActivityIndicatorSubclassExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZActivityIndicatorSubclassExample.m; sourceTree = "<group>"; };
+		FD7355C11ADF640F00B5F296 /* HZActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZActivityIndicatorView.h; sourceTree = "<group>"; };
+		FD7355C21ADF640F00B5F296 /* HZActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZActivityIndicatorView.m; sourceTree = "<group>"; };
+		FD7355C61ADFAB3800B5F296 /* RemoveCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoveCacheManager.h; sourceTree = "<group>"; };
+		FD7355C71ADFAB3800B5F296 /* RemoveCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveCacheManager.m; sourceTree = "<group>"; };
 		FD7901221ACA490D00D908EA /* 12.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 12.jpg; sourceTree = "<group>"; };
 		FD8AE2D41ACE1BAC00A4A5B6 /* EditPersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditPersonViewController.h; sourceTree = "<group>"; };
 		FD8AE2D51ACE1BAC00A4A5B6 /* EditPersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditPersonViewController.m; sourceTree = "<group>"; };
@@ -402,6 +414,11 @@
 		FD96C8D11AC116FF0002778A /* DeviceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceManager.m; sourceTree = "<group>"; };
 		FD96C8E51AC146480002778A /* PictureShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictureShowView.h; sourceTree = "<group>"; };
 		FD96C8E61AC146480002778A /* PictureShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictureShowView.m; sourceTree = "<group>"; };
+		FD97DA1F1ADCE3AD00963FB2 /* PathManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathManager.h; sourceTree = "<group>"; };
+		FD97DA201ADCE3AD00963FB2 /* PathManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathManager.m; sourceTree = "<group>"; };
+		FD97DA221ADCF3F000963FB2 /* UIView+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Category.h"; sourceTree = "<group>"; };
+		FD97DA231ADCF3F000963FB2 /* UIView+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Category.m"; sourceTree = "<group>"; };
+		FD97DA251ADD0EC600963FB2 /* 我的视频.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "我的视频.png"; sourceTree = "<group>"; };
 		FD9A76AE1ACB86F7007ACC11 /* MainListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainListCell.h; sourceTree = "<group>"; };
 		FD9A76AF1ACB86F7007ACC11 /* MainListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainListCell.m; sourceTree = "<group>"; };
 		FD9A76B21ACBC929007ACC11 /* PersonCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonCenterViewController.h; sourceTree = "<group>"; };
@@ -583,6 +600,8 @@
 			isa = PBXGroup;
 			children = (
 				FD53B16E1AC24F13008EE13F /* HeaderFile.h */,
+				FD97DA221ADCF3F000963FB2 /* UIView+Category.h */,
+				FD97DA231ADCF3F000963FB2 /* UIView+Category.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -659,6 +678,7 @@
 		FD558CF41AC3A62900DA42FF /* 切图（安卓） */ = {
 			isa = PBXGroup;
 			children = (
+				FD97DA251ADD0EC600963FB2 /* 我的视频.png */,
 				FDC430FF1AD687F2006AC165 /* 分享图标 */,
 				FDC430E71AD61B22006AC165 /* 杂志图.png */,
 				FDA91DFA1AD5156100734E1B /* 分类按钮back.png */,
@@ -805,6 +825,26 @@
 			path = "设置";
 			sourceTree = "<group>";
 		};
+		FD7355BE1ADF63EB00B5F296 /* loadingView */ = {
+			isa = PBXGroup;
+			children = (
+				FD7355BF1ADF640F00B5F296 /* HZActivityIndicatorSubclassExample.h */,
+				FD7355C01ADF640F00B5F296 /* HZActivityIndicatorSubclassExample.m */,
+				FD7355C11ADF640F00B5F296 /* HZActivityIndicatorView.h */,
+				FD7355C21ADF640F00B5F296 /* HZActivityIndicatorView.m */,
+			);
+			name = loadingView;
+			sourceTree = "<group>";
+		};
+		FD7355C51ADFAB0500B5F296 /* 清除缓存 */ = {
+			isa = PBXGroup;
+			children = (
+				FD7355C61ADFAB3800B5F296 /* RemoveCacheManager.h */,
+				FD7355C71ADFAB3800B5F296 /* RemoveCacheManager.m */,
+			);
+			name = "清除缓存";
+			sourceTree = "<group>";
+		};
 		FD96C87A1AC109E00002778A = {
 			isa = PBXGroup;
 			children = (
@@ -906,6 +946,7 @@
 		FD96C8B31AC10A560002778A /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				FD7355BE1ADF63EB00B5F296 /* loadingView */,
 				FD558D4C1AC4097F00DA42FF /* 刷新 */,
 				FD96C8BD1AC10C120002778A /* 侧滑 */,
 			);
@@ -980,6 +1021,7 @@
 		FD96C8CF1AC116D70002778A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				FD7355C51ADFAB0500B5F296 /* 清除缓存 */,
 				043EE7171AD6611600B194EB /* UserModel.h */,
 				043EE7181AD6611600B194EB /* UserModel.m */,
 				04440EC11ADBA83600F60852 /* MagazineModel.h */,
@@ -1020,10 +1062,10 @@
 				FD9A76F91ACBE711007ACC11 /* MyCommentViewController.m */,
 				FD462E421ACCDE1F001AC895 /* MyCollectionViewController.h */,
 				FD462E431ACCDE1F001AC895 /* MyCollectionViewController.m */,
-				FD462E541ACD0EF6001AC895 /* OffLIneVidioViewController.h */,
-				FD462E551ACD0EF6001AC895 /* OffLIneVidioViewController.m */,
 				FD462E621ACD584C001AC895 /* MyMagazineViewController.h */,
 				FD462E631ACD584C001AC895 /* MyMagazineViewController.m */,
+				FD462E541ACD0EF6001AC895 /* OffLIneVidioViewController.h */,
+				FD462E551ACD0EF6001AC895 /* OffLIneVidioViewController.m */,
 				FD8AE2D41ACE1BAC00A4A5B6 /* EditPersonViewController.h */,
 				FD8AE2D51ACE1BAC00A4A5B6 /* EditPersonViewController.m */,
 				FD8AE2E11ACE2A2000A4A5B6 /* EditSubViewController.h */,
@@ -1201,6 +1243,7 @@
 				FD96C8971AC109E00002778A /* LaunchScreen.xib in Resources */,
 				FD558D621AC4098F00DA42FF /* whiteArrow.png in Resources */,
 				FDA91DF71AD5085400734E1B /* tubiao_04.png in Resources */,
+				FD97DA261ADD0EC600963FB2 /* 我的视频.png in Resources */,
 				FD8AE31F1ACE606B00A4A5B6 /* 设置按钮.png in Resources */,
 				FD9A76F01ACBD2B1007ACC11 /* 头像.png in Resources */,
 				FD47C8181AC5316300846AC9 /* 下载.png in Resources */,
@@ -1291,11 +1334,13 @@
 			files = (
 				04E37C6E1ACD28EB00045E64 /* YRSideViewController.m in Sources */,
 				FD5CC55D1AD762BD008986F0 /* NetManager.m in Sources */,
+				FD97DA211ADCE3AD00963FB2 /* PathManager.m in Sources */,
 				FD462E441ACCDE1F001AC895 /* MyCollectionViewController.m in Sources */,
 				FD8B566C1ACE8578009F5E15 /* JSZLCateView.m in Sources */,
 				FD5D3C0C1AD3C15000A6F60E /* SettingCell.m in Sources */,
 				FD96C88C1AC109E00002778A /* AppDelegate.m in Sources */,
 				FD558CF21AC3A43B00DA42FF /* JiShuZhuanLanCell.m in Sources */,
+				FD97DA241ADCF3F000963FB2 /* UIView+Category.m in Sources */,
 				FD5CC6481AD7B8A1008986F0 /* SDWebImageDecoder.m in Sources */,
 				FD5CC6471AD7B8A1008986F0 /* SDImageCache.m in Sources */,
 				FD462E641ACD584C001AC895 /* MyMagazineViewController.m in Sources */,
@@ -1314,6 +1359,7 @@
 				FDA91DF31AD4F98100734E1B /* NavigationButton.m in Sources */,
 				FDC430EB1AD62684006AC165 /* ShareView.m in Sources */,
 				FD5CC6491AD7B8A1008986F0 /* SDWebImageDownloader.m in Sources */,
+				FD7355C41ADF640F00B5F296 /* HZActivityIndicatorView.m in Sources */,
 				FD5CC6461AD7B8A1008986F0 /* README.md in Sources */,
 				04440EC31ADBA83700F60852 /* MagazineModel.m in Sources */,
 				042C46741AC2815300D36C8F /* MenuViewController.m in Sources */,
@@ -1340,7 +1386,9 @@
 				04FE4C4A1ACD328D00A922DA /* AFURLSessionManager.m in Sources */,
 				FDA91DFF1AD5169900734E1B /* ShowPicture.m in Sources */,
 				FDB7CD411ACA970D007BAF79 /* MainDetailViewController.m in Sources */,
+				FD7355C31ADF640F00B5F296 /* HZActivityIndicatorSubclassExample.m in Sources */,
 				FD558D171AC3E89300DA42FF /* JiShuZhuanLanMoreCell.m in Sources */,
+				FD7355C81ADFAB3800B5F296 /* RemoveCacheManager.m in Sources */,
 				FD9A76F71ACBD3CF007ACC11 /* PersonColumeView.m in Sources */,
 				FD8AE2E61ACE31CB00A4A5B6 /* AFNetworkTool.m in Sources */,
 				04FE4C461ACD328D00A922DA /* AFSecurityPolicy.m in Sources */,

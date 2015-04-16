@@ -10,4 +10,6 @@
 
 @interface MainListViewController : UIViewController
 
+@property (nonatomic,copy) NSString *magazineId;
+
 @end

@@ -19,5 +19,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *fromLable;
 
 @property (nonatomic) NSInteger cellHeight;
+@property (nonatomic,strong) NSDictionary *evaluDict;
 
 @end

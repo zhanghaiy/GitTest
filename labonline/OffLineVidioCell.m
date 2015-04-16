@@ -21,6 +21,11 @@
     _titleLable.textColor = [UIColor colorWithRed:59/255.0 green:59/255.0 blue:59/255.0 alpha:1];
     _authorLable.textColor = [UIColor colorWithRed:165/255.0 green:165/255.0 blue:165/255.0 alpha:1];
     
+    _vidioImgView.layer.masksToBounds = YES;
+    _vidioImgView.layer.cornerRadius = 5;
+    _vidioImgView.layer.borderColor = [UIColor colorWithWhite:223/255.0 alpha:1].CGColor;
+    _vidioImgView.layer.borderWidth = 1;
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
