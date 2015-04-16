@@ -11,7 +11,6 @@
 #import "YRSideViewController.h"
 
 
-
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
@@ -21,6 +20,8 @@
 extern NSString *const COCIM_SERVER_PATH;
 extern NSString *const COCIM_INTERFACE_LOGIN;
 extern NSString *const COCIM_INTERFACE_REG;
+extern NSString *const COCIM_INTERFACE_PAST_MAGAZINE;
+
 
 @end
 

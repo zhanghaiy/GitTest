@@ -49,7 +49,7 @@
                             <constraint firstAttribute="height" constant="100" id="RR4-rT-xDC"/>
                             <constraint firstAttribute="width" constant="100" id="X2j-XN-zZx"/>
                         </constraints>
-                        <state key="normal" backgroundImage="播放.png">
+                        <state key="normal" backgroundImage="我的视频.png">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
@@ -86,6 +86,7 @@
                 <outlet property="authorLable" destination="6v5-fc-fW0" id="iEo-gJ-QdI"/>
                 <outlet property="backView" destination="Wvt-kJ-esN" id="t5R-Wt-13g"/>
                 <outlet property="deleteButton" destination="gQU-yL-heC" id="Eiw-xO-ouQ"/>
+                <outlet property="playButton" destination="03X-TS-CuI" id="os9-HT-buF"/>
                 <outlet property="titleLable" destination="QsT-fi-U9q" id="cgj-l1-zbh"/>
                 <outlet property="vidioImgView" destination="GYf-is-ahu" id="M7v-OD-2i3"/>
             </connections>
@@ -94,7 +95,7 @@
     </objects>
     <resources>
         <image name="删除.png" width="45" height="47"/>
-        <image name="播放.png" width="169" height="169"/>
+        <image name="我的视频.png" width="169" height="169"/>
         <image name="视频.png" width="628" height="270"/>
     </resources>
 </document>

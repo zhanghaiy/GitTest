@@ -7,9 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WXApi.h"
+#import "TencentOpenAPI.framework/Headers/QQApi.h"
+#import "TencentOpenAPI.framework/Headers/QQApiInterface.h"
+#import "TencentOpenAPI.framework/Headers/TencentOAuth.h"
 
-@interface JiShuZhuanLanDetailViewController : UIViewController
+@interface JiShuZhuanLanDetailViewController : UIViewController<WXApiDelegate>
 
 @property (nonatomic,copy) NSString *titleStr;
+@property(nonatomic, strong)TencentOAuth *tencentAuth;
 
 @end

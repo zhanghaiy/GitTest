@@ -10,4 +10,8 @@
 
 @interface WangQiCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *pictureurl;
+@property (weak, nonatomic) IBOutlet UILabel *title;
+@property (weak, nonatomic) IBOutlet UILabel *qc;
+@property (weak, nonatomic) IBOutlet UILabel *content;
 @end
