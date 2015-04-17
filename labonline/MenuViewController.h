@@ -15,5 +15,7 @@
 @interface MenuViewController : UIViewController
 
 @property (nonatomic,assign) BOOL enterFromHome;
+//@property(nonatomic,strong) NSMutableArray *magazines;
+//@property(nonatomic,weak) UITableView *wangQiTable;
 
 @end

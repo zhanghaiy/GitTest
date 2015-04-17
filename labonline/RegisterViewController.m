@@ -55,12 +55,6 @@
         UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"登录" message:@"用户名密码不能为空" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alert show];
     }else{
-//        if ([self respondsToSelector:@selector(presentingViewController)]) {
-//            [self.presentingViewController.presentingViewController dismissModalViewControllerAnimated:YES];//ios5
-//        } else {
-//            [self.parentViewController.parentViewController dismissModalViewControllerAnimated:YES];//ios4
-//        }
-        
         NSString *loginUrl=[COCIM_INTERFACE_REG stringByAppendingFormat:@"?username=%@&password=%@&nickname=%@&phone=%@&email=%@",username,password,nickname,phone,email];
         [AFNetworkTool JSONDataWithUrl:loginUrl success:^(id json) {
             int respCode=[[json objectForKey:@"respCode"] intValue];
@@ -77,10 +71,18 @@
                 //            [self presentViewController:_sideViewController animated:YES completion:nil];
 //                [self dismissViewControllerAnimated:YES completion:nil];
                 
-                if ([self respondsToSelector:@selector(presentingViewController)]) {
-                    [self.presentingViewController.presentingViewController dismissModalViewControllerAnimated:YES];//ios5
-                } else {
-                    [self.parentViewController.parentViewController dismissModalViewControllerAnimated:YES];//ios4
+                if ([self respondsToSelector:@selector(presentingViewController)]) {//ios5
+                    if (self.presentingViewController.presentingViewController) {//通过登录页面进入注册页面
+                        [self.presentingViewController.presentingViewController dismissModalViewControllerAnimated:YES];
+                    }else{//左侧菜单直接进入注册页面
+                        [self.presentingViewController dismissModalViewControllerAnimated:YES];
+                    }
+                } else {//ios4
+                    if (self.parentViewController.parentViewController) {
+                        [self.parentViewController.parentViewController dismissModalViewControllerAnimated:YES];
+                    }else{
+                        [self.parentViewController dismissModalViewControllerAnimated:YES];
+                    }
                 }
             }else{
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"登录" message:@"用户名密码错误" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];

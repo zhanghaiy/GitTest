@@ -9,6 +9,9 @@
 #import "MenuViewController.h"
 #import "YRSideViewController.h"
 #import "AppDelegate.h"
+#import "MagazineModel.h"
+#import "UIImageView+WebCache.h"
+#import "MainListViewController.h"
 
 @interface MenuViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
@@ -16,7 +19,7 @@
     UIScrollView *_scrollV;
     UIScrollView *_navScrollV;
     float _startPointX;
-    
+    NSMutableArray *magazines;
 }
 
 @end
@@ -32,6 +35,8 @@
 [UIColor colorWithRed:R/255.f green:G/255.f blue:B/255.f alpha:A]
 #define SCROLL_TAG 111
 #define kMainPreButtonWidth 60
+#define wangQiTag 2016//因为往期杂志最新到2015年
+#define wangQiTempBaseTag 1000//往期没有数据时，生成临时视图所用的tag基数，控件用到时通常要加上年数
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -41,13 +46,16 @@
             self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
+    magazines=[[NSMutableArray alloc]init];
+    
     self.title = @"医检在线";
     self.view.backgroundColor = [UIColor whiteColor];
     //self.navigationController.navigationBar.barTintColor=[UIColor redColor];
     
+    [self initData:@"2015"];
     //左侧按钮
     /*
-        判断是从主页进入还是杂志页进入，主页进入没有左侧按钮
+     判断是从主页进入还是杂志页进入，主页进入没有左侧按钮
      */
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -70,7 +78,6 @@
     [rightBtn addTarget:self action:@selector(enterSearchViewController) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
-//-----------------------------------------------------------------
     
     _topNaviV=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WidthOfScreen, MENU_HEIGHT)];
     _topNaviV.backgroundColor=RGBA(236.f, 236.f, 236.f, 1);
@@ -89,7 +96,7 @@
     
     [self createMenu];
     
-//    [self createHomePageBTN];
+    //    [self createHomePageBTN];
     
     //在导航视图底添加分割线
     UIView *navDividingLine = [[UIView alloc] init];
@@ -99,8 +106,51 @@
         navDividingLine.backgroundColor = [UIColor redColor];
         [self.view addSubview:navDividingLine];
     }
-    
 }
+
+-(void)initData:(NSString *)year{
+    NSString *loginUrl=[COCIM_INTERFACE_PAST_MAGAZINE stringByAppendingFormat:@"?year=%@",year];
+    [AFNetworkTool netWorkStatus];
+    [AFNetworkTool JSONDataWithUrl:loginUrl success:^(id json) {
+        int respCode=[[json objectForKey:@"respCode"] intValue];
+        if (respCode==1000) {
+            NSDictionary *data=[json objectForKey:@"data"];
+            NSArray *pastMagazineList=[data objectForKey:@"pastMagazineList"];
+            NSLog(@"%@",pastMagazineList);
+            [magazines removeAllObjects];//清除上次的查询结果
+            if(pastMagazineList.count>0){
+                for (int i=0; i<pastMagazineList.count; i++) {
+                    NSDictionary *magazine=[pastMagazineList objectAtIndex:i];
+                    MagazineModel *mm=[[MagazineModel alloc] init];
+                    [mm setValuesForKeysWithDictionary:magazine];
+                    [magazines addObject:mm];
+                }
+                UITableView *tv=(UITableView*)[self.view viewWithTag:[year intValue]];
+                
+                UIImageView *deleV=[self.view viewWithTag:wangQiTempBaseTag+[year intValue]];
+                if(deleV!=nil) [deleV removeFromSuperview];//移去默认的
+                
+                [tv reloadData];
+            }else{
+                UIImageView *uiv=[[UIImageView alloc] initWithFrame:CGRectMake((WidthOfScreen-98)/2,(HeightOfScreen-98-36-64)/2, 98, 98)];
+                //                uiv.backgroundColor=[UIColor redColor];
+                uiv.tag=wangQiTempBaseTag+[year intValue];
+                uiv.image=[UIImage imageNamed:@"4_05"];
+                UITableView *tv=(UITableView*)[self.view viewWithTag:[year intValue]];
+                [tv addSubview:uiv];
+            }
+        }else{
+            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"登录" message:@"用户名密码错误" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            [alert show];
+        }
+        // 提示:NSURLConnection异步方法回调,是在子线程
+        // 得到回调之后,通常更新UI,是在主线程
+        //        NSLog(@"%@", [NSThread currentThread]);
+    } fail:^{
+        NSLog(@"请求失败");
+    }];
+}
+
 #pragma mark - 返回上一页
 - (void)popToPrePage
 {
@@ -193,26 +243,8 @@
     CGPoint point = [tap locationInView:_scrollV];
     int t = point.x/_scrollV.frame.size.width + 1;
     NSLog(@"click %d",t);
-    
-    NSString *url = @"https://alpha-api.app.net/stream/0/posts/stream/global";
-    
-    NSString *filePath = [[NSBundle mainBundle]pathForResource:@"test" ofType:@"json"];
-    
-    if(filePath!=nil){//本地测试
-        NSData *stringData = [NSData dataWithContentsOfFile:filePath];
-        id result = [NSJSONSerialization JSONObjectWithData:stringData options:0 error:nil];
-        NSLog(@"%@",result);
-    }else{
-        [AFNetworkTool netWorkStatus];
-        [AFNetworkTool JSONDataWithUrl:url success:^(id json) {
-            NSLog(@"%@", json);
-            // 提示:NSURLConnection异步方法回调,是在子线程
-            // 得到回调之后,通常更新UI,是在主线程
-            //        NSLog(@"%@", [NSThread currentThread]);
-        } fail:^{
-            NSLog(@"请求失败");
-        }];
-    }
+    MainListViewController *listVC = [[MainListViewController alloc]init];
+    [self.navigationController pushViewController:listVC animated:YES];
 }
 
 //初始主界面
@@ -222,8 +254,10 @@
     wangQiTable.delegate=self;
     wangQiTable.dataSource=self;
     wangQiTable.separatorStyle=NO;
+    wangQiTable.tag=wangQiTag-view.tag;
     [view addSubview:wangQiTable];
 }
+
 - (void)changeColorForButton:(UIButton *)btn red:(float)nRedPercent
 {
     [btn setTitleColor:RGBA(0 + nRedPercent * (212 - 0),25 ,38 ,1) forState:UIControlStateNormal];
@@ -234,6 +268,8 @@
     float xx = _scrollV.frame.size.width * (btn.tag - 1) * (MENU_BUTTON_WIDTH / self.view.frame.size.width) - MENU_BUTTON_WIDTH;
     
     [_navScrollV scrollRectToVisible:CGRectMake(xx, 0, _navScrollV.frame.size.width, _navScrollV.frame.size.height) animated:YES];
+    
+    [self initData:[NSString stringWithFormat:@"%d",wangQiTag-btn.tag]];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -265,6 +301,7 @@
         float value2 = MIN_MENU_FONT + percent * (MAX_MENU_FONT - MIN_MENU_FONT);
         btn2.titleLabel.font = [UIFont systemFontOfSize:value2];
         [self changeColorForButton:btn2 red:percent];
+        
     }
 }
 
@@ -279,12 +316,15 @@
 {
     //过滤掉因表格滚动而触发
     if (scrollView.tag==SCROLL_TAG) {
+        int thenum=scrollView.contentOffset.x/self.view.frame.size.width;
+        [self initData:[NSString stringWithFormat:@"%d",wangQiTag-1-thenum]];
         float xx = scrollView.contentOffset.x * (MENU_BUTTON_WIDTH / self.view.frame.size.width) - MENU_BUTTON_WIDTH;
         [_navScrollV scrollRectToVisible:CGRectMake(xx, 0, _navScrollV.frame.size.width, _navScrollV.frame.size.height) animated:YES];
     }
 }
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 3;
+    return magazines.count;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *cellId = @"newsCell";
@@ -293,7 +333,12 @@
     {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"WangQiCell" owner:self options:0] lastObject];
     }
-    
+    MagazineModel *magazine=[magazines objectAtIndex:indexPath.row];
+    //    cell.pictureurl.image=[UIImage imageNamed:magazine.pictureurl];
+    [cell.pictureurl setImageWithURL:[NSURL URLWithString:magazine.pictureurl] placeholderImage:nil];
+    cell.title.text=magazine.title;
+    cell.qc.text=magazine.qc;
+    cell.content.text=magazine.content;
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

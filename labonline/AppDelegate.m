@@ -10,6 +10,8 @@
 #import "LeftViewController.h"
 #import "MainViewController.h"
 #import "LoginViewController.h"
+#import "TencentOpenAPI/TencentOAuth.h"
+
 
 @interface AppDelegate ()
 
@@ -18,12 +20,14 @@
 NSString *const COCIM_SERVER_PATH = @"http://192.168.0.153:8181/labonline";
 NSString *const COCIM_INTERFACE_LOGIN =  @"http://192.168.0.153:8181/labonline/hyController/login.do";
 NSString *const COCIM_INTERFACE_REG=@"http://192.168.0.153:8181/labonline/hyController/insertHyyh.do";
+NSString *const COCIM_INTERFACE_PAST_MAGAZINE=@"http://192.168.0.153:8181/labonline/zzwzController/queryNfList.do";
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
@@ -63,6 +67,7 @@ NSString *const COCIM_INTERFACE_REG=@"http://192.168.0.153:8181/labonline/hyCont
 //    [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
@@ -86,6 +91,18 @@ NSString *const COCIM_INTERFACE_REG=@"http://192.168.0.153:8181/labonline/hyCont
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+//QQ分享用到
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    return [TencentOAuth HandleOpenURL:url];
+
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return [TencentOAuth HandleOpenURL:url];
 }
 
 @end

@@ -7,14 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WXApi.h"
+#import "TencentOpenAPI.framework/Headers/QQApi.h"
+#import "TencentOpenAPI.framework/Headers/QQApiInterface.h"
+#import "TencentOpenAPI.framework/Headers/TencentOAuth.h"
 
-//@protocol JiShuZhuanLanDetailViewControllerDelegate <NSObject>
-//
-//- (void)addReadCounts;
-//
-//@end
-
-@interface JiShuZhuanLanDetailViewController : UIViewController
+@interface JiShuZhuanLanDetailViewController : UIViewController<WXApiDelegate>
 
 @property (nonatomic,copy) NSString *vidioUrl;
 @property (nonatomic,copy) NSString *titleStr;
@@ -24,5 +22,7 @@
 
 @property (nonatomic,assign) id delegate;
 @property (nonatomic,assign) SEL action;
+@property(nonatomic, strong)TencentOAuth *tencentAuth;
+
 
 @end

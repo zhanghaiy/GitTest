@@ -41,7 +41,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title = _titleStr;
+    [WXApi registerApp:@"wxe0742138717ee3fe"];
+    self.tencentAuth = [[TencentOAuth alloc] initWithAppId:@"1104472845" andDelegate:self];
+    
+    self.title = @"文章详情";
     // 左侧按钮
     NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 26) andBackImageWithName:@"aniu_07.png"];
     leftButton.delegate = self;
@@ -244,7 +247,49 @@
             break;
         case 2:
         {
-            // 分享
+            // 微信分享 文本
+//            SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
+//            req.text = @"人文的东西并不是体现在你看得到的方面，它更多的体现在你看不到的那些方面，它会影响每一个功能，这才是最本质的。但是，对这点可能很多人没有思考过，以为人文的东西就是我们搞一个很小清新的图片什么的。”综合来看，人文的东西其实是贯穿整个产品的脉络，或者说是它的灵魂所在。";
+//            req.bText = YES;
+//            req.scene = WXSceneSession;
+//            
+//            [WXApi sendReq:req];
+            
+            //微信分享链接
+//            WXMediaMessage *message = [WXMediaMessage message];
+//            message.title = @"aaaa";
+//            message.description = @"bbbbbbbb";
+//            [message setThumbImage:[UIImage imageNamed:@"wangqi.png"]];
+//            
+//            WXWebpageObject *ext = [WXWebpageObject object];
+//            ext.webpageUrl = @"http://2pau.l.mob.com/W6Dy6";
+//            
+//            message.mediaObject = ext;
+//            
+//            SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
+//            req.bText = NO;
+//            req.message = message;
+//            req.scene = WXSceneTimeline;
+//            
+//            [WXApi sendReq:req];
+            
+            //QQ分享链接
+            NSString *url = @"http://2pau.l.mob.com/W6Dy6";
+            //分享图预览图URL地址
+            NSString *previewImageUrl = @"wangqi.png";
+            QQApiNewsObject *newsObj = [QQApiNewsObject
+                                        objectWithURL:[NSURL URLWithString:url]
+                                        title: @"title"
+                                        description:@"description"
+                                        previewImageURL:[NSURL URLWithString:previewImageUrl]];
+            SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:newsObj];
+            //将内容分享到qq
+            QQApiSendResultCode sent = [QQApiInterface sendReq:req];
+            //将内容分享到qzone
+//            QQApiSendResultCode sent = [QQApiInterface SendReqToQZone:req];
+//            [self.tencentAuth logout:self];登出
+            
+//            AppDelegate *myDelegate =(AppDelegate*)[[UIApplication sharedApplication] delegate];
             
         }
             break;
@@ -316,6 +361,26 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark 微信所用
+-(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
+    return [WXApi handleOpenURL:url delegate:self];
+}
+#pragma mark 微信所用
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+    return [WXApi handleOpenURL:url delegate:self];
+}
+
+
+-(void) onResp:(BaseResp*)resp{
+    if([resp isKindOfClass:[SendMessageToWXResp class]])
+    {
+        NSString *strTitle = [NSString stringWithFormat:@"发送媒体消息结果"];
+        NSString *strMsg = [NSString stringWithFormat:@"errcode:%d", resp.errCode];
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+}
 /*
 #pragma mark - Navigation
 
