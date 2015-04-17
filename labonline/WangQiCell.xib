@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7525" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment version="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7516"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,39 +14,71 @@
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6QH-fg-tgX" id="MOW-KN-OqP">
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nkN-87-P2Y">
-                        <rect key="frame" x="12" y="10" width="133" height="159"/>
-                        <state key="normal" title="Button" image="wangqi.png">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                    </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="期刑数：第一期" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RgS-6h-ARi">
-                        <rect key="frame" x="178" y="79" width="123" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="宝洁医疗诊断" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RO0-9W-gvW">
+                        <rect key="frame" x="163" y="16" width="141" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="iJo-Am-768"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="638-KM-p0d">
-                        <rect key="frame" x="177" y="108" width="43" height="34"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="期刑数：第一期" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RgS-6h-ARi">
+                        <rect key="frame" x="163" y="41" width="141" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="dcy-fF-a59"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wangqi.png" translatesAutoresizingMaskIntoConstraints="NO" id="zWe-La-qtm">
+                        <rect key="frame" x="15" y="15" width="140" height="157"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="140" id="psu-VU-o8I"/>
+                        </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="321" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="97N-ae-qG5">
-                        <rect key="frame" x="228" y="114" width="42" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="内容" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N7j-x3-Zwq">
+                        <rect key="frame" x="163" y="67" width="141" height="95"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="宝洁医疗诊断" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RO0-9W-gvW">
-                        <rect key="frame" x="163" y="33" width="149" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="线框_05.png" translatesAutoresizingMaskIntoConstraints="NO" id="M5d-9L-zXM">
+                        <rect key="frame" x="8" y="8" width="304" height="171"/>
+                    </imageView>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="M5d-9L-zXM" firstAttribute="leading" secondItem="MOW-KN-OqP" secondAttribute="leadingMargin" id="0PI-fU-XFq"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="zWe-La-qtm" secondAttribute="bottom" constant="-1" id="683-Kp-WT0"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="RO0-9W-gvW" secondAttribute="trailing" constant="8" id="6pq-td-Noh"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="N7j-x3-Zwq" secondAttribute="trailing" constant="8" id="8nc-Q4-QH1"/>
+                    <constraint firstItem="zWe-La-qtm" firstAttribute="top" secondItem="MOW-KN-OqP" secondAttribute="topMargin" constant="7" id="BD7-Ad-wzZ"/>
+                    <constraint firstItem="RgS-6h-ARi" firstAttribute="top" secondItem="RO0-9W-gvW" secondAttribute="bottom" constant="4" id="E3v-wq-5L0"/>
+                    <constraint firstItem="RO0-9W-gvW" firstAttribute="top" secondItem="MOW-KN-OqP" secondAttribute="topMargin" constant="8" id="Gsi-Sk-PUF"/>
+                    <constraint firstItem="N7j-x3-Zwq" firstAttribute="leading" secondItem="zWe-La-qtm" secondAttribute="trailing" constant="8" id="MI2-Oc-mG6"/>
+                    <constraint firstItem="RO0-9W-gvW" firstAttribute="leading" secondItem="zWe-La-qtm" secondAttribute="trailing" constant="8" id="Spe-ja-hjd"/>
+                    <constraint firstItem="M5d-9L-zXM" firstAttribute="top" secondItem="MOW-KN-OqP" secondAttribute="topMargin" id="Uwm-sY-MTl"/>
+                    <constraint firstItem="M5d-9L-zXM" firstAttribute="trailing" secondItem="MOW-KN-OqP" secondAttribute="trailingMargin" id="VPa-WL-blT"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="N7j-x3-Zwq" secondAttribute="bottom" constant="9" id="cZo-I2-7J7"/>
+                    <constraint firstItem="N7j-x3-Zwq" firstAttribute="top" secondItem="RgS-6h-ARi" secondAttribute="bottom" constant="5" id="ccc-VD-PGF"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="RgS-6h-ARi" secondAttribute="trailing" constant="8" id="gop-rO-mgl"/>
+                    <constraint firstItem="zWe-La-qtm" firstAttribute="leading" secondItem="MOW-KN-OqP" secondAttribute="leadingMargin" constant="7" id="rj0-6L-GOB"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="M5d-9L-zXM" secondAttribute="bottom" constant="-8" id="tQu-Ue-wU6"/>
+                    <constraint firstItem="RgS-6h-ARi" firstAttribute="leading" secondItem="zWe-La-qtm" secondAttribute="trailing" constant="8" id="x4H-Te-ZI1"/>
+                </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="content" destination="N7j-x3-Zwq" id="Bqm-HC-fGR"/>
+                <outlet property="pictureurl" destination="zWe-La-qtm" id="hJT-JB-ODB"/>
+                <outlet property="qc" destination="RgS-6h-ARi" id="bRp-gg-DUo"/>
+                <outlet property="title" destination="RO0-9W-gvW" id="UCN-B8-EoE"/>
+            </connections>
             <point key="canvasLocation" x="244" y="253"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="wangqi.png" width="259" height="348"/>
+        <image name="线框_05.png" width="680" height="382"/>
     </resources>
 </document>
