@@ -10,12 +10,14 @@
 #import "MyCommentCell.h"
 #import "NetManager.h"
 #import "UIView+Category.h"
+#import "JiShuZhuanLanDetailViewController.h"
+
 
 @interface MyCommentViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_myCommentTableV;
     NSInteger _currentCellHeight;
-    NSArray *_myCommentArray;
+    NSMutableArray *_myCommentArray;
     NSString *_userid;
 }
 @end
@@ -55,6 +57,14 @@
     _myCommentTableV.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_myCommentTableV];
     
+//    _userid = kUserId;
+//    NSString *urlStr = [NSString stringWithFormat:kMyEvaluationUrl,_userid];
+//    [self requestDataWithUrlString:urlStr];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     _userid = kUserId;
     NSString *urlStr = [NSString stringWithFormat:kMyEvaluationUrl,_userid];
     [self requestDataWithUrlString:urlStr];
@@ -87,7 +97,12 @@
         if (respCode == 1000)
         {
             // 成功
-            _myCommentArray = [dic objectForKey:@"list"];
+            NSArray *listArr = [dic objectForKey:@"list"];
+            _myCommentArray = [[NSMutableArray alloc]init];
+            for (NSDictionary *dic in listArr)
+            {
+                [_myCommentArray insertObject:dic atIndex:0];
+            }
             [_myCommentTableV reloadData];
         }
         else
@@ -137,6 +152,24 @@
     }
     
     return _currentCellHeight;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *dic = [[_myCommentArray objectAtIndex:indexPath.row] objectForKey:@"articleinfo"];
+    if ([[dic objectForKey:@"urlhtml"] length]>5)
+    {
+        // html
+        JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+        if ([[dic objectForKey:@"urlvideo"] length]>5)
+        {
+            // 视频
+            detailVC.vidioUrl = [dic objectForKey:@"urlvideo"];
+        }
+        detailVC.articalDic = dic;
+        [self.navigationController pushViewController:detailVC animated:YES];
+    }
+
 }
 
 

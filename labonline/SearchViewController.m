@@ -73,6 +73,8 @@
     _tableV.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableV];
     _requestSubLebel = NO;
+    
+    [self requestTopSubLebel];
 }
 
 #pragma mark - 网络

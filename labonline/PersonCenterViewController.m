@@ -17,6 +17,7 @@
 #import "YRSideViewController.h"
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import "SearchViewController.h"
 
 @interface PersonCenterViewController ()
 {
@@ -204,7 +205,10 @@
 - (void)enterSearchViewController
 {
     // 搜索
+    // 搜索
     NSLog(@"enterSearchViewController");
+    SearchViewController *searchVC = [[SearchViewController alloc]init];
+    [self.navigationController pushViewController:searchVC animated:YES];
 }
 
 

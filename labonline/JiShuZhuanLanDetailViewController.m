@@ -33,7 +33,9 @@
     _articalDic = articalDic;
     _articalID = [_articalDic objectForKey:@"articleid"];
     _htmlUrl = [_articalDic objectForKey:@"urlhtml"];
-    _titleStr = [_articalDic objectForKey:@"type"];
+    if ([_articalDic objectForKey:@"type"]) {
+        _titleStr = [_articalDic objectForKey:@"type"];
+    }
 }
 
 
@@ -41,7 +43,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title = _titleStr;
+    self.title = @"文章详情";
     // 左侧按钮
     NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 26) andBackImageWithName:@"aniu_07.png"];
     leftButton.delegate = self;

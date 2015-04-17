@@ -10,6 +10,7 @@
 #import "MyCollectionCell.h"
 #import "NetManager.h"
 #import "UIView+Category.h"
+#import "JiShuZhuanLanDetailViewController.h"
 
 @interface MyCollectionViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -154,7 +155,19 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
      // 阅读
-     
+    NSDictionary *dic =[ _collectionArray objectAtIndex:indexPath.row];
+    if ([[dic objectForKey:@"urlhtml"] length]>5)
+    {
+        // html
+        JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+        if ([[dic objectForKey:@"urlvideo"] length]>5)
+        {
+            // 视频
+            detailVC.vidioUrl = [dic objectForKey:@"urlvideo"];
+        }
+        detailVC.articalDic = dic;
+        [self.navigationController pushViewController:detailVC animated:YES];
+    }
 }
 
 #pragma mark - MyCollectionCell callBack
