@@ -12,5 +12,6 @@
 
 +(void)removeLoadingVIewInView:(UIView *)superV;
 + (void)addLoadingViewInView:(UIView *)superView;
+- (void)addAlertViewWithMessage:(NSString *)message andTarget:(id)target;
 
 @end

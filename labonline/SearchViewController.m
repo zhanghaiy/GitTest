@@ -125,6 +125,10 @@
                  [_tableV reloadData];
                  _tableV.tableHeaderView = nil;
              }
+             else
+             {
+                 [self.view addAlertViewWithMessage:[dic objectForKey:@"remark"] andTarget:self];
+             }
 
          }
      } fail:^{
@@ -136,7 +140,7 @@
          }
          else
          {
-            
+             [self.view addAlertViewWithMessage:@"搜索失败" andTarget:self];
          }
     }];
 }
