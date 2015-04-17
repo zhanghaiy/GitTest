@@ -46,6 +46,7 @@
 		04CDCEC81ADFADB8001082AB /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CDCEC71ADFADB8001082AB /* CoreText.framework */; };
 		04CDCECA1ADFADC6001082AB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CDCEC91ADFADC6001082AB /* UIKit.framework */; };
 		04CDCECC1ADFADD8001082AB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CDCECB1ADFADD8001082AB /* Foundation.framework */; };
+		04CDCED51ADFCA3D001082AB /* PathManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CDCED41ADFCA3D001082AB /* PathManager.m */; };
 		04E37C6E1ACD28EB00045E64 /* YRSideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E37C6D1ACD28EB00045E64 /* YRSideViewController.m */; };
 		04FE4C421ACD328D00A922DA /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4C2E1ACD328D00A922DA /* AFHTTPRequestOperation.m */; };
 		04FE4C431ACD328D00A922DA /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4C301ACD328D00A922DA /* AFHTTPRequestOperationManager.m */; };
@@ -150,7 +151,6 @@
 		FD96C8C31AC1107C0002778A /* VidioPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD96C8C21AC1107C0002778A /* VidioPlayerViewController.m */; };
 		FD96C8D21AC116FF0002778A /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD96C8D11AC116FF0002778A /* DeviceManager.m */; };
 		FD96C8E71AC146480002778A /* PictureShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD96C8E61AC146480002778A /* PictureShowView.m */; };
-		FD97DA211ADCE3AD00963FB2 /* PathManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD97DA201ADCE3AD00963FB2 /* PathManager.m */; };
 		FD97DA241ADCF3F000963FB2 /* UIView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = FD97DA231ADCF3F000963FB2 /* UIView+Category.m */; };
 		FD97DA261ADD0EC600963FB2 /* 我的视频.png in Resources */ = {isa = PBXBuildFile; fileRef = FD97DA251ADD0EC600963FB2 /* 我的视频.png */; };
 		FD9A76B01ACB86F7007ACC11 /* MainListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9A76AF1ACB86F7007ACC11 /* MainListCell.m */; };
@@ -248,6 +248,8 @@
 		04CDCEC71ADFADB8001082AB /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		04CDCEC91ADFADC6001082AB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		04CDCECB1ADFADD8001082AB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		04CDCED31ADFCA3D001082AB /* PathManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathManager.h; sourceTree = "<group>"; };
+		04CDCED41ADFCA3D001082AB /* PathManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathManager.m; sourceTree = "<group>"; };
 		04E37C6C1ACD28EB00045E64 /* YRSideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRSideViewController.h; sourceTree = "<group>"; };
 		04E37C6D1ACD28EB00045E64 /* YRSideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRSideViewController.m; sourceTree = "<group>"; };
 		04FE4C2D1ACD328D00A922DA /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -414,8 +416,6 @@
 		FD96C8D11AC116FF0002778A /* DeviceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceManager.m; sourceTree = "<group>"; };
 		FD96C8E51AC146480002778A /* PictureShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictureShowView.h; sourceTree = "<group>"; };
 		FD96C8E61AC146480002778A /* PictureShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictureShowView.m; sourceTree = "<group>"; };
-		FD97DA1F1ADCE3AD00963FB2 /* PathManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathManager.h; sourceTree = "<group>"; };
-		FD97DA201ADCE3AD00963FB2 /* PathManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathManager.m; sourceTree = "<group>"; };
 		FD97DA221ADCF3F000963FB2 /* UIView+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Category.h"; sourceTree = "<group>"; };
 		FD97DA231ADCF3F000963FB2 /* UIView+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Category.m"; sourceTree = "<group>"; };
 		FD97DA251ADD0EC600963FB2 /* 我的视频.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "我的视频.png"; sourceTree = "<group>"; };
@@ -1021,6 +1021,8 @@
 		FD96C8CF1AC116D70002778A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				04CDCED31ADFCA3D001082AB /* PathManager.h */,
+				04CDCED41ADFCA3D001082AB /* PathManager.m */,
 				FD7355C51ADFAB0500B5F296 /* 清除缓存 */,
 				043EE7171AD6611600B194EB /* UserModel.h */,
 				043EE7181AD6611600B194EB /* UserModel.m */,
@@ -1334,7 +1336,6 @@
 			files = (
 				04E37C6E1ACD28EB00045E64 /* YRSideViewController.m in Sources */,
 				FD5CC55D1AD762BD008986F0 /* NetManager.m in Sources */,
-				FD97DA211ADCE3AD00963FB2 /* PathManager.m in Sources */,
 				FD462E441ACCDE1F001AC895 /* MyCollectionViewController.m in Sources */,
 				FD8B566C1ACE8578009F5E15 /* JSZLCateView.m in Sources */,
 				FD5D3C0C1AD3C15000A6F60E /* SettingCell.m in Sources */,
@@ -1400,6 +1401,7 @@
 				FD5CC64A1AD7B8A1008986F0 /* SDWebImageManager.m in Sources */,
 				FD96C8C31AC1107C0002778A /* VidioPlayerViewController.m in Sources */,
 				042C46791AC2976200D36C8F /* WangQiCell.m in Sources */,
+				04CDCED51ADFCA3D001082AB /* PathManager.m in Sources */,
 				FD96C8891AC109E00002778A /* main.m in Sources */,
 				FD9A76FA1ACBE711007ACC11 /* MyCommentViewController.m in Sources */,
 				FD8AE2DF1ACE230100A4A5B6 /* PersonEditCell.m in Sources */,

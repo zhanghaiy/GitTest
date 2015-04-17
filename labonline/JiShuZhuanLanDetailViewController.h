@@ -16,6 +16,13 @@
 
 @property (nonatomic,copy) NSString *vidioUrl;
 @property (nonatomic,copy) NSString *titleStr;
+@property (nonatomic,copy) NSString *htmlUrl;
+@property (nonatomic,copy) NSString *articalID;
+@property (nonatomic,strong) NSDictionary *articalDic;
+
+@property (nonatomic,assign) id delegate;
+@property (nonatomic,assign) SEL action;
 @property(nonatomic, strong)TencentOAuth *tencentAuth;
+
 
 @end
