@@ -208,29 +208,9 @@
 - (void)pictureShowMethod:(PictureShowView *)pictureShowV
 {
     NSDictionary *dict = [[pictureShowV.imageInfoArray objectAtIndex:pictureShowV.imageIndex] objectForKey:@"articleinfo"];
-   
-    if ([[dict objectForKey:@"urlpdf"] length]>5)
-    {
-        // PDF 跳转PDF页面
-        NSLog(@"跳转PDF页面");
-        PDFBrowserViewController *pdfBrowseVC = [[PDFBrowserViewController alloc]init];
-        pdfBrowseVC.filePath = [dict objectForKey:@"urlpdf"];
-        [self.navigationController pushViewController:pdfBrowseVC animated:YES];
-    }
-    else if ([[dict objectForKey:@"urlhtml"] length]>5)
-    {
-        // html
-        JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
-        if ([[dict objectForKey:@"urlvideo"] length]>5)
-        {
-            // 视频
-            detailVC.vidioUrl = [dict objectForKey:@"urlvideo"];
-        }
-        detailVC.articalID = [dict objectForKey:@"articleid"];
-        detailVC.htmlUrl = [dict objectForKey:@"urlhtml"];
-        detailVC.titleStr = [dict objectForKey:@"type"];
-        [self.navigationController pushViewController:detailVC animated:YES];
-    }
+    JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+    detailVC.articalDic = dict;
+    [self.navigationController pushViewController:detailVC animated:YES];
 }
 #pragma mark - 进入技术专栏界面
 - (void)enterJSZLVireController:(JSZLCateView *)jSZLCateView

@@ -70,14 +70,19 @@
         {
             _fileUrl = [NSURL fileURLWithPath:path];
         }
-        else
-        {
-            _fileUrl = [NSURL fileURLWithPath:_filePath];
-        }
-        previewController = [[QLPreviewController alloc] initWithNibName:nil bundle:nil];
-        previewController.dataSource = self;
-        previewController.delegate = self;
-        [self.navigationController pushViewController:previewController animated:NO];
+        UIWebView *webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth , kScreenHeight)];
+        webView.delegate = self;
+        [self.view addSubview:webView];
+        NSURLRequest *request = [NSURLRequest requestWithURL:_fileUrl];
+        [webView loadRequest:request];
+//        else
+//        {
+//            _fileUrl = [NSURL fileURLWithPath:_filePath];
+//        }
+//        previewController = [[QLPreviewController alloc] initWithNibName:nil bundle:nil];
+//        previewController.dataSource = self;
+//        previewController.delegate = self;
+//        [self.navigationController pushViewController:previewController animated:NO];
     }
 }
 

@@ -223,31 +223,11 @@
 {
     _markCellIndex = indexPath.row;
     NSDictionary *dict = [_searchDataArray objectAtIndex:indexPath.row];
-    if ([[dict objectForKey:@"urlpdf"] length]>5)
-    {
-        // PDF 跳转PDF页面
-        NSLog(@"跳转PDF页面");
-        PDFBrowserViewController *pdfBrowseVC = [[PDFBrowserViewController alloc]init];
-        pdfBrowseVC.filePath = [dict objectForKey:@"urlpdf"];
-        pdfBrowseVC.articalId = [dict objectForKey:@"articleid"];
-        pdfBrowseVC.target = self;
-        pdfBrowseVC.action = @selector(addReadCounts);
-        [self.navigationController pushViewController:pdfBrowseVC animated:YES];
-    }
-    else if ([[dict objectForKey:@"urlhtml"] length]>5)
-    {
-        // html
-        JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
-        if ([[dict objectForKey:@"urlvideo"] length]>5)
-        {
-            // 视频
-            detailVC.vidioUrl = [dict objectForKey:@"urlvideo"];
-        }
-        detailVC.delegate = self;
-        detailVC.action = @selector(addReadCounts);
-        detailVC.articalDic = dict;
-        [self.navigationController pushViewController:detailVC animated:YES];
-    }
+    JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+    detailVC.articalDic = dict;
+    detailVC.delegate = self;
+    detailVC.action = @selector(addReadCounts);
+    [self.navigationController pushViewController:detailVC animated:YES];
 
 }
 #pragma mark - 增加阅读数

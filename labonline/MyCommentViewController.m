@@ -157,19 +157,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *dic = [[_myCommentArray objectAtIndex:indexPath.row] objectForKey:@"articleinfo"];
-    if ([[dic objectForKey:@"urlhtml"] length]>5)
-    {
-        // html
-        JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
-        if ([[dic objectForKey:@"urlvideo"] length]>5)
-        {
-            // 视频
-            detailVC.vidioUrl = [dic objectForKey:@"urlvideo"];
-        }
-        detailVC.articalDic = dic;
-        [self.navigationController pushViewController:detailVC animated:YES];
-    }
-
+    JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+    detailVC.articalDic = dic;
+    [self.navigationController pushViewController:detailVC animated:YES];
 }
 
 

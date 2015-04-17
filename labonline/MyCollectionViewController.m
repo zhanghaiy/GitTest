@@ -156,18 +156,9 @@
 {
      // 阅读
     NSDictionary *dic =[ _collectionArray objectAtIndex:indexPath.row];
-    if ([[dic objectForKey:@"urlhtml"] length]>5)
-    {
-        // html
-        JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
-        if ([[dic objectForKey:@"urlvideo"] length]>5)
-        {
-            // 视频
-            detailVC.vidioUrl = [dic objectForKey:@"urlvideo"];
-        }
-        detailVC.articalDic = dic;
-        [self.navigationController pushViewController:detailVC animated:YES];
-    }
+    JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+    detailVC.articalDic = dic;
+    [self.navigationController pushViewController:detailVC animated:YES];
 }
 
 #pragma mark - MyCollectionCell callBack

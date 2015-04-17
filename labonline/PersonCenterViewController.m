@@ -122,7 +122,7 @@
 {
     _dataArray = [[NSMutableArray alloc]init];
     NSArray *imageArray = @[@"我的杂志.png",@"我的评论.png",@"我的收藏.png",@"离线视频.png"];
-    NSArray *titleArray = @[@"我的杂志",@"我的评论",@"我的收藏",@"离线视频"];
+    NSArray *titleArray = @[@"我的文章",@"我的评论",@"我的收藏",@"离线视频"];
     for (int i = 0; i < imageArray.count; i++)
     {
         NSDictionary *dict = @{@"ImageName":[imageArray objectAtIndex:i],@"Title":[titleArray objectAtIndex:i]};
@@ -143,8 +143,8 @@
     {
         case 0:
         {
-            // 我的杂志
-            NSLog(@"我的杂志");
+            // 我的文章
+            NSLog(@"我的文章");
             MyMagazineViewController *magazineVC = [[MyMagazineViewController alloc]init];
             [self.navigationController pushViewController:magazineVC animated:YES];
         }

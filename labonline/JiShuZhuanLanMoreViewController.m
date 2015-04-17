@@ -137,31 +137,36 @@
 {
     _currentEnterCell = indexPath.row;
     NSDictionary *subDic = [_articalArray objectAtIndex:indexPath.row];
-    if ([[subDic objectForKey:@"urlpdf"] length]>5)
-    {
-       // PDF 跳转PDF页面
-        NSLog(@"跳转PDF页面");
-        PDFBrowserViewController *pdfBrowseVC = [[PDFBrowserViewController alloc]init];
-        pdfBrowseVC.filePath = [subDic objectForKey:@"urlpdf"];
-        pdfBrowseVC.articalId = [subDic objectForKey:@"articleid"];
-        pdfBrowseVC.target = self;
-        pdfBrowseVC.action = @selector(addReadCounts);
-        [self.navigationController pushViewController:pdfBrowseVC animated:YES];
-    }
-    else if ([[subDic objectForKey:@"urlhtml"] length]>5)
-    {
-        // html
-        JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
-        if ([[subDic objectForKey:@"urlvideo"] length]>5)
-        {
-            // 视频
-            detailVC.vidioUrl = [subDic objectForKey:@"urlvideo"];
-        }
-        detailVC.articalDic = subDic;
-        detailVC.delegate = self;
-        detailVC.action = @selector(addReadCounts);
-        [self.navigationController pushViewController:detailVC animated:YES];
-    }
+    JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+    detailVC.articalDic = subDic;
+    detailVC.delegate = self;
+    detailVC.action = @selector(addReadCounts);
+    [self.navigationController pushViewController:detailVC animated:YES];
+//    if ([[subDic objectForKey:@"urlpdf"] length]>5)
+//    {
+//       // PDF 跳转PDF页面
+//        NSLog(@"跳转PDF页面");
+//        PDFBrowserViewController *pdfBrowseVC = [[PDFBrowserViewController alloc]init];
+//        pdfBrowseVC.filePath = [subDic objectForKey:@"urlpdf"];
+//        pdfBrowseVC.articalId = [subDic objectForKey:@"articleid"];
+//        pdfBrowseVC.target = self;
+//        pdfBrowseVC.action = @selector(addReadCounts);
+//        [self.navigationController pushViewController:pdfBrowseVC animated:YES];
+//    }
+//    else if ([[subDic objectForKey:@"urlhtml"] length]>5)
+//    {
+//        // html
+//        JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+//        if ([[subDic objectForKey:@"urlvideo"] length]>5)
+//        {
+//            // 视频
+//            detailVC.vidioUrl = [subDic objectForKey:@"urlvideo"];
+//        }
+//        detailVC.articalDic = subDic;
+//        detailVC.delegate = self;
+//        detailVC.action = @selector(addReadCounts);
+//        [self.navigationController pushViewController:detailVC animated:YES];
+//    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
