@@ -86,7 +86,7 @@
     pictureV.backgroundColor = [UIColor whiteColor];
     [headerV addSubview:pictureV];
     
-    jiShuZhuanLanTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-65) style:UITableViewStylePlain];
+    jiShuZhuanLanTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-64) style:UITableViewStylePlain];
     jiShuZhuanLanTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     jiShuZhuanLanTableView.delegate = self;
     jiShuZhuanLanTableView.dataSource = self;
@@ -106,12 +106,12 @@
     netManager.delegate = self;
     netManager.action = @selector(requestFinished:);
     [netManager requestDataWithUrlString:urlStr];
-    [UIView addLoadingViewInView:self.view];
+    [self.view addLoadingViewInSuperView:self.view andTarget:self];
 }
 #pragma mark --网络请求完成
 - (void)requestFinished:(NetManager *)netManager
 {
-    [UIView removeLoadingVIewInView:self.view];
+    [self.view removeLoadingVIewInView:self.view andTarget:self];
     if (netManager.downLoadData)
     {
         // 成功

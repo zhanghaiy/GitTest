@@ -10,8 +10,11 @@
 
 @interface UIView (Category)
 
-+(void)removeLoadingVIewInView:(UIView *)superV;
-+ (void)addLoadingViewInView:(UIView *)superView;
+//+(void)removeLoadingVIewInView:(UIView *)superV;
+//+ (void)addLoadingViewInView:(UIView *)superView;
 - (void)addAlertViewWithMessage:(NSString *)message andTarget:(id)target;
+
+- (void)addLoadingViewInSuperView:(UIView *)superView andTarget:(UIViewController*)taget;
+- (void)removeLoadingVIewInView:(UIView *)superV andTarget:(UIViewController *)target;
 
 @end

@@ -118,7 +118,7 @@
         {
             // 成功
             // 解析
-            [UIView removeLoadingVIewInView:self.view];
+            [self.view removeLoadingVIewInView:self.view andTarget:self];
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
             if ([[dict objectForKey:@"respCode"] integerValue] == 1000)
             {
@@ -139,7 +139,7 @@
     {
        // 下载
         _downLoadVidio = NO;
-        [UIView removeLoadingVIewInView:self.view];
+        [self.view removeLoadingVIewInView:self.view andTarget:self];
         if (netManager.downLoadData)
         {
             NSString *fileName = [[_vidioUrl componentsSeparatedByString:@"/"] lastObject];
@@ -233,7 +233,7 @@
             _collection = YES;
             NSString *urlStr = [NSString stringWithFormat:@"%@?userid=%@&articleid=%@",kCollectionUrl,kUserId,_articalID];
             [self requestMainDataWithURLString:urlStr];
-            [UIView addLoadingViewInView:self.view];
+            [self.view addLoadingViewInSuperView:self.view andTarget:self];
         }
             break;
         case 1:
@@ -308,7 +308,7 @@
                 {
                     [self requestMainDataWithURLString:_vidioUrl];
                     // 加载View
-                    [UIView addLoadingViewInView:self.view];
+                    [self.view addLoadingViewInSuperView:self.view andTarget:self];
                 }
             }
             else

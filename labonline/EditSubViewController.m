@@ -14,6 +14,7 @@
 @interface EditSubViewController ()<UITextFieldDelegate,UIAlertViewDelegate>
 {
     BOOL _success;
+    NSDictionary *_cateDict;
 }
 @end
 
@@ -25,6 +26,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    
+    _cateDict = @{@"昵称":@"nickname",@"手机号":@"phone",@"邮箱":@"email"};
     
     self.title = [NSString stringWithFormat:@"%@编辑",[_dataDict objectForKey:@"Title"]];
     self.view.backgroundColor = [UIColor colorWithWhite:244/255.0 alpha:1];
@@ -81,10 +85,10 @@
     NSArray *baseUrlArray = @[kAlterUserNameURL,kAlterTelephoneURL,kAlterEmailURL];
     NSArray *paramsArray = @[@"screenname",@"tel",@"email"];
     NSDictionary *paramDic = @{@"userid":userId,[paramsArray objectAtIndex:_alterType]:textField.text};
-    [UIView addLoadingViewInView:self.view];
+    [self.view addLoadingViewInSuperView:self.view andTarget:self];
     [AFNetworkTool postJSONWithUrl:[baseUrlArray objectAtIndex:_alterType] parameters:paramDic success:^(id responseObject)
     {
-        [UIView removeLoadingVIewInView:self.view];
+        [self.view removeLoadingVIewInView:self.view andTarget:self];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
         NSInteger respCode = [[dic objectForKey:@"respCode"] integerValue];
         if (respCode == 1000)
@@ -92,6 +96,8 @@
             // 成功
             _success = YES;
             [self createAlertViewWithMessage:[NSString stringWithFormat:@"%@修改成功",[_dataDict objectForKey:@"Title"]]];
+            [[NSUserDefaults standardUserDefaults] setObject:textField.text forKey:[_cateDict objectForKey:[_dataDict objectForKey:@"Title"]]];
+            [[NSUserDefaults standardUserDefaults] synchronize];
         }
         else
         {
@@ -100,7 +106,7 @@
         }
 
     } fail:^{
-         [UIView removeLoadingVIewInView:self.view];
+         [self.view removeLoadingVIewInView:self.view andTarget:self];
     }];
 }
 

@@ -97,10 +97,10 @@
 #pragma mark --网络请求
 - (void)requestWithUrl:(NSString *)url Params:(NSDictionary *)dict
 {
-    [UIView addLoadingViewInView:self.view];
+    [self.view addLoadingViewInSuperView:self.view andTarget:self];
     [AFNetworkTool postJSONWithUrl:url parameters:dict success:^(id responseObject)
      {
-         [UIView removeLoadingVIewInView:self.view];
+         [self.view removeLoadingVIewInView:self.view andTarget:self];
          if (_requestSubLebel)
          {
              // 搜索标签
@@ -132,7 +132,7 @@
 
          }
      } fail:^{
-         [UIView removeLoadingVIewInView:self.view];
+         [self.view removeLoadingVIewInView:self.view andTarget:self];
          if (_requestSubLebel)
          {
              _requestSubLebel = NO;

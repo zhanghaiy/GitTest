@@ -78,12 +78,12 @@
     netManager.delegate = self;
     netManager.action = @selector(netManagerCallBack:);
     [netManager requestDataWithUrlString:urlString];
-    [UIView addLoadingViewInView:self.view];
+    [self.view addLoadingViewInSuperView:self.view andTarget:self];
 }
 #pragma mark --- 网络回调
 - (void)netManagerCallBack:(NetManager *)netManager
 {
-    [UIView removeLoadingVIewInView:self.view];
+    [self.view removeLoadingVIewInView:self.view andTarget:self];
     // 我的评论列表
     if (netManager.failError)
     {

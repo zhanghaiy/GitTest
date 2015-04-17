@@ -18,8 +18,10 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "SearchViewController.h"
+#import "UIButton+WebCache.h"
 
-@interface PersonCenterViewController ()
+
+@interface PersonCenterViewController ()<EditPersonViewControllerDelegate>
 {
     NSMutableArray *_dataArray;
 }
@@ -64,10 +66,14 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
     
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
     // 头像 本地获取头像和昵称
     UIButton *personImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [personImageButton setFrame:CGRectMake((kScreenWidth-kImageBUttonHeight)/2, 20, kImageBUttonHeight, kImageBUttonHeight)];
-    [personImageButton setBackgroundImage:[UIImage imageNamed:@"头像.png"] forState:UIControlStateNormal];
+    personImageButton.tag = kImageButtonTag;
+    [personImageButton setImageWithURL:[NSURL URLWithString:[defaults objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"头像.png"]];
     personImageButton.layer.masksToBounds = YES;
     personImageButton.layer.cornerRadius = kImageBUttonHeight/2;
     personImageButton.layer.borderColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1].CGColor;
@@ -77,7 +83,7 @@
     
     // 用户名
     UILabel *nameLable = [[UILabel alloc]initWithFrame:CGRectMake(50, 20+kImageBUttonHeight, kScreenWidth-100, 30)];
-    nameLable.text = @"幸福的小猫咪";
+    nameLable.text = [defaults objectForKey:@"nickname"];
     nameLable.textAlignment = NSTextAlignmentCenter;
     nameLable.textColor = [UIColor redColor];
     nameLable.font = [UIFont systemFontOfSize:kOneFontSize];
@@ -177,7 +183,31 @@
 - (void)enterPersonEditViewController:(UIButton *)btn
 {
     EditPersonViewController *editVC = [[EditPersonViewController alloc]init];
+    editVC.delegate = self;
     [self.navigationController pushViewController:editVC animated:YES];
+}
+
+- (void)iconAlertSuccess:(BOOL)sucseess
+{
+    if (sucseess)
+    {
+        // 重新登录 请求数据 username=zhy&password=1
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSDictionary *dic = @{@"username":[defaults objectForKey:@"username"],@"password":[defaults objectForKey:@"password"]};
+        [AFNetworkTool postJSONWithUrl:COCIM_INTERFACE_LOGIN parameters:dic success:^(id responseObject) {
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+            NSDictionary *userInfo = [dict objectForKey:@"userinfo"];
+            NSUserDefaults *userDe=[NSUserDefaults standardUserDefaults];
+            [userDe setObject:[userInfo objectForKey:@"icon"] forKey:@"icon"];
+            [userDe synchronize];
+            
+            UIButton *btn = (UIButton *)[self.view viewWithTag:kImageButtonTag];
+            [btn setImageWithURL:[NSURL URLWithString:[userInfo objectForKey:@"icon"]]];
+
+        } fail:^{
+            
+        }];
+    }
 }
 
 #pragma mark - 退出当前账号

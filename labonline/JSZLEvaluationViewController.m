@@ -92,10 +92,10 @@
 
 - (void)requestEvaluesList
 {
-    [UIView addLoadingViewInView:self.view];
+    [self.view addLoadingViewInSuperView:self.view andTarget:self];
     NSDictionary *dic = @{@"articleid":_articalId};
     [AFNetworkTool postJSONWithUrl:kEvalueationURLString parameters:dic success:^(id responseObject) {
-        [UIView removeLoadingVIewInView:self.view];
+        [self.view removeLoadingVIewInView:self.view andTarget:self];
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
         _listArray = [dict objectForKey:@"list"];
         [_evalueTableV reloadData];
@@ -107,7 +107,7 @@
             }
         }
     } fail:^{
-        [UIView removeLoadingVIewInView:self.view];
+        [self.view removeLoadingVIewInView:self.view andTarget:self];
     }];
 }
 
