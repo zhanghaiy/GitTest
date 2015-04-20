@@ -19,7 +19,6 @@
     UITableView *_myCommentTableV;
     NSInteger _currentCellHeight;
     NSMutableArray *_myCommentArray;
-    NSString *_userid;
     BOOL _reloading;
     EGORefreshTableHeaderView *_refresV;
 }
@@ -67,7 +66,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    _userid = kUserId;
     NSString *urlStr = [NSString stringWithFormat:kMyEvaluationUrl,_userid];
     [self requestDataWithUrlString:urlStr];
     [self.view addLoadingViewInSuperView:self.view andTarget:self];

@@ -70,7 +70,7 @@
     // 获取收藏列表
     _reloading = NO;
     [self.view addLoadingViewInSuperView:self.view andTarget:self];
-    [self requestDataWithUrlString:[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,kUserId]];
+    [self requestDataWithUrlString:[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,_userId]];
     [self createRefreshView];
 }
 
@@ -102,7 +102,7 @@
         if ([[dic objectForKey:@"respCode"] integerValue] == 1000)
         {
             NSLog(@"删除成功");
-            [self requestDataWithUrlString:[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,kUserId]];
+            [self requestDataWithUrlString:[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,_userId]];
         }
     }
     else
@@ -225,7 +225,7 @@
              http://192.168.0.153:8181/labonline/hyController/deleteWdsc.do?userid=5&articleid=6
              */
             _deleteCollection = YES;
-            NSString *urlString = [NSString stringWithFormat:@"%@?userid=%@&articleid=%@",kDeleteCollectionUrl,kUserId,_articalId];
+            NSString *urlString = [NSString stringWithFormat:@"%@?userid=%@&articleid=%@",kDeleteCollectionUrl,_userId,_articalId];
             [self requestDataWithUrlString:urlString];
         }
             break;
@@ -269,7 +269,7 @@
     if (_reloading == NO)
     {
         _reloading = YES;
-        [self requestDataWithUrlString:[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,kUserId]];
+        [self requestDataWithUrlString:[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,_userId]];
     }
 }
 

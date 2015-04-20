@@ -16,6 +16,7 @@
 
 @interface EditSubViewController : UIViewController
 
+@property (nonatomic,copy) NSString *userID;
 @property (nonatomic,strong) NSDictionary *dataDict;
 @property (nonatomic,assign) NSInteger alterType;
 @property (nonatomic,assign) id<EditSubViewControllerDelegate> delegate;

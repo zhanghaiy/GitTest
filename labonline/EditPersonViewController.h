@@ -16,5 +16,7 @@
 @interface EditPersonViewController : UIViewController
 
 @property (nonatomic,assign) id<EditPersonViewControllerDelegate> delegate;
+@property (nonatomic,copy) NSString *userID;
+
 
 @end

@@ -61,8 +61,9 @@
             _vidioUrl = [_articalDic objectForKey:@"urlvideo"];
         }
     }
-    if ([_articalDic objectForKey:@"type"]) {
-        _titleStr = [_articalDic objectForKey:@"type"];
+    if ([_articalDic objectForKey:@"title"])
+    {
+        _titleStr = [_articalDic objectForKey:@"title"];
     }
 }
 
@@ -92,7 +93,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title = @"文章详情";
+    self.title = _titleStr;
     _downLoadVidio = NO;
     _collection = NO;
     
@@ -291,11 +292,21 @@
         case 0:
         {
            // 收藏
-            _collection = YES;
-            NSString *urlStr = [NSString stringWithFormat:@"%@?userid=%@&articleid=%@",kCollectionUrl,kUserId,_articalID];
-            [self requestMainDataWithURLString:urlStr];
-            [self.view addLoadingViewInSuperView:self.view andTarget:self];
-        }
+            NSString *userid;
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            if ([defaults objectForKey:@"userid"])
+            {
+                userid = [defaults objectForKey:@"userid"];
+                _collection = YES;
+                NSString *urlStr = [NSString stringWithFormat:@"%@?userid=%@&articleid=%@",kCollectionUrl,userid,_articalID];
+                [self requestMainDataWithURLString:urlStr];
+                [self.view addLoadingViewInSuperView:self.view andTarget:self];
+            }
+            else
+            {
+                [self.view addAlertViewWithMessage:@"亲，您还没有登录哦，登陆后才可收藏" andTarget:self];
+            }
+    }
             break;
         case 1:
         {

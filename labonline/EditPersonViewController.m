@@ -59,7 +59,7 @@
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setFrame:CGRectMake(0, 0, 40, 22)];
     [rightBtn setBackgroundImage:[UIImage imageNamed:@"OK.png"] forState:UIControlStateNormal];
-    [rightBtn addTarget:self action:@selector(alertFinished) forControlEvents:UIControlEventTouchUpInside];
+    [rightBtn addTarget:self action:@selector(commitImage) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
     
@@ -88,6 +88,9 @@
     _myTableV.backgroundColor = [UIColor clearColor];
     _myTableV.separatorColor = [UIColor colorWithWhite:244/255.0 alpha:1];
     [self.view addSubview:_myTableV];
+    
+    _currentImage = imageBtn.imageView.image;
+    NSLog(@"%@",_currentImage);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -105,14 +108,15 @@
     _baseDataArray = [[NSMutableArray alloc]initWithObjects:@{@"Title":@"昵称",@"Content":[defaults objectForKey:@"nickname"]},@{@"Title":@"手机号",@"Content":[defaults objectForKey:@"phone"]},@{@"Title":@"邮箱",@"Content":[defaults objectForKey:@"email"]}, nil];
 }
 
-- (void)alertFinished
+- (void)commitImage
 {
     // 修改完成  http://192.168.0.153:8181/labonline/hyController/updateTx.do?userid=80BE983A9EBC4B079247C4DDA518C2A8&usericon=dfwsvwsvedwvds
-    
     NSData *_data = UIImageJPEGRepresentation(_currentImage, 0.3);
+    [_data writeToFile:[NSString stringWithFormat:@"%@/Documents/TestImage",NSHomeDirectory()] atomically:YES];
+    NSLog(@"%@",[NSString stringWithFormat:@"%@/Documents/TestImage",NSHomeDirectory()]);
     NSString *encodedImageStr = [_data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
     NSString *imageString = [encodedImageStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *dic = @{@"userid":kUserId,@"usericon":imageString};
+    NSDictionary *dic = @{@"userid":_userID,@"usericon":imageString};
     [self.view addLoadingViewInSuperView:self.view andTarget:self];
     [AFNetworkTool postJSONWithUrl:kCommitImageUrl parameters:dic success:^(id responseObject)
     {
@@ -219,6 +223,7 @@
         }
         //将二进制数据生成UIImage
         _currentImage = [UIImage imageWithData:data];
+        [imageBtn setImage:nil forState:UIControlStateNormal];
         [imageBtn setBackgroundImage:_currentImage forState:UIControlStateNormal];
         NSLog(@"~~~~~~图片~~~~~~~");
     }
@@ -274,8 +279,10 @@
     subVC.delegate = self;
     subVC.dataDict = dict;
     subVC.alterType = indexPath.row;
+    subVC.userID = _userID;
     [self.navigationController pushViewController:subVC animated:YES];
 }
+
 
 - (void)reloadNewInfoWithString:(NSString *)string andAlterType:(NSInteger)alterType
 {

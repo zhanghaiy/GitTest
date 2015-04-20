@@ -24,11 +24,14 @@
 @interface PersonCenterViewController ()<EditPersonViewControllerDelegate>
 {
     NSMutableArray *_dataArray;
+    NSString *_userId;
 }
 @end
 
 @implementation PersonCenterViewController
-#define kImageButtonTag 22
+#define kHeadImageBtnTag 1122
+#define kUserNameLableTag 1123
+
 #define kOutButtonTag 23
 #define kPersonColumeViewTag 24
 
@@ -72,7 +75,7 @@
     // 头像 本地获取头像和昵称
     UIButton *personImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [personImageButton setFrame:CGRectMake((kScreenWidth-kImageBUttonHeight)/2, 20, kImageBUttonHeight, kImageBUttonHeight)];
-    personImageButton.tag = kImageButtonTag;
+    personImageButton.tag = kHeadImageBtnTag;
     [personImageButton setImageWithURL:[NSURL URLWithString:[defaults objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"头像.png"]];
     personImageButton.layer.masksToBounds = YES;
     personImageButton.layer.cornerRadius = kImageBUttonHeight/2;
@@ -83,6 +86,7 @@
     
     // 用户名
     UILabel *nameLable = [[UILabel alloc]initWithFrame:CGRectMake(50, 20+kImageBUttonHeight, kScreenWidth-100, 30)];
+    nameLable.tag = kUserNameLableTag;
     nameLable.text = [defaults objectForKey:@"nickname"];
     nameLable.textAlignment = NSTextAlignmentCenter;
     nameLable.textColor = [UIColor redColor];
@@ -115,6 +119,22 @@
     outButton.layer.borderWidth = 1;
     [outButton addTarget:self action:@selector(outCurrentUser) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:outButton];
+    
+    if ([defaults objectForKey:@"userid"])
+    {
+        _userId = [defaults objectForKey:@"userid"];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    UIButton *btn = (UIButton *)[self.view viewWithTag:kHeadImageBtnTag];
+    [btn setImageWithURL:[NSURL URLWithString:[defaults objectForKey:@"icon"]]];
+    UILabel *lab = (UILabel *)[self.view viewWithTag:kUserNameLableTag];
+    lab.text = [defaults objectForKey:@"nickname"];
 }
 
 #pragma mark - 组成数据源
@@ -154,6 +174,7 @@
             // 我的评论
             NSLog(@"我的评论");
             MyCommentViewController *myCommonVC = [[MyCommentViewController alloc]init];
+            myCommonVC.userid = _userId;
             [self.navigationController pushViewController:myCommonVC animated:YES];
         }
             break;
@@ -162,6 +183,7 @@
             // 我的收藏
             NSLog(@"我的收藏");
             MyCollectionViewController *myCollectionVC = [[MyCollectionViewController alloc]init];
+            myCollectionVC.userId = _userId;
             [self.navigationController pushViewController:myCollectionVC animated:YES];
         }
             break;
@@ -184,6 +206,7 @@
 {
     EditPersonViewController *editVC = [[EditPersonViewController alloc]init];
     editVC.delegate = self;
+    editVC.userID = _userId;
     [self.navigationController pushViewController:editVC animated:YES];
 }
 
@@ -193,20 +216,30 @@
     {
         // 重新登录 请求数据 username=zhy&password=1
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSDictionary *dic = @{@"username":[defaults objectForKey:@"username"],@"password":[defaults objectForKey:@"password"]};
-        [AFNetworkTool postJSONWithUrl:COCIM_INTERFACE_LOGIN parameters:dic success:^(id responseObject) {
-            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
-            NSDictionary *userInfo = [dict objectForKey:@"userinfo"];
-            NSUserDefaults *userDe=[NSUserDefaults standardUserDefaults];
-            [userDe setObject:[userInfo objectForKey:@"icon"] forKey:@"icon"];
-            [userDe synchronize];
-            
-            UIButton *btn = (UIButton *)[self.view viewWithTag:kImageButtonTag];
-            [btn setImageWithURL:[NSURL URLWithString:[userInfo objectForKey:@"icon"]]];
+        if ([defaults objectForKey:@"userName"]&&[defaults objectForKey:@"password"])
+        {
+            NSLog(@"%@\n%@",[defaults objectForKey:@"userName"],[defaults objectForKey:@"password"]);
+            NSDictionary *dic = @{@"username":[defaults objectForKey:@"userName"],@"password":[defaults objectForKey:@"password"]};
+            [AFNetworkTool postJSONWithUrl:COCIM_INTERFACE_LOGIN parameters:dic success:^(id responseObject)
+            {
+                NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+                if ([[dict objectForKey:@"respCode"] integerValue] == 1000)
+                {
+                    NSDictionary *userInfo = [[dict objectForKey:@"userinfo"] lastObject];
+                    NSUserDefaults *userDe=[NSUserDefaults standardUserDefaults];
+                    [userDe setObject:[userInfo objectForKey:@"icon"] forKey:@"icon"];
+                    [userDe synchronize];
+                    
+                    UIButton *btn = (UIButton *)[self.view viewWithTag:kHeadImageBtnTag];
+                    [btn setImageWithURL:[NSURL URLWithString:[userInfo objectForKey:@"icon"]]];
+                    UILabel *lab = (UILabel *)[self.view viewWithTag:kUserNameLableTag];
+                    lab.text = [userInfo objectForKey:@"nickname"];
+                }
+            } fail:^{
+                
+            }];
 
-        } fail:^{
-            
-        }];
+        }
     }
 }
 
@@ -217,6 +250,8 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     //移除UserDefaults中存储的用户信息
     [userDefaults removeObjectForKey:@"userName"];
+    [userDefaults removeObjectForKey:@"password"];
+    [userDefaults removeObjectForKey:@"userid"];
     [userDefaults synchronize];
     
 //    AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];

@@ -99,6 +99,7 @@
     
     _backScrollV = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-65)];
     _backScrollV.delegate =self;
+    _backScrollV.contentSize = CGSizeMake(kScreenWidth, kScreenHeight+10);
     [self.view addSubview:_backScrollV];
     
      // 图片轮播View
@@ -164,6 +165,7 @@
     else
     {
         // 失败
+        [self.view addAlertViewWithMessage:@"请求不到数据" andTarget:self];
     }
 }
 

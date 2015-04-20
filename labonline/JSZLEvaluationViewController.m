@@ -123,24 +123,31 @@
         参数 articleid userid text
      */
     // 编码
-    NSString *evaluContent = [textField.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    if ([evaluContent length]!=0)
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"userid"]!=nil)
     {
-        NSDictionary *dic = @{@"articleid":_articalId,@"userid":kUserId,@"text":textField.text};
-        [AFNetworkTool postJSONWithUrl:kCommitEvaluationUrl parameters:dic success:^(id responseObject) {
-            // 成功
-            [self createAlertViewWithMessage:@"评论提交成功"];
-            // 重新请求数据
-            sendFinished = YES;
-            [self requestEvaluesList];
-        } fail:^{
-            NSLog(@"失败");
-            [self createAlertViewWithMessage:@"评论提交失败"];
-        }];
+        if ([textField.text length])
+        {
+            NSDictionary *dic = @{@"articleid":_articalId,@"userid":[defaults objectForKey:@"userid"],@"text":textField.text};
+            [AFNetworkTool postJSONWithUrl:kCommitEvaluationUrl parameters:dic success:^(id responseObject) {
+                // 成功
+                [self createAlertViewWithMessage:@"评论提交成功"];
+                // 重新请求数据
+                sendFinished = YES;
+                [self requestEvaluesList];
+            } fail:^{
+                NSLog(@"失败");
+                [self createAlertViewWithMessage:@"评论提交失败"];
+            }];
+        }
+        else
+        {
+            [self createAlertViewWithMessage:@"评论不可为空"];
+        }
     }
     else
     {
-        [self createAlertViewWithMessage:@"评论不可为空"];
+        [self createAlertViewWithMessage:@"亲，请先登录后在进行评论."];
     }
 }
 

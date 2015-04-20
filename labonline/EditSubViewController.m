@@ -76,15 +76,14 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark - 修改完成
+#pragma mark - 修改提交
 - (void)alertFinished
 {
     // 修改完成
-    NSString *userId = kUserId;
     UITextField *textField = (UITextField *)[self.view viewWithTag:kTextFieldTag];
     NSArray *baseUrlArray = @[kAlterUserNameURL,kAlterTelephoneURL,kAlterEmailURL];
     NSArray *paramsArray = @[@"screenname",@"tel",@"email"];
-    NSDictionary *paramDic = @{@"userid":userId,[paramsArray objectAtIndex:_alterType]:textField.text};
+    NSDictionary *paramDic = @{@"userid":_userID,[paramsArray objectAtIndex:_alterType]:textField.text};
     [self.view addLoadingViewInSuperView:self.view andTarget:self];
     [AFNetworkTool postJSONWithUrl:[baseUrlArray objectAtIndex:_alterType] parameters:paramDic success:^(id responseObject)
     {
