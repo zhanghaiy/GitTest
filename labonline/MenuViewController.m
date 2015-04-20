@@ -123,6 +123,7 @@
                     NSDictionary *magazine=[pastMagazineList objectAtIndex:i];
                     MagazineModel *mm=[[MagazineModel alloc] init];
                     [mm setValuesForKeysWithDictionary:magazine];
+                    NSLog(@"%@",mm.id);
                     [magazines addObject:mm];
                 }
                 UITableView *tv=(UITableView*)[self.view viewWithTag:[year intValue]];
@@ -225,10 +226,10 @@
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(scrollV.frame.size.width * i, 0, scrollV.frame.size.width, scrollV.frame.size.height)];
         view.tag = i + 1;
         view.userInteractionEnabled = YES;
-        UITapGestureRecognizer *singleTapRecognizer = [[UITapGestureRecognizer alloc] init];
-        singleTapRecognizer.numberOfTapsRequired = 1;
-        [singleTapRecognizer addTarget:self action:@selector(pust2View:)];
-        [view addGestureRecognizer:singleTapRecognizer];
+//        UITapGestureRecognizer *singleTapRecognizer = [[UITapGestureRecognizer alloc] init];
+//        singleTapRecognizer.numberOfTapsRequired = 1;
+//        [singleTapRecognizer addTarget:self action:@selector(pust2View:)];
+//        [view addGestureRecognizer:singleTapRecognizer];
         
         [self initPageView:view];
         
@@ -241,12 +242,30 @@
 - (void)pust2View:(UITapGestureRecognizer *)tap
 {
     CGPoint point = [tap locationInView:_scrollV];
-    int t = point.x/_scrollV.frame.size.width + 1;
+    int t = point.x/_scrollV.frame.size.width ;
     NSLog(@"click %d",t);
-    MainListViewController *listVC = [[MainListViewController alloc]init];
-    [self.navigationController pushViewController:listVC animated:YES];
+//    MainListViewController *listVC = [[MainListViewController alloc]init];
+//    
+//    if(magazines.count>0){
+//        MagazineModel *magazine=[magazines objectAtIndex:t];
+//        NSLog(@"%@",magazine.id);
+//        listVC.magazineId=magazine.id;
+//        
+//        [self.navigationController pushViewController:listVC animated:YES];
+//    }
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"%d in table",indexPath.row);
+    MainListViewController *listVC = [[MainListViewController alloc]init];
 
+    if(magazines.count>0){
+        MagazineModel *magazine=[magazines objectAtIndex:indexPath.row];
+        NSLog(@"%@",magazine.id);
+        listVC.magazineId=magazine.id;
+
+        [self.navigationController pushViewController:listVC animated:YES];
+    }
+}
 //初始主界面
 - (void)initPageView:(UIView *)view
 {
@@ -339,6 +358,7 @@
     cell.title.text=magazine.title;
     cell.qc.text=magazine.qc;
     cell.content.text=magazine.content;
+    cell.selectionStyle=UITableViewCellSelectionStyleNone;
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

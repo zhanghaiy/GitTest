@@ -21,6 +21,7 @@
     UITableView *listtableV;
     NSMutableArray *_listArray;
     BOOL _upLoading;
+    MFMailComposeViewController *mailComposer;
 }
 @end
 
@@ -142,14 +143,37 @@
     shareV.frame = CGRectMake(0, kScreenHeight-220, kScreenWidth, 220);
     shareV.backgroundColor = [UIColor colorWithWhite:248/255.0 alpha:1];
     shareV.target = self;
-    shareV.action = @selector(shareCallBack);
+    shareV.action = @selector(shareCallBack:);
+    shareV.shareTitle=@"临床实验室APP";
+    shareV.shareUrl=@"http://www.ivdchina.com.cn/labonlineapp/index.htm";
     [self.view addSubview:shareV];
 }
 
-- (void)shareCallBack
+- (void)shareCallBack:(id)sender
 {
+//    int shareTag=((UIButton *)sender).tag;//有可能不是按钮
+//    NSLog(@"%d in share",shareTag);
+    if ([sender isKindOfClass:[UIButton class]]&&((UIButton *)sender).tag==604) {
+        mailComposer = [[MFMailComposeViewController alloc]init];
+        mailComposer.mailComposeDelegate = self;
+        [mailComposer setSubject:@"临床实验室APP"];
+        [mailComposer setMessageBody:@"<a href='http://www.ivdchina.com.cn/labonlineapp/index.htm'>链接地址</a>" isHTML:YES];
+        [self presentModalViewController:mailComposer animated:YES];
+    }
     UIView *darkV = [self.view viewWithTag:11223344];
     [darkV removeFromSuperview];
+}
+#pragma mark - mail compose delegate
+-(void)mailComposeController:(MFMailComposeViewController *)controller
+         didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error{
+    if (result) {
+        NSLog(@"Result : %d",result);
+    }
+    if (error) {
+        NSLog(@"Error : %@",error);
+    }
+    [self dismissModalViewControllerAnimated:YES];
+    
 }
 
 #pragma mark - 警告框

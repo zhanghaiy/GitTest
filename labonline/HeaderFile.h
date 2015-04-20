@@ -18,8 +18,8 @@
 typedef enum
 {
     MainPage = 0,
-    JiShuZhuanLan,
     WangQi,
+    JiShuZhuanLan,
     PersonCenter,
     SettingCenter,
     LogIn,

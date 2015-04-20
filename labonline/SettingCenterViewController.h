@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SettingCenterViewController : UIViewController
+#import <MessageUI/MessageUI.h>
+
+@interface SettingCenterViewController : UIViewController<MFMailComposeViewControllerDelegate>
+
 
 @end

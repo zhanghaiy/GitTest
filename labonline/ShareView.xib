@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7525" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7516"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -20,7 +20,7 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PTI-wr-oub">
+                <button opaque="NO" tag="600" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PTI-wr-oub">
                     <rect key="frame" x="20" y="33" width="60" height="60"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="60" id="1Mj-Tv-0pn"/>
@@ -33,7 +33,7 @@
                         <action selector="QQButtonClicked:" destination="iN0-l3-epB" eventType="touchUpInside" id="vu9-iW-kta"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JZ2-Cd-pig">
+                <button opaque="NO" tag="601" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JZ2-Cd-pig">
                     <rect key="frame" x="130" y="33" width="60" height="60"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="60" id="Qe8-7q-Hkd"/>
@@ -46,7 +46,7 @@
                         <action selector="QzoneButtonClicked:" destination="iN0-l3-epB" eventType="touchUpInside" id="yLc-yl-IPG"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7va-Vj-D9D">
+                <button opaque="NO" tag="602" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7va-Vj-D9D">
                     <rect key="frame" x="240" y="33" width="60" height="60"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="60" id="MyQ-m8-8BR"/>
@@ -89,7 +89,7 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hIh-Lw-e8y">
+                <button opaque="NO" tag="603" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hIh-Lw-e8y">
                     <rect key="frame" x="20" y="122" width="60" height="60"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="eAq-eh-qsr"/>
@@ -102,7 +102,7 @@
                         <action selector="momentsButtonClicked:" destination="iN0-l3-epB" eventType="touchUpInside" id="xKG-i1-gMl"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aj8-4E-QPG">
+                <button opaque="NO" tag="604" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aj8-4E-QPG">
                     <rect key="frame" x="130" y="122" width="60" height="60"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="60" id="2Pf-52-EEz"/>
@@ -115,7 +115,7 @@
                         <action selector="EMailButtonClicked:" destination="iN0-l3-epB" eventType="touchUpInside" id="ilc-WO-VfQ"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kyM-X8-C5u">
+                <button opaque="NO" tag="605" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kyM-X8-C5u">
                     <rect key="frame" x="240" y="122" width="60" height="60"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="7bu-fO-yfB"/>
@@ -202,11 +202,11 @@
         </view>
     </objects>
     <resources>
-        <image name="QQ.png" width="255" height="255"/>
+        <image name="QQ.png" width="116" height="116"/>
         <image name="QQ空间.png" width="160" height="160"/>
-        <image name="QQ邮箱.png" width="256" height="256"/>
-        <image name="微信.png" width="484" height="488"/>
-        <image name="新浪微博.png" width="512" height="512"/>
-        <image name="朋友圈.png" width="512" height="512"/>
+        <image name="QQ邮箱.png" width="116" height="116"/>
+        <image name="微信.png" width="116" height="116"/>
+        <image name="新浪微博.png" width="116" height="116"/>
+        <image name="朋友圈.png" width="116" height="116"/>
     </resources>
 </document>
