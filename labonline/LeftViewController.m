@@ -7,6 +7,7 @@
 //
 
 #import "LeftViewController.h"
+#import "UIButton+WebCache.h"
 
 @interface LeftViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -24,6 +25,8 @@
 #define kHeadViewHeight 160
 #define kImageHeight 80
 #define kCircleHeight 90
+#define kNameLableTag 1234
+#define kImageTag 1235
 
 #define kLoginButtonWidth 80
 #define kLoginButtonHeight 30
@@ -48,13 +51,15 @@
     
     UIButton *userImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [userImageButton setFrame:CGRectMake((kLeftWidth-kImageHeight)/2, 30+(kCircleHeight-kImageHeight)/2, kImageHeight, kImageHeight)];
-    [userImageButton setBackgroundImage:[UIImage imageNamed:@"33.jpg"] forState:UIControlStateNormal];
+    [userImageButton setBackgroundImage:[UIImage imageNamed:@"头像.png"] forState:UIControlStateNormal];
     userImageButton.layer.masksToBounds = YES;
     userImageButton.layer.cornerRadius = kImageHeight/2;
+    userImageButton.tag = kImageTag;
     [_logedV addSubview:userImageButton];
     
     UILabel *nameLab = [[UILabel alloc]initWithFrame:CGRectMake(10, 35+kCircleHeight, kLeftWidth-20, 30)];
-    nameLab.text = @"愤怒的老牛";
+    nameLab.tag = kNameLableTag;
+    nameLab.text = @"用户昵称";
     nameLab.textAlignment = NSTextAlignmentCenter;
     nameLab.textColor = [UIColor whiteColor];
     nameLab.font = [UIFont systemFontOfSize:15];
@@ -103,6 +108,11 @@
     if ([userDe objectForKey:@"userName"])
     {
         _logined = YES;
+        UILabel *nameLab = (UILabel *)[self.view viewWithTag:kNameLableTag];
+        nameLab.text = [userDe objectForKey:@"nickname"];
+
+        UIButton *btn = (UIButton *)[self.view viewWithTag:kImageTag];
+        [btn setImageWithURL:[NSURL URLWithString:[userDe objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"33.jpg"]];
     }
     else
     {
@@ -158,6 +168,11 @@
         _logined = YES;
         // 登陆
         _cateTableView.tableHeaderView = _logedV;
+        UILabel *nameLab = (UILabel *)[self.view viewWithTag:kNameLableTag];
+        nameLab.text = [userDe objectForKey:@"nickname"];
+        
+        UIButton *btn = (UIButton *)[self.view viewWithTag:kImageTag];
+        [btn setImageWithURL:[NSURL URLWithString:[userDe objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"33.jpg"]];
     }
     else
     {

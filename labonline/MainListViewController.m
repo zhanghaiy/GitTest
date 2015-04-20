@@ -11,16 +11,19 @@
 #import "JiShuZhuanLanDetailViewController.h"
 #import "SearchViewController.h"
 #import "NetManager.h"
-#import "PDFBrowserViewController.h"
 #import "UIView+Category.h"
+#import "EGORefreshTableHeaderView.h"
 
-@interface MainListViewController ()<UITableViewDataSource,UITableViewDelegate>
+
+@interface MainListViewController ()<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate>
 {
     UITableView *_listTableView;
     NSArray *_listArray;
     BOOL _addReadCounts;
     NSInteger _currentCellIndex;
     NSInteger _selectedIndex;
+    EGORefreshTableHeaderView *_refresV;
+    BOOL _reloading;
 }
 @end
 
@@ -31,8 +34,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.\
     
+    _reloading = NO;
     self.title = @"杂志名";
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    if ([DeviceManager deviceVersion]>=7)
+    {
+        //界面调整
+        if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
+        {
+            self.edgesForExtendedLayout = UIRectEdgeNone;
+        }
+    }
 
     // 左侧按钮
     NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 26) andBackImageWithName:@"aniu_07.png"];
@@ -56,7 +69,9 @@
     _listTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_listTableView];
     
+    [self.view addLoadingViewInSuperView:self.view andTarget:self];
     [self requestMainDataWithURLString:[NSString stringWithFormat:@"%@?id=%@",kMainListUrlString,_magazineId]];
+    [self createRefreshView];
 }
 
 #pragma mark - 网络请求
@@ -67,13 +82,19 @@
     netManager.delegate = self;
     netManager.action = @selector(requestFinished:);
     [netManager requestDataWithUrlString:urlStr];
-     [UIView addLoadingViewInView:self.view];
 }
 #pragma mark --网络请求完成
 - (void)requestFinished:(NetManager *)netManager
 {
-    // 删除加载View
-    [UIView removeLoadingVIewInView:self.view];
+    if (_reloading)
+    {
+        [self stopRefresh];
+    }
+    else
+    {
+        // 删除加载View
+        [self.view removeLoadingVIewInView:self.view andTarget:self];
+    }
     if (netManager.downLoadData)
     {
         // 成功
@@ -85,6 +106,7 @@
     else
     {
         // 失败
+        [self.view addAlertViewWithMessage:@"请求不到数据，请重试" andTarget:self];
     }
 }
 
@@ -134,31 +156,11 @@
     _currentCellIndex = cell.cellIndex;
     _selectedIndex = cell.selectedIndex;
     NSDictionary *dict = [[cell.listDict objectForKey:@"article"] objectAtIndex:cell.selectedIndex];
-    if ([[dict objectForKey:@"urlpdf"] length]>5)
-    {
-        // PDF 跳转PDF页面
-        NSLog(@"跳转PDF页面");
-        PDFBrowserViewController *pdfBrowseVC = [[PDFBrowserViewController alloc]init];
-        pdfBrowseVC.filePath = [dict objectForKey:@"urlpdf"];
-        pdfBrowseVC.articalId = [dict objectForKey:@"articleid"];
-        pdfBrowseVC.target = self;
-        pdfBrowseVC.action = @selector(addReadCounts);
-        [self.navigationController pushViewController:pdfBrowseVC animated:YES];
-    }
-    else if ([[dict objectForKey:@"urlhtml"] length]>5)
-    {
-        // html
-        JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
-        if ([[dict objectForKey:@"urlvideo"] length]>5)
-        {
-            // 视频
-            detailVC.vidioUrl = [dict objectForKey:@"urlvideo"];
-        }
-        detailVC.delegate = self;
-        detailVC.action = @selector(addReadCounts);
-        detailVC.articalDic = dict;
-        [self.navigationController pushViewController:detailVC animated:YES];
-    }
+    JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+    detailVC.articalDic = dict;
+    detailVC.delegate = self;
+    detailVC.action = @selector(addReadCounts);
+    [self.navigationController pushViewController:detailVC animated:YES];
 }
 
 #pragma mark - 返回上一页
@@ -181,6 +183,55 @@
     _addReadCounts = YES;
     [_listTableView reloadData];
 }
+
+#pragma mark --下拉刷新
+- (void)createRefreshView
+{
+    if (_refresV && [_refresV superview]) {
+        [_refresV removeFromSuperview];
+    }
+    _refresV = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.view.bounds.size.height,self.view.frame.size.width, self.view.bounds.size.height)];
+    _refresV.delegate = self;
+    [_listTableView addSubview:_refresV];
+    [_refresV refreshLastUpdatedDate];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView *)view
+{
+    return _reloading;
+}
+- (NSDate *)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView *)view
+{
+    return [NSDate date];
+}
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
+{
+    if (_reloading == NO)
+    {
+        _reloading = YES;
+        [self requestMainDataWithURLString:[NSString stringWithFormat:@"%@?id=%@",kMainListUrlString,_magazineId]];
+    }
+}
+
+- (void)stopRefresh
+{
+    _reloading = NO;
+    [_refresV egoRefreshScrollViewDataSourceDidFinishedLoading:_listTableView];
+    [_listTableView reloadInputViews];
+    
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [_refresV egoRefreshScrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [_refresV egoRefreshScrollViewDidEndDragging:scrollView];
+}
+
 
 
 - (void)didReceiveMemoryWarning

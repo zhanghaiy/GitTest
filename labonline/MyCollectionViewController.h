@@ -10,6 +10,6 @@
 
 @interface MyCollectionViewController : UIViewController
 
-//@property (nonatomic,copy) NSString *userId;
+@property (nonatomic,copy) NSString *userId;
 
 @end

@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol EditPersonViewControllerDelegate <NSObject>
+
+- (void)iconAlertSuccess:(BOOL)sucseess;
+
+@end
 @interface EditPersonViewController : UIViewController
+
+@property (nonatomic,assign) id<EditPersonViewControllerDelegate> delegate;
+@property (nonatomic,copy) NSString *userID;
+
 
 @end

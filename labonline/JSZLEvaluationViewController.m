@@ -54,7 +54,6 @@
         if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
             self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-//    _dataArray = @[@"我们每一个生活在这个世界的人，总有一个思维时刻在催促着你前行，在前进的路上我们总是自觉或不自觉地调整着自己努力的方向。因为我们正在明白，在你的面前始终有一个你目前无法达到的目标，这个目标就象一剂强心针，将你的肾上腺素调到最亢奋的状态。以至于我们常常在目标之中却无端地失去了目标。",@"写的不错。。。。。。",@"一般般",@"因为我们正在明白，在你的面前始终有一个你目前无法达到的目标，这个目标就象一剂强心针，将你的肾上腺素调到最亢奋的状态。以至于我们常常在目标之中却无端地失去了目标"];
     _evalueTableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-64-kDownViewHeight) style:UITableViewStylePlain];
     _evalueTableV.delegate = self;
     _evalueTableV.dataSource = self;
@@ -92,10 +91,10 @@
 
 - (void)requestEvaluesList
 {
-    [UIView addLoadingViewInView:self.view];
+    [self.view addLoadingViewInSuperView:self.view andTarget:self];
     NSDictionary *dic = @{@"articleid":_articalId};
     [AFNetworkTool postJSONWithUrl:kEvalueationURLString parameters:dic success:^(id responseObject) {
-        [UIView removeLoadingVIewInView:self.view];
+        [self.view removeLoadingVIewInView:self.view andTarget:self];
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
         _listArray = [dict objectForKey:@"list"];
         [_evalueTableV reloadData];
@@ -107,14 +106,13 @@
             }
         }
     } fail:^{
-        [UIView removeLoadingVIewInView:self.view];
+        [self.view removeLoadingVIewInView:self.view andTarget:self];
     }];
 }
 
 #pragma mark - 发送按钮点击事件
 - (void)sendButtonClicked:(UIButton *)btn
 {
-     NSLog(@"发送按钮点击事件");
     // 收键盘
     UITextField *textField = (UITextField *)[self.view viewWithTag:kTextFieldTag];
     [textField resignFirstResponder];
@@ -123,47 +121,50 @@
         http://192.168.0.153:8181/labonline/hyController/insertPl.do
         参数 articleid userid text
      */
-    // 编码
-    NSString *evaluContent = [textField.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    if ([evaluContent length]!=0)
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"userid"]!=nil)
     {
-        NSDictionary *dic = @{@"articleid":_articalId,@"userid":kUserId,@"text":textField.text};
-        [AFNetworkTool postJSONWithUrl:kCommitEvaluationUrl parameters:dic success:^(id responseObject) {
-            // 成功
-            [self createAlertViewWithMessage:@"评论提交成功"];
-            // 重新请求数据
-            sendFinished = YES;
-            [self requestEvaluesList];
-        } fail:^{
-            NSLog(@"失败");
-            [self createAlertViewWithMessage:@"评论提交失败"];
-        }];
+        if ([textField.text length])
+        {
+            [self.view addLoadingViewInSuperView:self.view andTarget:self];
+            NSDictionary *dic = @{@"articleid":_articalId,@"userid":[defaults objectForKey:@"userid"],@"text":textField.text};
+            [AFNetworkTool postJSONWithUrl:kCommitEvaluationUrl parameters:dic success:^(id responseObject)
+            {
+                [self.view removeLoadingVIewInView:self.view andTarget:self];
+                NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+                if ([[dictionary objectForKey:@"respCode"] integerValue] == 1000)
+                {
+                    // 成功
+                    [self createAlertViewWithMessage:@"评论提交成功"];
+                    // 重新请求数据
+                    sendFinished = YES;
+                    [self requestEvaluesList];
+                }
+                else
+                {
+                    [self createAlertViewWithMessage:[dictionary objectForKey:@"remark"]];
+                }
+                
+            } fail:^{
+                [self createAlertViewWithMessage:@"评论提交失败"];
+            }];
+        }
+        else
+        {
+            [self createAlertViewWithMessage:@"评论不可为空"];
+        }
     }
     else
     {
-        [self createAlertViewWithMessage:@"评论不可为空"];
+        [self createAlertViewWithMessage:@"亲，请先登录后在进行评论."];
     }
 }
 
+#pragma mark - Alert
 - (void)createAlertViewWithMessage:(NSString *)str
 {
     UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
     [alertV show];
-}
-
-- (void)createLoadingView
-{
-    UIView *loadingV = [[UIView alloc]initWithFrame:CGRectMake(20, 20, kScreenWidth-40, 200)];
-    loadingV.tag = 1234;
-    loadingV.center = CGPointMake(kScreenWidth/2, kScreenHeight*2/3);
-    loadingV.backgroundColor = [UIColor colorWithWhite:200/255.0 alpha:1];
-    [self.view addSubview:loadingV];
-    
-    UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake((kScreenWidth-40-30)/2, 20, 30, 30)];
-    activity.backgroundColor = [UIColor blackColor];
-    activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    [loadingV addSubview:activity];
-    [activity startAnimating];
 }
 
 - (void)removeLoadingView

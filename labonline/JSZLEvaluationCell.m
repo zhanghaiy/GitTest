@@ -47,7 +47,7 @@
     _evaluationLable.text = [[_evaluDict objectForKey:@"text"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     _timeLable.text = [_evaluDict objectForKey:@"created_at"];
     _userNameLable.text = [_evaluDict objectForKey:@"source"];
-    [_userImageButton setImageWithURL:[NSURL URLWithString:[_evaluDict objectForKey:@"urlsourcepic"]] placeholderImage:[UIImage imageNamed:@"33.jpg"]];
+    [_userImageButton setImageWithURL:[NSURL URLWithString:[_evaluDict objectForKey:@"urlsourcepic"]] placeholderImage:[UIImage imageNamed:@"头像.png"]];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

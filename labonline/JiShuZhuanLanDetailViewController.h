@@ -16,10 +16,7 @@
 
 @interface JiShuZhuanLanDetailViewController : UIViewController</*WXApiDelegate,*/MFMailComposeViewControllerDelegate>
 
-@property (nonatomic,copy) NSString *vidioUrl;
-@property (nonatomic,copy) NSString *titleStr;
-@property (nonatomic,copy) NSString *htmlUrl;
-@property (nonatomic,copy) NSString *articalID;
+
 @property (nonatomic,strong) NSDictionary *articalDic;
 
 @property (nonatomic,assign) id delegate;
