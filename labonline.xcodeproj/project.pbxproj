@@ -128,6 +128,7 @@
 		FD7355C31ADF640F00B5F296 /* HZActivityIndicatorSubclassExample.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7355C01ADF640F00B5F296 /* HZActivityIndicatorSubclassExample.m */; };
 		FD7355C41ADF640F00B5F296 /* HZActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7355C21ADF640F00B5F296 /* HZActivityIndicatorView.m */; };
 		FD7355C81ADFAB3800B5F296 /* RemoveCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7355C71ADFAB3800B5F296 /* RemoveCacheManager.m */; };
+		FD7742951AE48CD4006E3AC9 /* UITableView+AddRefreshCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7742941AE48CD4006E3AC9 /* UITableView+AddRefreshCategory.m */; };
 		FD7901231ACA490D00D908EA /* 12.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD7901221ACA490D00D908EA /* 12.jpg */; };
 		FD8AE2D61ACE1BAC00A4A5B6 /* EditPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8AE2D51ACE1BAC00A4A5B6 /* EditPersonViewController.m */; };
 		FD8AE2DF1ACE230100A4A5B6 /* PersonEditCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8AE2DD1ACE230100A4A5B6 /* PersonEditCell.m */; };
@@ -174,6 +175,8 @@
 		FDB7CD3E1ACA96FD007BAF79 /* MainListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB7CD3D1ACA96FD007BAF79 /* MainListViewController.m */; };
 		FDB7CD411ACA970D007BAF79 /* MainDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB7CD401ACA970D007BAF79 /* MainDetailViewController.m */; };
 		FDB7CD431ACAAE95007BAF79 /* 返回角.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB7CD421ACAAE95007BAF79 /* 返回角.png */; };
+		FDC08F751AE119A900ED7284 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC08F741AE119A900ED7284 /* Icon-72.png */; };
+		FDC08F771AE119FF00ED7284 /* icon-108.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC08F761AE119FF00ED7284 /* icon-108.png */; };
 		FDC430E21AD60C05006AC165 /* SearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC430E01AD60C05006AC165 /* SearchCell.m */; };
 		FDC430E31AD60C05006AC165 /* SearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDC430E11AD60C05006AC165 /* SearchCell.xib */; };
 		FDC430E61AD616BC006AC165 /* AboutMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC430E51AD616BC006AC165 /* AboutMeViewController.m */; };
@@ -385,6 +388,8 @@
 		FD7355C21ADF640F00B5F296 /* HZActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZActivityIndicatorView.m; sourceTree = "<group>"; };
 		FD7355C61ADFAB3800B5F296 /* RemoveCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoveCacheManager.h; sourceTree = "<group>"; };
 		FD7355C71ADFAB3800B5F296 /* RemoveCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveCacheManager.m; sourceTree = "<group>"; };
+		FD7742931AE48CD4006E3AC9 /* UITableView+AddRefreshCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+AddRefreshCategory.h"; sourceTree = "<group>"; };
+		FD7742941AE48CD4006E3AC9 /* UITableView+AddRefreshCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+AddRefreshCategory.m"; sourceTree = "<group>"; };
 		FD7901221ACA490D00D908EA /* 12.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 12.jpg; sourceTree = "<group>"; };
 		FD8AE2D41ACE1BAC00A4A5B6 /* EditPersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditPersonViewController.h; sourceTree = "<group>"; };
 		FD8AE2D51ACE1BAC00A4A5B6 /* EditPersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditPersonViewController.m; sourceTree = "<group>"; };
@@ -460,6 +465,8 @@
 		FDB7CD3F1ACA970D007BAF79 /* MainDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainDetailViewController.h; sourceTree = "<group>"; };
 		FDB7CD401ACA970D007BAF79 /* MainDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainDetailViewController.m; sourceTree = "<group>"; };
 		FDB7CD421ACAAE95007BAF79 /* 返回角.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "返回角.png"; sourceTree = "<group>"; };
+		FDC08F741AE119A900ED7284 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		FDC08F761AE119FF00ED7284 /* icon-108.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-108.png"; sourceTree = "<group>"; };
 		FDC430DF1AD60C05006AC165 /* SearchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchCell.h; sourceTree = "<group>"; };
 		FDC430E01AD60C05006AC165 /* SearchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchCell.m; sourceTree = "<group>"; };
 		FDC430E11AD60C05006AC165 /* SearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchCell.xib; sourceTree = "<group>"; };
@@ -620,6 +627,8 @@
 				FD53B16E1AC24F13008EE13F /* HeaderFile.h */,
 				FD97DA221ADCF3F000963FB2 /* UIView+Category.h */,
 				FD97DA231ADCF3F000963FB2 /* UIView+Category.m */,
+				FD7742931AE48CD4006E3AC9 /* UITableView+AddRefreshCategory.h */,
+				FD7742941AE48CD4006E3AC9 /* UITableView+AddRefreshCategory.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -901,6 +910,8 @@
 		FD96C8851AC109E00002778A /* labonline */ = {
 			isa = PBXGroup;
 			children = (
+				FDC08F761AE119FF00ED7284 /* icon-108.png */,
+				FDC08F741AE119A900ED7284 /* Icon-72.png */,
 				FD558CF41AC3A62900DA42FF /* 切图（安卓） */,
 				042C467A1AC297F600D36C8F /* wangqi.png */,
 				FD96C9331AC179600002778A /* Views */,
@@ -1263,6 +1274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD5D3C031AD3BF2800A6F60E /* night.png in Resources */,
+				FDC08F751AE119A900ED7284 /* Icon-72.png in Resources */,
 				FD462E5F1ACD2FC1001AC895 /* 视频.png in Resources */,
 				FDD3016D1AE0D73500EEF010 /* moren.png in Resources */,
 				FD462E501ACCE022001AC895 /* 取消.png in Resources */,
@@ -1300,6 +1312,7 @@
 				04CDCEB41ADF9C71001082AB /* WangQiCell.xib in Resources */,
 				FD5D3C011AD3BF2800A6F60E /* about.png in Resources */,
 				FD558D5E1AC4098F00DA42FF /* blueArrow.png in Resources */,
+				FDC08F771AE119FF00ED7284 /* icon-108.png in Resources */,
 				FD558CF91AC3A62900DA42FF /* 搜索.png in Resources */,
 				FD5D3C081AD3BF2800A6F60E /* wifi.png in Resources */,
 				0446BF071ADE482A00587FD5 /* read_me.txt in Resources */,
@@ -1423,6 +1436,7 @@
 				FD558D5B1AC4098F00DA42FF /* EGORefreshTableHeaderView.m in Sources */,
 				FDC430F11AD673DA006AC165 /* UserCallBackViewController.m in Sources */,
 				043C77381AD4F1A000B0DEAC /* LoginViewController.m in Sources */,
+				FD7742951AE48CD4006E3AC9 /* UITableView+AddRefreshCategory.m in Sources */,
 				FD9A76B41ACBC929007ACC11 /* PersonCenterViewController.m in Sources */,
 				FD8AE3221ACE658300A4A5B6 /* JiShuZhuanLanViewController.m in Sources */,
 				FD53DCEB1AC8DC1300BE4E08 /* VidioView.m in Sources */,

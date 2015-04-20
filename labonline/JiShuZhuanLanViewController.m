@@ -18,15 +18,17 @@
 #import "NetManager.h"
 #import "PDFBrowserViewController.h"
 #import "UIView+Category.h"
+#import "EGORefreshTableHeaderView.h"
 
-
-@interface JiShuZhuanLanViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface JiShuZhuanLanViewController ()<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate>
 {
     UITableView *jiShuZhuanLanTableView;
     NSArray *_articleListArray;
     NSInteger _currentCellIndex;//进入的cell
     NSInteger _currentSubVIndex;
     BOOL _addReadCounts;
+    EGORefreshTableHeaderView *_refresV;
+    BOOL _reloading;
 }
 @end
 
@@ -43,6 +45,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    _reloading = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"技术专栏";
     
@@ -94,8 +97,9 @@
     jiShuZhuanLanTableView.tableHeaderView = headerV;
     [self.view addSubview:jiShuZhuanLanTableView];
     
+    [self.view addLoadingViewInSuperView:self.view andTarget:self];
     [self requestMainDataWithURLString:kJSZLUrlString];
-    
+    [self createRefreshView];
 }
 
 #pragma mark - 网络请求
@@ -106,12 +110,19 @@
     netManager.delegate = self;
     netManager.action = @selector(requestFinished:);
     [netManager requestDataWithUrlString:urlStr];
-    [self.view addLoadingViewInSuperView:self.view andTarget:self];
 }
 #pragma mark --网络请求完成
 - (void)requestFinished:(NetManager *)netManager
 {
-    [self.view removeLoadingVIewInView:self.view andTarget:self];
+    if (_reloading)
+    {
+        [self stopRefresh];
+    }
+    else
+    {
+        // 删除加载View
+        [self.view removeLoadingVIewInView:self.view andTarget:self];
+    }
     if (netManager.downLoadData)
     {
         // 成功
@@ -238,6 +249,56 @@
     _addReadCounts = YES;
     [jiShuZhuanLanTableView reloadData];
 }
+
+
+#pragma mark --下拉刷新
+- (void)createRefreshView
+{
+    if (_refresV && [_refresV superview]) {
+        [_refresV removeFromSuperview];
+    }
+    _refresV = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.view.bounds.size.height,self.view.frame.size.width, self.view.bounds.size.height)];
+    _refresV.delegate = self;
+    [jiShuZhuanLanTableView addSubview:_refresV];
+    [_refresV refreshLastUpdatedDate];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView *)view
+{
+    return _reloading;
+}
+- (NSDate *)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView *)view
+{
+    return [NSDate date];
+}
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
+{
+    if (_reloading == NO)
+    {
+        _reloading = YES;
+        [self requestMainDataWithURLString:kJSZLUrlString];
+    }
+}
+
+- (void)stopRefresh
+{
+    _reloading = NO;
+    [_refresV egoRefreshScrollViewDataSourceDidFinishedLoading:jiShuZhuanLanTableView];
+    [_refresV reloadInputViews];
+    
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [_refresV egoRefreshScrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [_refresV egoRefreshScrollViewDidEndDragging:scrollView];
+}
+
 
 - (void)didReceiveMemoryWarning
 {

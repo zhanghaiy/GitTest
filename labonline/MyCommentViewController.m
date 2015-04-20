@@ -11,14 +11,17 @@
 #import "NetManager.h"
 #import "UIView+Category.h"
 #import "JiShuZhuanLanDetailViewController.h"
+#import "EGORefreshTableHeaderView.h"
 
 
-@interface MyCommentViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface MyCommentViewController ()<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate>
 {
     UITableView *_myCommentTableV;
     NSInteger _currentCellHeight;
     NSMutableArray *_myCommentArray;
     NSString *_userid;
+    BOOL _reloading;
+    EGORefreshTableHeaderView *_refresV;
 }
 @end
 
@@ -57,9 +60,8 @@
     _myCommentTableV.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_myCommentTableV];
     
-//    _userid = kUserId;
-//    NSString *urlStr = [NSString stringWithFormat:kMyEvaluationUrl,_userid];
-//    [self requestDataWithUrlString:urlStr];
+    _reloading = NO;
+    [self createRefreshView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -68,6 +70,7 @@
     _userid = kUserId;
     NSString *urlStr = [NSString stringWithFormat:kMyEvaluationUrl,_userid];
     [self requestDataWithUrlString:urlStr];
+    [self.view addLoadingViewInSuperView:self.view andTarget:self];
 }
 
 #pragma mark - 网络请求
@@ -78,12 +81,18 @@
     netManager.delegate = self;
     netManager.action = @selector(netManagerCallBack:);
     [netManager requestDataWithUrlString:urlString];
-    [self.view addLoadingViewInSuperView:self.view andTarget:self];
 }
 #pragma mark --- 网络回调
 - (void)netManagerCallBack:(NetManager *)netManager
 {
-    [self.view removeLoadingVIewInView:self.view andTarget:self];
+    if (_reloading)
+    {
+        [self stopRefresh];
+    }
+    else
+    {
+        [self.view removeLoadingVIewInView:self.view andTarget:self];
+    }
     // 我的评论列表
     if (netManager.failError)
     {
@@ -174,6 +183,54 @@
 - (void)backToPrePage
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark --下拉刷新
+- (void)createRefreshView
+{
+    if (_refresV && [_refresV superview]) {
+        [_refresV removeFromSuperview];
+    }
+    _refresV = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.view.bounds.size.height,self.view.frame.size.width, self.view.bounds.size.height)];
+    _refresV.delegate = self;
+    [_myCommentTableV addSubview:_refresV];
+    [_refresV refreshLastUpdatedDate];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView *)view
+{
+    return _reloading;
+}
+- (NSDate *)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView *)view
+{
+    return [NSDate date];
+}
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
+{
+    if (_reloading == NO)
+    {
+        _reloading = YES;
+        [self requestDataWithUrlString:[NSString stringWithFormat:kMyEvaluationUrl,_userid]];
+    }
+}
+
+- (void)stopRefresh
+{
+    _reloading = NO;
+    [_refresV egoRefreshScrollViewDataSourceDidFinishedLoading:_myCommentTableV];
+    [_refresV reloadInputViews];
+    
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [_refresV egoRefreshScrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [_refresV egoRefreshScrollViewDidEndDragging:scrollView];
 }
 
 

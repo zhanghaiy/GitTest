@@ -13,13 +13,18 @@
 #import "PDFBrowserViewController.h"
 #import "NetManager.h"
 #import "UIView+Category.h"
+#import "EGORefreshTableHeaderView.h"
 
-@interface JiShuZhuanLanMoreViewController ()<UITableViewDataSource,UITableViewDelegate>
+
+
+@interface JiShuZhuanLanMoreViewController ()<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate>
 {
     UITableView *_tableView;
     NSArray *_articalArray;
     NSInteger _currentEnterCell;//进入的cell
     BOOL _addReadCounts;
+    EGORefreshTableHeaderView *_refresV;
+    BOOL _reloading;
 }
 @end
 
@@ -34,12 +39,19 @@
     netManager.delegate = self;
     netManager.action = @selector(requestFinished:);
     [netManager requestDataWithUrlString:urlStr];
-    [self.view addLoadingViewInSuperView:self.view andTarget:self];
+    
 }
 #pragma mark --网络请求完成
 - (void)requestFinished:(NetManager *)netManager
 {
-    [self.view removeLoadingVIewInView:self.view andTarget:self];
+    if (_reloading)
+    {
+        [self stopRefresh];
+    }
+    else
+    {
+        [self.view removeLoadingVIewInView:self.view andTarget:self];
+    }
     if (netManager.downLoadData)
     {
         // 成功
@@ -60,6 +72,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    _reloading = NO;
     self.title = @"生物检验";
     self.view.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
     // 设置左右按钮
@@ -92,7 +105,9 @@
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
     
+    [self.view addLoadingViewInSuperView:self.view andTarget:self];
     [self requestMainDataWithURLString:[NSString stringWithFormat:kJSZLMoreUrlString,_typeId]];
+    [self createRefreshView];
 }
 
 #pragma mark - 返回上一页
@@ -142,31 +157,6 @@
     detailVC.delegate = self;
     detailVC.action = @selector(addReadCounts);
     [self.navigationController pushViewController:detailVC animated:YES];
-//    if ([[subDic objectForKey:@"urlpdf"] length]>5)
-//    {
-//       // PDF 跳转PDF页面
-//        NSLog(@"跳转PDF页面");
-//        PDFBrowserViewController *pdfBrowseVC = [[PDFBrowserViewController alloc]init];
-//        pdfBrowseVC.filePath = [subDic objectForKey:@"urlpdf"];
-//        pdfBrowseVC.articalId = [subDic objectForKey:@"articleid"];
-//        pdfBrowseVC.target = self;
-//        pdfBrowseVC.action = @selector(addReadCounts);
-//        [self.navigationController pushViewController:pdfBrowseVC animated:YES];
-//    }
-//    else if ([[subDic objectForKey:@"urlhtml"] length]>5)
-//    {
-//        // html
-//        JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
-//        if ([[subDic objectForKey:@"urlvideo"] length]>5)
-//        {
-//            // 视频
-//            detailVC.vidioUrl = [subDic objectForKey:@"urlvideo"];
-//        }
-//        detailVC.articalDic = subDic;
-//        detailVC.delegate = self;
-//        detailVC.action = @selector(addReadCounts);
-//        [self.navigationController pushViewController:detailVC animated:YES];
-//    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -174,12 +164,61 @@
     return 55;
 }
 
-
+#pragma mark - 增加阅读数
 - (void)addReadCounts
 {
     _addReadCounts = YES;
     [_tableView reloadData];
 }
+
+#pragma mark --下拉刷新
+- (void)createRefreshView
+{
+    if (_refresV && [_refresV superview]) {
+        [_refresV removeFromSuperview];
+    }
+    _refresV = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.view.bounds.size.height,self.view.frame.size.width, self.view.bounds.size.height)];
+    _refresV.delegate = self;
+    [_tableView addSubview:_refresV];
+    [_refresV refreshLastUpdatedDate];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView *)view
+{
+    return _reloading;
+}
+- (NSDate *)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView *)view
+{
+    return [NSDate date];
+}
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
+{
+    if (_reloading == NO)
+    {
+        _reloading = YES;
+        [self requestMainDataWithURLString:[NSString stringWithFormat:kJSZLMoreUrlString,_typeId]];
+    }
+}
+
+- (void)stopRefresh
+{
+    _reloading = NO;
+    [_refresV egoRefreshScrollViewDataSourceDidFinishedLoading:_tableView];
+    [_refresV reloadInputViews];
+    
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [_refresV egoRefreshScrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [_refresV egoRefreshScrollViewDidEndDragging:scrollView];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

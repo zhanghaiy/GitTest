@@ -54,7 +54,6 @@
         if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
             self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-//    _dataArray = @[@"我们每一个生活在这个世界的人，总有一个思维时刻在催促着你前行，在前进的路上我们总是自觉或不自觉地调整着自己努力的方向。因为我们正在明白，在你的面前始终有一个你目前无法达到的目标，这个目标就象一剂强心针，将你的肾上腺素调到最亢奋的状态。以至于我们常常在目标之中却无端地失去了目标。",@"写的不错。。。。。。",@"一般般",@"因为我们正在明白，在你的面前始终有一个你目前无法达到的目标，这个目标就象一剂强心针，将你的肾上腺素调到最亢奋的状态。以至于我们常常在目标之中却无端地失去了目标"];
     _evalueTableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-64-kDownViewHeight) style:UITableViewStylePlain];
     _evalueTableV.delegate = self;
     _evalueTableV.dataSource = self;
