@@ -7,8 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WXApi.h"
+#import "TencentOpenAPI.framework/Headers/QQApi.h"
+#import "TencentOpenAPI.framework/Headers/QQApiInterface.h"
+#import "TencentOpenAPI.framework/Headers/TencentOAuth.h"
 
-@interface ShareView : UIView
+
+@interface ShareView : UIView<WXApiDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *QQButton;
 @property (weak, nonatomic) IBOutlet UIButton *QzoneButton;
 @property (weak, nonatomic) IBOutlet UIButton *WeChatButton;
@@ -24,5 +29,8 @@
 
 @property (nonatomic,assign) id target;
 @property (nonatomic,assign) SEL action;
+
+@property(nonatomic,strong) NSString *shareTitle;//要分享的标题
+@property(nonatomic,strong) NSString *shareUrl;//要分享的网址
 
 @end

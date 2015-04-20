@@ -10,8 +10,16 @@
 		042C46741AC2815300D36C8F /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 042C46731AC2815300D36C8F /* MenuViewController.m */; };
 		042C46791AC2976200D36C8F /* WangQiCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 042C46781AC2976200D36C8F /* WangQiCell.m */; };
 		042C467B1AC297F600D36C8F /* wangqi.png in Resources */ = {isa = PBXBuildFile; fileRef = 042C467A1AC297F600D36C8F /* wangqi.png */; };
+		0435E2DA1AE4D2CE00A32AE5 /* QQ.png in Resources */ = {isa = PBXBuildFile; fileRef = 0435E2D91AE4D2CE00A32AE5 /* QQ.png */; };
+		0435E2DC1AE4D30E00A32AE5 /* 微信.png in Resources */ = {isa = PBXBuildFile; fileRef = 0435E2DB1AE4D30E00A32AE5 /* 微信.png */; };
+		0435E2DE1AE4D35900A32AE5 /* 朋友圈.png in Resources */ = {isa = PBXBuildFile; fileRef = 0435E2DD1AE4D35900A32AE5 /* 朋友圈.png */; };
+		0435E2E01AE4D37B00A32AE5 /* 新浪微博.png in Resources */ = {isa = PBXBuildFile; fileRef = 0435E2DF1AE4D37B00A32AE5 /* 新浪微博.png */; };
+		0435E2E21AE4D39C00A32AE5 /* QQ邮箱.png in Resources */ = {isa = PBXBuildFile; fileRef = 0435E2E11AE4D39C00A32AE5 /* QQ邮箱.png */; };
+		0435E2E41AE4D93200A32AE5 /* QQ空间.png in Resources */ = {isa = PBXBuildFile; fileRef = 0435E2E31AE4D93200A32AE5 /* QQ空间.png */; };
+		0435E2E61AE4D94000A32AE5 /* 左侧列.png in Resources */ = {isa = PBXBuildFile; fileRef = 0435E2E51AE4D94000A32AE5 /* 左侧列.png */; };
 		0436E1A31ADCB32800AF692B /* 线框_05.png in Resources */ = {isa = PBXBuildFile; fileRef = 0436E1A21ADCB32800AF692B /* 线框_05.png */; };
 		0436E1A51ADD05FE00AF692B /* 4_05.png in Resources */ = {isa = PBXBuildFile; fileRef = 0436E1A41ADD05FE00AF692B /* 4_05.png */; };
+		04383CFF1AE0B2CE00AFA530 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04383CFE1AE0B2CE00AFA530 /* MessageUI.framework */; };
 		043C772A1AD4F15D00B0DEAC /* 按钮_07.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C77211AD4F15D00B0DEAC /* 按钮_07.png */; };
 		043C772B1AD4F15D00B0DEAC /* 按钮_19.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C77221AD4F15D00B0DEAC /* 按钮_19.png */; };
 		043C772C1AD4F15D00B0DEAC /* 白色弹窗_05.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C77231AD4F15D00B0DEAC /* 白色弹窗_05.png */; };
@@ -68,7 +76,6 @@
 		FD462E5A1ACD2DB2001AC895 /* OffLineVidioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD462E581ACD2DB2001AC895 /* OffLineVidioCell.m */; };
 		FD462E5E1ACD2FC1001AC895 /* 播放.png in Resources */ = {isa = PBXBuildFile; fileRef = FD462E5C1ACD2FC1001AC895 /* 播放.png */; };
 		FD462E5F1ACD2FC1001AC895 /* 视频.png in Resources */ = {isa = PBXBuildFile; fileRef = FD462E5D1ACD2FC1001AC895 /* 视频.png */; };
-		FD462E611ACD3E90001AC895 /* 左侧列.png in Resources */ = {isa = PBXBuildFile; fileRef = FD462E601ACD3E90001AC895 /* 左侧列.png */; };
 		FD462E641ACD584C001AC895 /* MyMagazineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD462E631ACD584C001AC895 /* MyMagazineViewController.m */; };
 		FD47C8101AC521D300846AC9 /* JiShuZhuanLanDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD47C80F1AC521D300846AC9 /* JiShuZhuanLanDetailViewController.m */; };
 		FD47C8121AC524FB00846AC9 /* 收藏.png in Resources */ = {isa = PBXBuildFile; fileRef = FD47C8111AC524FB00846AC9 /* 收藏.png */; };
@@ -181,13 +188,7 @@
 		FDC430EB1AD62684006AC165 /* ShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC430EA1AD62684006AC165 /* ShareView.m */; };
 		FDC430ED1AD62693006AC165 /* ShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDC430EC1AD62693006AC165 /* ShareView.xib */; };
 		FDC430F11AD673DA006AC165 /* UserCallBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC430F01AD673DA006AC165 /* UserCallBackViewController.m */; };
-		FDC431061AD687F2006AC165 /* QQ.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC431001AD687F2006AC165 /* QQ.png */; };
-		FDC431071AD687F2006AC165 /* QQ空间.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC431011AD687F2006AC165 /* QQ空间.png */; };
 		FDC431081AD687F2006AC165 /* 人人.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC431021AD687F2006AC165 /* 人人.png */; };
-		FDC431091AD687F2006AC165 /* 微信.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC431031AD687F2006AC165 /* 微信.png */; };
-		FDC4310A1AD687F2006AC165 /* 新浪微博.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC431041AD687F2006AC165 /* 新浪微博.png */; };
-		FDC4310B1AD687F2006AC165 /* 朋友圈.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC431051AD687F2006AC165 /* 朋友圈.png */; };
-		FDC4310F1AD6893B006AC165 /* QQ邮箱.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC4310E1AD6893B006AC165 /* QQ邮箱.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -206,8 +207,16 @@
 		042C46771AC2976200D36C8F /* WangQiCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WangQiCell.h; sourceTree = "<group>"; };
 		042C46781AC2976200D36C8F /* WangQiCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WangQiCell.m; sourceTree = "<group>"; };
 		042C467A1AC297F600D36C8F /* wangqi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wangqi.png; sourceTree = "<group>"; };
+		0435E2D91AE4D2CE00A32AE5 /* QQ.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QQ.png; sourceTree = "<group>"; };
+		0435E2DB1AE4D30E00A32AE5 /* 微信.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "微信.png"; sourceTree = "<group>"; };
+		0435E2DD1AE4D35900A32AE5 /* 朋友圈.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "朋友圈.png"; sourceTree = "<group>"; };
+		0435E2DF1AE4D37B00A32AE5 /* 新浪微博.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "新浪微博.png"; sourceTree = "<group>"; };
+		0435E2E11AE4D39C00A32AE5 /* QQ邮箱.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QQ邮箱.png"; sourceTree = "<group>"; };
+		0435E2E31AE4D93200A32AE5 /* QQ空间.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QQ空间.png"; sourceTree = "<group>"; };
+		0435E2E51AE4D94000A32AE5 /* 左侧列.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "左侧列.png"; sourceTree = "<group>"; };
 		0436E1A21ADCB32800AF692B /* 线框_05.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "线框_05.png"; sourceTree = "<group>"; };
 		0436E1A41ADD05FE00AF692B /* 4_05.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4_05.png; sourceTree = "<group>"; };
+		04383CFE1AE0B2CE00AFA530 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		043C77211AD4F15D00B0DEAC /* 按钮_07.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "按钮_07.png"; sourceTree = "<group>"; };
 		043C77221AD4F15D00B0DEAC /* 按钮_19.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "按钮_19.png"; sourceTree = "<group>"; };
 		043C77231AD4F15D00B0DEAC /* 白色弹窗_05.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "白色弹窗_05.png"; sourceTree = "<group>"; };
@@ -287,7 +296,6 @@
 		FD462E581ACD2DB2001AC895 /* OffLineVidioCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OffLineVidioCell.m; sourceTree = "<group>"; };
 		FD462E5C1ACD2FC1001AC895 /* 播放.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "播放.png"; sourceTree = "<group>"; };
 		FD462E5D1ACD2FC1001AC895 /* 视频.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "视频.png"; sourceTree = "<group>"; };
-		FD462E601ACD3E90001AC895 /* 左侧列.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "左侧列.png"; sourceTree = "<group>"; };
 		FD462E621ACD584C001AC895 /* MyMagazineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMagazineViewController.h; sourceTree = "<group>"; };
 		FD462E631ACD584C001AC895 /* MyMagazineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMagazineViewController.m; sourceTree = "<group>"; };
 		FD47C80E1AC521D300846AC9 /* JiShuZhuanLanDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JiShuZhuanLanDetailViewController.h; sourceTree = "<group>"; };
@@ -462,13 +470,7 @@
 		FDC430EC1AD62693006AC165 /* ShareView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShareView.xib; sourceTree = "<group>"; };
 		FDC430EF1AD673DA006AC165 /* UserCallBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCallBackViewController.h; sourceTree = "<group>"; };
 		FDC430F01AD673DA006AC165 /* UserCallBackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCallBackViewController.m; sourceTree = "<group>"; };
-		FDC431001AD687F2006AC165 /* QQ.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QQ.png; sourceTree = "<group>"; };
-		FDC431011AD687F2006AC165 /* QQ空间.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QQ空间.png"; sourceTree = "<group>"; };
 		FDC431021AD687F2006AC165 /* 人人.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "人人.png"; sourceTree = "<group>"; };
-		FDC431031AD687F2006AC165 /* 微信.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "微信.png"; sourceTree = "<group>"; };
-		FDC431041AD687F2006AC165 /* 新浪微博.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "新浪微博.png"; sourceTree = "<group>"; };
-		FDC431051AD687F2006AC165 /* 朋友圈.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "朋友圈.png"; sourceTree = "<group>"; };
-		FDC4310E1AD6893B006AC165 /* QQ邮箱.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QQ邮箱.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -476,6 +478,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04383CFF1AE0B2CE00AFA530 /* MessageUI.framework in Frameworks */,
 				04CDCECC1ADFADD8001082AB /* Foundation.framework in Frameworks */,
 				04CDCECA1ADFADC6001082AB /* UIKit.framework in Frameworks */,
 				04CDCEC81ADFADB8001082AB /* CoreText.framework in Frameworks */,
@@ -687,7 +690,7 @@
 				FD5D3BF81AD3BF2800A6F60E /* 设置 */,
 				FD8B566F1ACE9BD6009F5E15 /* OK.png */,
 				FD8AE31E1ACE606B00A4A5B6 /* 设置按钮.png */,
-				FD462E601ACD3E90001AC895 /* 左侧列.png */,
+				0435E2E51AE4D94000A32AE5 /* 左侧列.png */,
 				FD462E5C1ACD2FC1001AC895 /* 播放.png */,
 				FD462E5D1ACD2FC1001AC895 /* 视频.png */,
 				FD462E4A1ACCE022001AC895 /* 弹出框.png */,
@@ -848,6 +851,7 @@
 		FD96C87A1AC109E00002778A = {
 			isa = PBXGroup;
 			children = (
+				04383CFE1AE0B2CE00AFA530 /* MessageUI.framework */,
 				04CDCECB1ADFADD8001082AB /* Foundation.framework */,
 				04CDCEC91ADFADC6001082AB /* UIKit.framework */,
 				04CDCEC71ADFADB8001082AB /* CoreText.framework */,
@@ -1136,13 +1140,13 @@
 		FDC430FF1AD687F2006AC165 /* 分享图标 */ = {
 			isa = PBXGroup;
 			children = (
-				FDC4310E1AD6893B006AC165 /* QQ邮箱.png */,
-				FDC431001AD687F2006AC165 /* QQ.png */,
-				FDC431011AD687F2006AC165 /* QQ空间.png */,
+				0435E2D91AE4D2CE00A32AE5 /* QQ.png */,
+				0435E2DB1AE4D30E00A32AE5 /* 微信.png */,
+				0435E2DD1AE4D35900A32AE5 /* 朋友圈.png */,
+				0435E2E31AE4D93200A32AE5 /* QQ空间.png */,
+				0435E2E11AE4D39C00A32AE5 /* QQ邮箱.png */,
 				FDC431021AD687F2006AC165 /* 人人.png */,
-				FDC431031AD687F2006AC165 /* 微信.png */,
-				FDC431041AD687F2006AC165 /* 新浪微博.png */,
-				FDC431051AD687F2006AC165 /* 朋友圈.png */,
+				0435E2DF1AE4D37B00A32AE5 /* 新浪微博.png */,
 			);
 			path = "分享图标";
 			sourceTree = "<group>";
@@ -1231,11 +1235,8 @@
 				FD462E5F1ACD2FC1001AC895 /* 视频.png in Resources */,
 				FD462E501ACCE022001AC895 /* 取消.png in Resources */,
 				FDB7CD431ACAAE95007BAF79 /* 返回角.png in Resources */,
-				FDC431061AD687F2006AC165 /* QQ.png in Resources */,
 				043C772D1AD4F15D00B0DEAC /* 注册按钮_05.png in Resources */,
-				FDC431071AD687F2006AC165 /* QQ空间.png in Resources */,
 				042C467B1AC297F600D36C8F /* wangqi.png in Resources */,
-				FDC4310B1AD687F2006AC165 /* 朋友圈.png in Resources */,
 				FD558D0F1AC3E1A500DA42FF /* aniu_07.png in Resources */,
 				FDC431081AD687F2006AC165 /* 人人.png in Resources */,
 				FD5D3C051AD3BF2800A6F60E /* share.png in Resources */,
@@ -1251,13 +1252,13 @@
 				FD47C8181AC5316300846AC9 /* 下载.png in Resources */,
 				FD7901231ACA490D00D908EA /* 12.jpg in Resources */,
 				FD558D101AC3E1A500DA42FF /* aniu_09.png in Resources */,
-				FDC4310F1AD6893B006AC165 /* QQ邮箱.png in Resources */,
 				FD5D3C021AD3BF2800A6F60E /* fontSize.png in Resources */,
 				FD8B56701ACE9BD6009F5E15 /* OK.png in Resources */,
 				FD462E531ACCE022001AC895 /* 我的收藏背景.png in Resources */,
 				043C772E1AD4F15D00B0DEAC /* anniu_06.png in Resources */,
 				043C773B1AD4F1D700B0DEAC /* MainStoryboard.storyboard in Resources */,
 				FD558D601AC4098F00DA42FF /* grayArrow.png in Resources */,
+				0435E2E41AE4D93200A32AE5 /* QQ空间.png in Resources */,
 				04CDCEB41ADF9C71001082AB /* WangQiCell.xib in Resources */,
 				FD5D3C011AD3BF2800A6F60E /* about.png in Resources */,
 				FD558D5E1AC4098F00DA42FF /* blueArrow.png in Resources */,
@@ -1280,16 +1281,18 @@
 				FD558CF31AC3A43B00DA42FF /* JiShuZhuanLanCell.xib in Resources */,
 				FD558D611AC4098F00DA42FF /* grayArrow@2x.png in Resources */,
 				FDA91DFB1AD5156100734E1B /* 分类按钮back.png in Resources */,
-				FDC431091AD687F2006AC165 /* 微信.png in Resources */,
 				FD47C8171AC5316300846AC9 /* 评价.png in Resources */,
 				FD8AE2E01ACE230100A4A5B6 /* PersonEditCell.xib in Resources */,
 				FD462E511ACCE022001AC895 /* 确定.png in Resources */,
+				0435E2E01AE4D37B00A32AE5 /* 新浪微博.png in Resources */,
+				0435E2DA1AE4D2CE00A32AE5 /* QQ.png in Resources */,
 				FD5D3C041AD3BF2800A6F60E /* removeCache.png in Resources */,
 				FD9A76FF1ACBF1E6007ACC11 /* MyCommentCell.xib in Resources */,
 				FD558D1A1AC4001600DA42FF /* 33.jpg in Resources */,
 				FD8B566E1ACE858C009F5E15 /* JSZLCateView.xib in Resources */,
 				FD558CFF1AC3A6A300DA42FF /* 新消息提醒_05.png in Resources */,
 				04CDCEA51ADF7E5B001082AB /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
+				0435E2DE1AE4D35900A32AE5 /* 朋友圈.png in Resources */,
 				FD5D3C071AD3BF2800A6F60E /* versionUpdate.png in Resources */,
 				FD558D5C1AC4098F00DA42FF /* blackArrow.png in Resources */,
 				043C77301AD4F15D00B0DEAC /* beij.png in Resources */,
@@ -1298,17 +1301,18 @@
 				FD5D3C061AD3BF2800A6F60E /* UserFeedBack.png in Resources */,
 				043C772F1AD4F15D00B0DEAC /* anniu_07.png in Resources */,
 				FD558CF81AC3A62900DA42FF /* pictureShow.png in Resources */,
-				FDC4310A1AD687F2006AC165 /* 新浪微博.png in Resources */,
 				FDA91DF91AD50F5000734E1B /* MainListCell.xib in Resources */,
 				FD462E521ACCE022001AC895 /* 删除.png in Resources */,
+				0435E2E61AE4D94000A32AE5 /* 左侧列.png in Resources */,
 				FD558CFA1AC3A62900DA42FF /* 游览.png in Resources */,
+				0435E2E21AE4D39C00A32AE5 /* QQ邮箱.png in Resources */,
 				FD9A76EF1ACBD2B1007ACC11 /* 离线视频.png in Resources */,
-				FD462E611ACD3E90001AC895 /* 左侧列.png in Resources */,
 				FD9A76F21ACBD2B1007ACC11 /* 我的收藏.png in Resources */,
 				FD9A76F31ACBD2B1007ACC11 /* 我的杂志.png in Resources */,
 				043C772A1AD4F15D00B0DEAC /* 按钮_07.png in Resources */,
 				0436E1A31ADCB32800AF692B /* 线框_05.png in Resources */,
 				043C772B1AD4F15D00B0DEAC /* 按钮_19.png in Resources */,
+				0435E2DC1AE4D30E00A32AE5 /* 微信.png in Resources */,
 				043C772C1AD4F15D00B0DEAC /* 白色弹窗_05.png in Resources */,
 				FD558D631AC4098F00DA42FF /* whiteArrow@2x.png in Resources */,
 				FD5D3C0D1AD3C15000A6F60E /* SettingCell.xib in Resources */,
