@@ -19,9 +19,19 @@
 @interface JiShuZhuanLanDetailViewController ()<UIWebViewDelegate,QLPreviewControllerDataSource,QLPreviewControllerDelegate>
 {
     UIWebView *_webV;
-    BOOL _collection;
-    BOOL _downLoadVidio;
-    BOOL _addReadCounts;
+    BOOL _addReadCounts; // 是否在增加阅读数
+    BOOL _isPDF; // 是否是PDF
+    BOOL _haveVidio;// 是否有视频
+    BOOL _downLoadVidio;// 是否在下载视频
+    BOOL _collection; // 是否在网络请求--收藏
+    NSString *_vidioUrl;
+    NSString *_titleStr;
+    NSString *_urlstring;
+    NSString *_articalID;
+    
+    BOOL _back;
+    QLPreviewController *previewController;
+    NSURL *_fileUrl;
     
     MFMailComposeViewController *mailComposer;
 }
@@ -86,6 +96,7 @@
     
 //    [WXApi registerApp:@"wxe0742138717ee3fe"];
 //    self.tencentAuth = [[TencentOAuth alloc] initWithAppId:@"1104472845" andDelegate:self];
+    self.title=_titleStr;
     
     // 左侧按钮
     NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 26) andBackImageWithName:@"aniu_07.png"];
@@ -362,8 +373,8 @@
     shareV.backgroundColor = [UIColor colorWithWhite:248/255.0 alpha:1];
     shareV.target = self;
     shareV.action = @selector(shareCallBack:);
-    shareV.shareTitle=@"aaaa";
-    shareV.shareUrl=_htmlUrl;
+    shareV.shareTitle=_titleStr;
+    shareV.shareUrl=_urlstring;
     [self.view addSubview:shareV];
 }
 - (void)shareCallBack:(id)sender
@@ -374,7 +385,7 @@
         mailComposer = [[MFMailComposeViewController alloc]init];
         mailComposer.mailComposeDelegate = self;
         [mailComposer setSubject:@"临床实验室"];
-        NSString *mailContent=[@"<a href='" stringByAppendingFormat:@"%@'>链接地址</a>",_htmlUrl];
+        NSString *mailContent=[@"<a href='" stringByAppendingFormat:@"%@'>链接地址</a>",_urlstring];
         [mailComposer setMessageBody:mailContent isHTML:YES];
         [self presentModalViewController:mailComposer animated:YES];
     }
@@ -432,7 +443,51 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+#pragma mark - 保存pdf
+- (void)saveCurrentFile
+{
+    NSString *fileName = [[_urlstring componentsSeparatedByString:@"/"] lastObject];
+    NSString *fileEnd = [[fileName componentsSeparatedByString:@"."] lastObject];
+    if ([fileEnd isEqualToString:@"pdf"])
+    {
+        NSString *toPath = [NSString stringWithFormat:@"%@/%@",[self localFilePath],fileName];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:toPath isDirectory:nil])
+        {
+            [self createAlertViewWithMessage:@"文件已经存在"];
+        }
+        else
+        {
+            NSURL *ressourcesUrl = [NSURL URLWithString:_urlstring];
+            NSData *fileData = [NSData dataWithContentsOfURL:ressourcesUrl];
+            if (fileName != nil)
+            {
+                NSError *error = nil;
+                [fileData writeToFile:toPath options:NSDataWritingAtomic error:&error];
+                if (error != nil)
+                {
+                    // 写入本地失败
+                    [self createAlertViewWithMessage:[NSString stringWithFormat:@"文件：%@ 写入本地失败", fileName]];
+                }
+                else
+                {
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    NSMutableArray *pdfArray;
+                    if ([defaults objectForKey:@"PDFArray"])
+                    {
+                        pdfArray = [[NSMutableArray alloc]initWithArray:[defaults objectForKey:@"PDFArray"]];
+                    }
+                    else
+                    {
+                        pdfArray = [[NSMutableArray alloc]init];
+                    }
+                    [pdfArray insertObject:_articalDic atIndex:0];
+                    [defaults setObject:pdfArray forKey:@"PDFArray"];
+                    [self createAlertViewWithMessage:[NSString stringWithFormat:@"文件：%@ 下载成功", fileName]];
+                }
+            }
+        }
+    }
+}
 //#pragma mark 微信所用
 //-(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
 //    return [WXApi handleOpenURL:url delegate:self];

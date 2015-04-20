@@ -202,11 +202,11 @@
         </view>
     </objects>
     <resources>
-        <image name="QQ.png" width="255" height="255"/>
+        <image name="QQ.png" width="116" height="116"/>
         <image name="QQ空间.png" width="160" height="160"/>
-        <image name="QQ邮箱.png" width="256" height="256"/>
-        <image name="微信.png" width="484" height="488"/>
-        <image name="新浪微博.png" width="512" height="512"/>
-        <image name="朋友圈.png" width="512" height="512"/>
+        <image name="QQ邮箱.png" width="116" height="116"/>
+        <image name="微信.png" width="116" height="116"/>
+        <image name="新浪微博.png" width="116" height="116"/>
+        <image name="朋友圈.png" width="116" height="116"/>
     </resources>
 </document>

@@ -101,6 +101,16 @@
         // 解析
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
         _listArray = [dict objectForKey:@"data"];
+        
+        if ([_listArray count])
+        {
+            if ([[[_listArray objectAtIndex:0] objectForKey:@"article"] count])
+            {
+                NSDictionary *subdict = [[[_listArray objectAtIndex:0] objectForKey:@"article"] lastObject];
+                self.title = [subdict objectForKey:@"magazinename"];
+            }
+        }
+        
         [_listTableView reloadData];
     }
     else

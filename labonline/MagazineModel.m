@@ -10,4 +10,8 @@
 
 @implementation MagazineModel
 
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key
+{
+    //    NSLog(@"没有找到属性：%@",key);
+}
 @end
