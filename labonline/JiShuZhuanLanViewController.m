@@ -16,17 +16,18 @@
 #import "AppDelegate.h"
 #import "SearchViewController.h"
 #import "NetManager.h"
-#import "PDFBrowserViewController.h"
 #import "UIView+Category.h"
+#import "EGORefreshTableHeaderView.h"
 
-
-@interface JiShuZhuanLanViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface JiShuZhuanLanViewController ()<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate>
 {
     UITableView *jiShuZhuanLanTableView;
     NSArray *_articleListArray;
     NSInteger _currentCellIndex;//进入的cell
     NSInteger _currentSubVIndex;
     BOOL _addReadCounts;
+    EGORefreshTableHeaderView *_refresV;
+    BOOL _reloading;
 }
 @end
 
@@ -43,6 +44,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    _reloading = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"技术专栏";
     
@@ -86,7 +88,7 @@
     pictureV.backgroundColor = [UIColor whiteColor];
     [headerV addSubview:pictureV];
     
-    jiShuZhuanLanTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-65) style:UITableViewStylePlain];
+    jiShuZhuanLanTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-64) style:UITableViewStylePlain];
     jiShuZhuanLanTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     jiShuZhuanLanTableView.delegate = self;
     jiShuZhuanLanTableView.dataSource = self;
@@ -94,8 +96,9 @@
     jiShuZhuanLanTableView.tableHeaderView = headerV;
     [self.view addSubview:jiShuZhuanLanTableView];
     
+    [self.view addLoadingViewInSuperView:self.view andTarget:self];
     [self requestMainDataWithURLString:kJSZLUrlString];
-    
+    [self createRefreshView];
 }
 
 #pragma mark - 网络请求
@@ -106,12 +109,19 @@
     netManager.delegate = self;
     netManager.action = @selector(requestFinished:);
     [netManager requestDataWithUrlString:urlStr];
-    [UIView addLoadingViewInView:self.view];
 }
 #pragma mark --网络请求完成
 - (void)requestFinished:(NetManager *)netManager
 {
-    [UIView removeLoadingVIewInView:self.view];
+    if (_reloading)
+    {
+        [self stopRefresh];
+    }
+    else
+    {
+        // 删除加载View
+        [self.view removeLoadingVIewInView:self.view andTarget:self];
+    }
     if (netManager.downLoadData)
     {
         // 成功
@@ -123,6 +133,7 @@
     else
     {
         // 失败
+        [self.view addAlertViewWithMessage:@"请求不到数据，请重试" andTarget:self];
     }
 }
 
@@ -159,28 +170,10 @@
 - (void)pictureShowMethod:(PictureShowView *)pictureShowV
 {
     NSDictionary *dict = [[pictureShowV.imageInfoArray objectAtIndex:pictureShowV.imageIndex] objectForKey:@"articleinfo"];
-    
-    if ([[dict objectForKey:@"urlpdf"] length]>5)
-    {
-        // PDF 跳转PDF页面
-        NSLog(@"跳转PDF页面");
-        PDFBrowserViewController *pdfBrowseVC = [[PDFBrowserViewController alloc]init];
-        pdfBrowseVC.filePath = [dict objectForKey:@"urlpdf"];
-        pdfBrowseVC.articalId = [dict objectForKey:@"articleid"];
-        [self.navigationController pushViewController:pdfBrowseVC animated:YES];
-    }
-    else if ([[dict objectForKey:@"urlhtml"] length]>5)
-    {
-        // html
-        JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
-        if ([[dict objectForKey:@"urlvideo"] length]>5)
-        {
-            // 视频
-            detailVC.vidioUrl = [dict objectForKey:@"urlvideo"];
-        }
-        detailVC.articalDic = dict;
-        [self.navigationController pushViewController:detailVC animated:YES];
-    }
+
+    JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+    detailVC.articalDic = dict;
+    [self.navigationController pushViewController:detailVC animated:YES];
 }
 
 #pragma mark -- 跳转到技术专栏详情界面
@@ -193,32 +186,12 @@
         _currentCellIndex = cell.dataIndex;
         _currentSubVIndex = cell.currentArticalIndex;
     }
-    
-    if ([[jszlSubV.subDict objectForKey:@"urlpdf"] length]>5)
-    {
-        // PDF 跳转PDF页面
-        NSLog(@"跳转PDF页面");
-        PDFBrowserViewController *pdfBrowseVC = [[PDFBrowserViewController alloc]init];
-        pdfBrowseVC.filePath = [jszlSubV.subDict objectForKey:@"urlpdf"];
-        pdfBrowseVC.articalId = [jszlSubV.subDict objectForKey:@"articleid"];
-        pdfBrowseVC.target = self;
-        pdfBrowseVC.action = @selector(addReadCounts);
-        [self.navigationController pushViewController:pdfBrowseVC animated:YES];
-    }
-    else if ([[jszlSubV.subDict objectForKey:@"urlhtml"] length]>5)
-    {
-        // html
-        JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
-        if ([[jszlSubV.subDict objectForKey:@"urlvideo"] length]>5)
-        {
-            // 视频
-            detailVC.vidioUrl = [jszlSubV.subDict objectForKey:@"urlvideo"];
-        }
-        detailVC.articalDic = jszlSubV.subDict;
-        detailVC.delegate = self;
-        detailVC.action = @selector(addReadCounts);
-        [self.navigationController pushViewController:detailVC animated:YES];
-    }
+   
+    JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+    detailVC.articalDic = jszlSubV.subDict;
+    detailVC.delegate = self;
+    detailVC.action = @selector(addReadCounts);
+    [self.navigationController pushViewController:detailVC animated:YES];
 }
 
 #pragma mark --跳转到技术专栏更多界面
@@ -262,6 +235,56 @@
     _addReadCounts = YES;
     [jiShuZhuanLanTableView reloadData];
 }
+
+
+#pragma mark --下拉刷新
+- (void)createRefreshView
+{
+    if (_refresV && [_refresV superview]) {
+        [_refresV removeFromSuperview];
+    }
+    _refresV = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.view.bounds.size.height,self.view.frame.size.width, self.view.bounds.size.height)];
+    _refresV.delegate = self;
+    [jiShuZhuanLanTableView addSubview:_refresV];
+    [_refresV refreshLastUpdatedDate];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView *)view
+{
+    return _reloading;
+}
+- (NSDate *)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView *)view
+{
+    return [NSDate date];
+}
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
+{
+    if (_reloading == NO)
+    {
+        _reloading = YES;
+        [self requestMainDataWithURLString:kJSZLUrlString];
+    }
+}
+
+- (void)stopRefresh
+{
+    _reloading = NO;
+    [_refresV egoRefreshScrollViewDataSourceDidFinishedLoading:jiShuZhuanLanTableView];
+    [_refresV reloadInputViews];
+    
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [_refresV egoRefreshScrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [_refresV egoRefreshScrollViewDidEndDragging:scrollView];
+}
+
 
 - (void)didReceiveMemoryWarning
 {

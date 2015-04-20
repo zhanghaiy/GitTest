@@ -29,11 +29,11 @@
 
 #import "NetManager.h"   // 网络请求
 #import "UIView+Category.h" // 加载动画
+#import "EGORefreshTableHeaderView.h"
 
-#import "PDFBrowserViewController.h"
 #import "JiShuZhuanLanDetailViewController.h"
 
-@interface MainViewController ()<LeftViewControllerDelegate,UIScrollViewDelegate>
+@interface MainViewController ()<LeftViewControllerDelegate,UIScrollViewDelegate,EGORefreshTableHeaderDelegate>
 {
     UIScrollView *_backScrollV;
     JSZLCateView *_jSZLCateV;
@@ -41,6 +41,8 @@
     MainNewView *_mainNewV;
     NSDictionary *_newMagazineDict;
     NSMutableArray *_newMagazineImageArray;
+    BOOL _reloading;
+    EGORefreshTableHeaderView *_refresV;
 }
 @end
 
@@ -96,6 +98,7 @@
     
     _backScrollV = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-65)];
     _backScrollV.delegate =self;
+    _backScrollV.contentSize = CGSizeMake(kScreenWidth, kScreenHeight+10);
     [self.view addSubview:_backScrollV];
     
      // 图片轮播View
@@ -123,7 +126,11 @@
     _jSZLCateV.action = @selector(enterJSZLVireController:);
     [_backScrollV addSubview:_jSZLCateV];
     
+    [self.view addLoadingViewInSuperView:self.view andTarget:self];
     [self requestMainDataWithURLString:kMainUrlString];
+    
+    _reloading = NO;
+    [self createRefreshView];
 }
 
 #pragma mark - 网络请求
@@ -134,22 +141,30 @@
     netManager.delegate = self;
     netManager.action = @selector(requestFinished:);
     [netManager requestDataWithUrlString:urlStr];
-    [UIView addLoadingViewInView:self.view];
 }
 #pragma mark --网络请求完成
 - (void)requestFinished:(NetManager *)netManager
 {
-    [UIView removeLoadingVIewInView:self.view];
+    if (_reloading)
+    {
+        [self stopRefresh];
+    }
+    else
+    {
+        [self.view removeLoadingVIewInView:self.view andTarget:self];
+    }
     if (netManager.downLoadData)
     {
         // 成功
         // 解析
+        
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
         [self addControlsWithDictionary:[dict objectForKey:@"data"]];
     }
     else
     {
         // 失败
+        [self.view addAlertViewWithMessage:@"请求不到数据，请重试" andTarget:self];
     }
 }
 
@@ -183,7 +198,12 @@
     _jSZLCateV.cateDataArray = jSZLArray;
     
     // 改变scrollView可滑动
-    _backScrollV.contentSize = CGSizeMake(kScreenWidth, 50+kTopImageShowViewHeight+kMainNewViewHeight+jSZLHeight);
+    NSInteger y = 80+kTopImageShowViewHeight+kMainNewViewHeight+jSZLHeight;
+    if (y<kScreenHeight)
+    {
+        y = kScreenHeight + 20;
+    }
+    _backScrollV.contentSize = CGSizeMake(kScreenWidth, y);
     _backScrollV.showsVerticalScrollIndicator = NO;
 }
 
@@ -208,29 +228,9 @@
 - (void)pictureShowMethod:(PictureShowView *)pictureShowV
 {
     NSDictionary *dict = [[pictureShowV.imageInfoArray objectAtIndex:pictureShowV.imageIndex] objectForKey:@"articleinfo"];
-   
-    if ([[dict objectForKey:@"urlpdf"] length]>5)
-    {
-        // PDF 跳转PDF页面
-        NSLog(@"跳转PDF页面");
-        PDFBrowserViewController *pdfBrowseVC = [[PDFBrowserViewController alloc]init];
-        pdfBrowseVC.filePath = [dict objectForKey:@"urlpdf"];
-        [self.navigationController pushViewController:pdfBrowseVC animated:YES];
-    }
-    else if ([[dict objectForKey:@"urlhtml"] length]>5)
-    {
-        // html
-        JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
-        if ([[dict objectForKey:@"urlvideo"] length]>5)
-        {
-            // 视频
-            detailVC.vidioUrl = [dict objectForKey:@"urlvideo"];
-        }
-        detailVC.articalID = [dict objectForKey:@"articleid"];
-        detailVC.htmlUrl = [dict objectForKey:@"urlhtml"];
-        detailVC.titleStr = [dict objectForKey:@"type"];
-        [self.navigationController pushViewController:detailVC animated:YES];
-    }
+    JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+    detailVC.articalDic = dict;
+    [self.navigationController pushViewController:detailVC animated:YES];
 }
 #pragma mark - 进入技术专栏界面
 - (void)enterJSZLVireController:(JSZLCateView *)jSZLCateView
@@ -342,6 +342,56 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)createRefreshView
+{
+    if (_refresV && [_refresV superview]) {
+        [_refresV removeFromSuperview];
+    }
+    _refresV = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.view.bounds.size.height,self.view.frame.size.width, self.view.bounds.size.height)];
+    _refresV.delegate = self;
+    [_backScrollV addSubview:_refresV];
+    [_refresV refreshLastUpdatedDate];
+}
+
+
+#pragma mark --EGORefreshTableHeaderDelegate
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView *)view
+{
+    return _reloading;
+}
+- (NSDate *)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView *)view
+{
+    return [NSDate date];
+}
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
+{
+    if (_reloading == NO)
+    {
+        _reloading = YES;
+        [self requestMainDataWithURLString:kMainUrlString];
+    }
+}
+
+- (void)stopRefresh
+{
+    _reloading = NO;
+    [_refresV egoRefreshScrollViewDataSourceDidFinishedLoading:_backScrollV];
+    [_backScrollV reloadInputViews];
+   
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [_refresV egoRefreshScrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [_refresV egoRefreshScrollViewDidEndDragging:scrollView];
+}
+
 
 /*
 #pragma mark - Navigation

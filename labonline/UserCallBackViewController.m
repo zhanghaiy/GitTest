@@ -8,11 +8,12 @@
 
 #import "UserCallBackViewController.h"
 #import "AFNetworkTool.h"
-
+#import "UIView+Category.h"
 
 @interface UserCallBackViewController ()<UITextViewDelegate,UIAlertViewDelegate>
 {
     UITextView *textV;
+    BOOL _commitSuccess;
 }
 @end
 
@@ -74,27 +75,47 @@
     sendBtn.layer.borderColor = [UIColor colorWithWhite:230/255.0 alpha:1].CGColor;
     [sendBtn addTarget:self action:@selector(sendBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:sendBtn];
+    _commitSuccess = NO;
 }
 
 - (void)sendBtnClicked
 {
-        NSDictionary *paramDic = @{@"userid":kUserId,@"feedbackcontent":textV.text};
-        [AFNetworkTool postJSONWithUrl:kUserCallBackUrl parameters:paramDic success:^(id responseObject) {
-           // 用户提交反馈成功
+    NSUserDefaults *defau = [NSUserDefaults standardUserDefaults];
+    if ([defau objectForKey:@"userid"])
+    {
+        [self.view addLoadingViewInSuperView:self.view andTarget:self];
+        NSDictionary *paramDic = @{@"userid":[defau objectForKey:@"userid"],@"feedbackcontent":textV.text};
+        [AFNetworkTool postJSONWithUrl:kUserCallBackUrl parameters:paramDic success:^(id responseObject)
+         {
+            // 用户提交反馈成功
+             [self.view removeLoadingVIewInView:self.view andTarget:self];
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
             if ([dic objectForKey:@"respCode"])
             {
-                UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:@"提交成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                [alertV show];
+                _commitSuccess = YES;
+                [self.view addAlertViewWithMessage:@"提交成功" andTarget:self];
+            }
+            else
+            {
+                [self.view addAlertViewWithMessage:@"提交失败" andTarget:self];
             }
         } fail:^{
-            //
+            [self.view addLoadingViewInSuperView:self.view andTarget:self];
+            [self.view addAlertViewWithMessage:@"提交失败" andTarget:self];
         }];
+    }
+    else
+    {
+        [self.view addAlertViewWithMessage:@"登陆后才可提交反馈" andTarget:self];
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (_commitSuccess)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event

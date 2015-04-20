@@ -109,7 +109,7 @@
         _pageControl.numberOfPages = 1;
         UIImageView *imgV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, width, height)];
         imgV.layer.masksToBounds = YES;
-        imgV.backgroundColor = [UIColor purpleColor];
+        imgV.image = [UIImage imageNamed:@"moren.png"];
         imgV.layer.cornerRadius = 5;
         imgV.userInteractionEnabled = YES;
         [_imageScroll addSubview:imgV];

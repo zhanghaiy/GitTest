@@ -11,4 +11,6 @@
 // 我的评论
 @interface MyCommentViewController : UIViewController
 
+@property (nonatomic,copy) NSString *userid;
+
 @end

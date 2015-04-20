@@ -10,14 +10,19 @@
 #import "MyCollectionCell.h"
 #import "NetManager.h"
 #import "UIView+Category.h"
+#import "JiShuZhuanLanDetailViewController.h"
+#import "EGORefreshTableHeaderView.h"
 
-@interface MyCollectionViewController ()<UITableViewDataSource,UITableViewDelegate>
+
+@interface MyCollectionViewController ()<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate>
 {
     UITableView *_myCollectionTableView;
     NSArray *_collectionArray;
     BOOL _deleteCollection;
     NSString *_articalId;
     NSString *_userid;
+    BOOL _reloading;
+    EGORefreshTableHeaderView *_refresV;
 }
 
 @end
@@ -63,7 +68,10 @@
     [self.view addSubview:_myCollectionTableView];
  
     // 获取收藏列表
-    [self requestDataWithUrlString:[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,kUserId]];
+    _reloading = NO;
+    [self.view addLoadingViewInSuperView:self.view andTarget:self];
+    [self requestDataWithUrlString:[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,_userId]];
+    [self createRefreshView];
 }
 
 #pragma mark - 网络请求
@@ -74,12 +82,18 @@
     netManager.delegate = self;
     netManager.action = @selector(netManagerCallBack:);
     [netManager requestDataWithUrlString:urlString];
-    [UIView addLoadingViewInView:self.view];
 }
 #pragma mark --- 网络回调
 - (void)netManagerCallBack:(NetManager *)netManager
 {
-    [UIView removeLoadingVIewInView:self.view];
+    if (_reloading)
+    {
+        [self stopRefresh];
+    }
+    else
+    {
+        [self.view removeLoadingVIewInView:self.view andTarget:self];
+    }
     if (_deleteCollection)
     {
         _deleteCollection = NO;
@@ -87,8 +101,11 @@
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
         if ([[dic objectForKey:@"respCode"] integerValue] == 1000)
         {
-            NSLog(@"删除成功");
-            [self requestDataWithUrlString:[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,kUserId]];
+            [self requestDataWithUrlString:[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,_userId]];
+        }
+        else
+        {
+            [self.view addAlertViewWithMessage:[dic objectForKey:@"remark"] andTarget:self];
         }
     }
     else
@@ -97,6 +114,7 @@
         if (netManager.failError)
         {
             // 失败
+             [self.view addAlertViewWithMessage:@"请求数据失败，请重试" andTarget:self];
         }
         else if (netManager.downLoadData)
         {
@@ -108,7 +126,10 @@
                 // 成功
                 _collectionArray= [dic objectForKey:@"list"];
                 [_myCollectionTableView reloadData];
-                // 数据为空
+            }
+            else
+            {
+                [self.view addAlertViewWithMessage:[dic objectForKey:@"remark"] andTarget:self];
             }
         }
     }
@@ -154,7 +175,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
      // 阅读
-     
+    NSDictionary *dic =[ _collectionArray objectAtIndex:indexPath.row];
+    JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+    detailVC.articalDic = dic;
+    [self.navigationController pushViewController:detailVC animated:YES];
 }
 
 #pragma mark - MyCollectionCell callBack
@@ -208,7 +232,7 @@
              http://192.168.0.153:8181/labonline/hyController/deleteWdsc.do?userid=5&articleid=6
              */
             _deleteCollection = YES;
-            NSString *urlString = [NSString stringWithFormat:@"%@?userid=%@&articleid=%@",kDeleteCollectionUrl,kUserId,_articalId];
+            NSString *urlString = [NSString stringWithFormat:@"%@?userid=%@&articleid=%@",kDeleteCollectionUrl,_userId,_articalId];
             [self requestDataWithUrlString:urlString];
         }
             break;
@@ -225,6 +249,56 @@
     UIView *askV = (UIView *)[self.view viewWithTag:kAskViewTag];
     [askV removeFromSuperview];
 }
+
+#pragma mark --下拉刷新
+- (void)createRefreshView
+{
+    if (_refresV && [_refresV superview]) {
+        [_refresV removeFromSuperview];
+    }
+    _refresV = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.view.bounds.size.height,self.view.frame.size.width, self.view.bounds.size.height)];
+    _refresV.delegate = self;
+    [_myCollectionTableView addSubview:_refresV];
+    [_refresV refreshLastUpdatedDate];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView *)view
+{
+    return _reloading;
+}
+- (NSDate *)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView *)view
+{
+    return [NSDate date];
+}
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
+{
+    if (_reloading == NO)
+    {
+        _reloading = YES;
+        [self requestDataWithUrlString:[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,_userId]];
+    }
+}
+
+- (void)stopRefresh
+{
+    _reloading = NO;
+    [_refresV egoRefreshScrollViewDataSourceDidFinishedLoading:_myCollectionTableView];
+    [_refresV reloadInputViews];
+    
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [_refresV egoRefreshScrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [_refresV egoRefreshScrollViewDidEndDragging:scrollView];
+}
+
+
 
 - (void)didReceiveMemoryWarning
 {

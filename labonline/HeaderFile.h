@@ -40,7 +40,7 @@ typedef enum
     EMail
 }AlterType;
 
-#define kUserId @"E3874C4463734AC08E6084F3D09F3D47"
+//#define kUserId @"E3874C4463734AC08E6084F3D09F3D47"
 // 技术专栏主页
 #define kJSZLUrlString @"http://192.168.0.153:8181/labonline/indexController/queryJszlList.do"
 // 技术专栏更多

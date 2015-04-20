@@ -17,15 +17,21 @@
 #import "YRSideViewController.h"
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import "SearchViewController.h"
+#import "UIButton+WebCache.h"
 
-@interface PersonCenterViewController ()
+
+@interface PersonCenterViewController ()<EditPersonViewControllerDelegate>
 {
     NSMutableArray *_dataArray;
+    NSString *_userId;
 }
 @end
 
 @implementation PersonCenterViewController
-#define kImageButtonTag 22
+#define kHeadImageBtnTag 1122
+#define kUserNameLableTag 1123
+
 #define kOutButtonTag 23
 #define kPersonColumeViewTag 24
 
@@ -63,10 +69,14 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
     
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
     // 头像 本地获取头像和昵称
     UIButton *personImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [personImageButton setFrame:CGRectMake((kScreenWidth-kImageBUttonHeight)/2, 20, kImageBUttonHeight, kImageBUttonHeight)];
-    [personImageButton setBackgroundImage:[UIImage imageNamed:@"头像.png"] forState:UIControlStateNormal];
+    personImageButton.tag = kHeadImageBtnTag;
+    [personImageButton setImageWithURL:[NSURL URLWithString:[defaults objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"头像.png"]];
     personImageButton.layer.masksToBounds = YES;
     personImageButton.layer.cornerRadius = kImageBUttonHeight/2;
     personImageButton.layer.borderColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1].CGColor;
@@ -76,7 +86,8 @@
     
     // 用户名
     UILabel *nameLable = [[UILabel alloc]initWithFrame:CGRectMake(50, 20+kImageBUttonHeight, kScreenWidth-100, 30)];
-    nameLable.text = @"幸福的小猫咪";
+    nameLable.tag = kUserNameLableTag;
+    nameLable.text = [defaults objectForKey:@"nickname"];
     nameLable.textAlignment = NSTextAlignmentCenter;
     nameLable.textColor = [UIColor redColor];
     nameLable.font = [UIFont systemFontOfSize:kOneFontSize];
@@ -108,6 +119,22 @@
     outButton.layer.borderWidth = 1;
     [outButton addTarget:self action:@selector(outCurrentUser) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:outButton];
+    
+    if ([defaults objectForKey:@"userid"])
+    {
+        _userId = [defaults objectForKey:@"userid"];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    UIButton *btn = (UIButton *)[self.view viewWithTag:kHeadImageBtnTag];
+    [btn setImageWithURL:[NSURL URLWithString:[defaults objectForKey:@"icon"]]];
+    UILabel *lab = (UILabel *)[self.view viewWithTag:kUserNameLableTag];
+    lab.text = [defaults objectForKey:@"nickname"];
 }
 
 #pragma mark - 组成数据源
@@ -115,7 +142,7 @@
 {
     _dataArray = [[NSMutableArray alloc]init];
     NSArray *imageArray = @[@"我的杂志.png",@"我的评论.png",@"我的收藏.png",@"离线视频.png"];
-    NSArray *titleArray = @[@"我的杂志",@"我的评论",@"我的收藏",@"离线视频"];
+    NSArray *titleArray = @[@"我的文章",@"我的评论",@"我的收藏",@"离线视频"];
     for (int i = 0; i < imageArray.count; i++)
     {
         NSDictionary *dict = @{@"ImageName":[imageArray objectAtIndex:i],@"Title":[titleArray objectAtIndex:i]};
@@ -136,8 +163,8 @@
     {
         case 0:
         {
-            // 我的杂志
-            NSLog(@"我的杂志");
+            // 我的文章
+            NSLog(@"我的文章");
             MyMagazineViewController *magazineVC = [[MyMagazineViewController alloc]init];
             [self.navigationController pushViewController:magazineVC animated:YES];
         }
@@ -147,6 +174,7 @@
             // 我的评论
             NSLog(@"我的评论");
             MyCommentViewController *myCommonVC = [[MyCommentViewController alloc]init];
+            myCommonVC.userid = _userId;
             [self.navigationController pushViewController:myCommonVC animated:YES];
         }
             break;
@@ -155,6 +183,7 @@
             // 我的收藏
             NSLog(@"我的收藏");
             MyCollectionViewController *myCollectionVC = [[MyCollectionViewController alloc]init];
+            myCollectionVC.userId = _userId;
             [self.navigationController pushViewController:myCollectionVC animated:YES];
         }
             break;
@@ -176,7 +205,42 @@
 - (void)enterPersonEditViewController:(UIButton *)btn
 {
     EditPersonViewController *editVC = [[EditPersonViewController alloc]init];
+    editVC.delegate = self;
+    editVC.userID = _userId;
     [self.navigationController pushViewController:editVC animated:YES];
+}
+
+- (void)iconAlertSuccess:(BOOL)sucseess
+{
+    if (sucseess)
+    {
+        // 重新登录 请求数据 username=zhy&password=1
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        if ([defaults objectForKey:@"userName"]&&[defaults objectForKey:@"password"])
+        {
+            NSLog(@"%@\n%@",[defaults objectForKey:@"userName"],[defaults objectForKey:@"password"]);
+            NSDictionary *dic = @{@"username":[defaults objectForKey:@"userName"],@"password":[defaults objectForKey:@"password"]};
+            [AFNetworkTool postJSONWithUrl:COCIM_INTERFACE_LOGIN parameters:dic success:^(id responseObject)
+            {
+                NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+                if ([[dict objectForKey:@"respCode"] integerValue] == 1000)
+                {
+                    NSDictionary *userInfo = [[dict objectForKey:@"userinfo"] lastObject];
+                    NSUserDefaults *userDe=[NSUserDefaults standardUserDefaults];
+                    [userDe setObject:[userInfo objectForKey:@"icon"] forKey:@"icon"];
+                    [userDe synchronize];
+                    
+                    UIButton *btn = (UIButton *)[self.view viewWithTag:kHeadImageBtnTag];
+                    [btn setImageWithURL:[NSURL URLWithString:[userInfo objectForKey:@"icon"]]];
+                    UILabel *lab = (UILabel *)[self.view viewWithTag:kUserNameLableTag];
+                    lab.text = [userInfo objectForKey:@"nickname"];
+                }
+            } fail:^{
+                
+            }];
+
+        }
+    }
 }
 
 #pragma mark - 退出当前账号
@@ -186,6 +250,8 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     //移除UserDefaults中存储的用户信息
     [userDefaults removeObjectForKey:@"userName"];
+    [userDefaults removeObjectForKey:@"password"];
+    [userDefaults removeObjectForKey:@"userid"];
     [userDefaults synchronize];
     
 //    AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
@@ -204,7 +270,10 @@
 - (void)enterSearchViewController
 {
     // 搜索
+    // 搜索
     NSLog(@"enterSearchViewController");
+    SearchViewController *searchVC = [[SearchViewController alloc]init];
+    [self.navigationController pushViewController:searchVC animated:YES];
 }
 
 

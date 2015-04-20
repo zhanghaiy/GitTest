@@ -9,7 +9,6 @@
 #import "SearchViewController.h"
 #import "SearchCell.h"
 #import "AFNetworkTool.h"
-#import "PDFBrowserViewController.h"
 #import "JiShuZhuanLanDetailViewController.h"
 #import "UIView+Category.h"
 
@@ -73,6 +72,8 @@
     _tableV.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableV];
     _requestSubLebel = NO;
+    
+    [self requestTopSubLebel];
 }
 
 #pragma mark - 网络
@@ -95,10 +96,10 @@
 #pragma mark --网络请求
 - (void)requestWithUrl:(NSString *)url Params:(NSDictionary *)dict
 {
-    [UIView addLoadingViewInView:self.view];
+    [self.view addLoadingViewInSuperView:self.view andTarget:self];
     [AFNetworkTool postJSONWithUrl:url parameters:dict success:^(id responseObject)
      {
-         [UIView removeLoadingVIewInView:self.view];
+         [self.view removeLoadingVIewInView:self.view andTarget:self];
          if (_requestSubLebel)
          {
              // 搜索标签
@@ -123,10 +124,14 @@
                  [_tableV reloadData];
                  _tableV.tableHeaderView = nil;
              }
+             else
+             {
+                 [self.view addAlertViewWithMessage:[dic objectForKey:@"remark"] andTarget:self];
+             }
 
          }
      } fail:^{
-         [UIView removeLoadingVIewInView:self.view];
+         [self.view removeLoadingVIewInView:self.view andTarget:self];
          if (_requestSubLebel)
          {
              _requestSubLebel = NO;
@@ -134,7 +139,7 @@
          }
          else
          {
-            
+             [self.view addAlertViewWithMessage:@"搜索失败" andTarget:self];
          }
     }];
 }
@@ -217,31 +222,11 @@
 {
     _markCellIndex = indexPath.row;
     NSDictionary *dict = [_searchDataArray objectAtIndex:indexPath.row];
-    if ([[dict objectForKey:@"urlpdf"] length]>5)
-    {
-        // PDF 跳转PDF页面
-        NSLog(@"跳转PDF页面");
-        PDFBrowserViewController *pdfBrowseVC = [[PDFBrowserViewController alloc]init];
-        pdfBrowseVC.filePath = [dict objectForKey:@"urlpdf"];
-        pdfBrowseVC.articalId = [dict objectForKey:@"articleid"];
-        pdfBrowseVC.target = self;
-        pdfBrowseVC.action = @selector(addReadCounts);
-        [self.navigationController pushViewController:pdfBrowseVC animated:YES];
-    }
-    else if ([[dict objectForKey:@"urlhtml"] length]>5)
-    {
-        // html
-        JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
-        if ([[dict objectForKey:@"urlvideo"] length]>5)
-        {
-            // 视频
-            detailVC.vidioUrl = [dict objectForKey:@"urlvideo"];
-        }
-        detailVC.delegate = self;
-        detailVC.action = @selector(addReadCounts);
-        detailVC.articalDic = dict;
-        [self.navigationController pushViewController:detailVC animated:YES];
-    }
+    JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+    detailVC.articalDic = dict;
+    detailVC.delegate = self;
+    detailVC.action = @selector(addReadCounts);
+    [self.navigationController pushViewController:detailVC animated:YES];
 
 }
 #pragma mark - 增加阅读数

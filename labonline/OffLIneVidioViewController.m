@@ -9,13 +9,14 @@
 #import "OffLIneVidioViewController.h"
 #import "OffLineVidioCell.h"
 #import <MediaPlayer/MediaPlayer.h>
+#import "UIView+Category.h"
 //#import <AVFoundation/AVFoundation.h>
 
-@interface OffLIneVidioViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface OffLIneVidioViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
     UITableView *_vidioTableView;
     MPMoviePlayerViewController *_playerController;
-    NSArray *_downloadArray;
+    NSMutableArray *_downloadArray;
 }
 @end
 
@@ -42,7 +43,7 @@
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = leftItem;
     
-    _downloadArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"VidioList"];
+    _downloadArray = [[NSMutableArray alloc]initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"VidioList"]];
     
     _vidioTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 5, kScreenWidth, kScreenHeight-80) style:UITableViewStylePlain];
     _vidioTableView.delegate = self;
@@ -53,6 +54,7 @@
     [self.view addSubview:_vidioTableView];
 }
 
+#pragma mark - UITableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _downloadArray.count;
@@ -70,11 +72,13 @@
         cell.action = @selector(playVidioButtonCallBack:);
     }
     NSDictionary *dic = [_downloadArray objectAtIndex:indexPath.row];
-    cell.vidioImgView.image = [UIImage imageWithData:[dic objectForKey:@"image"]];//[self getVidioImageWithVidioPath:[dic objectForKey:@"VidioPath"]];
+    cell.vidioImgView.image = [UIImage imageWithData:[dic objectForKey:@"image"]];
     cell.titleLable.text = [dic objectForKey:@"title"];
     cell.authorLable.text = [dic objectForKey:@"type"];
     cell.index = indexPath.row;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.deleteButton.tag = indexPath.row;
+    [cell.deleteButton addTarget:self action:@selector(deleteLocalVidio:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
@@ -83,13 +87,43 @@
     return 200;
 }
 
+#pragma mark - 删除本地视频
+- (void)deleteLocalVidio:(UIButton *)btn
+{
+    // 删除本地文件
+    NSDictionary *dict = [_downloadArray objectAtIndex:btn.tag];
+    // 此处由于模拟器路径存在变化 所以自己拼接字符串 在手机上测试后 再决定用哪个路径
+    // 存储的路径
+//    NSString *filePath = [dict objectForKey:@"VidioPath"];
+    // 合成的路径
+    NSString *path = [NSString stringWithFormat:@"%@/Documents/MyOff-lineVidio/%@",NSHomeDirectory(),[dict objectForKey:@"VidioName"]];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    [fileManager removeItemAtPath:path error:nil];
+    // 更改沙河存储数据
+    [_downloadArray removeObjectAtIndex:btn.tag];
+    [[NSUserDefaults standardUserDefaults] setObject:_downloadArray forKey:@"VidioList"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+
+    [self.view addAlertViewWithMessage:@"视频删除成功" andTarget:self];
+}
+
+#pragma mark - 警告框
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [_vidioTableView reloadData];
+}
+
+#pragma mark - 播放视频
 - (void)playVidioButtonCallBack:(OffLineVidioCell *)offLineCell
 {
     // 播放离线视频
-    NSLog(@"播放离线视频");
     NSDictionary *dict = [_downloadArray objectAtIndex:offLineCell.index];
-//    NSString *path = [NSString stringWithFormat:@"%@/Documents/MyOff-lineVidio/%@",NSHomeDirectory(),[dict objectForKey:@"VidioName"]];
-    [self playerPlayVidioWithPath:[dict objectForKey:@"VidioPath"]];
+    
+    // 此处由于模拟器路径存在变化 所以自己拼接字符串 在手机上测试后 再决定用哪个路径
+    NSString *path = [NSString stringWithFormat:@"%@/Documents/MyOff-lineVidio/%@",NSHomeDirectory(),[dict objectForKey:@"VidioName"]];
+    [self playerPlayVidioWithPath:path];
+    
+//    [self playerPlayVidioWithPath:[dict objectForKey:@"VidioPath"]];
 }
 
 
@@ -141,33 +175,6 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-/*
-- (UIImage *)getVidioImageWithVidioPath:(NSString *)videoPath
-
-{
-    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:[NSURL fileURLWithPath:videoPath] options:nil];
-    
-    AVAssetImageGenerator *gen = [[AVAssetImageGenerator alloc] initWithAsset:asset];
-    
-    gen.appliesPreferredTrackTransform = YES;
-    
-    CMTime time = CMTimeMakeWithSeconds(0.0, 600);
-    
-    NSError *error = nil;
-    
-    CMTime actualTime;
-    
-    CGImageRef image = [gen copyCGImageAtTime:time actualTime:&actualTime error:&error];
-    
-    UIImage *thumb = [[UIImage alloc] initWithCGImage:image];
-    
-    CGImageRelease(image);
-    
-    return thumb;
-}
-*/
-
 
 - (void)didReceiveMemoryWarning
 {

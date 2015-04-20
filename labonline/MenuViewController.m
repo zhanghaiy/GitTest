@@ -269,7 +269,7 @@
     
     [_navScrollV scrollRectToVisible:CGRectMake(xx, 0, _navScrollV.frame.size.width, _navScrollV.frame.size.height) animated:YES];
     
-    [self initData:[NSString stringWithFormat:@"%d",wangQiTag-btn.tag]];
+    [self initData:[NSString stringWithFormat:@"%ld",wangQiTag-btn.tag]];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

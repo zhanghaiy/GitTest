@@ -11,6 +11,7 @@
 #import "EditSubViewController.h"
 #import "AFNetworkTool.h"
 #import "UIView+Category.h"
+#import "UIButton+WebCache.h"
 
 @interface EditPersonViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,EditSubViewControllerDelegate,UIAlertViewDelegate>
 {
@@ -58,7 +59,7 @@
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setFrame:CGRectMake(0, 0, 40, 22)];
     [rightBtn setBackgroundImage:[UIImage imageNamed:@"OK.png"] forState:UIControlStateNormal];
-    [rightBtn addTarget:self action:@selector(alertFinished) forControlEvents:UIControlEventTouchUpInside];
+    [rightBtn addTarget:self action:@selector(commitImage) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
     
@@ -66,9 +67,12 @@
     headView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:headView];
     
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
     imageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [imageBtn setFrame:CGRectMake((kScreenWidth-kHeadImageButtonHeight)/2, (kHeadViewHeight-kHeadImageButtonHeight)/2, kHeadImageButtonHeight, kHeadImageButtonHeight)];
-    [imageBtn setBackgroundImage:[UIImage imageNamed:@"头像.png"] forState:UIControlStateNormal];
+    [imageBtn setImageWithURL:[NSURL URLWithString:[defaults objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"头像.png"]];
+
     imageBtn.layer.masksToBounds = YES;
     imageBtn.layer.cornerRadius = kHeadImageButtonHeight/2;
     imageBtn.layer.borderColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1].CGColor;
@@ -76,7 +80,7 @@
     [imageBtn addTarget:self action:@selector(selectImage:) forControlEvents:UIControlEventTouchUpInside];
     [headView addSubview:imageBtn];
     
-    _baseDataArray = [[NSMutableArray alloc]initWithObjects:@{@"Title":@"昵称",@"Content":@"幸福的小猫米"},@{@"Title":@"手机号",@"Content":@"15210065926"},@{@"Title":@"E-mail",@"Content":@"845602196@qq.com"}, nil];
+    [self makeUpDataContent];
     _myTableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 1+kHeadViewHeight, kScreenWidth, kScreenHeight-200) style:UITableViewStylePlain];
     _myTableV.delegate = self;
     _myTableV.dataSource = self;
@@ -84,20 +88,39 @@
     _myTableV.backgroundColor = [UIColor clearColor];
     _myTableV.separatorColor = [UIColor colorWithWhite:244/255.0 alpha:1];
     [self.view addSubview:_myTableV];
+    
+    _currentImage = imageBtn.imageView.image;
+    NSLog(@"%@",_currentImage);
 }
 
-- (void)alertFinished
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self makeUpDataContent];
+    [_myTableV reloadData];
+    
+}
+
+- (void)makeUpDataContent
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    _baseDataArray = [[NSMutableArray alloc]initWithObjects:@{@"Title":@"昵称",@"Content":[defaults objectForKey:@"nickname"]},@{@"Title":@"手机号",@"Content":[defaults objectForKey:@"phone"]},@{@"Title":@"邮箱",@"Content":[defaults objectForKey:@"email"]}, nil];
+}
+
+- (void)commitImage
 {
     // 修改完成  http://192.168.0.153:8181/labonline/hyController/updateTx.do?userid=80BE983A9EBC4B079247C4DDA518C2A8&usericon=dfwsvwsvedwvds
-    
     NSData *_data = UIImageJPEGRepresentation(_currentImage, 0.3);
+    [_data writeToFile:[NSString stringWithFormat:@"%@/Documents/TestImage",NSHomeDirectory()] atomically:YES];
+    NSLog(@"%@",[NSString stringWithFormat:@"%@/Documents/TestImage",NSHomeDirectory()]);
     NSString *encodedImageStr = [_data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
     NSString *imageString = [encodedImageStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *dic = @{@"userid":kUserId,@"usericon":imageString};
-    [UIView addLoadingViewInView:self.view];
+    NSDictionary *dic = @{@"userid":_userID,@"usericon":imageString};
+    [self.view addLoadingViewInSuperView:self.view andTarget:self];
     [AFNetworkTool postJSONWithUrl:kCommitImageUrl parameters:dic success:^(id responseObject)
     {
-        [UIView removeLoadingVIewInView:self.view];
+        [self.view removeLoadingVIewInView:self.view andTarget:self];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
         NSInteger respCode = [[dic objectForKey:@"respCode"] integerValue];
         if (respCode == 1000)
@@ -111,7 +134,7 @@
         }
         [self createAlertViewWithMessage:[dic objectForKey:@"remark"]];
     } fail:^{
-        [UIView removeLoadingVIewInView:self.view];
+        [self.view removeLoadingVIewInView:self.view andTarget:self];
        [self createAlertViewWithMessage:[dic objectForKey:@"修改失败"]];
     }];
 }
@@ -128,6 +151,10 @@
     if (_commitSuccess)
     {
         [self.navigationController popViewControllerAnimated:YES];
+        if ([self.delegate respondsToSelector:@selector(iconAlertSuccess:)])
+        {
+            [self.delegate iconAlertSuccess:_commitSuccess];
+        }
     }
 }
 
@@ -196,6 +223,7 @@
         }
         //将二进制数据生成UIImage
         _currentImage = [UIImage imageWithData:data];
+        [imageBtn setImage:nil forState:UIControlStateNormal];
         [imageBtn setBackgroundImage:_currentImage forState:UIControlStateNormal];
         NSLog(@"~~~~~~图片~~~~~~~");
     }
@@ -251,8 +279,10 @@
     subVC.delegate = self;
     subVC.dataDict = dict;
     subVC.alterType = indexPath.row;
+    subVC.userID = _userID;
     [self.navigationController pushViewController:subVC animated:YES];
 }
+
 
 - (void)reloadNewInfoWithString:(NSString *)string andAlterType:(NSInteger)alterType
 {
