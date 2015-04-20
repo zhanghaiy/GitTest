@@ -95,6 +95,7 @@
     if (netManager.failError)
     {
         // 失败
+        [self.view addAlertViewWithMessage:@"请求数据失败，请重试" andTarget:self];
     }
     else if (netManager.downLoadData)
     {
@@ -114,7 +115,7 @@
         }
         else
         {
-           
+            [self.view addAlertViewWithMessage:[dic objectForKey:@"remark"] andTarget:self];
         }
     }
 }

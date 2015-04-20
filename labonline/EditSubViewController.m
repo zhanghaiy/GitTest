@@ -103,9 +103,9 @@
             _success = NO;
             [self createAlertViewWithMessage:[NSString stringWithFormat:@"%@修改失败",[_dataDict objectForKey:@"Title"]]];
         }
-
     } fail:^{
-         [self.view removeLoadingVIewInView:self.view andTarget:self];
+        [self.view removeLoadingVIewInView:self.view andTarget:self];
+        [self createAlertViewWithMessage:@"找不到网络"];
     }];
 }
 

@@ -113,7 +113,6 @@
 #pragma mark - 发送按钮点击事件
 - (void)sendButtonClicked:(UIButton *)btn
 {
-     NSLog(@"发送按钮点击事件");
     // 收键盘
     UITextField *textField = (UITextField *)[self.view viewWithTag:kTextFieldTag];
     [textField resignFirstResponder];
@@ -122,21 +121,31 @@
         http://192.168.0.153:8181/labonline/hyController/insertPl.do
         参数 articleid userid text
      */
-    // 编码
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults objectForKey:@"userid"]!=nil)
     {
         if ([textField.text length])
         {
+            [self.view addLoadingViewInSuperView:self.view andTarget:self];
             NSDictionary *dic = @{@"articleid":_articalId,@"userid":[defaults objectForKey:@"userid"],@"text":textField.text};
-            [AFNetworkTool postJSONWithUrl:kCommitEvaluationUrl parameters:dic success:^(id responseObject) {
-                // 成功
-                [self createAlertViewWithMessage:@"评论提交成功"];
-                // 重新请求数据
-                sendFinished = YES;
-                [self requestEvaluesList];
+            [AFNetworkTool postJSONWithUrl:kCommitEvaluationUrl parameters:dic success:^(id responseObject)
+            {
+                [self.view removeLoadingVIewInView:self.view andTarget:self];
+                NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+                if ([[dictionary objectForKey:@"respCode"] integerValue] == 1000)
+                {
+                    // 成功
+                    [self createAlertViewWithMessage:@"评论提交成功"];
+                    // 重新请求数据
+                    sendFinished = YES;
+                    [self requestEvaluesList];
+                }
+                else
+                {
+                    [self createAlertViewWithMessage:[dictionary objectForKey:@"remark"]];
+                }
+                
             } fail:^{
-                NSLog(@"失败");
                 [self createAlertViewWithMessage:@"评论提交失败"];
             }];
         }
@@ -151,25 +160,11 @@
     }
 }
 
+#pragma mark - Alert
 - (void)createAlertViewWithMessage:(NSString *)str
 {
     UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
     [alertV show];
-}
-
-- (void)createLoadingView
-{
-    UIView *loadingV = [[UIView alloc]initWithFrame:CGRectMake(20, 20, kScreenWidth-40, 200)];
-    loadingV.tag = 1234;
-    loadingV.center = CGPointMake(kScreenWidth/2, kScreenHeight*2/3);
-    loadingV.backgroundColor = [UIColor colorWithWhite:200/255.0 alpha:1];
-    [self.view addSubview:loadingV];
-    
-    UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake((kScreenWidth-40-30)/2, 20, 30, 30)];
-    activity.backgroundColor = [UIColor blackColor];
-    activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    [loadingV addSubview:activity];
-    [activity startAnimating];
 }
 
 - (void)removeLoadingView

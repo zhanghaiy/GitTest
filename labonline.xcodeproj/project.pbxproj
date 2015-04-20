@@ -171,7 +171,6 @@
 		FDA91DF91AD50F5000734E1B /* MainListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDA91DF81AD50F5000734E1B /* MainListCell.xib */; };
 		FDA91DFB1AD5156100734E1B /* 分类按钮back.png in Resources */ = {isa = PBXBuildFile; fileRef = FDA91DFA1AD5156100734E1B /* 分类按钮back.png */; };
 		FDA91DFF1AD5169900734E1B /* ShowPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA91DFE1AD5169900734E1B /* ShowPicture.m */; };
-		FDB7CD3B1ACA6E86007BAF79 /* PDFBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB7CD3A1ACA6E86007BAF79 /* PDFBrowserViewController.m */; };
 		FDB7CD3E1ACA96FD007BAF79 /* MainListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB7CD3D1ACA96FD007BAF79 /* MainListViewController.m */; };
 		FDB7CD411ACA970D007BAF79 /* MainDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB7CD401ACA970D007BAF79 /* MainDetailViewController.m */; };
 		FDB7CD431ACAAE95007BAF79 /* 返回角.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB7CD421ACAAE95007BAF79 /* 返回角.png */; };
@@ -458,8 +457,6 @@
 		FDA91DFA1AD5156100734E1B /* 分类按钮back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "分类按钮back.png"; sourceTree = "<group>"; };
 		FDA91DFD1AD5169900734E1B /* ShowPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowPicture.h; sourceTree = "<group>"; };
 		FDA91DFE1AD5169900734E1B /* ShowPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowPicture.m; sourceTree = "<group>"; };
-		FDB7CD391ACA6E86007BAF79 /* PDFBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDFBrowserViewController.h; sourceTree = "<group>"; };
-		FDB7CD3A1ACA6E86007BAF79 /* PDFBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDFBrowserViewController.m; sourceTree = "<group>"; };
 		FDB7CD3C1ACA96FD007BAF79 /* MainListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainListViewController.h; sourceTree = "<group>"; };
 		FDB7CD3D1ACA96FD007BAF79 /* MainListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainListViewController.m; sourceTree = "<group>"; };
 		FDB7CD3F1ACA970D007BAF79 /* MainDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainDetailViewController.h; sourceTree = "<group>"; };
@@ -968,7 +965,6 @@
 				FD558CE61AC39E8300DA42FF /* 侧滑菜单 */,
 				FD558CE71AC39EA000DA42FF /* 技术专栏更多界面 */,
 				042C46711AC280B600D36C8F /* 往期 */,
-				FD96C8D41AC132200002778A /* PDF阅读 */,
 				FD96C8B81AC10A9C0002778A /* 视频播放 */,
 			);
 			name = Controllers;
@@ -1061,15 +1057,6 @@
 				04440EC21ADBA83700F60852 /* MagazineModel.m */,
 			);
 			name = Model;
-			sourceTree = "<group>";
-		};
-		FD96C8D41AC132200002778A /* PDF阅读 */ = {
-			isa = PBXGroup;
-			children = (
-				FDB7CD391ACA6E86007BAF79 /* PDFBrowserViewController.h */,
-				FDB7CD3A1ACA6E86007BAF79 /* PDFBrowserViewController.m */,
-			);
-			name = "PDF阅读";
 			sourceTree = "<group>";
 		};
 		FD96C9331AC179600002778A /* Views */ = {
@@ -1425,7 +1412,6 @@
 				FD5CC64C1AD7B8A1008986F0 /* UIButton+WebCache.m in Sources */,
 				FD462E5A1ACD2DB2001AC895 /* OffLineVidioCell.m in Sources */,
 				FDC430E21AD60C05006AC165 /* SearchCell.m in Sources */,
-				FDB7CD3B1ACA6E86007BAF79 /* PDFBrowserViewController.m in Sources */,
 				FD96C8B21AC10A3A0002778A /* LeftViewController.m in Sources */,
 				FD8AE2D61ACE1BAC00A4A5B6 /* EditPersonViewController.m in Sources */,
 				FD47C81F1AC53A3300846AC9 /* JSZLEvaluationCell.m in Sources */,

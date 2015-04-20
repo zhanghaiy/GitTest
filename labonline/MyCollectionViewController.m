@@ -101,8 +101,11 @@
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
         if ([[dic objectForKey:@"respCode"] integerValue] == 1000)
         {
-            NSLog(@"删除成功");
             [self requestDataWithUrlString:[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,_userId]];
+        }
+        else
+        {
+            [self.view addAlertViewWithMessage:[dic objectForKey:@"remark"] andTarget:self];
         }
     }
     else
@@ -111,6 +114,7 @@
         if (netManager.failError)
         {
             // 失败
+             [self.view addAlertViewWithMessage:@"请求数据失败，请重试" andTarget:self];
         }
         else if (netManager.downLoadData)
         {
@@ -122,7 +126,10 @@
                 // 成功
                 _collectionArray= [dic objectForKey:@"list"];
                 [_myCollectionTableView reloadData];
-                // 数据为空
+            }
+            else
+            {
+                [self.view addAlertViewWithMessage:[dic objectForKey:@"remark"] andTarget:self];
             }
         }
     }

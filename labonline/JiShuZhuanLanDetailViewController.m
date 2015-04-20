@@ -208,6 +208,7 @@
         else
         {
             // 失败
+            [self.view addAlertViewWithMessage:@"请求不到数据，请重试" andTarget:self];
         }
     }
     else if (_downLoadVidio)

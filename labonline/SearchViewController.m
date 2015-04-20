@@ -9,7 +9,6 @@
 #import "SearchViewController.h"
 #import "SearchCell.h"
 #import "AFNetworkTool.h"
-#import "PDFBrowserViewController.h"
 #import "JiShuZhuanLanDetailViewController.h"
 #import "UIView+Category.h"
 

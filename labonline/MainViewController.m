@@ -31,7 +31,6 @@
 #import "UIView+Category.h" // 加载动画
 #import "EGORefreshTableHeaderView.h"
 
-#import "PDFBrowserViewController.h"
 #import "JiShuZhuanLanDetailViewController.h"
 
 @interface MainViewController ()<LeftViewControllerDelegate,UIScrollViewDelegate,EGORefreshTableHeaderDelegate>
@@ -165,7 +164,7 @@
     else
     {
         // 失败
-        [self.view addAlertViewWithMessage:@"请求不到数据" andTarget:self];
+        [self.view addAlertViewWithMessage:@"请求不到数据，请重试" andTarget:self];
     }
 }
 

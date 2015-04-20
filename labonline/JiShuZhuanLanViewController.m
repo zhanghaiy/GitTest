@@ -16,7 +16,6 @@
 #import "AppDelegate.h"
 #import "SearchViewController.h"
 #import "NetManager.h"
-#import "PDFBrowserViewController.h"
 #import "UIView+Category.h"
 #import "EGORefreshTableHeaderView.h"
 
@@ -134,6 +133,7 @@
     else
     {
         // 失败
+        [self.view addAlertViewWithMessage:@"请求不到数据，请重试" andTarget:self];
     }
 }
 
@@ -170,24 +170,10 @@
 - (void)pictureShowMethod:(PictureShowView *)pictureShowV
 {
     NSDictionary *dict = [[pictureShowV.imageInfoArray objectAtIndex:pictureShowV.imageIndex] objectForKey:@"articleinfo"];
-    
-    if ([[dict objectForKey:@"urlpdf"] length]>5)
-    {
-        // PDF 跳转PDF页面
-        NSLog(@"跳转PDF页面");
-        PDFBrowserViewController *pdfBrowseVC = [[PDFBrowserViewController alloc]init];
-        pdfBrowseVC.filePath = [dict objectForKey:@"urlpdf"];
-        pdfBrowseVC.articalId = [dict objectForKey:@"articleid"];
-        [self.navigationController pushViewController:pdfBrowseVC animated:YES];
-    }
-    else if ([[dict objectForKey:@"urlhtml"] length]>5)
-    {
-        // html
-        JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
-        
-        detailVC.articalDic = dict;
-        [self.navigationController pushViewController:detailVC animated:YES];
-    }
+
+    JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+    detailVC.articalDic = dict;
+    [self.navigationController pushViewController:detailVC animated:YES];
 }
 
 #pragma mark -- 跳转到技术专栏详情界面
