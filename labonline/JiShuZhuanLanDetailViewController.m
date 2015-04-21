@@ -417,7 +417,7 @@
     [self.view addSubview:darkV];
     
     ShareView *shareV = [[[NSBundle mainBundle]loadNibNamed:@"ShareView" owner:self options:0] lastObject];
-    shareV.frame = CGRectMake(0, kScreenHeight-220, kScreenWidth, 220);
+    shareV.frame = CGRectMake(0, kScreenHeight-220-64, kScreenWidth, 220);
     shareV.backgroundColor = [UIColor colorWithWhite:248/255.0 alpha:1];
     shareV.target = self;
     shareV.action = @selector(shareCallBack:);
@@ -558,11 +558,10 @@
     return YES;
 }
 
-#pragma mark --notification handler
+#pragma mark - notification handler
 // 键盘升起时 downV 跟着升起
 - (void)keyboardWillChangeFrame:(NSNotification *)notification
 {
-    NSLog(@"UIKeyboardDidShowNotification");
     LoginView *logView = (LoginView *)[self.view viewWithTag:kLogViewTag];
     
     NSDictionary *info = [notification userInfo];
@@ -571,7 +570,7 @@
     CGRect endKeyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGFloat yOffset = endKeyboardRect.origin.y - beginKeyboardRect.origin.y;
     CGRect rect = logView.backView.frame;
-    rect.origin.y += yOffset/2;
+    rect.origin.y += yOffset/3;
     [UIView animateWithDuration:duration animations:^{
         logView.backView.frame = rect;
     }];
