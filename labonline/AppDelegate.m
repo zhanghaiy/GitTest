@@ -47,7 +47,7 @@ NSString *const COCIM_INTERFACE_PAST_MAGAZINE=@"http://192.168.0.153:8181/labonl
     _sideViewController=[[YRSideViewController alloc]initWithNibName:nil bundle:nil];
     _sideViewController.rootViewController=mainNVC;
     _sideViewController.leftViewController=leftViewController;
-    _sideViewController.rightViewController=rightViewController;
+//    _sideViewController.rightViewController=rightViewController;
     
     
     _sideViewController.leftViewShowWidth=240;

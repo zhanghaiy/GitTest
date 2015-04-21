@@ -15,10 +15,13 @@
 #import <AVFoundation/AVFoundation.h>
 #import <QuickLook/QuickLook.h>
 
+#import "YRSideViewController.h"
+#import "AppDelegate.h"
+#import "PathManager.h"
 
-@interface JiShuZhuanLanDetailViewController ()<UIWebViewDelegate,QLPreviewControllerDataSource,QLPreviewControllerDelegate>
+@interface JiShuZhuanLanDetailViewController ()<UIWebViewDelegate,QLPreviewControllerDataSource,QLPreviewControllerDelegate,UIAlertViewDelegate>
 {
-    UIWebView *_webV;
+    UIWebView *_webView;
     BOOL _addReadCounts; // 是否在增加阅读数
     BOOL _isPDF; // 是否是PDF
     BOOL _haveVidio;// 是否有视频
@@ -29,11 +32,15 @@
     NSString *_urlstring;
     NSString *_articalID;
     
-    BOOL _back;
+//    BOOL _back;
     QLPreviewController *previewController;
     NSURL *_fileUrl;
+    BOOL _downloadPdf;
+    BOOL _upDataPdf;
     
     MFMailComposeViewController *mailComposer;
+    
+    UIToolbar *toolBar;
 }
 @end
 
@@ -42,6 +49,7 @@
 #define kToolBarHeight 60
 #define kSubItemsTag 68
 
+#pragma mark - 传递的数据
 - (void)setArticalDic:(NSDictionary *)articalDic
 {
     _articalDic = articalDic;
@@ -71,33 +79,47 @@
 
 #pragma mark - 本地文件路径
 // 自己写的
-- (NSString*)localFilePath
+//- (NSString*)localFilePath
+//{
+//    NSString *documentsPath = [NSHomeDirectory() stringByAppendingString:@"/Documents/LocalFile"];
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    BOOL isDir = FALSE;
+//    BOOL isDirExist = [fileManager fileExistsAtPath:documentsPath isDirectory:&isDir];
+//    if (isDirExist == NO)
+//    {
+//        BOOL bCreateDir = [fileManager createDirectoryAtPath:documentsPath withIntermediateDirectories:YES attributes:nil error:nil];
+//        if(!bCreateDir)
+//        {
+//            NSLog(@"Create Audio Directory Failed.");
+//        }
+//    }
+//    return documentsPath;
+//}
+//
+#pragma mark - 增加阅读数
+- (void)upReadCounts
 {
-    NSString *documentsPath = [NSHomeDirectory() stringByAppendingString:@"/Documents/LocalFile"];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    BOOL isDir = FALSE;
-    BOOL isDirExist = [fileManager fileExistsAtPath:documentsPath isDirectory:&isDir];
-    if (isDirExist == NO)
-    {
-        BOOL bCreateDir = [fileManager createDirectoryAtPath:documentsPath withIntermediateDirectories:YES attributes:nil error:nil];
-        if(!bCreateDir)
-        {
-            NSLog(@"Create Audio Directory Failed.");
-        }
-    }
-    return documentsPath;
+    // 增加阅读数
+    _addReadCounts = YES;
+    [self requestMainDataWithURLString:[NSString stringWithFormat:kAddReadCountsUrl,_articalID]];
 }
 
-
-
-- (void)viewDidLoad {
+#pragma mark - viewDidLoad
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
 //    [WXApi registerApp:@"wxe0742138717ee3fe"];
 //    self.tencentAuth = [[TencentOAuth alloc] initWithAppId:@"1104472845" andDelegate:self];
-    self.title=_titleStr;
     
+    self.title=_titleStr;
+    //界面调整
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
+    {
+        if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
+            self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
     // 左侧按钮
     NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 26) andBackImageWithName:@"aniu_07.png"];
     leftButton.delegate = self;
@@ -112,7 +134,7 @@
     self.navigationItem.rightBarButtonItem = rightItem;
     
     // 底部工具栏
-    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, kScreenHeight - kToolBarHeight, kScreenWidth, kToolBarHeight)];
+    toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, kScreenHeight - kToolBarHeight-64, kScreenWidth, kToolBarHeight)];
     
     NSArray *imageArray = @[@"收藏.png",@"评价.png",@"分享.png",@"下载.png"];
     NSMutableArray *itemArray = [[NSMutableArray alloc]init];
@@ -135,43 +157,52 @@
     [toolBar setItems:itemArray animated:YES];
     toolBar.backgroundColor = [UIColor colorWithRed:248/255.0 green:248/255.0 blue:248/255.0 alpha:1];
     [self.view addSubview:toolBar];
-    
-    // webView
-    // 判断本地是否存在pdf
-    if (_isPDF)
-    {
-        NSString *path = [NSString stringWithFormat:@"%@/%@",[self localFilePath],[[NSURL URLWithString:_urlstring] lastPathComponent]];
-        NSLog(@"%@",path);
-        BOOL exit = [[NSFileManager defaultManager] fileExistsAtPath:path];
-        if (exit)
-        {
-            _fileUrl = [NSURL fileURLWithPath:path];
-        }
-        else
-        {
-            _fileUrl = [NSURL URLWithString:_urlstring];
-            [self upReadCounts];
-        }
-    }
-    else
-    {
-        _fileUrl = [NSURL URLWithString:_urlstring];
-        [self upReadCounts];
-    }
-
-    UIWebView *webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 64, kScreenWidth, kScreenHeight-64-kToolBarHeight)];
-    webView.delegate = self;
-    [self.view addSubview:webView];
-    NSURLRequest *request = [NSURLRequest requestWithURL:_fileUrl];
-    [webView loadRequest:request];
-}
-
-- (void)upReadCounts
-{
     // 增加阅读数
-    _addReadCounts = YES;
-    [self requestMainDataWithURLString:[NSString stringWithFormat:kAddReadCountsUrl,_articalID]];
+    [self upReadCounts];
+    _fileUrl = [NSURL URLWithString:_urlstring];
+    
+    _webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-kToolBarHeight-64)];
+    _webView.delegate = self;
+    [self.view addSubview:_webView];
+    NSURLRequest *request = [NSURLRequest requestWithURL:_fileUrl];
+    [_webView loadRequest:request];
+    
+    // 可以缩放
+    _webView.multipleTouchEnabled = YES;
+    UIPinchGestureRecognizer *pin = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(pinAction:)];
+    [_webView addGestureRecognizer:pin];
+    
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+    [_webView addGestureRecognizer:pan];
+    
+    [self.view bringSubviewToFront:toolBar];
+    AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
+    YRSideViewController *sideViewController=[delegate sideViewController];
+    sideViewController.needSwipeShowMenu=NO;
 }
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
+    YRSideViewController *sideViewController=[delegate sideViewController];
+    sideViewController.needSwipeShowMenu=YES;
+}
+
+#pragma mark - 拖拽
+- (void) handlePan: (UIPanGestureRecognizer *)rec{
+    CGPoint point = [rec translationInView:self.view];
+    NSLog(@"%f,%f",point.x,point.y);
+    rec.view.center = CGPointMake(rec.view.center.x + point.x, rec.view.center.y + point.y);
+    [rec setTranslation:CGPointMake(0, 0) inView:self.view];
+}
+#pragma mark - 缩放
+- (void)pinAction:(UIPinchGestureRecognizer *)pin
+{
+    pin.view.transform = CGAffineTransformScale(pin.view.transform, pin.scale, pin.scale);
+    pin.scale = 1.0f;
+}
+
 
 #pragma mark - 网络请求
 #pragma mark -- 开始请求
@@ -186,25 +217,14 @@
 #pragma mark --网络请求完成
 - (void)requestFinished:(NetManager *)netManager
 {
-    if (_collection)
+    if (_collection)// 收藏
     {
         _collection = NO;
-        // 收藏
         if (netManager.downLoadData)
         {
-            // 成功
-            // 解析
             [self.view removeLoadingVIewInView:self.view andTarget:self];
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
-            if ([[dict objectForKey:@"respCode"] integerValue] == 1000)
-            {
-                // 收藏成功
-                [self createAlertViewWithMessage:@"收藏成功"];
-            }
-            else
-            {
-                [self createAlertViewWithMessage:[dict objectForKey:@"remark"]];
-            }
+            [self.view addAlertViewWithMessage:[dict objectForKey:@"remark"] andTarget:self];
         }
         else
         {
@@ -212,9 +232,8 @@
             [self.view addAlertViewWithMessage:@"请求不到数据，请重试" andTarget:self];
         }
     }
-    else if (_downLoadVidio)
+    else if (_downLoadVidio) // 下载
     {
-       // 下载
         _downLoadVidio = NO;
         [self.view removeLoadingVIewInView:self.view andTarget:self];
         if (netManager.downLoadData)
@@ -226,7 +245,7 @@
                 BOOL exit = [netManager.downLoadData writeToFile:toPath atomically:YES];
                 if (exit)
                 {
-                    [self createAlertViewWithMessage:@"文件下载成功"];
+                    [self.view addAlertViewWithMessage:@"文件下载成功" andTarget:self];
                     UIImage *image = [self getVidioImageWithVidioPath:toPath];
                     NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
                     NSDictionary *currentDownloadVidio = @{@"VidioName":fileName,@"VidioPath":toPath,@"title":[_articalDic objectForKey:@"title"],@"type":[_articalDic objectForKey:@"type"],@"image":imageData};
@@ -246,18 +265,18 @@
                     [defaults synchronize];
                 }
                 else {
-                    [self createAlertViewWithMessage:@"文件写入本地失败"];
+                    [self.view addAlertViewWithMessage:@"文件写入本地失败" andTarget:self];
                 }
             }
             else {
-                [self createAlertViewWithMessage:@"文件存储路径不存在"];
+                [self.view addAlertViewWithMessage:@"文件存储路径不存在" andTarget:self];
             }
         }
         else {
-            [self createAlertViewWithMessage:@"文件下载失败,请检查网络"];
+            [self.view addAlertViewWithMessage:@"文件下载失败,请检查网络" andTarget:self];
         }
     }
-    else if (_addReadCounts)
+    else if (_addReadCounts) // 增加阅读数
     {
         _addReadCounts = NO;
     }
@@ -278,12 +297,6 @@
     return thumb;
 }
 
-
-- (void)createAlertViewWithMessage:(NSString *)message
-{
-    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-    [alertV show];
-}
 
 #pragma mark - 按钮点击事件
 - (void)buttonClicked:(UIButton *)btn
@@ -329,18 +342,30 @@
             if (_isPDF)
             {
                 // 下载PDF
-                [self saveCurrentFile];
+                NSString *fileName = [[_urlstring componentsSeparatedByString:@"/"] lastObject];
+                NSString *toPath = [NSString stringWithFormat:@"%@/%@",[PathManager getCatePathWithType:PDFPath],fileName];
+                BOOL exit = [[NSFileManager defaultManager] fileExistsAtPath:toPath isDirectory:nil];
+                if (exit)
+                {
+                    _downloadPdf = YES;
+                    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:[NSString stringWithFormat:@"本地已存在文件：%@",fileName] delegate:self cancelButtonTitle:@"覆盖" otherButtonTitles:@"取消", nil];
+                    [alertV show];
+                }
+                else
+                {
+                    [self saveCurrentFile];
+                }
             }
             else
             {
+                 // 下载视频
                 if (_haveVidio)
                 {
                     _downLoadVidio = YES;
-                    // 下载视频
                     NSString *currentVidioName = [[_vidioUrl componentsSeparatedByString:@"/"] lastObject];
                     if ([self localExitCurrentVidioName:currentVidioName])
                     {
-                        [self createAlertViewWithMessage:@"本地已经存在该视频"];
+                        [self.view addAlertViewWithMessage:@"本地已经存在该视频" andTarget:self];
                     }
                     else
                     {
@@ -351,7 +376,7 @@
                 }
                 else
                 {
-                    [self createAlertViewWithMessage:@"暂无视频"];
+                    [self.view addAlertViewWithMessage:@"暂无视频" andTarget:self];
                 }
             }
         }
@@ -443,51 +468,69 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - UIAlertView
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (_downloadPdf)
+    {
+        _downloadPdf = NO;
+        if (buttonIndex == 0)
+        {
+            // 下载
+            [self saveCurrentFile];
+        }
+    }
+}
+
 #pragma mark - 保存pdf
 - (void)saveCurrentFile
 {
+    NSData *fileData = [NSData dataWithContentsOfURL:_fileUrl];
+
     NSString *fileName = [[_urlstring componentsSeparatedByString:@"/"] lastObject];
-    NSString *fileEnd = [[fileName componentsSeparatedByString:@"."] lastObject];
-    if ([fileEnd isEqualToString:@"pdf"])
+    NSString *toPath = [NSString stringWithFormat:@"%@/%@",[PathManager getCatePathWithType:PDFPath],fileName];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:toPath isDirectory:nil])
     {
-        NSString *toPath = [NSString stringWithFormat:@"%@/%@",[self localFilePath],fileName];
-        if ([[NSFileManager defaultManager] fileExistsAtPath:toPath isDirectory:nil])
+        [self.view addAlertViewWithMessage:@"文件已经存在" andTarget:self];
+    }
+    else
+    {
+        if (fileName != nil)
         {
-            [self createAlertViewWithMessage:@"文件已经存在"];
-        }
-        else
-        {
-            NSURL *ressourcesUrl = [NSURL URLWithString:_urlstring];
-            NSData *fileData = [NSData dataWithContentsOfURL:ressourcesUrl];
-            if (fileName != nil)
+            NSError *error = nil;
+            BOOL exit = [fileData writeToFile:toPath options:NSDataWritingAtomic error:&error];
+            if (exit)
             {
-                NSError *error = nil;
-                [fileData writeToFile:toPath options:NSDataWritingAtomic error:&error];
-                if (error != nil)
-                {
-                    // 写入本地失败
-                    [self createAlertViewWithMessage:[NSString stringWithFormat:@"文件：%@ 写入本地失败", fileName]];
-                }
-                else
-                {
-                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                    NSMutableArray *pdfArray;
-                    if ([defaults objectForKey:@"PDFArray"])
-                    {
-                        pdfArray = [[NSMutableArray alloc]initWithArray:[defaults objectForKey:@"PDFArray"]];
-                    }
-                    else
-                    {
-                        pdfArray = [[NSMutableArray alloc]init];
-                    }
-                    [pdfArray insertObject:_articalDic atIndex:0];
-                    [defaults setObject:pdfArray forKey:@"PDFArray"];
-                    [self createAlertViewWithMessage:[NSString stringWithFormat:@"文件：%@ 下载成功", fileName]];
-                }
+                [self pdfInfoSaveToUserDefaults];
+            }
+            else
+            {
+                // 写入本地失败
+                [self.view addAlertViewWithMessage:@"文件写入本地失败" andTarget:self];
             }
         }
     }
 }
+
+#pragma mark - 将PDF文章信息存入沙盒
+- (void)pdfInfoSaveToUserDefaults
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *pdfArray;
+    if ([defaults objectForKey:@"PDFArray"])
+    {
+        pdfArray = [[NSMutableArray alloc]initWithArray:[defaults objectForKey:@"PDFArray"]];
+    }
+    else
+    {
+        pdfArray = [[NSMutableArray alloc]init];
+    }
+    [pdfArray insertObject:_articalDic atIndex:0];
+    [defaults setObject:pdfArray forKey:@"PDFArray"];
+    [self.view addAlertViewWithMessage:@"文件下载成功" andTarget:self];
+}
+
 //#pragma mark 微信所用
 //-(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
 //    return [WXApi handleOpenURL:url delegate:self];
