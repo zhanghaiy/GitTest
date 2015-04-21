@@ -18,5 +18,7 @@
 + (void)removePDFNSUserDefaults;
 // 根据类型清除相应文件夹 例如VidioPath,PDFPath,DataPath
 + (void)removeUserPersonCacheWithType:(PathType)pathType;
+// 删除用户信息
++ (void)removeUserInfo;
 
 @end

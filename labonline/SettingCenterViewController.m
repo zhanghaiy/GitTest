@@ -123,7 +123,6 @@
         case 4:
         {
             // 关于我们
-            // 关于我们
             AboutMeViewController *aboutMeVC = [[AboutMeViewController alloc]init];
             [self.navigationController pushViewController:aboutMeVC animated:YES];
         }

@@ -15,6 +15,7 @@
 // 系统设置 清除缓存
 + (void)removeUserAllLocalCacheFile
 {
+    [self removeUserInfo];
     [self removeVidioNSUserDefaults];
     [self removePDFNSUserDefaults];
     [self removeUserPersonCacheWithType:VidioPath];
@@ -38,6 +39,7 @@
     [defaults synchronize];
 }
 
+// 根据类型清除相应文件夹 例如VidioPath,PDFPath,DataPath
 + (void)removeUserPersonCacheWithType:(PathType)pathType
 {
     NSString *path = [PathManager getCatePathWithType:pathType];
@@ -50,6 +52,20 @@
     {
         [fileManager removeItemAtPath:[path stringByAppendingPathComponent:filename] error:NULL];
     }
+}
+
+// 删除用户信息
++ (void)removeUserInfo
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults removeObjectForKey:@"userName"];
+    [userDefaults removeObjectForKey:@"password"];
+    [userDefaults removeObjectForKey:@"userid"];
+    [userDefaults removeObjectForKey:@"nickname"];
+    [userDefaults removeObjectForKey:@"phone"];
+    [userDefaults removeObjectForKey:@"email"];
+    [userDefaults removeObjectForKey:@"icon"];
+    [userDefaults synchronize];
 }
 
 @end
