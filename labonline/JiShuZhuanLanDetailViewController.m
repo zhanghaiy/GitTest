@@ -308,15 +308,18 @@
         if ([[dic objectForKey:@"respCode"] integerValue] == 1000)
         {
             LoginView *logView = (LoginView *)[self.view viewWithTag:kLogViewTag];
+            NSArray *keyArray = @[@"id",@"nickname",@"phone",@"email",@"icon"];
             NSDictionary *userInfo = [[dic objectForKey:@"userinfo"] lastObject];
             NSUserDefaults *userDe=[NSUserDefaults standardUserDefaults];
             [userDe setObject:logView.nameField.text forKey:@"userName"];
             [userDe setObject:logView.passwordField.text forKey:@"password"];
-            [userDe setObject:[userInfo objectForKey:@"id"] forKey:@"userid"];
-            [userDe setObject:[userInfo objectForKey:@"nickname"] forKey:@"nickname"];
-            [userDe setObject:[userInfo objectForKey:@"phone"] forKey:@"phone"];
-            [userDe setObject:[userInfo objectForKey:@"email"] forKey:@"email"];
-            [userDe setObject:[userInfo objectForKey:@"icon"] forKey:@"icon"];
+            for (NSString *keys in keyArray)
+            {
+                if ([userInfo objectForKey:keys])
+                {
+                    [userDe setObject:[userInfo objectForKey:keys] forKey:keys];
+                }
+            }
             [userDe synchronize];
             [self removeLogView];
         }
@@ -350,9 +353,9 @@
         case 0:
         {
            // 收藏
-            if ([defaults objectForKey:@"userid"])
+            if ([defaults objectForKey:@"id"])
             {
-                userid = [defaults objectForKey:@"userid"];
+                userid = [defaults objectForKey:@"id"];
                 _collection = YES;
                 NSString *urlStr = [NSString stringWithFormat:@"%@?userid=%@&articleid=%@",kCollectionUrl,userid,_articalID];
                 [self requestMainDataWithURLString:urlStr];
@@ -369,7 +372,7 @@
         case 1:
         {
             // 评价
-            if ([defaults objectForKey:@"userid"])
+            if ([defaults objectForKey:@"id"])
             {
                 JSZLEvaluationViewController *jszlEvaluVC = [[JSZLEvaluationViewController alloc]init];
                 jszlEvaluVC.articalId = _articalID;// 9185
@@ -391,7 +394,7 @@
         case 3:
         {
             // 下载
-            if ([defaults objectForKey:@"userid"])
+            if ([defaults objectForKey:@"id"])
             {
                 [self downLoad];
             }

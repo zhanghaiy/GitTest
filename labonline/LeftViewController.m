@@ -169,10 +169,26 @@
         // 登陆
         _cateTableView.tableHeaderView = _logedV;
         UILabel *nameLab = (UILabel *)[self.view viewWithTag:kNameLableTag];
-        nameLab.text = [userDe objectForKey:@"nickname"];
+        if ([userDe objectForKey:@"nickname"])
+        {
+            nameLab.text = [userDe objectForKey:@"nickname"];
+        }
+        else
+        {
+           nameLab.text = [userDe objectForKey:@"userName"];
+        }
         
         UIButton *btn = (UIButton *)[self.view viewWithTag:kImageTag];
-        [btn setImageWithURL:[NSURL URLWithString:[userDe objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"33.jpg"]];
+        if ([userDe objectForKey:@"icon"])
+        {
+            // 去掉背景图
+            [btn setBackgroundImage:nil forState:UIControlStateNormal];
+            [btn setImageWithURL:[NSURL URLWithString:[userDe objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"头像.png"]];
+        }
+        else
+        {
+            [btn setBackgroundImage:[UIImage imageNamed:@"头像.png"] forState:UIControlStateNormal];
+        }
     }
     else
     {

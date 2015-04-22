@@ -81,10 +81,10 @@
 - (void)sendBtnClicked
 {
     NSUserDefaults *defau = [NSUserDefaults standardUserDefaults];
-    if ([defau objectForKey:@"userid"])
+    if ([defau objectForKey:@"id"])
     {
         [self.view addLoadingViewInSuperView:self.view andTarget:self];
-        NSDictionary *paramDic = @{@"userid":[defau objectForKey:@"userid"],@"feedbackcontent":textV.text};
+        NSDictionary *paramDic = @{@"userid":[defau objectForKey:@"id"],@"feedbackcontent":textV.text};
         [AFNetworkTool postJSONWithUrl:kUserCallBackUrl parameters:paramDic success:^(id responseObject)
          {
             // 用户提交反馈成功

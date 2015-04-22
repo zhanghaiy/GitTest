@@ -76,7 +76,15 @@
     UIButton *personImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [personImageButton setFrame:CGRectMake((kScreenWidth-kImageBUttonHeight)/2, 20, kImageBUttonHeight, kImageBUttonHeight)];
     personImageButton.tag = kHeadImageBtnTag;
-    [personImageButton setImageWithURL:[NSURL URLWithString:[defaults objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"头像.png"]];
+    if ([defaults objectForKey:@"icon"])
+    {
+        [personImageButton setBackgroundImage:nil forState:UIControlStateNormal];
+        [personImageButton setImageWithURL:[NSURL URLWithString:[defaults objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"头像.png"]];
+    }
+    else
+    {
+        [personImageButton setBackgroundImage:[UIImage imageNamed:@"头像.png"] forState:UIControlStateNormal];
+    }
     personImageButton.layer.masksToBounds = YES;
     personImageButton.layer.cornerRadius = kImageBUttonHeight/2;
     personImageButton.layer.borderColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1].CGColor;
@@ -87,7 +95,14 @@
     // 用户名
     UILabel *nameLable = [[UILabel alloc]initWithFrame:CGRectMake(50, 20+kImageBUttonHeight, kScreenWidth-100, 30)];
     nameLable.tag = kUserNameLableTag;
-    nameLable.text = [defaults objectForKey:@"nickname"];
+    if ([defaults objectForKey:@"nickname"])
+    {
+        nameLable.text = [defaults objectForKey:@"nickname"];
+    }
+    else
+    {
+        nameLable.text = [defaults objectForKey:@"username"];
+    }
     nameLable.textAlignment = NSTextAlignmentCenter;
     nameLable.textColor = [UIColor redColor];
     nameLable.font = [UIFont systemFontOfSize:kOneFontSize];
@@ -120,9 +135,9 @@
     [outButton addTarget:self action:@selector(outCurrentUser) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:outButton];
     
-    if ([defaults objectForKey:@"userid"])
+    if ([defaults objectForKey:@"id"])
     {
-        _userId = [defaults objectForKey:@"userid"];
+        _userId = [defaults objectForKey:@"id"];
     }
 }
 
@@ -249,9 +264,13 @@
     // 退出当前账号
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     //移除UserDefaults中存储的用户信息
+    NSArray *keyArray = @[@"id",@"nickname",@"phone",@"email",@"icon"];
+    for (NSString *keys in keyArray)
+    {
+        [userDefaults removeObjectForKey:keys];
+    }
     [userDefaults removeObjectForKey:@"userName"];
     [userDefaults removeObjectForKey:@"password"];
-    [userDefaults removeObjectForKey:@"userid"];
     [userDefaults synchronize];
     
 //    AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
