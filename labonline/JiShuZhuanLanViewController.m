@@ -32,7 +32,7 @@
 @end
 
 @implementation JiShuZhuanLanViewController
-#define kImageShowViewHeight 150
+#define kImageShowViewHeight (kScreenHeight*130/480)
 #define kCellHeight 245
 #define kCellBaseHeight 45
 #define kCellAloneArticalHeight 40

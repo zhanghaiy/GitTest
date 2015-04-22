@@ -60,7 +60,7 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults removeObjectForKey:@"userName"];
     [userDefaults removeObjectForKey:@"password"];
-    [userDefaults removeObjectForKey:@"userid"];
+    [userDefaults removeObjectForKey:@"id"];
     [userDefaults removeObjectForKey:@"nickname"];
     [userDefaults removeObjectForKey:@"phone"];
     [userDefaults removeObjectForKey:@"email"];

@@ -99,6 +99,7 @@
         imgV.userInteractionEnabled = YES;
         [_imageScroll addSubview:imgV];
         [imgV setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"pictureurl"]] placeholderImage:[UIImage imageNamed:@"moren.png"]];// 加载时显示加载图片 pictureurl
+        NSLog(@"%@",[dict objectForKey:@"pictureurl"]);
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapImageMethod:)];
         [imgV addGestureRecognizer:tap];
         _pageControl.numberOfPages = _imageInfoArray.count;
