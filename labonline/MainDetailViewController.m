@@ -15,8 +15,8 @@
 
 #define kBackViewTag 55
 #define kMagazineCoverButtonTag 56
-#define KCoverButtonWidth 115
-#define KCoverButtonHeight 135
+#define KCoverButtonWidth (kScreenWidth*110/320)
+#define KCoverButtonHeight (kScreenHeight*130/480)
 #define kDownLoadButtonTag 88
 #define kBrowseButtonTag 89
 #define kWangQiButtonTag 90
@@ -25,11 +25,12 @@
 #define kShowImagesViewTag 333
 #define kShowScrollViewTag 334
 #define kPageControlTag 335
-#define kImageViewHeight 80
+#define kImageViewHeight (kScreenHeight*80/480)
 
 @interface MainDetailViewController ()<UIScrollViewDelegate>
 
 @end
+
 
 @implementation MainDetailViewController
 
@@ -84,14 +85,14 @@
     [scrollV addSubview:coverButton];
     // 基本信息
     // 标题
-    UILabel *cateLable = [[UILabel alloc]initWithFrame:CGRectMake(20+KCoverButtonWidth, 15,backViewWidth-20-KCoverButtonWidth, 20)];
+    UILabel *cateLable = [[UILabel alloc]initWithFrame:CGRectMake(20+KCoverButtonWidth, 20,backViewWidth-20-KCoverButtonWidth, 30)];
     cateLable.text = [_detailDict objectForKey:@"title"];  //@"期刊分类标题";
     cateLable.textAlignment = NSTextAlignmentLeft;
     cateLable.textColor = [UIColor colorWithRed:45/255.0 green:45/255.0 blue:45/255.0 alpha:1];
     cateLable.font = [UIFont systemFontOfSize:kOneFontSize];
     [scrollV addSubview:cateLable];
     // 期刊
-    UILabel *qiKanLable = [[UILabel alloc]initWithFrame:CGRectMake(20+KCoverButtonWidth, 35,backViewWidth-20-KCoverButtonWidth, 20)];
+    UILabel *qiKanLable = [[UILabel alloc]initWithFrame:CGRectMake(20+KCoverButtonWidth, 50,backViewWidth-20-KCoverButtonWidth, 20)];
     qiKanLable.text = [_detailDict objectForKey:@"qc"];//@"期刊数：2015年2月刊";
     qiKanLable.textAlignment = NSTextAlignmentLeft;
     qiKanLable.textColor = [UIColor colorWithRed:117/255.0 green:117/255.0 blue:117/255.0 alpha:1];
@@ -112,7 +113,7 @@
     UIColor *textColor = [UIColor colorWithRed:124/255.0 green:124/255.0 blue:124/255.0 alpha:1];
     //阅读
     UIButton *browseButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [browseButton setFrame:CGRectMake(KCoverButtonWidth+15, 70, 48, 22)];
+    [browseButton setFrame:CGRectMake(KCoverButtonWidth+15, 75, 48, 22)];
     [browseButton setTitle:@"阅读" forState:UIControlStateNormal];
     [browseButton setTitleColor:textColor forState:UIControlStateNormal];
     browseButton.titleLabel.font = [UIFont systemFontOfSize:kOneFontSize];
@@ -126,7 +127,7 @@
     [scrollV addSubview:browseButton];
     // 往期
     UIButton *wangQiButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [wangQiButton setFrame:CGRectMake(KCoverButtonWidth+15+55, 70, 48, 22)];
+    [wangQiButton setFrame:CGRectMake(KCoverButtonWidth+15+55, 75, 48, 22)];
     [wangQiButton setTitle:@"往期" forState:UIControlStateNormal];
     [wangQiButton setTitleColor:textColor forState:UIControlStateNormal];
     wangQiButton.titleLabel.font = [UIFont systemFontOfSize:kOneFontSize];
@@ -146,7 +147,7 @@
     {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.tag = kImageButtonTag + i;
-        [btn setFrame:CGRectMake(10+i*btnWidth, 155, btnWidth, btnHeight)];
+        [btn setFrame:CGRectMake(10+i*btnWidth, 25+KCoverButtonHeight, btnWidth, btnHeight)];
         [btn setImageWithURL:[NSURL URLWithString:[_imagesArray objectAtIndex:i]] placeholderImage:nil];
         [btn addTarget:self action:@selector(imageButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [scrollV addSubview:btn];
@@ -155,7 +156,7 @@
     
     NSString *desStr = [_detailDict objectForKey:@"content"];
     CGRect rect = [desStr boundingRectWithSize:CGSizeMake(backViewWidth-20, 99999)options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:kOneFontSize]} context:nil];
-    UILabel *desLab = [[UILabel alloc]initWithFrame:CGRectMake(10, 170+kImageViewHeight,backViewWidth-20, rect.size.height)];
+    UILabel *desLab = [[UILabel alloc]initWithFrame:CGRectMake(10, 35+KCoverButtonHeight+kImageViewHeight,backViewWidth-20, rect.size.height)];
     desLab.text = desStr;
     desLab.textAlignment = NSTextAlignmentLeft;
     desLab.numberOfLines = 0;
@@ -163,9 +164,9 @@
     desLab.font = [UIFont systemFontOfSize:kOneFontSize];
     [scrollV addSubview:desLab];
     
-    if (backViewheight-170-kImageViewHeight-rect.size.height<=10)
+    if (backViewheight-35-KCoverButtonHeight-kImageViewHeight-rect.size.height<=10)
     {
-        scrollV.contentSize = CGSizeMake(0, 170+kImageViewHeight+rect.size.height+20);
+        scrollV.contentSize = CGSizeMake(0, 35+KCoverButtonHeight+kImageViewHeight+rect.size.height+20);
     }
 }
 

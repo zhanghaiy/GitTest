@@ -13,6 +13,7 @@
 - (void)awakeFromNib
 {
     // Initialization code
+    _textLable.textColor = [UIColor colorWithWhite:87/255.0 alpha:1];
 }
 
 - (void)fillDataWithIndex:(NSInteger)index andDataArray:(NSArray *)array

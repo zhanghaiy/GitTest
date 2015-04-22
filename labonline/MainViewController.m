@@ -48,7 +48,7 @@
 
 @implementation MainViewController
 // 图片轮播View高度
-#define kTopImageShowViewHeight 150
+#define kTopImageShowViewHeight (kScreenHeight*130/480)
 // 最新杂志View 高度
 #define kMainNewViewHeight 240
 // 技术专栏分类单位行高
@@ -59,6 +59,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
     if ([DeviceManager deviceVersion]>=7)
     {
         //界面调整
