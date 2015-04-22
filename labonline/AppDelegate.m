@@ -17,10 +17,10 @@
 
 @end
 
-NSString *const COCIM_SERVER_PATH = @"http://192.168.0.153:8181/labonline";
-NSString *const COCIM_INTERFACE_LOGIN =  @"http://192.168.0.153:8181/labonline/hyController/login.do";
-NSString *const COCIM_INTERFACE_REG=@"http://192.168.0.153:8181/labonline/hyController/insertHyyh.do";
-NSString *const COCIM_INTERFACE_PAST_MAGAZINE=@"http://192.168.0.153:8181/labonline/zzwzController/queryNfList.do";
+NSString *const COCIM_SERVER_PATH = @"http://123.57.155.106:8080/labonline";
+NSString *const COCIM_INTERFACE_LOGIN =  @"http://123.57.155.106:8080/labonline/hyController/login.do";
+NSString *const COCIM_INTERFACE_REG=@"http://123.57.155.106:8080/labonline/hyController/insertHyyh.do";
+NSString *const COCIM_INTERFACE_PAST_MAGAZINE=@"http://123.57.155.106:8080/labonline/zzwzController/queryNfList.do";
 
 @implementation AppDelegate
 
