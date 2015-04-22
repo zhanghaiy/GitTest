@@ -77,9 +77,15 @@
                 //
                 //            [um setValuesForKeysWithDictionary:data];
                 //            NSLog(@"%@",um);
-                
+                NSDictionary *userInfo = [[json objectForKey:@"userinfo"] lastObject];
                 NSUserDefaults *userDe=[NSUserDefaults standardUserDefaults];
                 [userDe setObject:username forKey:@"userName"];
+                [userDe setObject:password forKey:@"password"];
+                [userDe setObject:[userInfo objectForKey:@"id"] forKey:@"userid"];
+                [userDe setObject:[userInfo objectForKey:@"nickname"] forKey:@"nickname"];
+                [userDe setObject:[userInfo objectForKey:@"phone"] forKey:@"phone"];
+                [userDe setObject:[userInfo objectForKey:@"email"] forKey:@"email"];
+                [userDe setObject:[userInfo objectForKey:@"icon"] forKey:@"icon"];
                 [userDe synchronize];
                 
                 //            [self presentViewController:_sideViewController animated:YES completion:nil];
