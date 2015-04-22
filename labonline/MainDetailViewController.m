@@ -113,7 +113,7 @@
     UIColor *textColor = [UIColor colorWithRed:124/255.0 green:124/255.0 blue:124/255.0 alpha:1];
     //阅读
     UIButton *browseButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [browseButton setFrame:CGRectMake(KCoverButtonWidth+15, 75, 48, 22)];
+    [browseButton setFrame:CGRectMake(KCoverButtonWidth+15, 85, 48, 22)];
     [browseButton setTitle:@"阅读" forState:UIControlStateNormal];
     [browseButton setTitleColor:textColor forState:UIControlStateNormal];
     browseButton.titleLabel.font = [UIFont systemFontOfSize:kOneFontSize];
@@ -127,7 +127,7 @@
     [scrollV addSubview:browseButton];
     // 往期
     UIButton *wangQiButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [wangQiButton setFrame:CGRectMake(KCoverButtonWidth+15+55, 75, 48, 22)];
+    [wangQiButton setFrame:CGRectMake(KCoverButtonWidth+15+55, 85, 48, 22)];
     [wangQiButton setTitle:@"往期" forState:UIControlStateNormal];
     [wangQiButton setTitleColor:textColor forState:UIControlStateNormal];
     wangQiButton.titleLabel.font = [UIFont systemFontOfSize:kOneFontSize];
@@ -153,7 +153,6 @@
         [scrollV addSubview:btn];
     }
 
-    
     NSString *desStr = [_detailDict objectForKey:@"content"];
     CGRect rect = [desStr boundingRectWithSize:CGSizeMake(backViewWidth-20, 99999)options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:kOneFontSize]} context:nil];
     UILabel *desLab = [[UILabel alloc]initWithFrame:CGRectMake(10, 35+KCoverButtonHeight+kImageViewHeight,backViewWidth-20, rect.size.height)];

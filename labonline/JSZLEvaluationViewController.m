@@ -122,12 +122,12 @@
         参数 articleid userid text
      */
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:@"userid"]!=nil)
+    if ([defaults objectForKey:@"id"]!=nil)
     {
         if ([textField.text length])
         {
             [self.view addLoadingViewInSuperView:self.view andTarget:self];
-            NSDictionary *dic = @{@"articleid":_articalId,@"userid":[defaults objectForKey:@"userid"],@"text":textField.text};
+            NSDictionary *dic = @{@"articleid":_articalId,@"userid":[defaults objectForKey:@"id"],@"text":textField.text};
             [AFNetworkTool postJSONWithUrl:kCommitEvaluationUrl parameters:dic success:^(id responseObject)
             {
                 [self.view removeLoadingVIewInView:self.view andTarget:self];
