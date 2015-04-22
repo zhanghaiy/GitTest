@@ -15,6 +15,7 @@
 #import "UserCallBackViewController.h"
 #import "AFNetworkTool.h"
 #import "UIView+Category.h"
+#import "RemoveCacheManager.h"
 
 @interface SettingCenterViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
@@ -98,6 +99,7 @@
         case 0:
         {
             // 清除缓存
+            [RemoveCacheManager removeUserAllLocalCacheFile];
         }
             break;
         case 1:
@@ -120,7 +122,6 @@
             break;
         case 4:
         {
-            // 关于我们
             // 关于我们
             AboutMeViewController *aboutMeVC = [[AboutMeViewController alloc]init];
             [self.navigationController pushViewController:aboutMeVC animated:YES];

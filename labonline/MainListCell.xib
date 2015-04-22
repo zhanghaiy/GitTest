@@ -14,12 +14,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lem-uO-dI8">
-                        <rect key="frame" x="20" y="5" width="80" height="25"/>
+                        <rect key="frame" x="20" y="5" width="110" height="25"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="25" id="YF5-70-B8R"/>
+                            <constraint firstAttribute="height" constant="25" id="FKa-B1-UPM"/>
+                            <constraint firstAttribute="width" constant="110" id="XPZ-vd-sGr"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <state key="normal" title="生物检验">
                             <color key="titleColor" red="1" green="0.1915859607" blue="0.13115258390000001" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -31,13 +32,12 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="6Rw-s5-oJH" secondAttribute="bottom" constant="4" id="4Ag-Qb-VHM"/>
-                    <constraint firstItem="6Rw-s5-oJH" firstAttribute="leading" secondItem="v49-pf-hvJ" secondAttribute="leading" constant="10" id="C3S-6V-VYn"/>
-                    <constraint firstAttribute="trailing" secondItem="lem-uO-dI8" secondAttribute="trailing" constant="220" id="EHq-Nc-cE7"/>
-                    <constraint firstItem="lem-uO-dI8" firstAttribute="top" secondItem="v49-pf-hvJ" secondAttribute="top" constant="5" id="RSS-sl-48a"/>
-                    <constraint firstAttribute="trailing" secondItem="6Rw-s5-oJH" secondAttribute="trailing" constant="10" id="ent-7C-BiM"/>
-                    <constraint firstItem="lem-uO-dI8" firstAttribute="leading" secondItem="v49-pf-hvJ" secondAttribute="leading" constant="20" id="oWX-sQ-jBd"/>
-                    <constraint firstItem="6Rw-s5-oJH" firstAttribute="top" secondItem="lem-uO-dI8" secondAttribute="bottom" id="xeD-ve-VTm"/>
+                    <constraint firstItem="6Rw-s5-oJH" firstAttribute="top" secondItem="lem-uO-dI8" secondAttribute="bottom" id="4S4-eI-TSG"/>
+                    <constraint firstItem="lem-uO-dI8" firstAttribute="top" secondItem="v49-pf-hvJ" secondAttribute="top" constant="5" id="73B-8I-52h"/>
+                    <constraint firstItem="lem-uO-dI8" firstAttribute="leading" secondItem="v49-pf-hvJ" secondAttribute="leading" constant="20" id="Kwr-Ka-pCX"/>
+                    <constraint firstAttribute="bottom" secondItem="6Rw-s5-oJH" secondAttribute="bottom" constant="4" id="Mox-aF-3fd"/>
+                    <constraint firstItem="6Rw-s5-oJH" firstAttribute="leading" secondItem="v49-pf-hvJ" secondAttribute="leading" constant="10" id="oPG-ID-bl1"/>
+                    <constraint firstAttribute="trailing" secondItem="6Rw-s5-oJH" secondAttribute="trailing" constant="10" id="zUC-Dj-XmE"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

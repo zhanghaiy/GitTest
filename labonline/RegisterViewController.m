@@ -27,6 +27,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    // 添加手势 返回上一页
+    
+    UISwipeGestureRecognizer *left = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(backToPrePage)];
+    left.direction = UISwipeGestureRecognizerDirectionDown;
+    [self.view addGestureRecognizer:left];
+}
+
+- (void)backToPrePage
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -51,10 +61,14 @@
     NSString *phone=_phone.text;
     NSString *email=_email.text;
 
-    if (username.length==0||password.length==0) {
-        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"登录" message:@"用户名密码不能为空" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    if (username.length==0||password.length==0||nickname.length == 0||phone.length == 0||email.length == 0) {
+//        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"登录" message:@"用户名密码不能为空" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//        [alert show];
+        
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"信息不完整" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alert show];
-    }else{
+    }
+    else{
         NSString *loginUrl=[COCIM_INTERFACE_REG stringByAppendingFormat:@"?username=%@&password=%@&nickname=%@&phone=%@&email=%@",username,password,nickname,phone,email];
         [AFNetworkTool JSONDataWithUrl:loginUrl success:^(id json) {
             int respCode=[[json objectForKey:@"respCode"] intValue];
