@@ -37,29 +37,9 @@
     [queue addOperation:operation];
 }
 
-//- (void)postRequestWithUrlString:(NSString *)urlStr withDict:(NSDictionary *)dict
-//{
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    // 设置请求格式
-//    //    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-//    // 设置返回格式
-//    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//    [manager POST:urlStr parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        //        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-//        if (success) {
-//            success(responseObject);
-//        }
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"%@", error);
-//        if (fail) {
-//            fail();
-//        }
-//    }];
-//}
-
 - (void)callBack
 {
-    if ([self.delegate respondsToSelector:self.action])
+    if (_delegate && [self.delegate respondsToSelector:self.action])
     {
         [_delegate performSelector:_action withObject:self afterDelay:NO];
     }

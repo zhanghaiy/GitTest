@@ -74,7 +74,29 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapImgVMethod)];
     [self addGestureRecognizer:tap];
+    
+    self.multipleTouchEnabled = YES;
+    UIPinchGestureRecognizer *pin = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(pinAction:)];
+    [self addGestureRecognizer:pin];
+    
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+    [self addGestureRecognizer:pan];
 }
+
+#pragma mark - 拖拽
+- (void) handlePan: (UIPanGestureRecognizer *)rec{
+    CGPoint point = [rec translationInView:self];
+    NSLog(@"%f,%f",point.x,point.y);
+    rec.view.center = CGPointMake(rec.view.center.x + point.x, rec.view.center.y + point.y);
+    [rec setTranslation:CGPointMake(0, 0) inView:self];
+}
+#pragma mark - 缩放
+- (void)pinAction:(UIPinchGestureRecognizer *)pin
+{
+    pin.view.transform = CGAffineTransformScale(pin.view.transform, pin.scale, pin.scale);
+    pin.scale = 1.0f;
+}
+
 
 #pragma mark --tapMethod
 - (void)tapImgVMethod

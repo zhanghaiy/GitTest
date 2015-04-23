@@ -325,6 +325,11 @@
 - (void)enLargeImage:(MainNewView *)mainNewView
 {
     self.navigationController.navigationBarHidden = YES;
+    
+    AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
+    YRSideViewController *sideViewController=[delegate sideViewController];
+    sideViewController.needSwipeShowMenu=NO;
+    
     ShowPicture *pictureV = [[ShowPicture alloc]initWithFrame:self.view.bounds];
     [pictureV setSelectedIndex:mainNewView.clickImageIndex andImageDataArray:mainNewView.imageDataArray];
     pictureV.target = self;
@@ -337,6 +342,9 @@
 {
     [picV removeFromSuperview];
     self.navigationController.navigationBarHidden = NO;
+    AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
+    YRSideViewController *sideViewController=[delegate sideViewController];
+    sideViewController.needSwipeShowMenu=YES;
 }
 
 - (void)didReceiveMemoryWarning {

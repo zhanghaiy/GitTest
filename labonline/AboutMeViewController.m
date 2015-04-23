@@ -39,14 +39,14 @@
     [self.view addSubview:mainImgV];
     
     UILabel *appName = [[UILabel alloc]initWithFrame:CGRectMake((kScreenWidth-kAppNameLableWidth)/2, 85+kMainImageWidth, kAppNameLableWidth, 30)];
-    appName.text = @"医检在线";
+    appName.text = @"临床实验室";
     appName.textAlignment = NSTextAlignmentCenter;
     appName.textColor = [UIColor colorWithRed:214/255.0 green:0 blue:0 alpha:1];
     appName.font = [UIFont systemFontOfSize:15];
     [self.view addSubview:appName];
     
     UILabel *versionLable = [[UILabel alloc]initWithFrame:CGRectMake((kScreenWidth-kAppNameLableWidth)/2, 85+kMainImageWidth+30, kAppNameLableWidth, 20)];
-    versionLable.text = @"V1.0";
+    versionLable.text = @"V1.0.1";
     versionLable.textAlignment = NSTextAlignmentCenter;
     versionLable.textColor = [UIColor colorWithRed:214/255.0 green:0 blue:0 alpha:1];
     versionLable.font = [UIFont systemFontOfSize:14];

@@ -72,12 +72,13 @@
 //            NSLog(@"%@",um);
             NSArray *keyArray = @[@"id",@"nickname",@"phone",@"email",@"icon"];
             NSDictionary *userInfo = [[json objectForKey:@"userinfo"] lastObject];
+            NSLog(@"%@",userInfo);
             NSUserDefaults *userDe=[NSUserDefaults standardUserDefaults];
             [userDe setObject:username forKey:@"userName"];
             [userDe setObject:password forKey:@"password"];
             for (NSString *keys in keyArray)
             {
-                if ([userInfo objectForKey:keys])
+                if (![[userInfo objectForKey:keys] isEqual:[NSNull null]])
                 {
                     [userDe setObject:[userInfo objectForKey:keys] forKey:keys];
                 }

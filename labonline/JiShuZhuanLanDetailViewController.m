@@ -244,7 +244,14 @@
         {
             [self.view removeLoadingVIewInView:self.view andTarget:self];
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
-            [self.view addAlertViewWithMessage:[dict objectForKey:@"remark"] andTarget:self];
+            if ([[dict objectForKey:@"respCode"] integerValue] == 1000)
+            {
+                [self.view addAlertViewWithMessage:@"收藏成功" andTarget:self];
+            }
+            else
+            {
+                [self.view addAlertViewWithMessage:[dict objectForKey:@"remark"] andTarget:self];
+            }
         }
         else
         {

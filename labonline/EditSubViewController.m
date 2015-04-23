@@ -81,32 +81,62 @@
 {
     // 修改完成
     UITextField *textField = (UITextField *)[self.view viewWithTag:kTextFieldTag];
-    NSArray *baseUrlArray = @[kAlterUserNameURL,kAlterTelephoneURL,kAlterEmailURL];
-    NSArray *paramsArray = @[@"screenname",@"tel",@"email"];
-    NSDictionary *paramDic = @{@"userid":_userID,[paramsArray objectAtIndex:_alterType]:textField.text};
-    [self.view addLoadingViewInSuperView:self.view andTarget:self];
-    [AFNetworkTool postJSONWithUrl:[baseUrlArray objectAtIndex:_alterType] parameters:paramDic success:^(id responseObject)
+    BOOL _commit = NO; // 是否提交
+    // 先判断修改的信息格式是否正确
+    if (_alterType == Telephone)
     {
-        [self.view removeLoadingVIewInView:self.view andTarget:self];
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
-        NSInteger respCode = [[dic objectForKey:@"respCode"] integerValue];
-        if (respCode == 1000)
+        if ([textField.text length] == 11)
         {
-            // 成功
-            _success = YES;
-            [self createAlertViewWithMessage:[NSString stringWithFormat:@"%@修改成功",[_dataDict objectForKey:@"Title"]]];
-            [[NSUserDefaults standardUserDefaults] setObject:textField.text forKey:[_cateDict objectForKey:[_dataDict objectForKey:@"Title"]]];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+            NSLog(@"%@",textField.text);
+            _commit = YES;
         }
         else
         {
-            _success = NO;
-            [self createAlertViewWithMessage:[NSString stringWithFormat:@"%@修改失败",[_dataDict objectForKey:@"Title"]]];
+            [self createAlertViewWithMessage:@"手机号必须是11位"];
         }
-    } fail:^{
-        [self.view removeLoadingVIewInView:self.view andTarget:self];
-        [self createAlertViewWithMessage:@"找不到网络"];
-    }];
+    }
+    else if (_alterType == EMail)
+    {
+        if ([textField.text rangeOfString:@"@"].location != NSNotFound&&([textField.text hasSuffix:@"com"]||[textField.text hasSuffix:@"cn"]))
+        {
+            _commit = YES;
+        }
+        else
+        {
+            [self createAlertViewWithMessage:@"邮箱格式不正确"];
+        }
+    }
+    
+    // 格式正确后 提交服务端
+    if (_commit)
+    {
+        NSArray *baseUrlArray = @[kAlterUserNameURL,kAlterTelephoneURL,kAlterEmailURL];
+        NSArray *paramsArray = @[@"screenname",@"tel",@"email"];
+        NSDictionary *paramDic = @{@"userid":_userID,[paramsArray objectAtIndex:_alterType]:textField.text};
+        [self.view addLoadingViewInSuperView:self.view andTarget:self];
+        [AFNetworkTool postJSONWithUrl:[baseUrlArray objectAtIndex:_alterType] parameters:paramDic success:^(id responseObject)
+         {
+             [self.view removeLoadingVIewInView:self.view andTarget:self];
+             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+             NSInteger respCode = [[dic objectForKey:@"respCode"] integerValue];
+             if (respCode == 1000)
+             {
+                 // 成功
+                 _success = YES;
+                 [self createAlertViewWithMessage:[NSString stringWithFormat:@"%@修改成功",[_dataDict objectForKey:@"Title"]]];
+                 [[NSUserDefaults standardUserDefaults] setObject:textField.text forKey:[_cateDict objectForKey:[_dataDict objectForKey:@"Title"]]];
+                 [[NSUserDefaults standardUserDefaults] synchronize];
+             }
+             else
+             {
+                 _success = NO;
+                 [self createAlertViewWithMessage:[NSString stringWithFormat:@"%@修改失败",[_dataDict objectForKey:@"Title"]]];
+             }
+         } fail:^{
+             [self.view removeLoadingVIewInView:self.view andTarget:self];
+             [self createAlertViewWithMessage:@"找不到网络"];
+         }];
+    }
 }
 
 #pragma mark - 创建alertView

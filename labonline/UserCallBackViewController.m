@@ -54,6 +54,7 @@
     textV.layer.borderWidth = 1;
     textV.scrollEnabled = YES;
     textV.text = @"提点小建议";
+    textV.textColor = [UIColor colorWithWhite:157/255.0 alpha:1];
     [self.view addSubview:textV];
     
     UILabel *markLab = [[UILabel alloc]initWithFrame:CGRectMake(10, 5+kTextViewHeight, kScreenWidth-20, kMarkLableHeight)];
@@ -110,10 +111,23 @@
     }
 }
 
+- (void)textViewDidChange:(UITextView *)textView
+{
+    if ([textV.text length]>500)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"字符个数不能大于500" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+        textView.text = [textView.text substringToIndex:500];
+        [textV resignFirstResponder];
+    }
+}
+
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (_commitSuccess)
     {
+        _commitSuccess = NO;
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
