@@ -28,6 +28,7 @@
     BOOL _addReadCounts;
     EGORefreshTableHeaderView *_refresV;
     BOOL _reloading;
+//    NetManager *netManager;
 }
 @end
 
@@ -99,6 +100,12 @@
     [self.view addLoadingViewInSuperView:self.view andTarget:self];
     [self requestMainDataWithURLString:kJSZLUrlString];
     [self createRefreshView];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+//    [netManager removeQue];
 }
 
 #pragma mark - 网络请求

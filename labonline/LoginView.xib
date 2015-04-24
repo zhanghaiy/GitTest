@@ -79,9 +79,10 @@
                         <constraint firstItem="229-YT-l2h" firstAttribute="leading" secondItem="uhr-Kh-2ij" secondAttribute="leading" id="VUZ-iy-rRa"/>
                         <constraint firstItem="dMh-ID-AyH" firstAttribute="leading" secondItem="uhr-Kh-2ij" secondAttribute="leading" constant="40" id="Wy2-WS-QOZ"/>
                         <constraint firstAttribute="trailing" secondItem="Yno-vA-VPq" secondAttribute="trailing" constant="35" id="XZR-0U-2sw"/>
-                        <constraint firstAttribute="height" constant="200" id="ZyD-h8-1rm"/>
                         <constraint firstItem="Ghp-37-Q0E" firstAttribute="top" secondItem="Yno-vA-VPq" secondAttribute="bottom" constant="10" id="a38-YF-Hvs"/>
+                        <constraint firstAttribute="width" constant="300" id="bRh-x9-GlV"/>
                         <constraint firstAttribute="trailing" secondItem="dMh-ID-AyH" secondAttribute="trailing" constant="40" id="el5-MG-eXT"/>
+                        <constraint firstAttribute="height" constant="200" id="emA-Le-25s"/>
                         <constraint firstItem="Yno-vA-VPq" firstAttribute="top" secondItem="uhr-Kh-2ij" secondAttribute="top" constant="30" id="fm4-dR-whW"/>
                         <constraint firstItem="Yno-vA-VPq" firstAttribute="leading" secondItem="uhr-Kh-2ij" secondAttribute="leading" constant="35" id="tOH-rm-Wcg"/>
                         <constraint firstItem="dhS-Hk-IVu" firstAttribute="top" secondItem="uhr-Kh-2ij" secondAttribute="top" constant="35" id="uHw-K1-Nv8"/>
@@ -92,8 +93,6 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="centerY" secondItem="uhr-Kh-2ij" secondAttribute="centerY" id="miI-Qv-Kvc"/>
-                <constraint firstItem="uhr-Kh-2ij" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="qf2-Em-MAV"/>
-                <constraint firstAttribute="trailing" secondItem="uhr-Kh-2ij" secondAttribute="trailing" constant="10" id="s4w-4c-xtq"/>
                 <constraint firstAttribute="centerX" secondItem="uhr-Kh-2ij" secondAttribute="centerX" id="sFF-iV-Wwr"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -104,7 +103,7 @@
                 <outlet property="passwordField" destination="dMh-ID-AyH" id="5iF-7V-MB2"/>
                 <outlet property="resBtn" destination="hGP-8Y-nPR" id="oJ0-Ip-Da4"/>
             </connections>
-            <point key="canvasLocation" x="362" y="218"/>
+            <point key="canvasLocation" x="455" y="213"/>
         </view>
     </objects>
     <resources>

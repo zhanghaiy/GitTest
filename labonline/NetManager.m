@@ -11,9 +11,15 @@
 #import "AFHTTPRequestOperationManager.h"
 
 @implementation NetManager
+{
+//    AFHTTPRequestOperation *operation;
+    NSOperationQueue *queue;
+    BOOL _userStop;
+}
 
 - (void)requestDataWithUrlString:(NSString *)urlString
 {
+    _userStop = NO;
     NSLog(@"~~~~~~~~~~requestDataWithUrlString");
     NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -28,13 +34,24 @@
          [self callBack];
      }failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
-         NSLog(@"AFHttpRequestOperation错误");
-         _failError = error;
-         [self callBack];
-     }];
+         if (!_userStop)
+         {
+             NSLog(@"AFHttpRequestOperation错误");
+             _failError = error;
+             [self callBack];
+         }
+    }];
     
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    queue = [[NSOperationQueue alloc] init];
     [queue addOperation:operation];
+}
+
+- (void)removeQue
+{
+    NSLog(@"removeQue");
+    _userStop = YES;
+//    [operation cancel];
+    [queue cancelAllOperations];
 }
 
 - (void)callBack
