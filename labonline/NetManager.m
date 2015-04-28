@@ -17,6 +17,17 @@
     BOOL _userStop;
 }
 
+static NetManager *netmanager = nil;
++ (NetManager*)getShareManager
+{
+    if (netmanager == nil)
+    {
+        netmanager = [[NetManager alloc]init];
+    }
+    return netmanager;
+}
+
+
 - (void)requestDataWithUrlString:(NSString *)urlString
 {
     _userStop = NO;
@@ -34,23 +45,24 @@
          [self callBack];
      }failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
+         NSLog(@"AFHttpRequestOperation错误");
          if (!_userStop)
          {
-             NSLog(@"AFHttpRequestOperation错误");
              _failError = error;
              [self callBack];
          }
     }];
-    
-    queue = [[NSOperationQueue alloc] init];
+    if (queue == nil)
+    {
+        queue = [[NSOperationQueue alloc] init];
+    }
     [queue addOperation:operation];
 }
 
-- (void)removeQue
+- (void)cancelRequestOperation
 {
     NSLog(@"removeQue");
     _userStop = YES;
-//    [operation cancel];
     [queue cancelAllOperations];
 }
 

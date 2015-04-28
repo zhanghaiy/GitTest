@@ -24,6 +24,7 @@
     NSInteger _selectedIndex;
     EGORefreshTableHeaderView *_refresV;
     BOOL _reloading;
+    BOOL _netRequest;
 }
 @end
 
@@ -74,11 +75,21 @@
     [self createRefreshView];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (_netRequest)
+    {
+        [[NetManager getShareManager] cancelRequestOperation];
+    }
+}
+
 #pragma mark - 网络请求
 #pragma mark -- 开始请求
 - (void)requestMainDataWithURLString:(NSString *)urlStr
 {
-    NetManager *netManager = [[NetManager alloc]init];
+    _netRequest = YES;
+    NetManager *netManager = [NetManager getShareManager];
     netManager.delegate = self;
     netManager.action = @selector(requestFinished:);
     [netManager requestDataWithUrlString:urlStr];
@@ -86,6 +97,7 @@
 #pragma mark --网络请求完成
 - (void)requestFinished:(NetManager *)netManager
 {
+    _netRequest = NO;
     if (_reloading)
     {
         [self stopRefresh];

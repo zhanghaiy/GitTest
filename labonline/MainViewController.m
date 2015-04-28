@@ -33,6 +33,12 @@
 
 #import "JiShuZhuanLanDetailViewController.h"
 
+#import "EJTMainView.h"
+#import "ProductCateView.h"
+
+#import "EJTListViewController.h"
+#import "EJTMenuViewController.h"
+
 @interface MainViewController ()<LeftViewControllerDelegate,UIScrollViewDelegate,EGORefreshTableHeaderDelegate>
 {
     UIScrollView *_backScrollV;
@@ -43,6 +49,9 @@
     NSMutableArray *_newMagazineImageArray;
     BOOL _reloading;
     EGORefreshTableHeaderView *_refresV;
+    int _currentTopY;
+    EJTMainView *eJTView;
+    ProductCateView *_productCateV;
 }
 @end
 
@@ -51,12 +60,21 @@
 #define kTopImageShowViewHeight (kScreenHeight*130/480)
 // 最新杂志View 高度
 #define kMainNewViewHeight 240
-// 技术专栏分类单位行高
+// 技术专栏分类单位行高 (70*kScreenHeight/480)
 #define kJSZLAloneHeight 80
 // 技术专栏头部高度
 #define kJSZLHeadHeight 40
 
-- (void)viewDidLoad {
+//(40*kScreenHeight/480)
+#define kProductHangHeight 40
+#define kProductHeadHeight 40
+
+/// (310*kScreenHeight/480)
+#define kEJTViewHeight 340
+
+
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
@@ -132,13 +150,36 @@
     
     _reloading = NO;
     [self createRefreshView];
+    
+    _currentTopY = (int)(25+kTopImageShowViewHeight+kMainNewViewHeight);
+    eJTView = [[[NSBundle mainBundle]loadNibNamed:@"EJTMainView" owner:self options:0] lastObject];
+    eJTView.frame = CGRectMake(5, _currentTopY+kJSZLAloneHeight+10, kScreenWidth-10, kEJTViewHeight);
+    eJTView.index = 12;
+    [_backScrollV addSubview:eJTView];
+    
+    
+    _productCateV = [[[NSBundle mainBundle]loadNibNamed:@"ProductCateView" owner:self options:0] lastObject];
+    [_productCateV setFrame:CGRectMake(5, _currentTopY+kJSZLAloneHeight+20+kEJTViewHeight, kScreenWidth-10, kProductHeadHeight+kProductHangHeight*1)];
+    _productCateV.counts = 3;
+    _productCateV.delegate = self;
+    _productCateV.action = @selector(productCateMethod:);
+    [_backScrollV addSubview:_productCateV];
+    
+    _backScrollV.contentSize = CGSizeMake(kScreenWidth, _currentTopY + kJSZLAloneHeight + kEJTViewHeight + 20 + kProductHeadHeight+kProductHangHeight*2);
+}
+
+- (void)productCateMethod:(id)obj
+{
+    // 菜单界面
+    EJTMenuViewController *menuVC =[[ EJTMenuViewController alloc]init];
+    [self.navigationController pushViewController:menuVC animated:YES];
 }
 
 #pragma mark - 网络请求
 #pragma mark -- 开始请求
 - (void)requestMainDataWithURLString:(NSString *)urlStr
 {
-    NetManager *netManager = [[NetManager alloc]init];
+    NetManager *netManager = [NetManager getShareManager];
     netManager.delegate = self;
     netManager.action = @selector(requestFinished:);
     [netManager requestDataWithUrlString:urlStr];
@@ -198,8 +239,17 @@
     _jSZLCateV.frame = rect;
     _jSZLCateV.cateDataArray = jSZLArray;
     
+    //e检通View y
+    CGRect ejtRect = eJTView.frame;
+    ejtRect.origin.y = _currentTopY + jSZLHeight +10;
+    eJTView.frame = ejtRect;
+    // e检通分类
+    CGRect ejtCateRect = _productCateV.frame;
+    ejtCateRect.origin.y = _currentTopY + jSZLHeight +10 + eJTView.frame.size.height+10;
+    _productCateV.frame = ejtCateRect;
+    
     // 改变scrollView可滑动
-    NSInteger y = 80+kTopImageShowViewHeight+kMainNewViewHeight+jSZLHeight;
+    NSInteger y = _currentTopY+jSZLHeight + 20 +ejtRect.size.height + ejtCateRect.size.height +10;
     if (y<kScreenHeight)
     {
         y = kScreenHeight + 20;
@@ -314,6 +364,15 @@
             // 注册
             RegisterViewController *registerVC = [[RegisterViewController alloc]init];
             [self presentViewController:registerVC animated:YES completion:nil];
+        }
+            break;
+        case EJianTong:
+        {
+            // e检通
+            EJTListViewController *eJTVC = [[EJTListViewController alloc]init];
+            eJTVC.type = 0;
+            eJTVC.titleString = @"仪器";
+            [self.navigationController pushViewController:eJTVC animated:YES];
         }
             break;
         default:

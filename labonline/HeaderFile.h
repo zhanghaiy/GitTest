@@ -19,6 +19,7 @@ typedef enum
 {
     MainPage = 0,
     WangQi,
+    EJianTong,
     JiShuZhuanLan,
     PersonCenter,
     SettingCenter,

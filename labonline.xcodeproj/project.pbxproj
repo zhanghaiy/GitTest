@@ -193,6 +193,14 @@
 		FDA91DF91AD50F5000734E1B /* MainListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDA91DF81AD50F5000734E1B /* MainListCell.xib */; };
 		FDA91DFB1AD5156100734E1B /* 分类按钮back.png in Resources */ = {isa = PBXBuildFile; fileRef = FDA91DFA1AD5156100734E1B /* 分类按钮back.png */; };
 		FDA91DFF1AD5169900734E1B /* ShowPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA91DFE1AD5169900734E1B /* ShowPicture.m */; };
+		FDB673701AEF35E60013E9A1 /* EJTMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB6736F1AEF35E60013E9A1 /* EJTMainView.m */; };
+		FDB673721AEF35FB0013E9A1 /* EJTMainView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDB673711AEF35FB0013E9A1 /* EJTMainView.xib */; };
+		FDB673751AEF6F690013E9A1 /* ProductCateView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB673741AEF6F690013E9A1 /* ProductCateView.m */; };
+		FDB673771AEF6F730013E9A1 /* ProductCateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDB673761AEF6F730013E9A1 /* ProductCateView.xib */; };
+		FDB6737A1AEF83A50013E9A1 /* EJTListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB673791AEF83A50013E9A1 /* EJTListViewController.m */; };
+		FDB6737D1AEF83B40013E9A1 /* EJTMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB6737C1AEF83B40013E9A1 /* EJTMenuViewController.m */; };
+		FDB673801AEF850F0013E9A1 /* MenuButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB6737F1AEF850F0013E9A1 /* MenuButton.m */; };
+		FDB673821AEF8A630013E9A1 /* eJianTong.json in Resources */ = {isa = PBXBuildFile; fileRef = FDB673811AEF8A630013E9A1 /* eJianTong.json */; };
 		FDB7CD3E1ACA96FD007BAF79 /* MainListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB7CD3D1ACA96FD007BAF79 /* MainListViewController.m */; };
 		FDB7CD411ACA970D007BAF79 /* MainDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB7CD401ACA970D007BAF79 /* MainDetailViewController.m */; };
 		FDB7CD431ACAAE95007BAF79 /* 返回角.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB7CD421ACAAE95007BAF79 /* 返回角.png */; };
@@ -487,6 +495,19 @@
 		FDA91DFA1AD5156100734E1B /* 分类按钮back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "分类按钮back.png"; sourceTree = "<group>"; };
 		FDA91DFD1AD5169900734E1B /* ShowPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowPicture.h; sourceTree = "<group>"; };
 		FDA91DFE1AD5169900734E1B /* ShowPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowPicture.m; sourceTree = "<group>"; };
+		FDB6736E1AEF35E60013E9A1 /* EJTMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EJTMainView.h; sourceTree = "<group>"; };
+		FDB6736F1AEF35E60013E9A1 /* EJTMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EJTMainView.m; sourceTree = "<group>"; };
+		FDB673711AEF35FB0013E9A1 /* EJTMainView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EJTMainView.xib; sourceTree = "<group>"; };
+		FDB673731AEF6F690013E9A1 /* ProductCateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductCateView.h; sourceTree = "<group>"; };
+		FDB673741AEF6F690013E9A1 /* ProductCateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductCateView.m; sourceTree = "<group>"; };
+		FDB673761AEF6F730013E9A1 /* ProductCateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductCateView.xib; sourceTree = "<group>"; };
+		FDB673781AEF83A50013E9A1 /* EJTListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EJTListViewController.h; sourceTree = "<group>"; };
+		FDB673791AEF83A50013E9A1 /* EJTListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EJTListViewController.m; sourceTree = "<group>"; };
+		FDB6737B1AEF83B40013E9A1 /* EJTMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EJTMenuViewController.h; sourceTree = "<group>"; };
+		FDB6737C1AEF83B40013E9A1 /* EJTMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EJTMenuViewController.m; sourceTree = "<group>"; };
+		FDB6737E1AEF850F0013E9A1 /* MenuButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuButton.h; sourceTree = "<group>"; };
+		FDB6737F1AEF850F0013E9A1 /* MenuButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuButton.m; sourceTree = "<group>"; };
+		FDB673811AEF8A630013E9A1 /* eJianTong.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = eJianTong.json; sourceTree = "<group>"; };
 		FDB7CD3C1ACA96FD007BAF79 /* MainListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainListViewController.h; sourceTree = "<group>"; };
 		FDB7CD3D1ACA96FD007BAF79 /* MainListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainListViewController.m; sourceTree = "<group>"; };
 		FDB7CD3F1ACA970D007BAF79 /* MainDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainDetailViewController.h; sourceTree = "<group>"; };
@@ -682,6 +703,12 @@
 				FD8B566A1ACE8578009F5E15 /* JSZLCateView.h */,
 				FD8B566B1ACE8578009F5E15 /* JSZLCateView.m */,
 				FD8B566D1ACE858C009F5E15 /* JSZLCateView.xib */,
+				FDB6736E1AEF35E60013E9A1 /* EJTMainView.h */,
+				FDB6736F1AEF35E60013E9A1 /* EJTMainView.m */,
+				FDB673711AEF35FB0013E9A1 /* EJTMainView.xib */,
+				FDB673731AEF6F690013E9A1 /* ProductCateView.h */,
+				FDB673741AEF6F690013E9A1 /* ProductCateView.m */,
+				FDB673761AEF6F730013E9A1 /* ProductCateView.xib */,
 			);
 			name = "主页";
 			sourceTree = "<group>";
@@ -775,6 +802,20 @@
 				FD558D5A1AC4098F00DA42FF /* whiteArrow@2x.png */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		FD56327D1AEDD79600CFFB85 /* e检通 */ = {
+			isa = PBXGroup;
+			children = (
+				FDB673811AEF8A630013E9A1 /* eJianTong.json */,
+				FDB6737E1AEF850F0013E9A1 /* MenuButton.h */,
+				FDB6737F1AEF850F0013E9A1 /* MenuButton.m */,
+				FDB673781AEF83A50013E9A1 /* EJTListViewController.h */,
+				FDB673791AEF83A50013E9A1 /* EJTListViewController.m */,
+				FDB6737B1AEF83B40013E9A1 /* EJTMenuViewController.h */,
+				FDB6737C1AEF83B40013E9A1 /* EJTMenuViewController.m */,
+			);
+			name = "e检通";
 			sourceTree = "<group>";
 		};
 		FD5CC6301AD7B8A0008986F0 /* SDWebImage */ = {
@@ -1004,6 +1045,7 @@
 		FD96C8AF1AC10A240002778A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				FD56327D1AEDD79600CFFB85 /* e检通 */,
 				043C77331AD4F18300B0DEAC /* 登录 */,
 				FDA91DE41AD4BAF500734E1B /* 搜索 */,
 				FD5D3BF41AD3ACA000A6F60E /* 设置 */,
@@ -1310,6 +1352,7 @@
 			files = (
 				0435E2F01AE4E92200A32AE5 /* 2_13.png in Resources */,
 				FD5D3C031AD3BF2800A6F60E /* night.png in Resources */,
+				FDB673821AEF8A630013E9A1 /* eJianTong.json in Resources */,
 				0435E2F61AE4E92200A32AE5 /* 8_13.png in Resources */,
 				FDC08F751AE119A900ED7284 /* Icon-72.png in Resources */,
 				FD462E5F1ACD2FC1001AC895 /* 视频.png in Resources */,
@@ -1355,6 +1398,7 @@
 				FD462E491ACCDF6B001AC895 /* MyCollectionCell.xib in Resources */,
 				FDC430E31AD60C05006AC165 /* SearchCell.xib in Resources */,
 				FD462E5E1ACD2FC1001AC895 /* 播放.png in Resources */,
+				FDB673721AEF35FB0013E9A1 /* EJTMainView.xib in Resources */,
 				04CDCE9F1ADF5F9D001082AB /* OffLineVidioCell.xib in Resources */,
 				FD93920E1AE6381700B4F1EE /* 输入框_05.png in Resources */,
 				FD93920F1AE6381700B4F1EE /* denglu.png in Resources */,
@@ -1408,6 +1452,7 @@
 				0435E2DC1AE4D30E00A32AE5 /* 微信.png in Resources */,
 				043C772C1AD4F15D00B0DEAC /* 白色弹窗_05.png in Resources */,
 				FD558D631AC4098F00DA42FF /* whiteArrow@2x.png in Resources */,
+				FDB673771AEF6F730013E9A1 /* ProductCateView.xib in Resources */,
 				FD5D3C0D1AD3C15000A6F60E /* SettingCell.xib in Resources */,
 				FD47C8161AC5316300846AC9 /* 分享.png in Resources */,
 				FD462E4F1ACCE022001AC895 /* 弹出框.png in Resources */,
@@ -1431,6 +1476,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDB6737A1AEF83A50013E9A1 /* EJTListViewController.m in Sources */,
 				04E37C6E1ACD28EB00045E64 /* YRSideViewController.m in Sources */,
 				FD5CC55D1AD762BD008986F0 /* NetManager.m in Sources */,
 				FD462E441ACCDE1F001AC895 /* MyCollectionViewController.m in Sources */,
@@ -1438,6 +1484,7 @@
 				FD5D3C0C1AD3C15000A6F60E /* SettingCell.m in Sources */,
 				FD96C88C1AC109E00002778A /* AppDelegate.m in Sources */,
 				FD558CF21AC3A43B00DA42FF /* JiShuZhuanLanCell.m in Sources */,
+				FDB673801AEF850F0013E9A1 /* MenuButton.m in Sources */,
 				FD97DA241ADCF3F000963FB2 /* UIView+Category.m in Sources */,
 				FD5CC6481AD7B8A1008986F0 /* SDWebImageDecoder.m in Sources */,
 				FD5CC6471AD7B8A1008986F0 /* SDImageCache.m in Sources */,
@@ -1453,6 +1500,7 @@
 				FD96C8D21AC116FF0002778A /* DeviceManager.m in Sources */,
 				FD8B56641ACE7AF8009F5E15 /* MainViewController.m in Sources */,
 				FD8AE2E31ACE2A2000A4A5B6 /* EditSubViewController.m in Sources */,
+				FDB673701AEF35E60013E9A1 /* EJTMainView.m in Sources */,
 				FD47C81B1AC5386E00846AC9 /* JSZLEvaluationViewController.m in Sources */,
 				FDA91DF31AD4F98100734E1B /* NavigationButton.m in Sources */,
 				FDC430EB1AD62684006AC165 /* ShareView.m in Sources */,
@@ -1478,6 +1526,7 @@
 				FD7742951AE48CD4006E3AC9 /* UITableView+AddRefreshCategory.m in Sources */,
 				FD9A76B41ACBC929007ACC11 /* PersonCenterViewController.m in Sources */,
 				FD8AE3221ACE658300A4A5B6 /* JiShuZhuanLanViewController.m in Sources */,
+				FDB673751AEF6F690013E9A1 /* ProductCateView.m in Sources */,
 				FD53DCEB1AC8DC1300BE4E08 /* VidioView.m in Sources */,
 				FDB7CD3E1ACA96FD007BAF79 /* MainListViewController.m in Sources */,
 				04FE4C421ACD328D00A922DA /* AFHTTPRequestOperation.m in Sources */,
@@ -1492,6 +1541,7 @@
 				04FE4C461ACD328D00A922DA /* AFSecurityPolicy.m in Sources */,
 				FD9A76FD1ACBF1B0007ACC11 /* MyCommentCell.m in Sources */,
 				04FE4C491ACD328D00A922DA /* AFURLResponseSerialization.m in Sources */,
+				FDB6737D1AEF83B40013E9A1 /* EJTMenuViewController.m in Sources */,
 				FDC430E61AD616BC006AC165 /* AboutMeViewController.m in Sources */,
 				04FE4C481ACD328D00A922DA /* AFURLRequestSerialization.m in Sources */,
 				FD9392061AE637C700B4F1EE /* LoginView.m in Sources */,

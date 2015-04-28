@@ -130,7 +130,7 @@
         _logined = NO;
     }
     
-    _titleCateArray = [[NSMutableArray alloc]initWithObjects:@"首页",@"杂志",@"技术专栏",@"用户中心", nil];
+    _titleCateArray = [[NSMutableArray alloc]initWithObjects:@"首页",@"杂志",@"e检通产品",@"技术专栏",@"用户中心", nil];
     // 列表视图：从-5开始 UI设计需要
     _cateTableView = [[UITableView alloc]initWithFrame:CGRectMake(-5, 10, kLeftWidth-10, kScreenHeight-100) style:UITableViewStylePlain];
     _cateTableView.delegate = self;

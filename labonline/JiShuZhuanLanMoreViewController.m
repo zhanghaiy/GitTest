@@ -24,6 +24,7 @@
     BOOL _addReadCounts;
     EGORefreshTableHeaderView *_refresV;
     BOOL _reloading;
+    BOOL _netRequesting;
 }
 @end
 
@@ -34,7 +35,8 @@
 #pragma mark -- 开始请求
 - (void)requestMainDataWithURLString:(NSString *)urlStr
 {
-    NetManager *netManager = [[NetManager alloc]init];
+    _netRequesting = YES;
+    NetManager *netManager = [NetManager getShareManager];
     netManager.delegate = self;
     netManager.action = @selector(requestFinished:);
     [netManager requestDataWithUrlString:urlStr];
@@ -43,6 +45,7 @@
 #pragma mark --网络请求完成
 - (void)requestFinished:(NetManager *)netManager
 {
+    _netRequesting = NO;
     if (_reloading)
     {
         [self stopRefresh];
@@ -66,6 +69,14 @@
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (_netRequesting)
+    {
+        [[NetManager getShareManager] cancelRequestOperation];
+    }
+}
 
 - (void)viewDidLoad
 {

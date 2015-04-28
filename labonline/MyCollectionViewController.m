@@ -23,6 +23,8 @@
     NSString *_userid;
     BOOL _reloading;
     EGORefreshTableHeaderView *_refresV;
+    
+    BOOL _netRequesting;
 }
 
 @end
@@ -74,11 +76,22 @@
     [self createRefreshView];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    if (_netRequesting)
+    {
+        [[NetManager getShareManager] cancelRequestOperation];
+    }
+}
+
 #pragma mark - 网络请求
 #pragma mark --- 开始请求
 - (void)requestDataWithUrlString:(NSString *)urlString
 {
-    NetManager *netManager = [[NetManager alloc]init];
+    _netRequesting = YES;
+    NetManager *netManager = [NetManager getShareManager];
     netManager.delegate = self;
     netManager.action = @selector(netManagerCallBack:);
     [netManager requestDataWithUrlString:urlString];
@@ -86,6 +99,7 @@
 #pragma mark --- 网络回调
 - (void)netManagerCallBack:(NetManager *)netManager
 {
+    _netRequesting = NO;
     if (_reloading)
     {
         [self stopRefresh];
