@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *productScrollView;
 
-@property (nonatomic,assign) NSInteger index;
+@property (nonatomic,strong) NSArray *productInfoArray;
+//@property (nonatomic,assign) NSInteger index;
 
 @end

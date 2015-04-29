@@ -22,9 +22,11 @@
 }
 */
 
-- (void)setCounts:(int)counts
+
+- (void)setProductArray:(NSArray *)productArray
 {
-    [self createCategoryLableWithCounts:counts];
+    _productArray = productArray;
+    [self createCategoryLableWithData:_productArray];
 }
 
 - (void)awakeFromNib
@@ -43,20 +45,20 @@
     _titleLab.textColor = [UIColor colorWithRed:217/255.0 green:0/255.0 blue:37/255.0 alpha:1];
 }
 
-- (void)createCategoryLableWithCounts:(NSInteger)count
+- (void)createCategoryLableWithData:(NSArray *)array
 {
-    NSArray *array = @[@"仪器",@"试剂",@"耗材"];
     NSInteger index = 0;
     NSInteger lableWidth = (self.bounds.size.width-20)/3;
-    NSInteger hang = count%3?count/3+1:count/3;
+    NSInteger hang = array.count%3?array.count/3+1:array.count/3;
     for (int i = 0; i < hang; i ++)
     {
         for (int j = 0; j < 3; j ++)
         {
-            if (index < count)
+            if (index < array.count)
             {
+                NSDictionary *subDict = [array objectAtIndex:index];
                 UILabel *cateLab = [[UILabel alloc]initWithFrame:CGRectMake(5+j*(lableWidth+5), 40+i*(kCategoryLableHeight+10), lableWidth, kCategoryLableHeight)];
-                cateLab.text = [array objectAtIndex:j];
+                cateLab.text = [_productArray objectAtIndex:j];//[subDict objectForKey:@"classifyname"];
                 cateLab.tag = kProductCateLableTag+index;
                 cateLab.textAlignment = NSTextAlignmentCenter;
                 cateLab.font = [UIFont systemFontOfSize:kTwoFontSize];

@@ -13,7 +13,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLab;
 
 // 模拟数据
-@property (nonatomic,assign) int counts;
+//@property (nonatomic,assign) int counts;
+@property (nonatomic,strong) NSArray *productArray;
 
 @property (nonatomic,assign) id delegate;
 @property (nonatomic,assign) SEL action;

@@ -154,18 +154,17 @@
     _currentTopY = (int)(25+kTopImageShowViewHeight+kMainNewViewHeight);
     eJTView = [[[NSBundle mainBundle]loadNibNamed:@"EJTMainView" owner:self options:0] lastObject];
     eJTView.frame = CGRectMake(5, _currentTopY+kJSZLAloneHeight+10, kScreenWidth-10, kEJTViewHeight);
-    eJTView.index = 12;
+//    eJTView.index = 12;
     [_backScrollV addSubview:eJTView];
     
     
     _productCateV = [[[NSBundle mainBundle]loadNibNamed:@"ProductCateView" owner:self options:0] lastObject];
     [_productCateV setFrame:CGRectMake(5, _currentTopY+kJSZLAloneHeight+20+kEJTViewHeight, kScreenWidth-10, kProductHeadHeight+kProductHangHeight*1)];
-    _productCateV.counts = 3;
     _productCateV.delegate = self;
     _productCateV.action = @selector(productCateMethod:);
     [_backScrollV addSubview:_productCateV];
     
-    _backScrollV.contentSize = CGSizeMake(kScreenWidth, _currentTopY + kJSZLAloneHeight + kEJTViewHeight + 20 + kProductHeadHeight+kProductHangHeight*2);
+    _backScrollV.contentSize = CGSizeMake(kScreenWidth, _currentTopY + kJSZLAloneHeight + kEJTViewHeight + 20 + kProductHeadHeight+kProductHangHeight*1);
 }
 
 - (void)productCateMethod:(id)obj
@@ -213,7 +212,7 @@
 #pragma mark --根据数据来添加UI控件
 - (void)addControlsWithDictionary:(NSDictionary *)dict
 {
-    // 最新主题的数据
+    // 最新文章的数据
     _newMagazineDict = [[dict objectForKey:@"newMagazineList"] objectAtIndex:0];
     NSInteger imageCount = [[_newMagazineDict objectForKey:@"picturenum"] integerValue];
     _newMagazineImageArray = [[NSMutableArray alloc]init];
@@ -239,15 +238,22 @@
     _jSZLCateV.frame = rect;
     _jSZLCateV.cateDataArray = jSZLArray;
     
-    //e检通View y
+    // e检通数据
+    NSArray *ejtArray = @[@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@""]; //[dict objectForKey:@"productList"];
+//    NSInteger hangCounts = ejtArray.count%9?ejtArray.count/9+1:ejtArray.count/9;
+    //e检通View frame
     CGRect ejtRect = eJTView.frame;
     ejtRect.origin.y = _currentTopY + jSZLHeight +10;
+//    ejtRect.size.height = kProductHeadHeight+kProductHangHeight*hangCounts;
     eJTView.frame = ejtRect;
-    // e检通分类
+    eJTView.productInfoArray = ejtArray;
+    
+    // e检通分类数据
     CGRect ejtCateRect = _productCateV.frame;
     ejtCateRect.origin.y = _currentTopY + jSZLHeight +10 + eJTView.frame.size.height+10;
     _productCateV.frame = ejtCateRect;
-    
+    _productCateV.productArray = @[@"仪器",@"试剂",@"耗材"]; //[dict objectForKey:@"productclassifyList"];
+
     // 改变scrollView可滑动
     NSInteger y = _currentTopY+jSZLHeight + 20 +ejtRect.size.height + ejtCateRect.size.height +10;
     if (y<kScreenHeight)

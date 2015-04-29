@@ -13,13 +13,20 @@
 #define kPageButtonTag 567
 
 
-- (void)setIndex:(NSInteger)index
+//- (void)setIndex:(NSInteger)index
+//{
+//    NSLog(@"~~~~~~%f",self.bounds.size.height);
+//    NSLog(@"%f~~~~~~~",self.bounds.size.width);
+//    NSArray *array = @[@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@""];
+//    [self createProductBoxWithDataArray:array];
+//    [self createPageButtonWithCounts:array.count%9?array.count/9+1:array.count/9];
+//}
+
+- (void)setProductInfoArray:(NSArray *)productInfoArray
 {
-    NSLog(@"~~~~~~%f",self.bounds.size.height);
-    NSLog(@"%f~~~~~~~",self.bounds.size.width);
-    NSArray *array = @[@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@""];
-    [self createProductBoxWithDataArray:array];
-    [self createPageButtonWithCounts:array.count%9?array.count/9+1:array.count/9];
+    _productInfoArray = productInfoArray;
+    [self createProductBoxWithDataArray:_productInfoArray];
+    [self createPageButtonWithCounts:_productInfoArray.count%9?_productInfoArray.count/9+1:_productInfoArray.count/9];
 }
 
 
