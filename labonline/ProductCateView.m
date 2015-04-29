@@ -58,7 +58,7 @@
             {
                 NSDictionary *subDict = [array objectAtIndex:index];
                 UILabel *cateLab = [[UILabel alloc]initWithFrame:CGRectMake(5+j*(lableWidth+5), 40+i*(kCategoryLableHeight+10), lableWidth, kCategoryLableHeight)];
-                cateLab.text = [_productArray objectAtIndex:j];//[subDict objectForKey:@"classifyname"];
+                cateLab.text = [subDict objectForKey:@"classifyname"];//[_productArray objectAtIndex:j];//[subDict objectForKey:@"classifyname"];
                 cateLab.tag = kProductCateLableTag+index;
                 cateLab.textAlignment = NSTextAlignmentCenter;
                 cateLab.font = [UIFont systemFontOfSize:kTwoFontSize];

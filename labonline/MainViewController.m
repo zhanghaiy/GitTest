@@ -239,8 +239,9 @@
     _jSZLCateV.cateDataArray = jSZLArray;
     
     // e检通数据
-    NSArray *ejtArray = @[@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@""]; //[dict objectForKey:@"productList"];
+    NSArray *ejtArray = [dict objectForKey:@"productList"];//@[@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@""]; //;
 //    NSInteger hangCounts = ejtArray.count%9?ejtArray.count/9+1:ejtArray.count/9;
+    NSLog(@"~~~~~%@",ejtArray);
     //e检通View frame
     CGRect ejtRect = eJTView.frame;
     ejtRect.origin.y = _currentTopY + jSZLHeight +10;
@@ -252,7 +253,7 @@
     CGRect ejtCateRect = _productCateV.frame;
     ejtCateRect.origin.y = _currentTopY + jSZLHeight +10 + eJTView.frame.size.height+10;
     _productCateV.frame = ejtCateRect;
-    _productCateV.productArray = @[@"仪器",@"试剂",@"耗材"]; //[dict objectForKey:@"productclassifyList"];
+    _productCateV.productArray = [dict objectForKey:@"productclassifyList"];// @[@"仪器",@"试剂",@"耗材"]; //[dict objectForKey:@"productclassifyList"];
 
     // 改变scrollView可滑动
     NSInteger y = _currentTopY+jSZLHeight + 20 +ejtRect.size.height + ejtCateRect.size.height +10;
