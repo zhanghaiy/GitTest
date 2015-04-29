@@ -16,7 +16,7 @@
     self.layer.cornerRadius = 2;
     self.layer.borderWidth = 1;
     self.layer.borderColor = [UIColor colorWithWhite:240/255.0 alpha:1].CGColor;
-    self.titleLabel.font = [UIFont systemFontOfSize:13];
+    self.titleLabel.font = [UIFont systemFontOfSize:kOneFontSize];
 //    [self setTitleColor:[UIColor colorWithRed:217/255.0 green:0 blue:36/255.0 alpha:1] forState:UIControlStateNormal];
     [self setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     [self setTitleColor:[UIColor colorWithRed:217/255.0 green:0 blue:36/255.0 alpha:1] forState:UIControlStateNormal];

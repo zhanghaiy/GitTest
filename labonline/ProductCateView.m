@@ -81,10 +81,11 @@
 
 - (void)tapCateLableMethod:(UITapGestureRecognizer *)tap
 {
+    _selectedButtonIndex = tap.view.tag-kProductCateLableTag;
     NSLog(@"tap%ld",tap.view.tag-kProductCateLableTag);
     if ([self.delegate respondsToSelector:self.action])
     {
-        [_delegate performSelector:_action withObject:nil afterDelay:0.01];
+        [_delegate performSelector:_action withObject:self afterDelay:0.01];
     }
 }
 

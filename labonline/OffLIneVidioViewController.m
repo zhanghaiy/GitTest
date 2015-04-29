@@ -120,7 +120,7 @@
     NSDictionary *dict = [_downloadArray objectAtIndex:offLineCell.index];
     
     // 此处由于模拟器路径存在变化 所以自己拼接字符串 在手机上测试后 再决定用哪个路径
-    NSString *path = [NSString stringWithFormat:@"%@/Documents/MyOff-lineVidio/%@",NSHomeDirectory(),[dict objectForKey:@"VidioName"]];
+    NSString *path = [NSString stringWithFormat:@"%@/Documents/UserCache/MyOff-lineVidio/%@",NSHomeDirectory(),[dict objectForKey:@"VidioName"]];
     [self playerPlayVidioWithPath:path];
     
 //    [self playerPlayVidioWithPath:[dict objectForKey:@"VidioPath"]];

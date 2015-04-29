@@ -59,8 +59,13 @@
         // 成功
         // 解析
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
-        _articalArray = [[dict objectForKey:@"data"] objectForKey:@"article"];
-        [_tableView reloadData];
+        if ([[dict objectForKey:@"respCode"] integerValue] == 1000)
+        {
+            _articalArray = [[dict objectForKey:@"data"] objectForKey:@"article"];
+//            NSLog(@"%@",dict);
+            [_tableView reloadData];
+        }
+        
     }
     else
     {

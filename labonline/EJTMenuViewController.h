@@ -10,6 +10,6 @@
 
 @interface EJTMenuViewController : UIViewController
 
-//@property (nonatomic,assign) NSInteger type;
+@property (nonatomic,assign) NSInteger firstMenu;
 
 @end

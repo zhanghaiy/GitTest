@@ -216,6 +216,8 @@
 		FDC430ED1AD62693006AC165 /* ShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDC430EC1AD62693006AC165 /* ShareView.xib */; };
 		FDC430F11AD673DA006AC165 /* UserCallBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC430F01AD673DA006AC165 /* UserCallBackViewController.m */; };
 		FDC431081AD687F2006AC165 /* 人人.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC431021AD687F2006AC165 /* 人人.png */; };
+		FDDF61781AF0EC9900725F23 /* EJTListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDDF61761AF0EC9900725F23 /* EJTListCell.m */; };
+		FDDF61791AF0EC9900725F23 /* EJTListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDDF61771AF0EC9900725F23 /* EJTListCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -531,6 +533,9 @@
 		FDC430EF1AD673DA006AC165 /* UserCallBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCallBackViewController.h; sourceTree = "<group>"; };
 		FDC430F01AD673DA006AC165 /* UserCallBackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCallBackViewController.m; sourceTree = "<group>"; };
 		FDC431021AD687F2006AC165 /* 人人.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "人人.png"; sourceTree = "<group>"; };
+		FDDF61751AF0EC9900725F23 /* EJTListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EJTListCell.h; sourceTree = "<group>"; };
+		FDDF61761AF0EC9900725F23 /* EJTListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EJTListCell.m; sourceTree = "<group>"; };
+		FDDF61771AF0EC9900725F23 /* EJTListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EJTListCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -818,6 +823,9 @@
 				FDB673791AEF83A50013E9A1 /* EJTListViewController.m */,
 				FDB6737B1AEF83B40013E9A1 /* EJTMenuViewController.h */,
 				FDB6737C1AEF83B40013E9A1 /* EJTMenuViewController.m */,
+				FDDF61751AF0EC9900725F23 /* EJTListCell.h */,
+				FDDF61761AF0EC9900725F23 /* EJTListCell.m */,
+				FDDF61771AF0EC9900725F23 /* EJTListCell.xib */,
 			);
 			name = "e检通";
 			sourceTree = "<group>";
@@ -1371,6 +1379,7 @@
 				FD5D3C051AD3BF2800A6F60E /* share.png in Resources */,
 				0436E1A51ADD05FE00AF692B /* 4_05.png in Resources */,
 				FD47C8201AC53A3300846AC9 /* JSZLEvaluationCell.xib in Resources */,
+				FDDF61791AF0EC9900725F23 /* EJTListCell.xib in Resources */,
 				FD9392071AE637C700B4F1EE /* LoginView.xib in Resources */,
 				FD47C8121AC524FB00846AC9 /* 收藏.png in Resources */,
 				FD93920D1AE6381700B4F1EE /* 弹窗背景_05.png in Resources */,
@@ -1556,6 +1565,7 @@
 				FD9A76B01ACB86F7007ACC11 /* MainListCell.m in Sources */,
 				FD5CC64A1AD7B8A1008986F0 /* SDWebImageManager.m in Sources */,
 				FD96C8C31AC1107C0002778A /* VidioPlayerViewController.m in Sources */,
+				FDDF61781AF0EC9900725F23 /* EJTListCell.m in Sources */,
 				042C46791AC2976200D36C8F /* WangQiCell.m in Sources */,
 				04CDCED51ADFCA3D001082AB /* PathManager.m in Sources */,
 				FD96C8891AC109E00002778A /* main.m in Sources */,
