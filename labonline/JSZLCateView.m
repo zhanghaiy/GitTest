@@ -27,6 +27,8 @@
     _headButton.layer.cornerRadius = 3;
     _headTitleLable.textColor = [UIColor colorWithRed:217/255.0 green:0 blue:6/255.0 alpha:1];
     _headTitleLable.backgroundColor = [UIColor clearColor];
+    _headTitleLable.tag = kTitleLableTag;
+    _headTitleLable.textColor = [UIColor colorWithRed:217/255.0 green:0/255.0 blue:37/255.0 alpha:1];
 }
 
 - (void)setCateDataArray:(NSArray *)cateDataArray
@@ -39,7 +41,7 @@
 {
      _headTitleLable.backgroundColor = [UIColor clearColor];
     NSInteger index = 0;
-    NSInteger lableWidth = (self.bounds.size.width-50)/4;
+    NSInteger lableWidth = (self.bounds.size.width-25)/4;
     NSInteger hang = 2;
     if (_cateDataArray.count<=8)
     {
@@ -52,7 +54,7 @@
             if (_cateDataArray.count > i*4+j)
             {
                 NSDictionary *subDict = [_cateDataArray objectAtIndex:index];
-                UILabel *cateLab = [[UILabel alloc]initWithFrame:CGRectMake(10+j*(lableWidth+10), 40+i*(kCategoryLableHeight+10), lableWidth, kCategoryLableHeight)];
+                UILabel *cateLab = [[UILabel alloc]initWithFrame:CGRectMake(5+j*(lableWidth+5), 40+i*(kCategoryLableHeight+10), lableWidth, kCategoryLableHeight)];
                 cateLab.text = [subDict objectForKey:@"columnname"];
 //                cateLab.text = [_cateDataArray objectAtIndex:index];
                 cateLab.tag = kCateLableTag+index;
@@ -64,6 +66,7 @@
                 cateLab.layer.borderWidth = 1;
                 cateLab.layer.borderColor = [UIColor colorWithWhite:241/255.0 alpha:1].CGColor;
                 cateLab.userInteractionEnabled = YES;
+                cateLab.textColor = [UIColor colorWithWhite:86/255.0 alpha:1];
                 [self addSubview:cateLab];
                 
                 UITapGestureRecognizer *tapCateLab = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapCateLableMethod:)];

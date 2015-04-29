@@ -37,6 +37,7 @@
     
     BOOL _downloadPdf; // 正在下载PDF
     BOOL _login;// 判断是否登录
+    BOOL _netRequesting;
     
     MFMailComposeViewController *mailComposer;
     
@@ -207,6 +208,11 @@
     AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
     YRSideViewController *sideViewController=[delegate sideViewController];
     sideViewController.needSwipeShowMenu=YES;
+    
+    if (_netRequesting)
+    {
+        [[NetManager getShareManager] cancelRequestOperation];
+    }
 }
 
 #pragma mark - 拖拽
@@ -228,7 +234,8 @@
 #pragma mark -- 开始请求
 - (void)requestMainDataWithURLString:(NSString *)urlStr
 {
-    NetManager *netManager = [[NetManager alloc]init];
+    _netRequesting = YES;
+    NetManager *netManager = [NetManager getShareManager];
     netManager.delegate = self;
     netManager.action = @selector(requestFinished:);
     [netManager requestDataWithUrlString:urlStr];
@@ -237,6 +244,7 @@
 #pragma mark --网络请求完成
 - (void)requestFinished:(NetManager *)netManager
 {
+    _netRequesting = NO;
     if (_collection)// 收藏
     {
         _collection = NO;
@@ -244,7 +252,14 @@
         {
             [self.view removeLoadingVIewInView:self.view andTarget:self];
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
-            [self.view addAlertViewWithMessage:[dict objectForKey:@"remark"] andTarget:self];
+            if ([[dict objectForKey:@"respCode"] integerValue] == 1000)
+            {
+                [self.view addAlertViewWithMessage:@"收藏成功" andTarget:self];
+            }
+            else
+            {
+                [self.view addAlertViewWithMessage:[dict objectForKey:@"remark"] andTarget:self];
+            }
         }
         else
         {

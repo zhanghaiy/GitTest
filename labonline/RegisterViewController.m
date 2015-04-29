@@ -81,7 +81,7 @@
                 NSUserDefaults *userDe=[NSUserDefaults standardUserDefaults];
                 [userDe setObject:username forKey:@"userName"];
                 [userDe setObject:password forKey:@"password"];
-                [userDe setObject:[userInfo objectForKey:@"id"] forKey:@"userid"];
+                [userDe setObject:[userInfo objectForKey:@"id"] forKey:@"id"];
                 [userDe setObject:[userInfo objectForKey:@"nickname"] forKey:@"nickname"];
                 [userDe setObject:[userInfo objectForKey:@"phone"] forKey:@"phone"];
                 [userDe setObject:[userInfo objectForKey:@"email"] forKey:@"email"];

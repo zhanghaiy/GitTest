@@ -28,6 +28,7 @@
     BOOL _addReadCounts;
     EGORefreshTableHeaderView *_refresV;
     BOOL _reloading;
+    BOOL _netRequesting;
 }
 @end
 
@@ -101,11 +102,21 @@
     [self createRefreshView];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (_netRequesting)
+    {
+        [[NetManager getShareManager] cancelRequestOperation];
+    }
+}
+
 #pragma mark - 网络请求
 #pragma mark -- 开始请求
 - (void)requestMainDataWithURLString:(NSString *)urlStr
 {
-    NetManager *netManager = [[NetManager alloc]init];
+    _netRequesting = YES;
+    NetManager *netManager = [NetManager getShareManager];
     netManager.delegate = self;
     netManager.action = @selector(requestFinished:);
     [netManager requestDataWithUrlString:urlStr];
@@ -113,6 +124,7 @@
 #pragma mark --网络请求完成
 - (void)requestFinished:(NetManager *)netManager
 {
+    _netRequesting = NO;
     if (_reloading)
     {
         [self stopRefresh];
@@ -166,6 +178,15 @@
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray *subArr = [[_articleListArray objectAtIndex:indexPath.row] objectForKey:@"article"];
+    NSInteger count = (subArr.count>5)?5:subArr.count;
+    NSLog(@"%ld",count);
+    return kCellBaseHeight + kCellAloneArticalHeight*count;
+}
+
+
 #pragma mark - 图片轮播-->进入详情
 - (void)pictureShowMethod:(PictureShowView *)pictureShowV
 {
@@ -204,18 +225,12 @@
     [self.navigationController pushViewController:moreVC animated:YES];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSArray *subArr = [[_articleListArray objectAtIndex:indexPath.row] objectForKey:@"article"];
-    NSInteger count = (subArr.count>5)?5:subArr.count;
-    NSLog(@"%ld",count);
-    return kCellBaseHeight + kCellAloneArticalHeight*count;
-}
-
+#pragma mark - 返回上一页
 - (void)popToPrePage
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
 #pragma mark - 左侧菜单
 -(void)popToLeftMenu
 {
@@ -223,6 +238,8 @@
     YRSideViewController *sideViewController=[delegate sideViewController];
     [sideViewController showLeftViewController:YES];
 }
+
+#pragma mark - 搜索界面
 - (void)enterSearchViewController
 {
     // 进入搜索界面
@@ -230,6 +247,7 @@
     [self.navigationController pushViewController:searchVC animated:YES];
 }
 
+#pragma mark - 增加阅读数
 - (void)addReadCounts
 {
     _addReadCounts = YES;

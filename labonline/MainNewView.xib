@@ -14,15 +14,14 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wangqi.png" translatesAutoresizingMaskIntoConstraints="NO" id="3Ps-Yj-M0c">
                     <rect key="frame" x="10" y="10" width="120" height="150"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="120" id="R8h-fq-zMg"/>
-                        <constraint firstAttribute="height" constant="150" id="U1c-wG-bhH"/>
+                        <constraint firstAttribute="width" constant="120" id="vNk-Ov-aMi"/>
+                        <constraint firstAttribute="height" constant="150" id="xPJ-4f-yTL"/>
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rbA-H7-RYQ">
                     <rect key="frame" x="140" y="15" width="45" height="20"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="45" id="9vw-0z-20j"/>
-                        <constraint firstAttribute="height" constant="20" id="dji-aK-tUd"/>
+                        <constraint firstAttribute="height" constant="20" id="kFp-wf-SZ8"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="New">
@@ -33,7 +32,7 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="宝洁医疗诊断相机" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zbk-Bw-0RQ">
                     <rect key="frame" x="140" y="35" width="160" height="25"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="25" id="cJ7-l4-rjT"/>
+                        <constraint firstAttribute="height" constant="25" id="DfX-qN-gXD"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -42,7 +41,7 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="期次：2015.03.18" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LiV-c8-ScV">
                     <rect key="frame" x="140" y="60" width="160" height="15"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="15" id="mMA-Bs-6HJ"/>
+                        <constraint firstAttribute="height" constant="15" id="ASy-wN-y2j"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -51,7 +50,7 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="昨天，百集系列剧《中华百家姓·起源故事》在郑州举行发布会，宣布“拜谒根脉圣地·溯源中华姓氏”中原寻根行活动启动，将通过晚报征" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bzV-af-lyZ">
                     <rect key="frame" x="140" y="75" width="160" height="85"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="85" id="kOI-bM-PBs"/>
+                        <constraint firstAttribute="height" constant="85" id="cfP-ZB-Yhj"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -60,19 +59,20 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="3Ps-Yj-M0c" firstAttribute="top" secondItem="t6e-rf-KsY" secondAttribute="top" constant="10" id="21Q-aO-CHf"/>
-                <constraint firstItem="Zbk-Bw-0RQ" firstAttribute="leading" secondItem="3Ps-Yj-M0c" secondAttribute="trailing" constant="10" id="5hv-qs-zyl"/>
-                <constraint firstAttribute="trailing" secondItem="LiV-c8-ScV" secondAttribute="trailing" constant="10" id="8ef-dF-hbE"/>
-                <constraint firstItem="rbA-H7-RYQ" firstAttribute="leading" secondItem="3Ps-Yj-M0c" secondAttribute="trailing" constant="10" id="Cgc-Ul-vZb"/>
-                <constraint firstItem="3Ps-Yj-M0c" firstAttribute="leading" secondItem="t6e-rf-KsY" secondAttribute="leading" constant="10" id="EMw-y2-IeP"/>
-                <constraint firstItem="LiV-c8-ScV" firstAttribute="top" secondItem="Zbk-Bw-0RQ" secondAttribute="bottom" id="FUK-N6-FYS"/>
-                <constraint firstItem="Zbk-Bw-0RQ" firstAttribute="top" secondItem="rbA-H7-RYQ" secondAttribute="bottom" id="JP3-5c-MTO"/>
-                <constraint firstAttribute="trailing" secondItem="bzV-af-lyZ" secondAttribute="trailing" constant="10" id="SLy-Uy-WQi"/>
-                <constraint firstItem="LiV-c8-ScV" firstAttribute="leading" secondItem="3Ps-Yj-M0c" secondAttribute="trailing" constant="10" id="TF7-Is-NOK"/>
-                <constraint firstItem="bzV-af-lyZ" firstAttribute="top" secondItem="LiV-c8-ScV" secondAttribute="bottom" id="gV9-Nq-kOJ"/>
-                <constraint firstItem="rbA-H7-RYQ" firstAttribute="top" secondItem="t6e-rf-KsY" secondAttribute="top" constant="15" id="hS6-q0-jI7"/>
-                <constraint firstItem="bzV-af-lyZ" firstAttribute="leading" secondItem="3Ps-Yj-M0c" secondAttribute="trailing" constant="10" id="mfH-vG-mfC"/>
-                <constraint firstAttribute="trailing" secondItem="Zbk-Bw-0RQ" secondAttribute="trailing" constant="10" id="v80-Bm-ej2"/>
+                <constraint firstItem="bzV-af-lyZ" firstAttribute="leading" secondItem="3Ps-Yj-M0c" secondAttribute="trailing" constant="10" id="7bs-yj-zyb"/>
+                <constraint firstItem="3Ps-Yj-M0c" firstAttribute="leading" secondItem="t6e-rf-KsY" secondAttribute="leading" constant="10" id="9mA-gw-sgj"/>
+                <constraint firstItem="rbA-H7-RYQ" firstAttribute="leading" secondItem="3Ps-Yj-M0c" secondAttribute="trailing" constant="10" id="C1U-Aa-LN1"/>
+                <constraint firstAttribute="trailing" secondItem="rbA-H7-RYQ" secondAttribute="trailing" constant="125" id="CPq-k6-yyF"/>
+                <constraint firstItem="3Ps-Yj-M0c" firstAttribute="top" secondItem="t6e-rf-KsY" secondAttribute="top" constant="10" id="Ded-jW-dvP"/>
+                <constraint firstItem="bzV-af-lyZ" firstAttribute="top" secondItem="LiV-c8-ScV" secondAttribute="bottom" id="Ij2-bW-VOC"/>
+                <constraint firstItem="LiV-c8-ScV" firstAttribute="top" secondItem="Zbk-Bw-0RQ" secondAttribute="bottom" id="Pp0-WK-cqg"/>
+                <constraint firstItem="Zbk-Bw-0RQ" firstAttribute="top" secondItem="rbA-H7-RYQ" secondAttribute="bottom" id="RdI-P1-2zA"/>
+                <constraint firstAttribute="trailing" secondItem="Zbk-Bw-0RQ" secondAttribute="trailing" constant="10" id="cgZ-My-mu2"/>
+                <constraint firstItem="LiV-c8-ScV" firstAttribute="leading" secondItem="3Ps-Yj-M0c" secondAttribute="trailing" constant="10" id="evo-Qw-vr9"/>
+                <constraint firstAttribute="trailing" secondItem="LiV-c8-ScV" secondAttribute="trailing" constant="10" id="ih9-ud-Thn"/>
+                <constraint firstAttribute="trailing" secondItem="bzV-af-lyZ" secondAttribute="trailing" constant="10" id="qgf-Su-Fmh"/>
+                <constraint firstItem="rbA-H7-RYQ" firstAttribute="top" secondItem="t6e-rf-KsY" secondAttribute="top" constant="15" id="xdu-hw-1UE"/>
+                <constraint firstItem="Zbk-Bw-0RQ" firstAttribute="leading" secondItem="3Ps-Yj-M0c" secondAttribute="trailing" constant="10" id="zN1-F5-TBF"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
@@ -82,7 +82,7 @@
                 <outlet property="qiCiLable" destination="LiV-c8-ScV" id="2rd-Vg-vn5"/>
                 <outlet property="smallNewButton" destination="rbA-H7-RYQ" id="zOg-yU-qer"/>
             </connections>
-            <point key="canvasLocation" x="302" y="164"/>
+            <point key="canvasLocation" x="75" y="143"/>
         </view>
     </objects>
     <resources>

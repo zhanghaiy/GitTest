@@ -1,0 +1,84 @@
+{
+  "Test" : [
+    {
+      "subMenus" : [
+        {
+          "subsubMenus" : [
+            "病理"
+          ],
+          "title" : "病理"
+        },
+        {
+          "subsubMenus" : [
+            "POCT",
+            "血液",
+            "免疫",
+            "微生物",
+            "生命科学",
+            "其他"
+          ],
+          "title" : "POCT"
+        },
+        {
+          "subsubMenus" : [
+            "条码系统",
+            "流水线系统",
+            "软件系统",
+            "前处理系统",
+            "后处理系统",
+            "其他"
+          ],
+          "title" : "实验室自动化"
+        }
+      ],
+      "title" : "仪器"
+    },
+    {
+      "subMenus" : [
+        {
+          "subsubMenus" : [
+            "POCT",
+            "血液",
+            "免疫",
+            "微生物",
+            "生命科学",
+            "其他"
+          ],
+          "title" : "POCT"
+        },
+        {
+          "subsubMenus" : [
+            "基因扩增",
+            "核酸纯化",
+            "其他"
+          ],
+          "title" : "生命科学"
+        }
+      ],
+      "title" : "试剂"
+    },
+    {
+      "subMenus" : [
+        {
+          "subsubMenus" : [
+            "仪器耗材"
+          ],
+          "title" : "仪器耗材"
+        },
+        {
+          "subsubMenus" : [
+            "真空采血管"
+          ],
+          "title" : "真空采血管"
+        },
+        {
+          "subsubMenus" : [
+            "其他耗材"
+          ],
+          "title" : "其他耗材"
+        }
+      ],
+      "title" : "耗材"
+    }
+  ]
+}

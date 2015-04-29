@@ -11,9 +11,26 @@
 #import "AFHTTPRequestOperationManager.h"
 
 @implementation NetManager
+{
+//    AFHTTPRequestOperation *operation;
+    NSOperationQueue *queue;
+    BOOL _userStop;
+}
+
+static NetManager *netmanager = nil;
++ (NetManager*)getShareManager
+{
+    if (netmanager == nil)
+    {
+        netmanager = [[NetManager alloc]init];
+    }
+    return netmanager;
+}
+
 
 - (void)requestDataWithUrlString:(NSString *)urlString
 {
+    _userStop = NO;
     NSLog(@"~~~~~~~~~~requestDataWithUrlString");
     NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -29,37 +46,29 @@
      }failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"AFHttpRequestOperation错误");
-         _failError = error;
-         [self callBack];
-     }];
-    
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+         if (!_userStop)
+         {
+             _failError = error;
+             [self callBack];
+         }
+    }];
+    if (queue == nil)
+    {
+        queue = [[NSOperationQueue alloc] init];
+    }
     [queue addOperation:operation];
 }
 
-//- (void)postRequestWithUrlString:(NSString *)urlStr withDict:(NSDictionary *)dict
-//{
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    // 设置请求格式
-//    //    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-//    // 设置返回格式
-//    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//    [manager POST:urlStr parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        //        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-//        if (success) {
-//            success(responseObject);
-//        }
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"%@", error);
-//        if (fail) {
-//            fail();
-//        }
-//    }];
-//}
+- (void)cancelRequestOperation
+{
+    NSLog(@"removeQue");
+    _userStop = YES;
+    [queue cancelAllOperations];
+}
 
 - (void)callBack
 {
-    if ([self.delegate respondsToSelector:self.action])
+    if (_delegate && [self.delegate respondsToSelector:self.action])
     {
         [_delegate performSelector:_action withObject:self afterDelay:NO];
     }

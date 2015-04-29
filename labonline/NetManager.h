@@ -15,4 +15,7 @@
 @property (nonatomic,assign) SEL action;
 @property (nonatomic,strong) NSError *failError;
 
++ (NetManager*)getShareManager;
+- (void)cancelRequestOperation;
+
 @end

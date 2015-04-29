@@ -18,7 +18,6 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "SearchViewController.h"
-#import "UIButton+WebCache.h"
 
 
 @interface PersonCenterViewController ()<EditPersonViewControllerDelegate>
@@ -76,15 +75,17 @@
     UIButton *personImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [personImageButton setFrame:CGRectMake((kScreenWidth-kImageBUttonHeight)/2, 20, kImageBUttonHeight, kImageBUttonHeight)];
     personImageButton.tag = kHeadImageBtnTag;
-    if ([defaults objectForKey:@"icon"])
+    
+    if ([defaults objectForKey:@"icon"]&&[[defaults objectForKey:@"icon"] hasPrefix:@"http"])
     {
-        [personImageButton setBackgroundImage:nil forState:UIControlStateNormal];
-        [personImageButton setImageWithURL:[NSURL URLWithString:[defaults objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"头像.png"]];
+        NSData *imageDa = [NSData dataWithContentsOfURL:[NSURL URLWithString:[defaults objectForKey:@"icon"]]];
+        [personImageButton setBackgroundImage:[UIImage imageWithData:imageDa]  forState:UIControlStateNormal];
     }
     else
     {
         [personImageButton setBackgroundImage:[UIImage imageNamed:@"头像.png"] forState:UIControlStateNormal];
     }
+
     personImageButton.layer.masksToBounds = YES;
     personImageButton.layer.cornerRadius = kImageBUttonHeight/2;
     personImageButton.layer.borderColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1].CGColor;
@@ -147,7 +148,16 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     UIButton *btn = (UIButton *)[self.view viewWithTag:kHeadImageBtnTag];
-    [btn setImageWithURL:[NSURL URLWithString:[defaults objectForKey:@"icon"]]];
+    if ([defaults objectForKey:@"icon"]&&[[defaults objectForKey:@"icon"] hasPrefix:@"http"])
+    {
+        NSData *imageDa = [NSData dataWithContentsOfURL:[NSURL URLWithString:[defaults objectForKey:@"icon"]]];
+        [btn setBackgroundImage:[UIImage imageWithData:imageDa]  forState:UIControlStateNormal];
+    }
+    else
+    {
+        [btn setBackgroundImage:[UIImage imageNamed:@"头像.png"] forState:UIControlStateNormal];
+    }
+    
     UILabel *lab = (UILabel *)[self.view viewWithTag:kUserNameLableTag];
     lab.text = [defaults objectForKey:@"nickname"];
 }
@@ -246,7 +256,9 @@
                     [userDe synchronize];
                     
                     UIButton *btn = (UIButton *)[self.view viewWithTag:kHeadImageBtnTag];
-                    [btn setImageWithURL:[NSURL URLWithString:[userInfo objectForKey:@"icon"]]];
+                    NSData *imageDa = [NSData dataWithContentsOfURL:[NSURL URLWithString:[userInfo objectForKey:@"icon"]]];
+                    [btn setBackgroundImage:[UIImage imageWithData:imageDa] forState:UIControlStateNormal];
+                    
                     UILabel *lab = (UILabel *)[self.view viewWithTag:kUserNameLableTag];
                     lab.text = [userInfo objectForKey:@"nickname"];
                 }

@@ -11,7 +11,6 @@
 #import "EditSubViewController.h"
 #import "AFNetworkTool.h"
 #import "UIView+Category.h"
-#import "UIButton+WebCache.h"
 
 @interface EditPersonViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,EditSubViewControllerDelegate,UIAlertViewDelegate>
 {
@@ -71,8 +70,18 @@
     
     imageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [imageBtn setFrame:CGRectMake((kScreenWidth-kHeadImageButtonHeight)/2, (kHeadViewHeight-kHeadImageButtonHeight)/2, kHeadImageButtonHeight, kHeadImageButtonHeight)];
-    [imageBtn setImageWithURL:[NSURL URLWithString:[defaults objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"头像.png"]];
-
+    
+    if ([defaults objectForKey:@"icon"]&&[[defaults objectForKey:@"icon"] hasPrefix:@"http"])
+    {
+        NSData *imageDa = [NSData dataWithContentsOfURL:[NSURL URLWithString:[defaults objectForKey:@"icon"]]];
+        [imageBtn setBackgroundImage:[UIImage imageWithData:imageDa] forState:UIControlStateNormal];
+    }
+    else
+    {
+        _currentImage = [UIImage imageNamed:@"头像.png"];
+        [imageBtn setBackgroundImage:_currentImage forState:UIControlStateNormal];
+    }
+    
     imageBtn.layer.masksToBounds = YES;
     imageBtn.layer.cornerRadius = kHeadImageButtonHeight/2;
     imageBtn.layer.borderColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1].CGColor;
@@ -99,22 +108,37 @@
     
     [self makeUpDataContent];
     [_myTableV reloadData];
-    
 }
 
+#pragma mark - 构成数据源
 - (void)makeUpDataContent
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    _baseDataArray = [[NSMutableArray alloc]initWithObjects:@{@"Title":@"昵称",@"Content":[defaults objectForKey:@"nickname"]},@{@"Title":@"手机号",@"Content":[defaults objectForKey:@"phone"]},@{@"Title":@"邮箱",@"Content":[defaults objectForKey:@"email"]}, nil];
+    _baseDataArray = [[NSMutableArray alloc]init];
+    NSArray *cateTitle = @[@"nickname",@"phone",@"email"];
+    NSArray *textArray = @[@"昵称",@"手机号",@"邮箱"];
+    for (int i = 0;i < cateTitle.count;i ++)
+    {
+        NSString *content;
+        if ([defaults objectForKey:[cateTitle objectAtIndex:i]])
+        {
+            content = [defaults objectForKey:[cateTitle objectAtIndex:i]];
+        }
+        else
+        {
+            content = @"";
+        }
+        NSDictionary *subDict = @{@"Title":[textArray objectAtIndex:i],@"Content":content};
+        [_baseDataArray addObject:subDict];
+    }
 }
 
 - (void)commitImage
 {
     // 修改完成  http://192.168.0.153:8181/labonline/hyController/updateTx.do?userid=80BE983A9EBC4B079247C4DDA518C2A8&usericon=dfwsvwsvedwvds
     NSData *_data = UIImageJPEGRepresentation(_currentImage, 0.3);
-    [_data writeToFile:[NSString stringWithFormat:@"%@/Documents/TestImage",NSHomeDirectory()] atomically:YES];
-    NSLog(@"%@",[NSString stringWithFormat:@"%@/Documents/TestImage",NSHomeDirectory()]);
-    NSString *encodedImageStr = [_data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
+    NSLog(@"提交图片");
+    NSString *encodedImageStr = [_data base64Encoding];
     NSString *imageString = [encodedImageStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *dic = @{@"userid":_userID,@"usericon":imageString};
     [self.view addLoadingViewInSuperView:self.view andTarget:self];
@@ -223,9 +247,7 @@
         }
         //将二进制数据生成UIImage
         _currentImage = [UIImage imageWithData:data];
-        [imageBtn setImage:nil forState:UIControlStateNormal];
         [imageBtn setBackgroundImage:_currentImage forState:UIControlStateNormal];
-        NSLog(@"~~~~~~图片~~~~~~~");
     }
 }
 

@@ -7,7 +7,6 @@
 //
 
 #import "LeftViewController.h"
-#import "UIButton+WebCache.h"
 
 @interface LeftViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -110,16 +109,28 @@
         _logined = YES;
         UILabel *nameLab = (UILabel *)[self.view viewWithTag:kNameLableTag];
         nameLab.text = [userDe objectForKey:@"nickname"];
-
+        if (![userDe objectForKey:@"nickname"])
+        {
+            nameLab.text = [userDe objectForKey:@"username"];
+        }
+        
         UIButton *btn = (UIButton *)[self.view viewWithTag:kImageTag];
-        [btn setImageWithURL:[NSURL URLWithString:[userDe objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"33.jpg"]];
+        if ([userDe objectForKey:@"icon"]&&[[userDe objectForKey:@"icon"] hasPrefix:@"http"])
+        {
+            NSData *imageDa = [NSData dataWithContentsOfURL:[NSURL URLWithString:[userDe objectForKey:@"icon"]]];
+            [btn setBackgroundImage:[UIImage imageWithData:imageDa]  forState:UIControlStateNormal];
+        }
+        else
+        {
+            [btn setBackgroundImage:[UIImage imageNamed:@"头像.png"] forState:UIControlStateNormal];
+        }
     }
     else
     {
         _logined = NO;
     }
     
-    _titleCateArray = [[NSMutableArray alloc]initWithObjects:@"首页",@"杂志",@"技术专栏",@"用户中心", nil];
+    _titleCateArray = [[NSMutableArray alloc]initWithObjects:@"首页",@"杂志",@"e检通产品",@"技术专栏",@"用户中心", nil];
     // 列表视图：从-5开始 UI设计需要
     _cateTableView = [[UITableView alloc]initWithFrame:CGRectMake(-5, 10, kLeftWidth-10, kScreenHeight-100) style:UITableViewStylePlain];
     _cateTableView.delegate = self;
@@ -179,11 +190,10 @@
         }
         
         UIButton *btn = (UIButton *)[self.view viewWithTag:kImageTag];
-        if ([userDe objectForKey:@"icon"])
+        if ([userDe objectForKey:@"icon"]&&[[userDe objectForKey:@"icon"] hasPrefix:@"http"])
         {
-            // 去掉背景图
-            [btn setBackgroundImage:nil forState:UIControlStateNormal];
-            [btn setImageWithURL:[NSURL URLWithString:[userDe objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"头像.png"]];
+            NSData *imageDa = [NSData dataWithContentsOfURL:[NSURL URLWithString:[userDe objectForKey:@"icon"]]];
+            [btn setBackgroundImage:[UIImage imageWithData:imageDa]  forState:UIControlStateNormal];
         }
         else
         {

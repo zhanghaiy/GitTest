@@ -7,11 +7,13 @@
 //
 
 #import "MainDetailViewController.h"
-#import "MainListViewController.h"
-#import "MenuViewController.h"
-#import "ShowPicture.h"
-#import "SearchViewController.h"
-#import "UIButton+WebCache.h"
+#import "MainListViewController.h"  // 文章列表
+#import "MenuViewController.h"      // 往期
+#import "ShowPicture.h"             // 放大图片
+#import "SearchViewController.h"    // 搜索
+#import "UIButton+WebCache.h"       // 图片缓存框架
+#import "AppDelegate.h"             // AppDelegate.h
+#import "YRSideViewController.h"    // 抽屉
 
 #define kBackViewTag 55
 #define kMagazineCoverButtonTag 56
@@ -178,11 +180,19 @@
     pictureV.target = self;
     pictureV.action = @selector(pictureCallBack:);
     [self.view addSubview:pictureV];
+    
+    AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
+    YRSideViewController *sideViewController=[delegate sideViewController];
+    sideViewController.needSwipeShowMenu=NO;
 }
 - (void)pictureCallBack:(ShowPicture *)pictureV
 {
     [pictureV removeFromSuperview];
     self.navigationController.navigationBarHidden = NO;
+    
+    AppDelegate *delegate=(AppDelegate*)[[UIApplication sharedApplication]delegate];
+    YRSideViewController *sideViewController=[delegate sideViewController];
+    sideViewController.needSwipeShowMenu=YES;
 }
 
 #pragma mark - 按钮点击事件

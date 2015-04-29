@@ -21,7 +21,8 @@
 {
     UITableView *listtableV;
     NSMutableArray *_listArray;
-    BOOL _upLoading;
+//    BOOL _upLoading;
+    BOOL _removeCache;
     MFMailComposeViewController *mailComposer;
 }
 @end
@@ -35,7 +36,7 @@
     
     self.title = @"系统设置";
     self.view.backgroundColor = [UIColor colorWithWhite:244/255.0 alpha:1];
-    
+    _removeCache = NO;
     // 左侧返回按钮
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setFrame:CGRectMake(0, 0, 35, 36)];
@@ -110,7 +111,8 @@
         case 0:
         {
             // 清除缓存
-            [RemoveCacheManager removeUserAllLocalCacheFile];
+            _removeCache = YES;
+            [self createAlertViewWithTitle:@"提示" Message:@"清除缓存会清除掉离线视频和文章，确定要清楚么？" cancelTitle:@"确定" otherTitle:@"取消"];
         }
             break;
         case 1:
@@ -197,22 +199,12 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    switch (buttonIndex)
+    if (_removeCache)
     {
-        case 0:
-            // 确定
-            
-            break;
-        case 1:
-        {
-            // 升级
-            
-        }
-            break;
-        default:
-            break;
+        _removeCache = NO;
+        [RemoveCacheManager removeUserAllLocalCacheFile];
+        [self createAlertViewWithTitle:@"提示" Message:@"清除成功" cancelTitle:@"确定" otherTitle:nil];
     }
-    
 }
 
 

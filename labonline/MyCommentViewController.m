@@ -21,6 +21,8 @@
     NSMutableArray *_myCommentArray;
     BOOL _reloading;
     EGORefreshTableHeaderView *_refresV;
+    
+    BOOL _netRequesting;
 }
 @end
 
@@ -33,6 +35,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    _netRequesting = NO;
     self.title = @"我的评论";
     self.view.backgroundColor =[UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
     //界面调整
@@ -71,11 +74,21 @@
     [self.view addLoadingViewInSuperView:self.view andTarget:self];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (_netRequesting)
+    {
+        [[NetManager getShareManager] cancelRequestOperation];
+    }
+}
+
 #pragma mark - 网络请求
 #pragma mark --- 开始请求
 - (void)requestDataWithUrlString:(NSString *)urlString
 {
-    NetManager *netManager = [[NetManager alloc]init];
+    _netRequesting = YES;
+    NetManager *netManager = [NetManager getShareManager];
     netManager.delegate = self;
     netManager.action = @selector(netManagerCallBack:);
     [netManager requestDataWithUrlString:urlString];
@@ -83,6 +96,7 @@
 #pragma mark --- 网络回调
 - (void)netManagerCallBack:(NetManager *)netManager
 {
+    _netRequesting = NO;
     if (_reloading)
     {
         [self stopRefresh];
