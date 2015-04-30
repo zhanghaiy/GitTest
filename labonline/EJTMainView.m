@@ -7,24 +7,17 @@
 //
 
 #import "EJTMainView.h"
+#import "UIButton+WebCache.h"
 
 @implementation EJTMainView
 #define kProductsButtonBaseTag 800
 #define kPageButtonTag 567
 
 
-//- (void)setIndex:(NSInteger)index
-//{
-//    NSLog(@"~~~~~~%f",self.bounds.size.height);
-//    NSLog(@"%f~~~~~~~",self.bounds.size.width);
-//    NSArray *array = @[@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@""];
-//    [self createProductBoxWithDataArray:array];
-//    [self createPageButtonWithCounts:array.count%9?array.count/9+1:array.count/9];
-//}
-
 - (void)setProductInfoArray:(NSArray *)productInfoArray
 {
     _productInfoArray = productInfoArray;
+    NSLog(@"%@",productInfoArray);
     [self createProductBoxWithDataArray:_productInfoArray];
     [self createPageButtonWithCounts:_productInfoArray.count%9?_productInfoArray.count/9+1:_productInfoArray.count/9];
 }
@@ -109,7 +102,6 @@
 - (void)createProductBoxWithDataArray:(NSArray *)array
 {
     NSInteger pages = array.count%9?array.count/9+1:array.count/9;
-
 //    float maxWidth = _productScrollView.bounds.size.width;
 //    float maxHeight = _productScrollView.bounds.size.height;
     float maxWidth = self.bounds.size.width;
@@ -125,13 +117,22 @@
             {
                 if (currentProduct<array.count)
                 {
+                    NSDictionary *subDic= [_productInfoArray objectAtIndex:currentProduct];
                     float width = (maxWidth-12)/3;
                     float height = maxHeight/3;
                     float labHeight = 20;
                     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
                     [btn setFrame:CGRectMake(5+i*maxWidth+k*(width+1), 5+j*height, width, height-labHeight)];
                     btn.tag = kProductsButtonBaseTag+currentProduct;
-                    [btn setBackgroundImage:[UIImage imageNamed:@"文章缩略图.png"] forState:UIControlStateNormal];
+//                    [btn setBackgroundImage:[UIImage imageNamed:@"文章缩略图.png"] forState:UIControlStateNormal];
+                    if ([[subDic objectForKey:@"producticon"] length]>2)
+                    {
+                        [btn setImageWithURL:[NSURL URLWithString:[subDic objectForKey:@"producticon"]] placeholderImage:[UIImage imageNamed:@"暂无图片.jpg"]];
+                    }
+                    else
+                    {
+                        [btn setImage:[UIImage imageNamed:@"暂无图片.jpg"] forState:UIControlStateNormal];
+                    }
                     btn.layer.masksToBounds = YES;
                     btn.layer.cornerRadius = 3;
                     btn .layer.borderColor = [UIColor colorWithWhite:235/255.0 alpha:1].CGColor;
@@ -141,9 +142,9 @@
                     
                     UILabel *titleLab = [[UILabel alloc]initWithFrame:CGRectMake(5+i*maxWidth+k*(width+1), 5+(j+1)*height-labHeight, width, labHeight)];
                     titleLab.textAlignment = NSTextAlignmentCenter;
-                    titleLab.text = [NSString stringWithFormat:@"产品%d",currentProduct+1];
+                    titleLab.text = [subDic objectForKey:@"producttitle"];//[NSString stringWithFormat:@"产品%d",currentProduct+1];
                     titleLab.textColor = [UIColor colorWithWhite:86/255.0 alpha:1];
-                    titleLab.font = [UIFont systemFontOfSize:kOneFontSize];
+                    titleLab.font = [UIFont systemFontOfSize:kThreeFontSize];
                     [_productScrollView addSubview:titleLab];
                     
                     currentProduct++;
