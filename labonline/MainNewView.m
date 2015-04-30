@@ -53,14 +53,18 @@
     NSInteger wid = self.frame.size.width;
     NSInteger hei = self.frame.size.height;
     NSInteger btnWidth = (wid-20)/5;
-    NSInteger btnHeight = 60;
+    NSInteger btnHeight = 70;
     for (int i = 0; i < _imageDataArray.count; i ++)
     {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.tag = kImageButtonTag + i;
-        [btn setFrame:CGRectMake(10+i*btnWidth, hei-btnHeight-10, btnWidth, btnHeight)];
+        [btn setFrame:CGRectMake(10+i*btnWidth, hei-btnHeight-5, btnWidth-3, btnHeight)];
         [btn setImageWithURL:[NSURL URLWithString:[_imageDataArray objectAtIndex:i]]];
         [btn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        btn.layer.masksToBounds = YES;
+        btn.layer.cornerRadius = 1;
+        btn.layer.borderColor = [UIColor colorWithWhite:220/255.0 alpha:1].CGColor;
+        btn.layer.borderWidth = 1;
         [self addSubview:btn];
     }
 }

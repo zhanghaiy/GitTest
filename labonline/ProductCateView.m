@@ -58,7 +58,7 @@
             {
                 NSDictionary *subDict = [array objectAtIndex:index];
                 UILabel *cateLab = [[UILabel alloc]initWithFrame:CGRectMake(5+j*(lableWidth+5), 40+i*(kCategoryLableHeight+10), lableWidth, kCategoryLableHeight)];
-                cateLab.text = [_productArray objectAtIndex:j];//[subDict objectForKey:@"classifyname"];
+                cateLab.text = [subDict objectForKey:@"classifyname"];//[_productArray objectAtIndex:j];//[subDict objectForKey:@"classifyname"];
                 cateLab.tag = kProductCateLableTag+index;
                 cateLab.textAlignment = NSTextAlignmentCenter;
                 cateLab.font = [UIFont systemFontOfSize:kTwoFontSize];
@@ -81,10 +81,11 @@
 
 - (void)tapCateLableMethod:(UITapGestureRecognizer *)tap
 {
+    _selectedButtonIndex = tap.view.tag-kProductCateLableTag;
     NSLog(@"tap%ld",tap.view.tag-kProductCateLableTag);
     if ([self.delegate respondsToSelector:self.action])
     {
-        [_delegate performSelector:_action withObject:nil afterDelay:0.01];
+        [_delegate performSelector:_action withObject:self afterDelay:0.01];
     }
 }
 

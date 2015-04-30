@@ -10,6 +10,8 @@
 #import "EJTListViewController.h"
 #import "MenuButton.h"
 
+
+
 @interface EJTMenuViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     NSArray *leftArray;
@@ -17,6 +19,8 @@
     UITableView *leftTab;
     UITableView *rightTab;
     
+    NSInteger _secMenu;
+    NSInteger _thirdMenu;
 }
 @end
 
@@ -27,31 +31,54 @@
 
 @implementation EJTMenuViewController
 
+- (void)setFirstMenu:(NSInteger)firstMenu
+{
+    _firstMenu = firstMenu;
+    _secMenu = 0;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    if ([DeviceManager deviceVersion]>=7)
+    {
+        //界面调整
+        if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
+        {
+            self.edgesForExtendedLayout = UIRectEdgeNone;
+        }
+    }
+    // 左侧按钮
+    NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 26) andBackImageWithName:@"aniu_07.png"];
+    leftButton.delegate = self;
+    leftButton.action = @selector(backToPrePage);
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    NSArray *array = [[NSUserDefaults standardUserDefaults] objectForKey:@"MENUARRAY"];
+    leftArray = [[array objectAtIndex:_firstMenu] objectForKey:@"submenus"];
+    rightArray = [[leftArray objectAtIndex:_secMenu] objectForKey:@"submenus"];
+    self.title = [[[array objectAtIndex:_firstMenu] objectForKey:@"info"] objectForKey:@"classifyname"];
+    
     MenuButton *oneBtn = [MenuButton buttonWithType:UIButtonTypeCustom];
-    [oneBtn setFrame:CGRectMake(0, 64, kScreenWidth/2, 30)];
-    [oneBtn setTitle:@"菜单1" forState:UIControlStateNormal];
+    [oneBtn setFrame:CGRectMake(0, 0, kScreenWidth/2, 30)];
+    [oneBtn setTitle:[[[leftArray objectAtIndex:0] objectForKey:@"info"] objectForKey:@"classifyname"] forState:UIControlStateNormal];
     [oneBtn addTarget:self action:@selector(oneMenu:) forControlEvents:UIControlEventTouchUpInside];
     oneBtn.backgroundColor = [UIColor whiteColor];
     oneBtn.tag = kOneBtnTag;
     [self.view addSubview:oneBtn];
     
     MenuButton *secBtn = [MenuButton buttonWithType:UIButtonTypeCustom];
-    [secBtn setFrame:CGRectMake(kScreenWidth/2, 64, kScreenWidth/2, 30)];
-    [secBtn setTitle:@"菜单2" forState:UIControlStateNormal];
+    [secBtn setFrame:CGRectMake(kScreenWidth/2, 0, kScreenWidth/2, 30)];
+    [secBtn setTitle:[[rightArray objectAtIndex:0] objectForKey:@"classifyname"] forState:UIControlStateNormal];
     [secBtn addTarget:self action:@selector(secBtn:) forControlEvents:UIControlEventTouchUpInside];
-    secBtn.backgroundColor = [UIColor whiteColor];
     secBtn.tag = kTwoBtnTag;
     [self.view addSubview:secBtn];
     
-    leftArray = @[@[@"生化",@"血液",@"免疫"],@[@"接种仪",@"血培养仪"],@[@"菜单1",@"菜单2",@"菜单3",@"菜单4"],@[@"菜单1",@"菜单2",@"菜单3",@"菜单4",@"菜单5"],@[@"菜单1",@"菜单2",@"菜单3",@"菜单4",@"菜单5"],@[@"菜单1",@"菜单2",@"菜单3",@"菜单4",@"菜单5"],@[@"菜单1",@"菜单2",@"菜单3",@"菜单4",@"菜单5"],@[@"菜单1",@"菜单2",@"菜单3",@"菜单4",@"菜单5"]];
-    rightArray = [leftArray objectAtIndex:0];
-    
-    leftTab = [[UITableView alloc]initWithFrame:CGRectMake(0, 94, kScreenWidth/2, kScreenHeight-94) style:UITableViewStylePlain];
+    leftTab = [[UITableView alloc]initWithFrame:CGRectMake(0, 31, kScreenWidth/2, kScreenHeight-95) style:UITableViewStylePlain];
     leftTab.delegate = self;
     leftTab.dataSource = self;
     leftTab.tag = kLeftTabTag;
@@ -59,10 +86,10 @@
     leftTab.layer.masksToBounds = YES;
     leftTab.layer.cornerRadius = 2;
     leftTab.layer.borderWidth = 1;
-    leftTab.layer.borderColor = [UIColor colorWithRed:217/255.0 green:0 blue:36/255.0 alpha:1].CGColor;
+    leftTab.layer.borderColor = [UIColor colorWithRed:228/255.0 green:129/255.0 blue:138/255.0 alpha:1].CGColor;
     [self.view addSubview:leftTab];
     
-    rightTab = [[UITableView alloc]initWithFrame:CGRectMake(kScreenWidth/2, 94, kScreenWidth/2, kScreenHeight-94) style:UITableViewStylePlain];
+    rightTab = [[UITableView alloc]initWithFrame:CGRectMake(kScreenWidth/2, 31, kScreenWidth/2, kScreenHeight-95) style:UITableViewStylePlain];
     rightTab.delegate = self;
     rightTab.dataSource = self;
     rightTab.tag = kRightTabTag;
@@ -70,7 +97,7 @@
     rightTab.layer.masksToBounds = YES;
     rightTab.layer.cornerRadius = 2;
     rightTab.layer.borderWidth = 1;
-    rightTab.layer.borderColor = [UIColor colorWithRed:217/255.0 green:0 blue:36/255.0 alpha:1].CGColor;
+    rightTab.layer.borderColor = [UIColor colorWithRed:228/255.0 green:129/255.0 blue:138/255.0 alpha:1].CGColor;
     [self.view addSubview:rightTab];
     
     leftTab.hidden = YES;
@@ -80,48 +107,45 @@
     
 }
 
+- (void)backToPrePage
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)oneMenu:(MenuButton *)btn
 {
     NSLog(@"oneMenu");
-    
+    [self changeButtonSelectedWithButtonTag:btn.tag];
     if (btn.selected)
     {
-        [self changButtonBackColorWithTag:btn.tag andSelected:NO];
+        [self changeTableViewFrameWithTag:kLeftTabTag andCount:leftArray.count];
+        leftTab.hidden = NO;
+        [leftTab reloadData];
     }
     else
     {
-        [self changButtonBackColorWithTag:btn.tag andSelected:YES];
+        leftTab.hidden = YES;
+        rightTab.hidden = YES;
     }
-    [self changeTableViewFrameWithTag:kLeftTabTag andCount:leftArray.count];
-    leftTab.hidden = NO;
-    [leftTab reloadData];
+    
 }
 
-- (void)changButtonBackColorWithTag:(NSInteger)tag andSelected:(BOOL)selected
-{
-    
-    UIButton *btn = (UIButton *)[self.view viewWithTag:tag];
-    btn.selected = selected;
-    if (selected)
-    {
-        [btn setBackgroundColor:[UIColor colorWithRed:217/255.0 green:0 blue:36/255.0 alpha:1]];
-    }
-    else
-    {
-        [btn setBackgroundColor:[UIColor whiteColor]];
-    }
-}
 
 - (void)secBtn:(MenuButton *)btn
 {
-    NSLog(@"secBtn");
-    leftTab.hidden = YES;
-    [self changButtonBackColorWithTag:kOneBtnTag andSelected:NO];
-    rightArray = [leftArray objectAtIndex:0];
-    [self changeTableViewFrameWithTag:kRightTabTag andCount:rightArray.count];
-    rightTab.hidden = NO;
-    [rightTab reloadData];
+    [self changeButtonSelectedWithButtonTag:btn.tag];
+    if (btn.selected)
+    {
+        rightArray = [[leftArray objectAtIndex:_secMenu] objectForKey:@"submenus"];
+        [self changeTableViewFrameWithTag:kRightTabTag andCount:rightArray.count];
+        rightTab.hidden = NO;
+        [rightTab reloadData];
+    }
+    else
+    {
+        rightTab.hidden = YES;
+    }
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -150,24 +174,25 @@
     if (cell == nil)
     {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        cell.textLabel.font = [UIFont systemFontOfSize:kOneFontSize];
     }
-    
     
     if (tableView.tag == kLeftTabTag)
     {
         // left
-        cell.textLabel.text = [NSString stringWithFormat:@"菜单%ld",indexPath.row+1];//[leftArray objectAtIndex:indexPath.row];
+        NSLog(@"%@",[leftArray objectAtIndex:indexPath.row] );
+        cell.textLabel.text = [[[leftArray objectAtIndex:indexPath.row] objectForKey:@"info"] objectForKey:@"classifyname"];//[leftArray objectAtIndex:indexPath.row];
     }
     else if (tableView.tag == kRightTabTag)
     {
-        cell.textLabel.text = [rightArray objectAtIndex:indexPath.row];
+        cell.textLabel.text = [[rightArray objectAtIndex:indexPath.row] objectForKey:@"classifyname"];
     }
-    
+    cell.textLabel.textColor = [UIColor colorWithRed:217/255.0 green:0 blue:36/255.0 alpha:1];
     // 选中后背景色
     cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
     cell.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:217/255.0 green:0/255.0 blue:36/255.0 alpha:1];
     cell.selectedTextColor = [UIColor whiteColor];
-    cell.textLabel.textColor = [UIColor colorWithRed:217/255.0 green:0 blue:36/255.0 alpha:1];
+    
     return cell;
 }
 
@@ -177,7 +202,12 @@
 {
     if (tableView.tag == kLeftTabTag)
     {
-        rightArray = [leftArray objectAtIndex:indexPath.row];
+        _secMenu = indexPath.row;
+        
+        UIButton *btn = (UIButton *)[self.view viewWithTag:kOneBtnTag];
+        [btn setTitle:[[[leftArray objectAtIndex:indexPath.row] objectForKey:@"info"] objectForKey:@"classifyname"] forState:UIControlStateNormal];
+        
+        rightArray = [[leftArray objectAtIndex:indexPath.row] objectForKey:@"submenus"];
         [self changeTableViewFrameWithTag:kRightTabTag andCount:rightArray.count];
         rightTab.hidden = NO;
         [rightTab reloadData];
@@ -185,9 +215,17 @@
     else
     {
         // 跳到下一界面
+        UIButton *btn = (UIButton *)[self.view viewWithTag:kTwoBtnTag];
+        [btn setTitle:[[rightArray objectAtIndex:indexPath.row] objectForKey:@"classifyname"] forState:UIControlStateNormal];
+//        [self changeButtonSelectedWithButtonTag:kTwoBtnTag];
+        _thirdMenu = indexPath.row;
+        NSString *classifyid = [[rightArray objectAtIndex:indexPath.row] objectForKey:@"classifyid"];
+        NSLog(@"%@",classifyid);
         EJTListViewController *eJTListVC = [[EJTListViewController alloc]init];
-        eJTListVC.titleString = @"仪器";
-        eJTListVC.type = 0;
+        eJTListVC.firstMenu = _firstMenu;
+        eJTListVC.seconMenu = _secMenu;
+        eJTListVC.thirdMenu = _thirdMenu;
+        eJTListVC.classifyid = classifyid;
         [self.navigationController pushViewController:eJTListVC animated:YES];
     }
 }
@@ -197,6 +235,21 @@
     return 0.1;
 }
 
+#pragma mark - 改变按钮选中状态
+- (void)changeButtonSelectedWithButtonTag:(NSInteger)tag
+{
+    UIButton *btn = (UIButton *)[self.view viewWithTag:tag];
+    if (btn.selected)
+    {
+        btn.selected = NO;
+        [btn setBackgroundColor:[UIColor whiteColor]];
+    }
+    else
+    {
+        btn.selected = YES;
+        [btn setBackgroundColor:[UIColor colorWithRed:217/255.0 green:0 blue:36/255.0 alpha:1]];
+    }
+}
 
 - (void)changeTableViewFrameWithTag:(NSInteger)tag andCount:(NSInteger)counts
 {
@@ -213,8 +266,12 @@
 {
     leftTab.hidden = YES;
     rightTab.hidden = YES;
-    [self changButtonBackColorWithTag:kOneBtnTag andSelected:NO];
-    [self changButtonBackColorWithTag:kTwoBtnTag andSelected:NO];
+    UIButton *btn = (UIButton *)[self.view viewWithTag:kOneBtnTag];
+    btn.selected = NO;
+    [btn setBackgroundColor:[UIColor whiteColor]];
+    UIButton *btn1 = (UIButton *)[self.view viewWithTag:kTwoBtnTag];
+    btn1.selected = NO;
+    [btn1 setBackgroundColor:[UIColor whiteColor]];
 }
 
 - (void)didReceiveMemoryWarning {

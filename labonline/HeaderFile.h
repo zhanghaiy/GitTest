@@ -48,7 +48,11 @@ typedef enum
 #define kJSZLMoreUrlString @"http://123.57.155.106:8080/labonline/zzwzController/queryJszlwzList.do?type_id=%@"
 
 // 主页接口 无参数
-#define kMainUrlString @"http://123.57.155.106:8080/labonline/indexController/queryList.do"
+// 阿里云 暂无e检通数据
+//#define kMainUrlString @"http://123.57.155.106:8080/labonline/indexController/queryList.do"
+// 153 有数据
+#define kMainUrlString @"http://192.168.0.153:8181/labonline/indexController/queryList.do"
+
 // 主页杂志的阅读接口 左侧杂志接口
 #define kMainListUrlString @"http://123.57.155.106:8080/labonline/zzwzController/queryList.do"
 // 评论界面接口 9185
@@ -85,6 +89,10 @@ typedef enum
 #define kSysUpdataUrl @"http://123.57.155.106:8080/labonline/hyController/queryBbList.do"
 // 用户反馈
 #define kUserCallBackUrl @"http://123.57.155.106:8080/labonline/hyController/insertFk.do"
+// e检通产品分类接口
+#define kEJTCateUrl @"http://192.168.0.153:8181/labonline/ejtController/queryCpflList.do?versionCode=0"
+// e检通产品列表接口 参数 classifyid
+#define kEJTProductListUrl @"http://192.168.0.153:8181/labonline/ejtController/queryCpList.do"
 
 #define kOneFontSize 13
 #define kTwoFontSize 12

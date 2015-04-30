@@ -52,6 +52,7 @@
     int _currentTopY;
     EJTMainView *eJTView;
     ProductCateView *_productCateV;
+    BOOL _requestEJTCate;
 }
 @end
 
@@ -73,6 +74,59 @@
 #define kEJTViewHeight 340
 
 
+#pragma mark - 组成e检通菜单分类数据
+- (NSArray *)makeUpEJTMenuDataWithArray:(NSArray *)array
+{
+    NSMutableArray *mainArr1 = [[NSMutableArray alloc]init];
+    NSMutableArray *mainArr2 = [[NSMutableArray alloc]init];
+    NSMutableArray *mainArr3 = [[NSMutableArray alloc]init];
+    for (NSDictionary *subDic in array)
+    {
+        NSString *classifycode = [subDic objectForKey:@"classifycode"];
+        if (classifycode.length == 3)
+        {
+            [mainArr1 addObject:subDic];
+        }
+        if (classifycode.length == 5)
+        {
+            [mainArr2 addObject:subDic];
+        }
+        if (classifycode.length == 7)
+        {
+            [mainArr3 addObject:subDic];
+        }
+    }
+    
+    NSMutableArray *oneArray = [[NSMutableArray alloc]init];
+    for (NSDictionary *subDict1 in mainArr1)
+    {
+        NSString *code1 = [subDict1 objectForKey:@"classifycode"];
+        NSMutableArray *twoArray = [[NSMutableArray alloc]init];
+        for (NSDictionary *subDict2 in mainArr2)
+        {
+            NSString *code2 = [subDict2 objectForKey:@"classifycode"];
+            if ([code2 hasPrefix:code1])
+            {
+                NSMutableArray *threeArray = [[NSMutableArray alloc]init];
+                for (NSDictionary *subDict3 in mainArr3)
+                {
+                    NSString *code3 = [subDict3 objectForKey:@"classifycode"];
+                    if ([code3 hasPrefix:code2])
+                    {
+                        [threeArray addObject:subDict3];
+                    }
+                }
+                NSDictionary *dict2 = @{@"submenus":threeArray,@"info":subDict2};
+                [twoArray addObject:dict2];
+            }
+        }
+        NSDictionary *dict1 = @{@"submenus":twoArray,@"info":subDict1};
+        [oneArray addObject:dict1];
+    }
+    return oneArray;
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -87,6 +141,9 @@
         }
     }
 
+    _requestEJTCate = YES;
+    [self requestMainDataWithURLString:kEJTCateUrl];
+    
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:216/255.0 green:0 blue:0 alpha:1]}];
     self.view.backgroundColor = [UIColor colorWithWhite:244/255.0 alpha:1];
     self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
@@ -145,9 +202,6 @@
     _jSZLCateV.action = @selector(enterJSZLVireController:);
     [_backScrollV addSubview:_jSZLCateV];
     
-    [self.view addLoadingViewInSuperView:self.view andTarget:self];
-    [self requestMainDataWithURLString:kMainUrlString];
-    
     _reloading = NO;
     [self createRefreshView];
     
@@ -165,12 +219,19 @@
     [_backScrollV addSubview:_productCateV];
     
     _backScrollV.contentSize = CGSizeMake(kScreenWidth, _currentTopY + kJSZLAloneHeight + kEJTViewHeight + 20 + kProductHeadHeight+kProductHangHeight*1);
+    
+    [self.view addLoadingViewInSuperView:self.view andTarget:self];
+    [self requestMainDataWithURLString:kMainUrlString];
 }
 
-- (void)productCateMethod:(id)obj
+
+#pragma mark - 菜单过渡界面
+- (void)productCateMethod:(ProductCateView *)proCateV
 {
     // 菜单界面
     EJTMenuViewController *menuVC =[[ EJTMenuViewController alloc]init];
+    menuVC.firstMenu = proCateV.selectedButtonIndex;
+//    NSLog(@"%d",menuVC.type);
     [self.navigationController pushViewController:menuVC animated:YES];
 }
 
@@ -194,18 +255,35 @@
     {
         [self.view removeLoadingVIewInView:self.view andTarget:self];
     }
-    if (netManager.downLoadData)
+    
+    if (_requestEJTCate)
     {
-        // 成功
-        // 解析
-        
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
-        [self addControlsWithDictionary:[dict objectForKey:@"data"]];
+        _requestEJTCate= NO;
+        if (netManager.downLoadData)
+        {
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
+            if ([dict objectForKey:@"productclassifyList"])
+            {
+                NSArray *eJtMenuArray = [self makeUpEJTMenuDataWithArray:[dict objectForKey:@"productclassifyList"]];
+                [[NSUserDefaults standardUserDefaults] setObject:eJtMenuArray forKey:@"MENUARRAY"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+        }
     }
     else
     {
-        // 失败
-        [self.view addAlertViewWithMessage:@"请求不到数据，请重试" andTarget:self];
+        if (netManager.downLoadData)
+        {
+            // 成功
+            // 解析
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
+            [self addControlsWithDictionary:[dict objectForKey:@"data"]];
+        }
+        else
+        {
+            // 失败
+            [self.view addAlertViewWithMessage:@"请求不到数据，请重试" andTarget:self];
+        }
     }
 }
 
@@ -239,8 +317,9 @@
     _jSZLCateV.cateDataArray = jSZLArray;
     
     // e检通数据
-    NSArray *ejtArray = @[@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@""]; //[dict objectForKey:@"productList"];
+    NSArray *ejtArray = [dict objectForKey:@"productList"];//@[@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@""]; //;
 //    NSInteger hangCounts = ejtArray.count%9?ejtArray.count/9+1:ejtArray.count/9;
+    NSLog(@"~~~~~%@",ejtArray);
     //e检通View frame
     CGRect ejtRect = eJTView.frame;
     ejtRect.origin.y = _currentTopY + jSZLHeight +10;
@@ -252,7 +331,7 @@
     CGRect ejtCateRect = _productCateV.frame;
     ejtCateRect.origin.y = _currentTopY + jSZLHeight +10 + eJTView.frame.size.height+10;
     _productCateV.frame = ejtCateRect;
-    _productCateV.productArray = @[@"仪器",@"试剂",@"耗材"]; //[dict objectForKey:@"productclassifyList"];
+    _productCateV.productArray = [dict objectForKey:@"productclassifyList"];// @[@"仪器",@"试剂",@"耗材"]; //[dict objectForKey:@"productclassifyList"];
 
     // 改变scrollView可滑动
     NSInteger y = _currentTopY+jSZLHeight + 20 +ejtRect.size.height + ejtCateRect.size.height +10;
@@ -298,6 +377,7 @@
         // 更多界面
         JiShuZhuanLanMoreViewController *moreVC = [[JiShuZhuanLanMoreViewController alloc]init];
         moreVC.typeId = [[jSZLCateView.cateDataArray objectAtIndex:jSZLCateView.selectedIndex] objectForKey:@"id"];
+//        NSLog(@"%@",moreVC.typeId);
         [self.navigationController pushViewController:moreVC animated:YES];
     }
     else
@@ -376,8 +456,11 @@
         {
             // e检通
             EJTListViewController *eJTVC = [[EJTListViewController alloc]init];
-            eJTVC.type = 0;
-            eJTVC.titleString = @"仪器";
+            eJTVC.firstMenu = 0;
+            eJTVC.seconMenu = 0;
+            eJTVC.thirdMenu = 0;
+            eJTVC.classifyid = @"1D7A353CB48C471BB1A9696F070E6DDD";// 此处暂时写死
+            eJTVC.enterFormHome = YES;
             [self.navigationController pushViewController:eJTVC animated:YES];
         }
             break;

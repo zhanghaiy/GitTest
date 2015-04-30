@@ -187,6 +187,8 @@
 		FD9A76FA1ACBE711007ACC11 /* MyCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9A76F91ACBE711007ACC11 /* MyCommentViewController.m */; };
 		FD9A76FD1ACBF1B0007ACC11 /* MyCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9A76FC1ACBF1B0007ACC11 /* MyCommentCell.m */; };
 		FD9A76FF1ACBF1E6007ACC11 /* MyCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD9A76FE1ACBF1E6007ACC11 /* MyCommentCell.xib */; };
+		FDA803431AF07C66001F2842 /* 暂无图片.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FDA803411AF07C66001F2842 /* 暂无图片.jpg */; };
+		FDA803441AF07C66001F2842 /* LoadingImage.png in Resources */ = {isa = PBXBuildFile; fileRef = FDA803421AF07C66001F2842 /* LoadingImage.png */; };
 		FDA91DE71AD4BB1200734E1B /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA91DE61AD4BB1200734E1B /* SearchViewController.m */; };
 		FDA91DF31AD4F98100734E1B /* NavigationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA91DF21AD4F98100734E1B /* NavigationButton.m */; };
 		FDA91DF71AD5085400734E1B /* tubiao_04.png in Resources */ = {isa = PBXBuildFile; fileRef = FDA91DF61AD5085400734E1B /* tubiao_04.png */; };
@@ -214,6 +216,8 @@
 		FDC430ED1AD62693006AC165 /* ShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDC430EC1AD62693006AC165 /* ShareView.xib */; };
 		FDC430F11AD673DA006AC165 /* UserCallBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC430F01AD673DA006AC165 /* UserCallBackViewController.m */; };
 		FDC431081AD687F2006AC165 /* 人人.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC431021AD687F2006AC165 /* 人人.png */; };
+		FDDF61781AF0EC9900725F23 /* EJTListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDDF61761AF0EC9900725F23 /* EJTListCell.m */; };
+		FDDF61791AF0EC9900725F23 /* EJTListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDDF61771AF0EC9900725F23 /* EJTListCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -486,6 +490,8 @@
 		FD9A76FB1ACBF1B0007ACC11 /* MyCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCommentCell.h; sourceTree = "<group>"; };
 		FD9A76FC1ACBF1B0007ACC11 /* MyCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCommentCell.m; sourceTree = "<group>"; };
 		FD9A76FE1ACBF1E6007ACC11 /* MyCommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyCommentCell.xib; sourceTree = "<group>"; };
+		FDA803411AF07C66001F2842 /* 暂无图片.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "暂无图片.jpg"; sourceTree = "<group>"; };
+		FDA803421AF07C66001F2842 /* LoadingImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LoadingImage.png; sourceTree = "<group>"; };
 		FDA91DE51AD4BB1200734E1B /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		FDA91DE61AD4BB1200734E1B /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		FDA91DF11AD4F98100734E1B /* NavigationButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationButton.h; sourceTree = "<group>"; };
@@ -527,6 +533,9 @@
 		FDC430EF1AD673DA006AC165 /* UserCallBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCallBackViewController.h; sourceTree = "<group>"; };
 		FDC430F01AD673DA006AC165 /* UserCallBackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCallBackViewController.m; sourceTree = "<group>"; };
 		FDC431021AD687F2006AC165 /* 人人.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "人人.png"; sourceTree = "<group>"; };
+		FDDF61751AF0EC9900725F23 /* EJTListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EJTListCell.h; sourceTree = "<group>"; };
+		FDDF61761AF0EC9900725F23 /* EJTListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EJTListCell.m; sourceTree = "<group>"; };
+		FDDF61771AF0EC9900725F23 /* EJTListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EJTListCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -814,6 +823,9 @@
 				FDB673791AEF83A50013E9A1 /* EJTListViewController.m */,
 				FDB6737B1AEF83B40013E9A1 /* EJTMenuViewController.h */,
 				FDB6737C1AEF83B40013E9A1 /* EJTMenuViewController.m */,
+				FDDF61751AF0EC9900725F23 /* EJTListCell.h */,
+				FDDF61761AF0EC9900725F23 /* EJTListCell.m */,
+				FDDF61771AF0EC9900725F23 /* EJTListCell.xib */,
 			);
 			name = "e检通";
 			sourceTree = "<group>";
@@ -917,6 +929,8 @@
 		FD9392111AE6383B00B4F1EE /* images */ = {
 			isa = PBXGroup;
 			children = (
+				FDA803411AF07C66001F2842 /* 暂无图片.jpg */,
+				FDA803421AF07C66001F2842 /* LoadingImage.png */,
 				042C467A1AC297F600D36C8F /* wangqi.png */,
 				FD97DA251ADD0EC600963FB2 /* 我的视频.png */,
 				FDC430E71AD61B22006AC165 /* 杂志图.png */,
@@ -1365,6 +1379,7 @@
 				FD5D3C051AD3BF2800A6F60E /* share.png in Resources */,
 				0436E1A51ADD05FE00AF692B /* 4_05.png in Resources */,
 				FD47C8201AC53A3300846AC9 /* JSZLEvaluationCell.xib in Resources */,
+				FDDF61791AF0EC9900725F23 /* EJTListCell.xib in Resources */,
 				FD9392071AE637C700B4F1EE /* LoginView.xib in Resources */,
 				FD47C8121AC524FB00846AC9 /* 收藏.png in Resources */,
 				FD93920D1AE6381700B4F1EE /* 弹窗背景_05.png in Resources */,
@@ -1373,6 +1388,7 @@
 				FDA91DF71AD5085400734E1B /* tubiao_04.png in Resources */,
 				FD97DA261ADD0EC600963FB2 /* 我的视频.png in Resources */,
 				FD9392101AE6381700B4F1EE /* zhuce.png in Resources */,
+				FDA803441AF07C66001F2842 /* LoadingImage.png in Resources */,
 				0435E2F21AE4E92200A32AE5 /* 4_13.png in Resources */,
 				0435E2F31AE4E92200A32AE5 /* 5_13.png in Resources */,
 				FD8AE31F1ACE606B00A4A5B6 /* 设置按钮.png in Resources */,
@@ -1428,6 +1444,7 @@
 				FD5D3C071AD3BF2800A6F60E /* versionUpdate.png in Resources */,
 				FD558D5C1AC4098F00DA42FF /* blackArrow.png in Resources */,
 				0435E2F11AE4E92200A32AE5 /* 3_13.png in Resources */,
+				FDA803431AF07C66001F2842 /* 暂无图片.jpg in Resources */,
 				043C77301AD4F15D00B0DEAC /* beij.png in Resources */,
 				FDC430E81AD61B22006AC165 /* 杂志图.png in Resources */,
 				0435E2F51AE4E92200A32AE5 /* 7_13.png in Resources */,
@@ -1548,6 +1565,7 @@
 				FD9A76B01ACB86F7007ACC11 /* MainListCell.m in Sources */,
 				FD5CC64A1AD7B8A1008986F0 /* SDWebImageManager.m in Sources */,
 				FD96C8C31AC1107C0002778A /* VidioPlayerViewController.m in Sources */,
+				FDDF61781AF0EC9900725F23 /* EJTListCell.m in Sources */,
 				042C46791AC2976200D36C8F /* WangQiCell.m in Sources */,
 				04CDCED51ADFCA3D001082AB /* PathManager.m in Sources */,
 				FD96C8891AC109E00002778A /* main.m in Sources */,
