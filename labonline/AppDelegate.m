@@ -104,5 +104,9 @@ NSString *const COCIM_INTERFACE_PAST_MAGAZINE=@"http://123.57.155.106:8080/labon
 {
     return [TencentOAuth HandleOpenURL:url];
 }
-
+//禁止横屏
+-(NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
 @end
