@@ -460,6 +460,7 @@
             eJTVC.seconMenu = 0;
             eJTVC.thirdMenu = 0;
             eJTVC.classifyid = @"1D7A353CB48C471BB1A9696F070E6DDD";// 此处暂时写死
+            eJTVC.enterFormHome = YES;
             [self.navigationController pushViewController:eJTVC animated:YES];
         }
             break;

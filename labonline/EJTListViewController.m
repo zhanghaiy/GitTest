@@ -12,7 +12,7 @@
 #import "NetManager.h"
 #import "UIView+Category.h"
 #import "UIImageView+WebCache.h"
-
+#import "SearchViewController.h"
 
 @interface EJTListViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -51,7 +51,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor colorWithWhite:244/255.0 alpha:1];
+    self.view.backgroundColor = [UIColor whiteColor];
     if ([DeviceManager deviceVersion]>=7)
     {
         //界面调整
@@ -60,6 +60,32 @@
             self.edgesForExtendedLayout = UIRectEdgeNone;
         }
     }
+    
+    if (_enterFormHome == NO)
+    {
+        // 左侧按钮
+        NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 26) andBackImageWithName:@"aniu_07.png"];
+        leftButton.delegate = self;
+        leftButton.action = @selector(backToPrePage);
+        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+        self.navigationItem.leftBarButtonItem = leftItem;
+    }
+    else
+    {
+        NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 26) andBackImageWithName:nil];
+        leftButton.delegate = self;
+        leftButton.action = nil;
+        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+        self.navigationItem.leftBarButtonItem = leftItem;
+    }
+    
+    // right
+    NavigationButton *rightButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25) andBackImageWithName:@"aniu_09.png"];
+    rightButton.delegate = self;
+    rightButton.action = @selector(enterSearchVC);
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
     _paiXu = NO;
     _mainArray = [[NSMutableArray alloc]init];
     [self makeUpMenuArray];
@@ -89,22 +115,19 @@
     [rigBtn addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:rigBtn];
     
-//    _mainArray = @[@"12.jpg",@"33.png",@"12.jpg",@"33.png"];
-    
-    
-    _leftTabV = [[UITableView alloc]initWithFrame:CGRectMake(0, 30, kScreenWidth/2, kScreenHeight-94) style:UITableViewStylePlain];
+    _leftTabV = [[UITableView alloc]initWithFrame:CGRectMake(0, 31, kScreenWidth/2, kScreenHeight-95) style:UITableViewStylePlain];
     _leftTabV.delegate = self;
     _leftTabV.dataSource = self;
     _leftTabV.tag = KleftTabTag;
     [self.view addSubview:_leftTabV];
     
-    _rightTabV = [[UITableView alloc]initWithFrame:CGRectMake(kScreenWidth/2, 30, kScreenWidth/2, kScreenHeight-94) style:UITableViewStylePlain];
+    _rightTabV = [[UITableView alloc]initWithFrame:CGRectMake(kScreenWidth/2, 31, kScreenWidth/2, kScreenHeight-95) style:UITableViewStylePlain];
     _rightTabV.delegate = self;
     _rightTabV.dataSource = self;
     _rightTabV.tag = kRightTabTag;
     [self.view addSubview:_rightTabV];
     
-    _smallTabV = [[UITableView alloc]initWithFrame:CGRectMake(0, 30, kScreenWidth/3, kScreenHeight-94) style:UITableViewStylePlain];
+    _smallTabV = [[UITableView alloc]initWithFrame:CGRectMake(0, 31, kScreenWidth/3, kScreenHeight-95) style:UITableViewStylePlain];
     _smallTabV.delegate = self;
     _smallTabV.dataSource = self;
     _smallTabV.tag = kSmallTabTag;
@@ -121,30 +144,51 @@
     _leftTabV.layer.masksToBounds = YES;
     _leftTabV.layer.cornerRadius = 2;
     _leftTabV.layer.borderWidth = 1;
-    _leftTabV.layer.borderColor = [UIColor colorWithRed:217/255.0 green:0 blue:36/255.0 alpha:1].CGColor;
+    _leftTabV.layer.borderColor = [UIColor colorWithRed:228/255.0 green:129/255.0 blue:138/255.0 alpha:1].CGColor;
     
     _rightTabV.separatorStyle = UITableViewCellSeparatorStyleNone;
     _rightTabV.layer.masksToBounds = YES;
     _rightTabV.layer.cornerRadius = 2;
     _rightTabV.layer.borderWidth = 1;
-    _rightTabV.layer.borderColor = [UIColor colorWithRed:217/255.0 green:0 blue:36/255.0 alpha:1].CGColor;
+    _rightTabV.layer.borderColor = [UIColor colorWithRed:228/255.0 green:129/255.0 blue:138/255.0 alpha:1].CGColor;
     
     _smallTabV.separatorStyle = UITableViewCellSeparatorStyleNone;
     _smallTabV.layer.masksToBounds = YES;
     _smallTabV.layer.cornerRadius = 2;
     _smallTabV.layer.borderWidth = 1;
-    _smallTabV.layer.borderColor = [UIColor colorWithRed:217/255.0 green:0 blue:36/255.0 alpha:1].CGColor;
+    _smallTabV.layer.borderColor = [UIColor colorWithRed:228/255.0 green:129/255.0 blue:138/255.0 alpha:1].CGColor;
     
-    _mainTabV = [[UITableView alloc]initWithFrame:CGRectMake(0, 30, kScreenWidth, kScreenHeight-94) style:UITableViewStylePlain];
+    _mainTabV = [[UITableView alloc]initWithFrame:CGRectMake(0, 35, kScreenWidth, kScreenHeight-100) style:UITableViewStylePlain];
     _mainTabV.delegate = self;
     _mainTabV.dataSource = self;
     _mainTabV.tag = kMainTabTag;
+    _mainTabV.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _mainTabV.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_mainTabV];
     
-    _pXrray = @[@"时间",@"其他"];
+    _pXrray = @[@"时间",@"浏览量"];
     
+    [self startRequestMainData];
+}
+
+#pragma mark - 搜索
+- (void)enterSearchVC
+{
+    // 搜索
+    NSLog(@"enterSearchViewController");
+    SearchViewController *searchVC = [[SearchViewController alloc]init];
+    [self.navigationController pushViewController:searchVC animated:YES];
+}
+#pragma mark - 返回上一页
+- (void)backToPrePage
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - 请求产品信息列表
+- (void)startRequestMainData
+{
     NSString *urlStr = [NSString stringWithFormat:@"%@?classifyid=%@",kEJTProductListUrl,_classifyid];
-    NSLog(@"%@",urlStr);
     [self requestWithUrl:urlStr];
 }
 
@@ -155,13 +199,13 @@
     manager.delegate = self;
     manager.action = @selector(requestFinished:);
     [manager requestDataWithUrlString:urlString];
-//    [self.view addLoadingViewInSuperView:self.view andTarget:self];
+    [self.view addLoadingViewInSuperView:self.view andTarget:self];
 }
 
 #pragma mark - 网络回调
 - (void)requestFinished:(NetManager *)netManager
 {
-//    [self.view removeLoadingVIewInView:self.view andTarget:self];
+    [self.view removeLoadingVIewInView:self.view andTarget:self];
     if (netManager.downLoadData)
     {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
@@ -221,7 +265,7 @@
 {
     if (tableView.tag == kMainTabTag)
     {
-        return 150;
+        return 160;
     }
     return 35;
 }
@@ -241,7 +285,7 @@
         NSLog(@"%@",dict);
         if ([[dict objectForKey:@"producticon"] length]>2)
         {
-            [cell.imageV setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"producticon"]] placeholderImage:[UIImage imageNamed:@"33.jpg"]];
+            [cell.imageV setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"producticon"]] placeholderImage:[UIImage imageNamed:@"wangqi.png"]];
         }
         else
         {
@@ -268,6 +312,7 @@
         if (cell == nil)
         {
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+            cell.textLabel.font = [UIFont systemFontOfSize:kOneFontSize];
         }
         // 选中后背景色
         cell.textLabel.textColor = [UIColor colorWithRed:217/255.0 green:0 blue:36/255.0 alpha:1];
@@ -315,6 +360,8 @@
     {
         case KleftTabTag:
         {
+            UIButton *btn = (UIButton *)[self.view viewWithTag:kMiddleButtonTag];
+            [btn setTitle:[[[_seconMenudArray objectAtIndex:indexPath.row] objectForKey:@"info"] objectForKey:@"classifyname"] forState:UIControlStateNormal];
             _seconMenu = indexPath.row;
             _thirdMenuArray = [[_seconMenudArray objectAtIndex:indexPath.row] objectForKey:@"submenus"];
             [self.view bringSubviewToFront:_rightTabV];
@@ -329,7 +376,11 @@
             _thirdMenu = indexPath.row;
             _leftTabV.hidden = YES;
             _rightTabV.hidden = YES;
-            
+            UIButton *btn = (UIButton *)[self.view viewWithTag:kMiddleButtonTag];
+            [btn setTitle:[[_thirdMenuArray objectAtIndex:indexPath.row] objectForKey:@"classifyname"] forState:UIControlStateNormal];
+            _classifyid = [[_thirdMenuArray objectAtIndex:indexPath.row] objectForKey:@"classifyid"];
+            [self startRequestMainData];
+            [self changeButtonSelectedWithButtonTag:kMiddleButtonTag];
         }
             break;
         case kSmallTabTag:
@@ -342,9 +393,15 @@
                 _smallTabV.hidden = YES;
                 if (indexPath.row == 0)
                 {
-                    [self timePx];
+                    [self timeSort];
                     [_mainTabV reloadData];
                 }
+                else if (indexPath.row == 1)
+                {
+                    [self seenumberSort];
+                    [_mainTabV reloadData];
+                }
+                [self changeButtonSelectedWithButtonTag:kRightButtonTag];
             }
             else
             {
@@ -358,12 +415,16 @@
                 _seconMenudArray = [[_firstMenuArray objectAtIndex:_firstMenu] objectForKey:@"submenus"];
                 UIButton *btn2 = (UIButton *)[self.view viewWithTag:kMiddleButtonTag];
                 [btn2 setTitle:[[[_seconMenudArray objectAtIndex:0] objectForKey:@"info"] objectForKey:@"classifyname"] forState:UIControlStateNormal];
+                
+                _classifyid = [[[_firstMenuArray objectAtIndex:indexPath.row] objectForKey:@"info"] objectForKey:@"classifyid"];
+                [self startRequestMainData];
+                [self changeButtonSelectedWithButtonTag:kLeftButtonTag];
             }
         }
             break;
         case kMainTabTag:
         {
-            
+            // 选中产品信息 进入产品详情
         }
             break;
         default:
@@ -393,7 +454,6 @@
     NSLog(@"%@",_thirdMenuArray);
 }
 
-/*
 #pragma mark - 触空白收起菜单
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -403,39 +463,64 @@
     _rightTabV.hidden = YES;
     
 }
-*/
+
 
 #pragma mark - 菜单按钮被点击
 - (void)buttonClicked:(MenuButton *)btn
 {
+    [self changeButtonSelectedWithButtonTag:btn.tag];
     switch (btn.tag)
     {
         case kLeftButtonTag:
         {
-            NSLog(@"一级分类");
-            [self reloadSmallTableViewWithPaiXu:NO];
-            [self changeTableViewFrameWithTag:_smallTabV.tag andCount:_firstMenuArray.count];
-            [self makeTableViewAlone:NO];
+            if (btn.selected)
+            {
+                NSLog(@"一级分类");
+                [self reloadSmallTableViewWithPaiXu:NO];
+                [self changeTableViewFrameWithTag:_smallTabV.tag andCount:_firstMenuArray.count];
+                [self makeTableViewAlone:NO];
+            }
+            else
+            {
+                _smallTabV.hidden = YES;
+            }
+            
         }
             break;
         case kMiddleButtonTag:
         {
-            NSLog(@"产品分类");
-            [self makeTableViewAlone:YES];
-            _seconMenudArray = [[_firstMenuArray objectAtIndex:_firstMenu] objectForKey:@"submenus"];
-            [self changeTableViewFrameWithTag:_leftTabV.tag andCount:_seconMenudArray.count];
+            if (btn.selected)
+            {
+                NSLog(@"产品分类");
+                [self makeTableViewAlone:YES];
+                _seconMenudArray = [[_firstMenuArray objectAtIndex:_firstMenu] objectForKey:@"submenus"];
+                [self changeTableViewFrameWithTag:_leftTabV.tag andCount:_seconMenudArray.count];
+                
+                [self.view bringSubviewToFront:_leftTabV];
+                _leftTabV.hidden = NO;
+                [_leftTabV reloadData];
+            }
+            else
+            {
+                _leftTabV.hidden = YES;
+                _rightTabV.hidden = YES;
+            }
             
-            [self.view bringSubviewToFront:_leftTabV];
-            _leftTabV.hidden = NO;
-            [_leftTabV reloadData];
         }
             break;
         case kRightButtonTag:
         {
-            NSLog(@"排序");
-            [self makeTableViewAlone:NO];
-            [self reloadSmallTableViewWithPaiXu:YES];
-            [self changeTableViewFrameWithTag:_smallTabV.tag andCount:_pXrray.count];
+            if (btn.selected)
+            {
+                NSLog(@"排序");
+                [self makeTableViewAlone:NO];
+                [self reloadSmallTableViewWithPaiXu:YES];
+                [self changeTableViewFrameWithTag:_smallTabV.tag andCount:_pXrray.count];
+            }
+            else
+            {
+                _smallTabV.hidden = YES;
+            }
         }
             break;
         default:
@@ -443,6 +528,21 @@
     }
 }
 
+#pragma mark - 改变按钮选中状态
+- (void)changeButtonSelectedWithButtonTag:(NSInteger)tag
+{
+    UIButton *btn = (UIButton *)[self.view viewWithTag:tag];
+    if (btn.selected)
+    {
+        btn.selected = NO;
+        [btn setBackgroundColor:[UIColor whiteColor]];
+    }
+    else
+    {
+        btn.selected = YES;
+        [btn setBackgroundColor:[UIColor colorWithRed:217/255.0 green:0 blue:36/255.0 alpha:1]];
+    }
+}
 
 #pragma mark - 控制产品菜单、排序菜单、主菜单不能同时出现
 - (void)makeTableViewAlone:(BOOL)product
@@ -471,19 +571,24 @@
     [_smallTabV reloadData];
 }
 
+#pragma mark - 根据数据改变菜单的高度
 - (void)changeTableViewFrameWithTag:(NSInteger)tag andCount:(NSInteger)counts
 {
     UITableView *tabV = (UITableView *)[self.view viewWithTag:tag];
     CGRect rect = tabV.frame;
-    if (counts*35<rect.size.height)
+    if (counts*35<kScreenHeight-100)
     {
         rect.size.height = counts*35;
+    }
+    else
+    {
+        rect.size.height = kScreenHeight-100;
     }
     tabV.frame = rect;
 }
 
-#pragma mark- 时间排序
-- (void)timePx
+#pragma mark - 时间排序
+- (void)timeSort
 {
     for (int i = 0; i < _mainArray.count-1; i ++)
     {
@@ -500,7 +605,7 @@
         }
     }
 }
-
+#pragma mark -- 交换位置（排序）
 - (void)exchangeObjectIndex:(NSInteger)x andIndex:(NSInteger )y
 {
     NSDictionary *dic = [_mainArray objectAtIndex:x];
@@ -509,6 +614,7 @@
     [_mainArray replaceObjectAtIndex:y withObject:dic];
 }
 
+#pragma mark -- 字符串转时间
 - (NSDate *)stringChangToDate:(NSString *)string
 {
     NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
@@ -518,7 +624,27 @@
     return inputDate;
 }
 
-- (void)didReceiveMemoryWarning {
+#pragma mark - 浏览量排序
+- (void)seenumberSort
+{
+    for (int i = 0; i < _mainArray.count-1; i ++)
+    {
+        NSDictionary *dict = [_mainArray objectAtIndex:i];
+        NSInteger seenum1 = [[dict objectForKey:@"seenum"] integerValue];
+        for (int j = i +1; j < _mainArray.count; j++)
+        {
+            NSDictionary *dict2 = [_mainArray objectAtIndex:j];
+            NSInteger seenum2 = [[dict2 objectForKey:@"seenum"] integerValue];
+            if (seenum1<seenum2)
+            {
+                [self exchangeObjectIndex:i andIndex:j];
+            }
+        }
+    }
+}
+
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }

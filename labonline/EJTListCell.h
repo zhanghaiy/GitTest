@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface EJTListCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *backImgV;
 @property (weak, nonatomic) IBOutlet UIImageView *imageV;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *qKLabel;

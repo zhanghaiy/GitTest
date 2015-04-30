@@ -10,8 +10,7 @@
 
 @interface EJTListViewController : UIViewController
 
-//@property (nonatomic,copy) NSString *titleString;
-//@property (nonatomic,assign) int type;
+@property (nonatomic,assign) BOOL enterFormHome;
 
 @property (nonatomic,copy) NSString *classifyid;
 @property (nonatomic,assign) NSInteger firstMenu;
@@ -19,6 +18,5 @@
 @property (nonatomic,assign) NSInteger thirdMenu;
 @property (nonatomic,copy) NSString *codeString;
 
-//- (void)setFirstMenu:(NSInteger)firstMenu SecondMenu:(NSInteger)seconMenu ThirdMenu:(NSInteger)thirdMenu;
 
 @end
