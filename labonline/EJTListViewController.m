@@ -215,6 +215,10 @@
             // 成功
             NSArray *productList = [[dict objectForKey:@"data"] objectForKey:@"productList"];
             NSLog(@"%@",productList);
+            if (_mainArray.count)
+            {
+                [_mainArray removeAllObjects];
+            }
             for (NSDictionary *dict in productList)
             {
                 NSLog(@"%@",dict);
