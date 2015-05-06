@@ -38,6 +38,7 @@
 
 #import "EJTListViewController.h"
 #import "EJTMenuViewController.h"
+#import "ProductDetailViewController.h"
 
 @interface MainViewController ()<LeftViewControllerDelegate,UIScrollViewDelegate,EGORefreshTableHeaderDelegate>
 {
@@ -209,6 +210,8 @@
     eJTView = [[[NSBundle mainBundle]loadNibNamed:@"EJTMainView" owner:self options:0] lastObject];
     eJTView.frame = CGRectMake(5, _currentTopY+kJSZLAloneHeight+10, kScreenWidth-10, kEJTViewHeight);
 //    eJTView.index = 12;
+    eJTView.target=self;
+    eJTView.action=@selector(productMethod:);
     [_backScrollV addSubview:eJTView];
     
     
@@ -224,7 +227,13 @@
     [self requestMainDataWithURLString:kMainUrlString];
 }
 
-
+#pragma mark - 产品点击事件
+- (void)productMethod:(NSDictionary *)proDic{
+    NSLog(@"%@",proDic);
+    ProductDetailViewController *proDV=[[ProductDetailViewController alloc] init];
+    proDV.proDetail=proDic;
+    [self.navigationController pushViewController:proDV animated:YES];
+}
 #pragma mark - 菜单过渡界面
 - (void)productCateMethod:(ProductCateView *)proCateV
 {
@@ -265,6 +274,7 @@
             if ([dict objectForKey:@"productclassifyList"])
             {
                 NSArray *eJtMenuArray = [self makeUpEJTMenuDataWithArray:[dict objectForKey:@"productclassifyList"]];
+                NSLog(@"@@@@@@@:%@",eJtMenuArray);
                 [[NSUserDefaults standardUserDefaults] setObject:eJtMenuArray forKey:@"MENUARRAY"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
             }

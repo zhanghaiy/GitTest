@@ -158,6 +158,12 @@
 - (void)productBtnClicked:(UIButton *)btn
 {
     NSLog(@"产品%ld被点击",btn.tag-kProductsButtonBaseTag+1);
+    NSDictionary *subDic= [_productInfoArray objectAtIndex:btn.tag-kProductsButtonBaseTag];
+    NSLog(@"%@",subDic);
+    if ([_target respondsToSelector:_action])
+    {
+        [_target performSelector:_action withObject:subDic afterDelay:NO];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView

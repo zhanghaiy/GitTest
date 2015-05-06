@@ -59,6 +59,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     NSArray *array = [[NSUserDefaults standardUserDefaults] objectForKey:@"MENUARRAY"];
+    NSLog(@"here :%@",array);
     leftArray = [[array objectAtIndex:_firstMenu] objectForKey:@"submenus"];
     rightArray = [[leftArray objectAtIndex:_secMenu] objectForKey:@"submenus"];
     self.title = [[[array objectAtIndex:_firstMenu] objectForKey:@"info"] objectForKey:@"classifyname"];
@@ -100,8 +101,8 @@
     rightTab.layer.borderColor = [UIColor colorWithRed:228/255.0 green:129/255.0 blue:138/255.0 alpha:1].CGColor;
     [self.view addSubview:rightTab];
     
-    leftTab.hidden = YES;
-    rightTab.hidden = YES;
+    leftTab.hidden = NO;
+    rightTab.hidden = NO;
     leftTab.backgroundColor = [UIColor clearColor];
     rightTab.backgroundColor = [UIColor clearColor];
     
