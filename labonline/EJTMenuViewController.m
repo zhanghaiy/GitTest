@@ -9,7 +9,7 @@
 #import "EJTMenuViewController.h"
 #import "EJTListViewController.h"
 #import "MenuButton.h"
-
+#import "MenuCell.h"
 
 
 @interface EJTMenuViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -21,6 +21,8 @@
     
     NSInteger _secMenu;
     NSInteger _thirdMenu;
+    
+    BOOL _first;
 }
 @end
 
@@ -28,6 +30,8 @@
 #define kTwoBtnTag 11
 #define kLeftTabTag 12
 #define kRightTabTag 13
+#define kFirstCellTag 555
+#define kSecondCellTag 888
 
 @implementation EJTMenuViewController
 
@@ -41,6 +45,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    _first = YES;
     if ([DeviceManager deviceVersion]>=7)
     {
         //界面调整
@@ -50,13 +55,13 @@
         }
     }
     // 左侧按钮
-    NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 26) andBackImageWithName:@"aniu_07.png"];
+    NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 35, 40) andBackImageWithName:@"返回角.png"];
     leftButton.delegate = self;
     leftButton.action = @selector(backToPrePage);
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor colorWithWhite:244/255.0 alpha:1];
     
     NSArray *array = [[NSUserDefaults standardUserDefaults] objectForKey:@"MENUARRAY"];
     NSLog(@"here :%@",array);
@@ -64,42 +69,44 @@
     rightArray = [[leftArray objectAtIndex:_secMenu] objectForKey:@"submenus"];
     self.title = [[[array objectAtIndex:_firstMenu] objectForKey:@"info"] objectForKey:@"classifyname"];
     
-    MenuButton *oneBtn = [MenuButton buttonWithType:UIButtonTypeCustom];
-    [oneBtn setFrame:CGRectMake(0, 0, kScreenWidth/2, 30)];
-    [oneBtn setTitle:[[[leftArray objectAtIndex:0] objectForKey:@"info"] objectForKey:@"classifyname"] forState:UIControlStateNormal];
-    [oneBtn addTarget:self action:@selector(oneMenu:) forControlEvents:UIControlEventTouchUpInside];
-    oneBtn.backgroundColor = [UIColor whiteColor];
-    oneBtn.tag = kOneBtnTag;
-    [self.view addSubview:oneBtn];
+//    MenuButton *oneBtn = [MenuButton buttonWithType:UIButtonTypeCustom];
+//    [oneBtn setFrame:CGRectMake(0, 0, kScreenWidth/2, 30)];
+//    [oneBtn setTitle:[[[leftArray objectAtIndex:0] objectForKey:@"info"] objectForKey:@"classifyname"] forState:UIControlStateNormal];
+//    [oneBtn addTarget:self action:@selector(oneMenu:) forControlEvents:UIControlEventTouchUpInside];
+//    oneBtn.backgroundColor = [UIColor whiteColor];
+//    oneBtn.tag = kOneBtnTag;
+//    [self.view addSubview:oneBtn];
+//    
+//    MenuButton *secBtn = [MenuButton buttonWithType:UIButtonTypeCustom];
+//    [secBtn setFrame:CGRectMake(kScreenWidth/2, 0, kScreenWidth/2, 30)];
+//    [secBtn setTitle:[[rightArray objectAtIndex:0] objectForKey:@"classifyname"] forState:UIControlStateNormal];
+//    [secBtn addTarget:self action:@selector(secBtn:) forControlEvents:UIControlEventTouchUpInside];
+//    secBtn.tag = kTwoBtnTag;
+//    [self.view addSubview:secBtn];
     
-    MenuButton *secBtn = [MenuButton buttonWithType:UIButtonTypeCustom];
-    [secBtn setFrame:CGRectMake(kScreenWidth/2, 0, kScreenWidth/2, 30)];
-    [secBtn setTitle:[[rightArray objectAtIndex:0] objectForKey:@"classifyname"] forState:UIControlStateNormal];
-    [secBtn addTarget:self action:@selector(secBtn:) forControlEvents:UIControlEventTouchUpInside];
-    secBtn.tag = kTwoBtnTag;
-    [self.view addSubview:secBtn];
-    
-    leftTab = [[UITableView alloc]initWithFrame:CGRectMake(0, 31, kScreenWidth/2, kScreenHeight-95) style:UITableViewStylePlain];
+    leftTab = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth/2, kScreenHeight-64) style:UITableViewStylePlain];
     leftTab.delegate = self;
     leftTab.dataSource = self;
     leftTab.tag = kLeftTabTag;
     leftTab.separatorStyle = UITableViewCellSeparatorStyleNone;
     leftTab.layer.masksToBounds = YES;
     leftTab.layer.cornerRadius = 2;
-    leftTab.layer.borderWidth = 1;
-    leftTab.layer.borderColor = [UIColor colorWithRed:228/255.0 green:129/255.0 blue:138/255.0 alpha:1].CGColor;
+//    leftTab.layer.borderWidth = 1;
+//    leftTab.layer.borderColor = [UIColor colorWithWhite:230/255.0 alpha:1].CGColor;
     [self.view addSubview:leftTab];
+//    [self changeTableViewFrameWithTag:kLeftTabTag andCount:leftArray.count];
     
-    rightTab = [[UITableView alloc]initWithFrame:CGRectMake(kScreenWidth/2, 31, kScreenWidth/2, kScreenHeight-95) style:UITableViewStylePlain];
+    rightTab = [[UITableView alloc]initWithFrame:CGRectMake(kScreenWidth/2, 0, kScreenWidth/2, kScreenHeight-64) style:UITableViewStylePlain];
     rightTab.delegate = self;
     rightTab.dataSource = self;
     rightTab.tag = kRightTabTag;
     rightTab.separatorStyle = UITableViewCellSeparatorStyleNone;
     rightTab.layer.masksToBounds = YES;
     rightTab.layer.cornerRadius = 2;
-    rightTab.layer.borderWidth = 1;
-    rightTab.layer.borderColor = [UIColor colorWithRed:228/255.0 green:129/255.0 blue:138/255.0 alpha:1].CGColor;
+//    rightTab.layer.borderWidth = 1;
+//    rightTab.layer.borderColor = [UIColor colorWithWhite:244/255.0 alpha:1].CGColor;
     [self.view addSubview:rightTab];
+//    [self changeTableViewFrameWithTag:kRightTabTag andCount:rightArray.count];
     
     leftTab.hidden = NO;
     rightTab.hidden = NO;
@@ -165,40 +172,103 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 35;
+    return 40;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellId = @"cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if (cell == nil)
     {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
-        cell.textLabel.font = [UIFont systemFontOfSize:kOneFontSize];
+        cell = [[[NSBundle mainBundle]loadNibNamed:@"MenuCell" owner:self options:0] lastObject];
     }
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.target = self;
     if (tableView.tag == kLeftTabTag)
     {
         // left
         NSLog(@"%@",[leftArray objectAtIndex:indexPath.row] );
-        cell.textLabel.text = [[[leftArray objectAtIndex:indexPath.row] objectForKey:@"info"] objectForKey:@"classifyname"];//[leftArray objectAtIndex:indexPath.row];
+        cell.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:1];
+        cell.titleLabel.text = [[[leftArray objectAtIndex:indexPath.row] objectForKey:@"info"] objectForKey:@"classifyname"];
+        cell.titleLabel.font = [UIFont systemFontOfSize:kOneFontSize];
+        cell.action = @selector(firstMenu:);
+        cell.tag = indexPath.row + kFirstCellTag;
+        if (_first)
+        {
+            if (indexPath.row == 0)
+            {
+                [cell btnClicked:cell.backBtn];
+            }
+        }
     }
     else if (tableView.tag == kRightTabTag)
     {
-        cell.textLabel.text = [[rightArray objectAtIndex:indexPath.row] objectForKey:@"classifyname"];
+        cell.titleLabel.textColor = [UIColor colorWithWhite:128/255.0 alpha:1];
+        cell.titleLabel.text = [[rightArray objectAtIndex:indexPath.row] objectForKey:@"classifyname"];
+        cell.titleLabel.font = [UIFont systemFontOfSize:kTwoFontSize];
+        cell.backgroundColor = [UIColor colorWithWhite:244/255.0 alpha:1];
+        cell.action = @selector(secondMenu:);
+        cell.tag = indexPath.row + kSecondCellTag;
+        if (indexPath.row == 0)
+        {
+//            [self changeSelectedCell:cell andBaseTag:kSecondCellTag andSumCounts:rightArray.count];
+            cell.selectedLable.hidden = NO;
+        }
     }
-    cell.textLabel.textColor = [UIColor colorWithRed:217/255.0 green:0 blue:36/255.0 alpha:1];
-    // 选中后背景色
-    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
-    cell.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:217/255.0 green:0/255.0 blue:36/255.0 alpha:1];
-    cell.selectedTextColor = [UIColor whiteColor];
     
     return cell;
 }
 
+- (void)firstMenu:(MenuCell *)cell
+{
+    [self changeSelectedCell:cell andBaseTag:kFirstCellTag andSumCounts:leftArray.count];
+    _secMenu = cell.tag-kFirstCellTag;//indexPath.row;
+    rightArray = [[leftArray objectAtIndex:_secMenu] objectForKey:@"submenus"];
+    [rightTab reloadData];
+}
 
+- (void)secondMenu:(MenuCell *)cell
+{
+    [self changeSelectedCell:cell andBaseTag:kSecondCellTag andSumCounts:rightArray.count];
+    _thirdMenu = cell.tag-kSecondCellTag;
+    NSString *classifyid = [[rightArray objectAtIndex:_thirdMenu] objectForKey:@"classifyid"];
+    NSLog(@"%@",classifyid);
+    EJTListViewController *eJTListVC = [[EJTListViewController alloc]init];
+    eJTListVC.firstMenu = _firstMenu;
+    eJTListVC.seconMenu = _secMenu;
+    eJTListVC.thirdMenu = _thirdMenu;
+    eJTListVC.classifyid = classifyid;
+    [self.navigationController pushViewController:eJTListVC animated:YES];
 
+}
+
+- (void)changeSelectedCell:(MenuCell *)cell andBaseTag:(NSInteger)tag andSumCounts:(NSInteger)counts
+{
+    for (int i = 0;i < counts;i ++)
+    {
+        MenuCell *newCell = (MenuCell *)[self.view viewWithTag:i+tag];
+        if (cell.tag == newCell.tag)
+        {
+            newCell.selectedLable.hidden = NO;
+            newCell.backgroundColor = [UIColor colorWithWhite:244/255.0 alpha:1];
+        }
+        else
+        {
+            newCell.selectedLable.hidden = YES;
+            if (tag == kFirstCellTag)
+            {
+                newCell.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:1];
+            }
+            else
+            {
+                newCell.backgroundColor = [UIColor colorWithWhite:244/255.0 alpha:1];
+            }
+        }
+    }
+}
+
+/*
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView.tag == kLeftTabTag)
@@ -230,7 +300,7 @@
         [self.navigationController pushViewController:eJTListVC animated:YES];
     }
 }
-
+*/
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     return 0.1;
@@ -256,9 +326,13 @@
 {
     UITableView *tabV = (UITableView *)[self.view viewWithTag:tag];
     CGRect rect = tabV.frame;
-    if (counts*35<rect.size.height)
+    if (counts*40<kScreenHeight-94)
     {
-        rect.size.height = counts*35;
+        rect.size.height = counts*40;
+    }
+    else
+    {
+        rect.size.height = kScreenHeight-94;
     }
     tabV.frame = rect;
 }

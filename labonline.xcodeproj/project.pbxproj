@@ -155,6 +155,8 @@
 		FD5D3C081AD3BF2800A6F60E /* wifi.png in Resources */ = {isa = PBXBuildFile; fileRef = FD5D3C001AD3BF2800A6F60E /* wifi.png */; };
 		FD5D3C0C1AD3C15000A6F60E /* SettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5D3C0A1AD3C15000A6F60E /* SettingCell.m */; };
 		FD5D3C0D1AD3C15000A6F60E /* SettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5D3C0B1AD3C15000A6F60E /* SettingCell.xib */; };
+		FD71F5E51AFB0D6400E2ACDF /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD71F5E41AFB0D6400E2ACDF /* MenuCell.m */; };
+		FD71F5E71AFB0D7600E2ACDF /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD71F5E61AFB0D7600E2ACDF /* MenuCell.xib */; };
 		FD7355C31ADF640F00B5F296 /* HZActivityIndicatorSubclassExample.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7355C01ADF640F00B5F296 /* HZActivityIndicatorSubclassExample.m */; };
 		FD7355C41ADF640F00B5F296 /* HZActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7355C21ADF640F00B5F296 /* HZActivityIndicatorView.m */; };
 		FD7355C81ADFAB3800B5F296 /* RemoveCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7355C71ADFAB3800B5F296 /* RemoveCacheManager.m */; };
@@ -442,6 +444,9 @@
 		FD5D3C091AD3C15000A6F60E /* SettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingCell.h; sourceTree = "<group>"; };
 		FD5D3C0A1AD3C15000A6F60E /* SettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingCell.m; sourceTree = "<group>"; };
 		FD5D3C0B1AD3C15000A6F60E /* SettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingCell.xib; sourceTree = "<group>"; };
+		FD71F5E31AFB0D6400E2ACDF /* MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCell.h; sourceTree = "<group>"; };
+		FD71F5E41AFB0D6400E2ACDF /* MenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuCell.m; sourceTree = "<group>"; };
+		FD71F5E61AFB0D7600E2ACDF /* MenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
 		FD7355BF1ADF640F00B5F296 /* HZActivityIndicatorSubclassExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZActivityIndicatorSubclassExample.h; sourceTree = "<group>"; };
 		FD7355C01ADF640F00B5F296 /* HZActivityIndicatorSubclassExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZActivityIndicatorSubclassExample.m; sourceTree = "<group>"; };
 		FD7355C11ADF640F00B5F296 /* HZActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZActivityIndicatorView.h; sourceTree = "<group>"; };
@@ -840,18 +845,9 @@
 		FD56327D1AEDD79600CFFB85 /* e检通 */ = {
 			isa = PBXGroup;
 			children = (
+				FD71F5E21AFB0D3F00E2ACDF /* Controllers */,
+				FD71F5E11AFB0D2B00E2ACDF /* Views */,
 				FDB673811AEF8A630013E9A1 /* eJianTong.json */,
-				FDB6737E1AEF850F0013E9A1 /* MenuButton.h */,
-				FDB6737F1AEF850F0013E9A1 /* MenuButton.m */,
-				FDB673781AEF83A50013E9A1 /* EJTListViewController.h */,
-				FDB673791AEF83A50013E9A1 /* EJTListViewController.m */,
-				FDB6737B1AEF83B40013E9A1 /* EJTMenuViewController.h */,
-				FDB6737C1AEF83B40013E9A1 /* EJTMenuViewController.m */,
-				FDDF61751AF0EC9900725F23 /* EJTListCell.h */,
-				FDDF61761AF0EC9900725F23 /* EJTListCell.m */,
-				FDDF61771AF0EC9900725F23 /* EJTListCell.xib */,
-				044117141AF89A5600D7927A /* ProductDetailViewController.h */,
-				044117151AF89A5600D7927A /* ProductDetailViewController.m */,
 			);
 			name = "e检通";
 			sourceTree = "<group>";
@@ -909,6 +905,34 @@
 				FD5D3C001AD3BF2800A6F60E /* wifi.png */,
 			);
 			path = "设置";
+			sourceTree = "<group>";
+		};
+		FD71F5E11AFB0D2B00E2ACDF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FDB6737E1AEF850F0013E9A1 /* MenuButton.h */,
+				FDB6737F1AEF850F0013E9A1 /* MenuButton.m */,
+				FDDF61751AF0EC9900725F23 /* EJTListCell.h */,
+				FDDF61761AF0EC9900725F23 /* EJTListCell.m */,
+				FDDF61771AF0EC9900725F23 /* EJTListCell.xib */,
+				FD71F5E31AFB0D6400E2ACDF /* MenuCell.h */,
+				FD71F5E41AFB0D6400E2ACDF /* MenuCell.m */,
+				FD71F5E61AFB0D7600E2ACDF /* MenuCell.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		FD71F5E21AFB0D3F00E2ACDF /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FDB673781AEF83A50013E9A1 /* EJTListViewController.h */,
+				FDB673791AEF83A50013E9A1 /* EJTListViewController.m */,
+				FDB6737B1AEF83B40013E9A1 /* EJTMenuViewController.h */,
+				FDB6737C1AEF83B40013E9A1 /* EJTMenuViewController.m */,
+				044117141AF89A5600D7927A /* ProductDetailViewController.h */,
+				044117151AF89A5600D7927A /* ProductDetailViewController.m */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		FD7355BE1ADF63EB00B5F296 /* loadingView */ = {
@@ -1497,6 +1521,7 @@
 				043C772F1AD4F15D00B0DEAC /* anniu_07.png in Resources */,
 				FD558CF81AC3A62900DA42FF /* pictureShow.png in Resources */,
 				FDA91DF91AD50F5000734E1B /* MainListCell.xib in Resources */,
+				FD71F5E71AFB0D7600E2ACDF /* MenuCell.xib in Resources */,
 				04341ACA1AF087EB00725496 /* icon58.png in Resources */,
 				FD462E521ACCE022001AC895 /* 删除.png in Resources */,
 				0435E2E61AE4D94000A32AE5 /* 左侧列.png in Resources */,
@@ -1552,6 +1577,7 @@
 				FD97DA241ADCF3F000963FB2 /* UIView+Category.m in Sources */,
 				FD5CC6481AD7B8A1008986F0 /* SDWebImageDecoder.m in Sources */,
 				FD5CC6471AD7B8A1008986F0 /* SDImageCache.m in Sources */,
+				FD71F5E51AFB0D6400E2ACDF /* MenuCell.m in Sources */,
 				FD462E641ACD584C001AC895 /* MyMagazineViewController.m in Sources */,
 				FD558D131AC3E74600DA42FF /* JiShuZhuanLanMoreViewController.m in Sources */,
 				04FE4C431ACD328D00A922DA /* AFHTTPRequestOperationManager.m in Sources */,

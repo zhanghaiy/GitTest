@@ -25,6 +25,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 35, 40) andBackImageWithName:@"返回角.png"];
+    leftButton.delegate = self;
+    leftButton.action = @selector(backToPrePage);
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
     NSURL *url;
     _urlstring=[_proDetail objectForKey:@"urlhtml"];
     _productID=[_proDetail objectForKey:@"productid"];
@@ -90,6 +97,11 @@
         _addReadCounts = NO;
     }
 }
+- (void)backToPrePage
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 /*
 #pragma mark - Navigation
 

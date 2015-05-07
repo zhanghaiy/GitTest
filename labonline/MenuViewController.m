@@ -62,7 +62,7 @@
     [button setFrame:CGRectMake(0, 0, 25, 26)];
     if (!_enterFromHome)
     {
-        [button setBackgroundImage:[UIImage imageNamed:@"aniu_07.png"] forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageNamed:@"返回角.png"] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(popToPrePage) forControlEvents:UIControlEventTouchUpInside];
     }else{
         [button setFrame:CGRectMake(0, 0, 35, 36)];
