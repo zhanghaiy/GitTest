@@ -15,5 +15,7 @@
 
 @property (nonatomic,strong) NSArray *productInfoArray;
 //@property (nonatomic,assign) NSInteger index;
+@property (nonatomic,assign) id target;
+@property (nonatomic,assign) SEL action;
 
 @end

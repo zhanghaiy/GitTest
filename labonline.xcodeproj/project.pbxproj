@@ -55,6 +55,7 @@
 		043C77391AD4F1A000B0DEAC /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043C77371AD4F1A000B0DEAC /* RegisterViewController.m */; };
 		043C773B1AD4F1D700B0DEAC /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 043C773A1AD4F1D700B0DEAC /* MainStoryboard.storyboard */; };
 		043EE7191AD6611600B194EB /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 043EE7181AD6611600B194EB /* UserModel.m */; };
+		044117161AF89A5600D7927A /* ProductDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044117151AF89A5600D7927A /* ProductDetailViewController.m */; };
 		04440EC31ADBA83700F60852 /* MagazineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04440EC21ADBA83700F60852 /* MagazineModel.m */; };
 		0446BF061ADE482A00587FD5 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0446BF021ADE482900587FD5 /* libWeChatSDK.a */; };
 		0446BF071ADE482A00587FD5 /* read_me.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0446BF031ADE482A00587FD5 /* read_me.txt */; };
@@ -201,7 +202,6 @@
 		FD9A76FD1ACBF1B0007ACC11 /* MyCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9A76FC1ACBF1B0007ACC11 /* MyCommentCell.m */; };
 		FD9A76FF1ACBF1E6007ACC11 /* MyCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD9A76FE1ACBF1E6007ACC11 /* MyCommentCell.xib */; };
 		FDA803431AF07C66001F2842 /* 暂无图片.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FDA803411AF07C66001F2842 /* 暂无图片.jpg */; };
-		FDA803441AF07C66001F2842 /* LoadingImage.png in Resources */ = {isa = PBXBuildFile; fileRef = FDA803421AF07C66001F2842 /* LoadingImage.png */; };
 		FDA91DE71AD4BB1200734E1B /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA91DE61AD4BB1200734E1B /* SearchViewController.m */; };
 		FDA91DF31AD4F98100734E1B /* NavigationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA91DF21AD4F98100734E1B /* NavigationButton.m */; };
 		FDA91DF71AD5085400734E1B /* tubiao_04.png in Resources */ = {isa = PBXBuildFile; fileRef = FDA91DF61AD5085400734E1B /* tubiao_04.png */; };
@@ -295,6 +295,8 @@
 		043C773A1AD4F1D700B0DEAC /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		043EE7171AD6611600B194EB /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
 		043EE7181AD6611600B194EB /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
+		044117141AF89A5600D7927A /* ProductDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductDetailViewController.h; sourceTree = "<group>"; };
+		044117151AF89A5600D7927A /* ProductDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductDetailViewController.m; sourceTree = "<group>"; };
 		04440EC11ADBA83600F60852 /* MagazineModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagazineModel.h; sourceTree = "<group>"; };
 		04440EC21ADBA83700F60852 /* MagazineModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagazineModel.m; sourceTree = "<group>"; };
 		0446BF021ADE482900587FD5 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
@@ -848,6 +850,8 @@
 				FDDF61751AF0EC9900725F23 /* EJTListCell.h */,
 				FDDF61761AF0EC9900725F23 /* EJTListCell.m */,
 				FDDF61771AF0EC9900725F23 /* EJTListCell.xib */,
+				044117141AF89A5600D7927A /* ProductDetailViewController.h */,
+				044117151AF89A5600D7927A /* ProductDetailViewController.m */,
 			);
 			name = "e检通";
 			sourceTree = "<group>";
@@ -1563,6 +1567,7 @@
 				FDB673701AEF35E60013E9A1 /* EJTMainView.m in Sources */,
 				FD47C81B1AC5386E00846AC9 /* JSZLEvaluationViewController.m in Sources */,
 				FDA91DF31AD4F98100734E1B /* NavigationButton.m in Sources */,
+				044117161AF89A5600D7927A /* ProductDetailViewController.m in Sources */,
 				FDC430EB1AD62684006AC165 /* ShareView.m in Sources */,
 				FD5CC6491AD7B8A1008986F0 /* SDWebImageDownloader.m in Sources */,
 				FD7355C41ADF640F00B5F296 /* HZActivityIndicatorView.m in Sources */,
