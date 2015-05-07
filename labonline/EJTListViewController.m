@@ -13,6 +13,7 @@
 #import "UIView+Category.h"
 #import "UIImageView+WebCache.h"
 #import "SearchViewController.h"
+#import "ProductDetailViewController.h"
 
 @interface EJTListViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -93,6 +94,10 @@
     NSString *firstMenuTitle = [[[_firstMenuArray objectAtIndex:_firstMenu] objectForKey:@"info"] objectForKey:@"classifyname"];
     self.title = firstMenuTitle;
     
+    NSString *secondStr=[[[_seconMenudArray objectAtIndex:_seconMenu] objectForKey:@"info"] objectForKey:@"classifyname"];
+    NSString *thirdStr=[[_thirdMenuArray objectAtIndex:_thirdMenu] objectForKey:@"classifyname"];
+    self.title=[secondStr stringByAppendingFormat:@" -> %@",thirdStr];
+    
     MenuButton *leftBtn = [MenuButton buttonWithType:UIButtonTypeCustom];
     leftBtn.tag = kLeftButtonTag;
     [leftBtn setFrame:CGRectMake(0, 0, kScreenWidth/3, 30)];
@@ -168,6 +173,7 @@
     
     _pXrray = @[@"时间",@"浏览量"];
     
+    _classifyid = [[_thirdMenuArray objectAtIndex:_thirdMenu] objectForKey:@"classifyid"];
     [self startRequestMainData];
 }
 
@@ -385,6 +391,10 @@
             _classifyid = [[_thirdMenuArray objectAtIndex:indexPath.row] objectForKey:@"classifyid"];
             [self startRequestMainData];
             [self changeButtonSelectedWithButtonTag:kMiddleButtonTag];
+            
+            NSString *secondStr=[[[_seconMenudArray objectAtIndex:_seconMenu] objectForKey:@"info"] objectForKey:@"classifyname"];
+            NSString *thirdStr=[[_thirdMenuArray objectAtIndex:indexPath.row] objectForKey:@"classifyname"];
+            self.title=[secondStr stringByAppendingFormat:@" -> %@",thirdStr];
         }
             break;
         case kSmallTabTag:
@@ -429,6 +439,10 @@
         case kMainTabTag:
         {
             // 选中产品信息 进入产品详情
+            NSDictionary *proD = [_mainArray objectAtIndex:indexPath.row];
+            ProductDetailViewController *proDetail=[[ProductDetailViewController alloc] init];
+            proDetail.proDetail=proD;
+            [self.navigationController pushViewController:proDetail animated:YES];
         }
             break;
         default:

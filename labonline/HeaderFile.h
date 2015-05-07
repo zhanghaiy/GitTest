@@ -94,6 +94,8 @@ typedef enum
 // e检通产品列表接口 参数 classifyid
 #define kEJTProductListUrl @"http://192.168.0.153:8181/labonline/ejtController/queryCpList.do"
 
+#define kAddProductReadCountsUrl @"http://192.168.0.153:8181/labonline/ejtController/updateLll.do?productid=%@"
+
 #define kOneFontSize 13
 #define kTwoFontSize 12
 #define kThreeFontSize 11
