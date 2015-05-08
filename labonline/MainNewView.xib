@@ -56,6 +56,12 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QzO-AX-Dtq">
+                    <rect key="frame" x="90" y="10" width="40" height="40"/>
+                    <state key="normal" backgroundImage="mainNew.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
@@ -86,6 +92,7 @@
         </view>
     </objects>
     <resources>
+        <image name="mainNew.png" width="46" height="46"/>
         <image name="wangqi.png" width="259" height="348"/>
     </resources>
 </document>
