@@ -157,8 +157,8 @@
 		FD5D3C0D1AD3C15000A6F60E /* SettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5D3C0B1AD3C15000A6F60E /* SettingCell.xib */; };
 		FD65F4C51AFC55AC00A14062 /* ProductCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD65F4C31AFC55AC00A14062 /* ProductCollectionCell.m */; };
 		FD65F4C61AFC55AC00A14062 /* ProductCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD65F4C41AFC55AC00A14062 /* ProductCollectionCell.xib */; };
-		FD65F4C91AFC563B00A14062 /* mainNew.png in Resources */ = {isa = PBXBuildFile; fileRef = FD65F4C71AFC563B00A14062 /* mainNew.png */; };
 		FD65F4CA1AFC563B00A14062 /* productCollection.png in Resources */ = {isa = PBXBuildFile; fileRef = FD65F4C81AFC563B00A14062 /* productCollection.png */; };
+		FD65F4CC1AFC97B900A14062 /* mainNew.png in Resources */ = {isa = PBXBuildFile; fileRef = FD65F4CB1AFC97B900A14062 /* mainNew.png */; };
 		FD71F5E51AFB0D6400E2ACDF /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD71F5E41AFB0D6400E2ACDF /* MenuCell.m */; };
 		FD71F5E71AFB0D7600E2ACDF /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD71F5E61AFB0D7600E2ACDF /* MenuCell.xib */; };
 		FD7355C31ADF640F00B5F296 /* HZActivityIndicatorSubclassExample.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7355C01ADF640F00B5F296 /* HZActivityIndicatorSubclassExample.m */; };
@@ -451,8 +451,8 @@
 		FD65F4C21AFC55AC00A14062 /* ProductCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductCollectionCell.h; sourceTree = "<group>"; };
 		FD65F4C31AFC55AC00A14062 /* ProductCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductCollectionCell.m; sourceTree = "<group>"; };
 		FD65F4C41AFC55AC00A14062 /* ProductCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductCollectionCell.xib; sourceTree = "<group>"; };
-		FD65F4C71AFC563B00A14062 /* mainNew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainNew.png; sourceTree = "<group>"; };
 		FD65F4C81AFC563B00A14062 /* productCollection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = productCollection.png; sourceTree = "<group>"; };
+		FD65F4CB1AFC97B900A14062 /* mainNew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainNew.png; sourceTree = "<group>"; };
 		FD71F5E31AFB0D6400E2ACDF /* MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCell.h; sourceTree = "<group>"; };
 		FD71F5E41AFB0D6400E2ACDF /* MenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuCell.m; sourceTree = "<group>"; };
 		FD71F5E61AFB0D7600E2ACDF /* MenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
@@ -792,8 +792,8 @@
 		FD558CF41AC3A62900DA42FF /* 切图（安卓） */ = {
 			isa = PBXGroup;
 			children = (
-				FD65F4C71AFC563B00A14062 /* mainNew.png */,
 				FD65F4C81AFC563B00A14062 /* productCollection.png */,
+				FD65F4CB1AFC97B900A14062 /* mainNew.png */,
 				FD9392111AE6383B00B4F1EE /* images */,
 				FD9392081AE637F000B4F1EE /* 登陆 */,
 				FDD3015B1AE0BAD200EEF010 /* loadingAnimotion */,
@@ -1460,7 +1460,6 @@
 				FD47C8121AC524FB00846AC9 /* 收藏.png in Resources */,
 				04341AD31AF087EB00725496 /* icon180.png in Resources */,
 				FD93920D1AE6381700B4F1EE /* 弹窗背景_05.png in Resources */,
-				FD65F4C91AFC563B00A14062 /* mainNew.png in Resources */,
 				FD96C8971AC109E00002778A /* LaunchScreen.xib in Resources */,
 				FD558D621AC4098F00DA42FF /* whiteArrow.png in Resources */,
 				FDA91DF71AD5085400734E1B /* tubiao_04.png in Resources */,
@@ -1487,6 +1486,7 @@
 				FD5D3C011AD3BF2800A6F60E /* about.png in Resources */,
 				FD558D5E1AC4098F00DA42FF /* blueArrow.png in Resources */,
 				FD558CF91AC3A62900DA42FF /* 搜索.png in Resources */,
+				FD65F4CC1AFC97B900A14062 /* mainNew.png in Resources */,
 				FD5D3C081AD3BF2800A6F60E /* wifi.png in Resources */,
 				0446BF071ADE482A00587FD5 /* read_me.txt in Resources */,
 				FD5CC6451AD7B8A1008986F0 /* LICENSE in Resources */,
