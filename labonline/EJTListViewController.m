@@ -23,14 +23,9 @@
     NSMutableArray *_firstMenuArray;
     NSMutableArray *_seconMenudArray;
     NSMutableArray *_thirdMenuArray;
-//    NSArray *_firstMenuArray;
-//    NSArray *_seconMenudArray;
-//    NSArray *_thirdMenuArray;
     
     NSMutableArray *_mainArray;
     NSArray *_pXrray;
-    
-//    NSInteger _currentType;
     
     UITableView *_smallTabV;
     UITableView *_leftTabV;
@@ -38,6 +33,10 @@
     UITableView *_mainTabV;
     
     BOOL _paiXu;
+    int _currentRequestPage;
+    UIView *_loadingMoreView;
+    NSDictionary *_loadingPageDic;
+    BOOL _loadMore;
 }
 @end
 
@@ -183,6 +182,7 @@
     
     _pXrray = @[@"时间",@"浏览量"];
     
+    _currentRequestPage = 1;
     _classifyid = [[_thirdMenuArray objectAtIndex:_thirdMenu] objectForKey:@"classifyid"];
     [self startRequestMainData];
 }
@@ -204,7 +204,7 @@
 #pragma mark - 请求产品信息列表
 - (void)startRequestMainData
 {
-    NSString *urlStr = [NSString stringWithFormat:@"%@?classifyid=%@",kEJTProductListUrl,_classifyid];
+    NSString *urlStr = [NSString stringWithFormat:@"%@?classifyid=%@&currentPage=%d&pageSize=10",kEJTProductListUrl,_classifyid,_currentRequestPage];
     NSLog(@"~~~~~~%@",urlStr);
     [self requestWithUrl:urlStr];
 }
@@ -231,14 +231,15 @@
         {
             // 成功
             NSArray *productList = [[dict objectForKey:@"data"] objectForKey:@"productList"];
-//            NSLog(@"%@",productList);
-            if (_mainArray.count)
+            _loadingPageDic = [dict objectForKey:@"pageBean"];
+            [self createLoadingMoreView];
+            if (!_loadMore)
             {
                 [_mainArray removeAllObjects];
             }
+            _loadMore = NO;
             for (NSDictionary *dict in productList)
             {
-//                NSLog(@"%@",dict);
                 [_mainArray addObject:dict];
             }
             [_mainTabV reloadData];
@@ -352,11 +353,8 @@
                 cell.tag = indexPath.row + kLeftCellTag;
                 if (indexPath.row == _seconMenu)
                 {
-                    cell.selectedLable.hidden = YES;
+                    cell.selectedLable.hidden = NO;
                     cell.backgroundColor = [UIColor colorWithWhite:244/255.0 alpha:1];
-//                    [cell btnClicked:cell.backBtn];
-//                    // 隐藏三级菜单
-//                    [NSTimer scheduledTimerWithTimeInterval:0.0001 target:self selector:@selector(changRightTabVHidden:) userInfo:nil repeats:NO];
                 }
             }
                 break;
@@ -376,7 +374,7 @@
                 }
                 if (indexPath.row == _thirdMenu)
                 {
-//                    cell.selectedLable.hidden = NO;
+                    cell.selectedLable.hidden = NO;
                 }
             }
                 break;
@@ -431,6 +429,7 @@
     }
 }
 
+#pragma mark - 选中cell
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView.tag == kMainTabTag)
@@ -446,14 +445,54 @@
 #pragma mark -- 去掉多余的线
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
+    if (tableView.tag == kMainTabTag)
+    {
+        return _loadingMoreView.frame.size.height;
+    }
     return 0.1;
 }
-
-- (void)changRightTabVHidden:(NSTimer *)timer
+#pragma mark - 尾部视图 加载更多
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    _rightTabV.hidden = YES;
+    if (tableView.tag == kMainTabTag)
+    {
+        return _loadingMoreView;
+    }
+    return nil;
 }
 
+#pragma mark - 创建尾部视图
+- (void)createLoadingMoreView
+{
+    NSInteger sumPages = [[_loadingPageDic objectForKey:@"totalPage"] intValue];
+    if (_currentRequestPage<sumPages)
+    {
+        _loadingMoreView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 30)];
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setFrame:CGRectMake(10, 5, kScreenWidth-20, 20)];
+        [btn setBackgroundColor:[UIColor clearColor]];
+        [btn setTitle:@"加载更多...." forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor colorWithWhite:128/255.0 alpha:1] forState:UIControlStateNormal];
+        btn.titleLabel.font = [UIFont systemFontOfSize:kOneFontSize];
+        [btn addTarget:self action:@selector(loadMoreButonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_loadingMoreView addSubview:btn];
+    }
+    else
+    {
+        _loadingMoreView = nil;
+    }
+}
+
+#pragma mark - 加载更多按钮点击事件
+- (void)loadMoreButonClicked:(UIButton *)btn
+{
+    // 加载更多
+    _loadMore = YES;
+    _currentRequestPage ++;
+    [self startRequestMainData];
+}
+
+#pragma mark - 二级菜单点击事件回调
 - (void)leftMenu:(MenuCell *)cell
 {
     [self changeSelectedCell:cell andBaseTag:kLeftCellTag andSumCounts:_seconMenudArray.count];
@@ -469,26 +508,29 @@
     [self changeTableViewFrameWithTag:_rightTabV.tag andCount:_thirdMenuArray.count];
 }
 
+#pragma mark - 三级菜单点击事件回调
 - (void)rightMenu:(MenuCell *)cell
 {
     [self changeSelectedCell:cell andBaseTag:kRightCellTag andSumCounts:_thirdMenuArray.count];
     _thirdMenu = cell.tag - kRightCellTag;
     
-    // 网络请求
     _leftTabV.hidden = YES;
     _rightTabV.hidden = YES;
     UIButton *btn = (UIButton *)[self.view viewWithTag:kMiddleButtonTag];
     [btn setTitle:[[_thirdMenuArray objectAtIndex:_thirdMenu] objectForKey:@"classifyname"] forState:UIControlStateNormal];
+    
+    // 网络请求
+    _currentRequestPage = 1;
     _classifyid = [[_thirdMenuArray objectAtIndex:_thirdMenu] objectForKey:@"classifyid"];
     [self startRequestMainData];
     [self changeButtonSelectedWithButtonTag:kMiddleButtonTag];
     
-    NSLog(@"^^^^^^^%@^^^^^^",[[[_seconMenudArray objectAtIndex:_seconMenu] objectForKey:@"info"] objectForKey:@"classifyname"]);
     NSString *secondStr=[[[_seconMenudArray objectAtIndex:_seconMenu] objectForKey:@"info"] objectForKey:@"classifyname"];
     NSString *thirdStr=[[_thirdMenuArray objectAtIndex:_thirdMenu] objectForKey:@"classifyname"];
     self.title=[secondStr stringByAppendingFormat:@" -> %@",thirdStr];
 }
 
+#pragma mark - 排序菜单点击事件回调
 - (void)paiXuMenu:(MenuCell *)cell
 {
     NSInteger index = cell.tag - kSmallCellTag;
@@ -540,6 +582,7 @@
     }
 }
 
+#pragma mark - 一级菜单点击事件回调
 - (void)firstMenu:(MenuCell *)cell
 {
     _firstMenu = cell.tag - kSmallCellTag;
@@ -555,58 +598,13 @@
     UIButton *btn2 = (UIButton *)[self.view viewWithTag:kMiddleButtonTag];
     [btn2 setTitle:[[[_seconMenudArray objectAtIndex:0] objectForKey:@"info"] objectForKey:@"classifyname"] forState:UIControlStateNormal];
     
+    _currentRequestPage = 1;
     _classifyid = [[[_firstMenuArray objectAtIndex:_firstMenu] objectForKey:@"info"] objectForKey:@"classifyid"];
     [self startRequestMainData];
     [self changeButtonSelectedWithButtonTag:kLeftButtonTag];
 }
 
-/*
-- (void)smallAndMainMenu:(MenuCell *)cell
-{
-    if (_paiXu)
-    {
-        NSInteger index = cell.tag - kSmallCellTag;
-        NSString *titl = [_pXrray objectAtIndex:index];
-        UIButton *btn = (UIButton *)[self.view viewWithTag:102];
-        [btn setTitle:titl forState:UIControlStateNormal];
-        _smallTabV.hidden = YES;
-        if (index == 0)
-        {
-            if (_mainArray.count)
-            {
-                [self timeSort];
-                [_mainTabV reloadData];
-            }
-            else
-            {
-                NSLog(@"没有数据");
-            }
-        }
-        else if (index == 1)
-        {
-            [self seenumberSort];
-            [_mainTabV reloadData];
-        }
-    }
-    else
-    {
-        _firstMenu = cell.tag-kSmallTabTag;
-        NSString *titl = [[[_firstMenuArray objectAtIndex:_firstMenu] objectForKey:@"info"] objectForKey:@"classifyname"];
-        UIButton *btn = (UIButton *)[self.view viewWithTag:kLeftButtonTag];
-        [btn setTitle:titl forState:UIControlStateNormal];
-        self.title = titl;
-        _smallTabV.hidden = YES;
-        
-        _seconMenudArray = [[_firstMenuArray objectAtIndex:_firstMenu] objectForKey:@"submenus"];
-        UIButton *btn2 = (UIButton *)[self.view viewWithTag:kMiddleButtonTag];
-        [btn2 setTitle:[[[_seconMenudArray objectAtIndex:0] objectForKey:@"info"] objectForKey:@"classifyname"] forState:UIControlStateNormal];
-        
-        _classifyid = [[[_firstMenuArray objectAtIndex:_firstMenu] objectForKey:@"info"] objectForKey:@"classifyid"];
-        [self startRequestMainData];
-        [self changeButtonSelectedWithButtonTag:kLeftButtonTag];
-    }
-}
-*/
+#pragma mark - 改变cell选中状态（任何时刻只能有一个被选中）
 - (void)changeSelectedCell:(MenuCell *)cell andBaseTag:(NSInteger)tag andSumCounts:(NSInteger)counts
 {
     for (int i = 0;i < counts;i ++)
