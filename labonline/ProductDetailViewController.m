@@ -15,6 +15,7 @@
     NSString *_productID;// 产品id
     BOOL _addReadCounts; // 是否再增加阅读数
     BOOL _netRequesting;
+    BOOL _collectionProduct;
 }
 
 @end
@@ -25,6 +26,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.title = [_proDetail objectForKey:@"producttitle"];
+    NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 35, 40) andBackImageWithName:@"返回角.png"];
+    leftButton.delegate = self;
+    leftButton.action = @selector(backToPrePage);
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
     NSURL *url;
     _urlstring=[_proDetail objectForKey:@"urlhtml"];
     _productID=[_proDetail objectForKey:@"productid"];
@@ -48,7 +57,7 @@
 -(void)createHomePageBTN{
     UIButton *preButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [preButton setFrame:CGRectMake(kScreenWidth-kMainPreButtonWidth-10, kScreenHeight-kMainPreButtonWidth-20, kMainPreButtonWidth, kMainPreButtonWidth)];
-    [preButton setTitle:@"首页" forState:UIControlStateNormal];
+    [preButton setTitle:@"收藏" forState:UIControlStateNormal];
     [preButton setTitleColor:[UIColor colorWithRed:204/255.0 green:0 blue:0 alpha:1] forState:UIControlStateNormal];
     preButton.layer.masksToBounds = YES;
     preButton.layer.cornerRadius = preButton.frame.size.width/2;
@@ -61,7 +70,15 @@
 #pragma 首页按钮点击事件
 - (void)preButtonClicked
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+//    [self.navigationController popToRootViewControllerAnimated:YES];
+    /*
+     此处为收藏按钮 2015.05.08
+     */
+    
+    NSString *userid = [[NSUserDefaults standardUserDefaults] objectForKey:@"id"];
+    NSString *collectionUrl = [NSString stringWithFormat:@"%@?userid=%@&productid=%@",kProductCollectionUrl,userid,_productID];
+    _collectionProduct = YES;
+    [self requestMainDataWithURLString:collectionUrl];
 }
 #pragma mark - 增加阅读数
 - (void)upReadCounts
@@ -89,7 +106,29 @@
     {
         _addReadCounts = NO;
     }
+    if (_collectionProduct)
+    {
+        _collectionProduct = NO;
+        NSString *title;
+        if (netManager.downLoadData)
+        {
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
+            title = [dict objectForKey:@"remark"];
+        }
+        else
+        {
+           title = @"收藏失败";
+        }
+        
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:title delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
+    }
 }
+- (void)backToPrePage
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 /*
 #pragma mark - Navigation
 

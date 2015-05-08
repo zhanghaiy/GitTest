@@ -292,6 +292,7 @@
             // 解析
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
             [self addControlsWithDictionary:[dict objectForKey:@"data"]];
+//            NSLog(@"")
         }
         else
         {
