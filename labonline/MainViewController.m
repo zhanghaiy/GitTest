@@ -141,9 +141,6 @@
             self.edgesForExtendedLayout = UIRectEdgeNone;
         }
     }
-
-    _requestEJTCate = YES;
-    [self requestMainDataWithURLString:kEJTCateUrl];
     
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:216/255.0 green:0 blue:0 alpha:1]}];
     self.view.backgroundColor = [UIColor colorWithWhite:244/255.0 alpha:1];
@@ -225,6 +222,9 @@
     
     [self.view addLoadingViewInSuperView:self.view andTarget:self];
     [self requestMainDataWithURLString:kMainUrlString];
+    
+    _requestEJTCate = YES;
+    [self requestMainDataWithURLString:kEJTCateUrl];
 }
 
 #pragma mark - 产品点击事件
@@ -288,6 +288,7 @@
             // 解析
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
             [self addControlsWithDictionary:[dict objectForKey:@"data"]];
+//            NSLog(@"")
         }
         else
         {

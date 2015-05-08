@@ -64,10 +64,13 @@ typedef enum
 
 // 收藏接口 参数userid  articleid
 #define kCollectionUrl @"http://123.57.155.106:8080/labonline/hyController/insertWdsc.do"
-// 我的收藏接口 参数 userid
-#define kMyCollectionUrlString @"http://123.57.155.106:8080/labonline/hyController/queryWdscList.do"
+// 我的收藏接口 参数 userid http://192.168.0.153:8181
+//#define kMyCollectionUrlString @"http://123.57.155.106:8080/labonline/hyController/queryWdscList.do"
+#define kMyCollectionUrlString @"http://192.168.0.153:8181/labonline/hyController/queryWdscList.do"
+
 // 删除收藏 参数userid  articleid
-#define kDeleteCollectionUrl @"http://123.57.155.106:8080/labonline/hyController/deleteWdsc.do"
+//#define kDeleteCollectionUrl @"http://123.57.155.106:8080/labonline/hyController/deleteWdsc.do"
+#define kDeleteCollectionUrl @"http://192.168.0.153:8181/labonline/hyController/deleteWdsc.do"
 
 // 修改昵称 参数 userid screenname
 #define kAlterUserNameURL @"http://123.57.155.106:8080/labonline/hyController/updateNc.do"
@@ -89,12 +92,17 @@ typedef enum
 #define kSysUpdataUrl @"http://123.57.155.106:8080/labonline/hyController/queryBbList.do"
 // 用户反馈
 #define kUserCallBackUrl @"http://123.57.155.106:8080/labonline/hyController/insertFk.do"
-// e检通产品分类接口
+// e检通产品分类接口 http://192.168.0.153:8181
 #define kEJTCateUrl @"http://192.168.0.153:8181/labonline/ejtController/queryCpflList.do?versionCode=0"
 // e检通产品列表接口 参数 classifyid
 #define kEJTProductListUrl @"http://192.168.0.153:8181/labonline/ejtController/queryCpList.do"
-
+// e检通增加阅读数
 #define kAddProductReadCountsUrl @"http://192.168.0.153:8181/labonline/ejtController/updateLll.do?productid=%@"
+// e检通产品收藏 参数 productid userid
+#define kProductCollectionUrl @"http://192.168.0.153:8181/labonline/ejtController/insertWdsc.do"
+// 阿里云  http://123.57.155.106:8080
+//#define kProductCollectionUrl @"http://123.57.155.106:8080/labonline/ejtController/insertWdsc.do"
+
 
 #define kOneFontSize 13
 #define kTwoFontSize 12

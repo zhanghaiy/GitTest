@@ -22,7 +22,7 @@
 
 #import "RegisterViewController.h"
 
-@interface JiShuZhuanLanDetailViewController ()<UIWebViewDelegate,QLPreviewControllerDataSource,QLPreviewControllerDelegate,UIAlertViewDelegate,UITextFieldDelegate>
+@interface JiShuZhuanLanDetailViewController ()<UIWebViewDelegate,UIAlertViewDelegate,UITextFieldDelegate>
 {
     UIWebView *_webView;
     BOOL _addReadCounts; // 是否在增加阅读数
@@ -122,7 +122,7 @@
             self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     // 左侧按钮
-    NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 25, 26) andBackImageWithName:@"aniu_07.png"];
+    NavigationButton *leftButton = [[NavigationButton alloc]initWithFrame:CGRectMake(0, 0, 35, 40) andBackImageWithName:@"返回角.png"];
     leftButton.delegate = self;
     leftButton.action = @selector(popToPrePage);
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
