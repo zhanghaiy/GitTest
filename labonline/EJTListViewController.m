@@ -522,8 +522,8 @@
     _thirdMenuArray = [[_seconMenudArray objectAtIndex:_seconMenu] objectForKey:@"submenus"];
     _rightTabV.hidden = NO;
     [self.view bringSubviewToFront:_rightTabV];
-    [_rightTabV reloadData];
     [self changeTableViewFrameWithTag:_rightTabV.tag andCount:_thirdMenuArray.count];
+    [_rightTabV reloadData];
 }
 
 #pragma mark - 三级菜单点击事件回调
