@@ -264,17 +264,21 @@
     {
         [self.view removeLoadingVIewInView:self.view andTarget:self];
     }
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
+    NSLog(@"@@@@@@@:%@",netManager.downLoadData);
+    
+    if ([dict objectForKey:@"productclassifyList"])  _requestEJTCate= YES;
+    else _requestEJTCate= NO;
     
     if (_requestEJTCate)
     {
-        _requestEJTCate= NO;
         if (netManager.downLoadData)
         {
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
             if ([dict objectForKey:@"productclassifyList"])
             {
                 NSArray *eJtMenuArray = [self makeUpEJTMenuDataWithArray:[dict objectForKey:@"productclassifyList"]];
-                NSLog(@"@@@@@@@:%@",eJtMenuArray);
+//                NSLog(@"@@@@@@@:%@",eJtMenuArray);
                 [[NSUserDefaults standardUserDefaults] setObject:eJtMenuArray forKey:@"MENUARRAY"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
             }
@@ -330,7 +334,7 @@
     // e检通数据
     NSArray *ejtArray = [dict objectForKey:@"productList"];//@[@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@""]; //;
 //    NSInteger hangCounts = ejtArray.count%9?ejtArray.count/9+1:ejtArray.count/9;
-    NSLog(@"~~~~~%@",ejtArray);
+//    NSLog(@"~~~~~%@",ejtArray);
     //e检通View frame
     CGRect ejtRect = eJTView.frame;
     ejtRect.origin.y = _currentTopY + jSZLHeight +10;
