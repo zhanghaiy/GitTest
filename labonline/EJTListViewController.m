@@ -18,7 +18,10 @@
 #import "AppDelegate.h"
 #import "YRSideViewController.h"
 
-@interface EJTListViewController ()<UITableViewDataSource,UITableViewDelegate>
+#import "EGORefreshTableHeaderView.h"
+
+
+@interface EJTListViewController ()<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate>
 {
     NSMutableArray *_firstMenuArray;
     NSMutableArray *_seconMenudArray;
@@ -37,6 +40,9 @@
     UIView *_loadingMoreView;
     NSDictionary *_loadingPageDic;
     BOOL _loadMore;
+    
+    BOOL _reloading;
+    EGORefreshTableHeaderView *_refresV;
 }
 @end
 
@@ -155,17 +161,7 @@
     _smallTabV.backgroundColor = [UIColor clearColor];
     
     _leftTabV.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    _leftTabV.layer.masksToBounds = YES;
-//    _leftTabV.layer.cornerRadius = 2;
-//    _leftTabV.layer.borderWidth = 1;
-//    _leftTabV.layer.borderColor = [UIColor colorWithRed:228/255.0 green:129/255.0 blue:138/255.0 alpha:1].CGColor;
     
-//    _rightTabV.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    _rightTabV.layer.masksToBounds = YES;
-//    _rightTabV.layer.cornerRadius = 2;
-//    _rightTabV.layer.borderWidth = 1;
-//    _rightTabV.layer.borderColor = [UIColor colorWithRed:228/255.0 green:129/255.0 blue:138/255.0 alpha:1].CGColor;
-//    
     _smallTabV.separatorStyle = UITableViewCellSeparatorStyleNone;
     _smallTabV.layer.masksToBounds = YES;
     _smallTabV.layer.cornerRadius = 2;
@@ -181,10 +177,12 @@
     [self.view addSubview:_mainTabV];
     
     _pXrray = @[@"时间",@"浏览量"];
-    
+    _reloading = NO;
     _currentRequestPage = 1;
     _classifyid = [[_thirdMenuArray objectAtIndex:_thirdMenu] objectForKey:@"classifyid"];
-    [self startRequestMainData];
+    [self startRequestMainDataWithAnimotion:YES];
+    
+    [self createRefreshView];
 }
 
 #pragma mark - 搜索
@@ -202,8 +200,12 @@
 }
 
 #pragma mark - 请求产品信息列表
-- (void)startRequestMainData
+- (void)startRequestMainDataWithAnimotion:(BOOL)animotion
 {
+    if (animotion)
+    {
+        [self.view addLoadingViewInSuperView:self.view andTarget:self];
+    }
     NSString *urlStr = [NSString stringWithFormat:@"%@?classifyid=%@&currentPage=%d&pageSize=10",kEJTProductListUrl,_classifyid,_currentRequestPage];
     NSLog(@"~~~~~~%@",urlStr);
     [self requestWithUrl:urlStr];
@@ -216,13 +218,19 @@
     manager.delegate = self;
     manager.action = @selector(requestFinished:);
     [manager requestDataWithUrlString:urlString];
-    [self.view addLoadingViewInSuperView:self.view andTarget:self];
 }
 
 #pragma mark - 网络回调
 - (void)requestFinished:(NetManager *)netManager
 {
-    [self.view removeLoadingVIewInView:self.view andTarget:self];
+    if (_reloading)
+    {
+        [self stopRefresh];
+    }
+    else
+    {
+        [self.view removeLoadingVIewInView:self.view andTarget:self];
+    }
     if (netManager.downLoadData)
     {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
@@ -489,7 +497,7 @@
     // 加载更多
     _loadMore = YES;
     _currentRequestPage ++;
-    [self startRequestMainData];
+    [self startRequestMainDataWithAnimotion:YES];
 }
 
 #pragma mark - 二级菜单点击事件回调
@@ -522,7 +530,7 @@
     // 网络请求
     _currentRequestPage = 1;
     _classifyid = [[_thirdMenuArray objectAtIndex:_thirdMenu] objectForKey:@"classifyid"];
-    [self startRequestMainData];
+    [self startRequestMainDataWithAnimotion:YES];
     [self changeButtonSelectedWithButtonTag:kMiddleButtonTag];
     
     NSString *secondStr=[[[_seconMenudArray objectAtIndex:_seconMenu] objectForKey:@"info"] objectForKey:@"classifyname"];
@@ -600,7 +608,7 @@
     
     _currentRequestPage = 1;
     _classifyid = [[[_firstMenuArray objectAtIndex:_firstMenu] objectForKey:@"info"] objectForKey:@"classifyid"];
-    [self startRequestMainData];
+    [self startRequestMainDataWithAnimotion:YES];
     [self changeButtonSelectedWithButtonTag:kLeftButtonTag];
 }
 
@@ -848,6 +856,62 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+#pragma mark --下拉刷新
+- (void)createRefreshView
+{
+    if (_refresV && [_refresV superview]) {
+        [_refresV removeFromSuperview];
+    }
+    _refresV = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.view.bounds.size.height,self.view.frame.size.width, self.view.bounds.size.height)];
+    _refresV.delegate = self;
+    [_mainTabV addSubview:_refresV];
+    [_refresV refreshLastUpdatedDate];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView *)view
+{
+    return _reloading;
+}
+- (NSDate *)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView *)view
+{
+    return [NSDate date];
+}
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
+{
+    if (_reloading == NO)
+    {
+        _reloading = YES;
+        [self startRequestMainDataWithAnimotion:NO];
+    }
+}
+
+- (void)stopRefresh
+{
+    _reloading = NO;
+    [_refresV egoRefreshScrollViewDataSourceDidFinishedLoading:_mainTabV];
+    [_refresV reloadInputViews];
+    
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView.tag == kMainTabTag)
+    {
+        [_refresV egoRefreshScrollViewDidScroll:scrollView];
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (scrollView.tag == kMainTabTag)
+    {
+        [_refresV egoRefreshScrollViewDidEndDragging:scrollView];
+    }
+}
+
 
 /*
 #pragma mark - Navigation
