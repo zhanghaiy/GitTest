@@ -176,7 +176,7 @@
     _mainTabV.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_mainTabV];
     
-    _pXrray = @[@"时间",@"浏览量"];
+    _pXrray = @[@"按时间排序",@"按浏览量排序"];
     _reloading = NO;
     _currentRequestPage = 1;
     _classifyid = [[_thirdMenuArray objectAtIndex:_thirdMenu] objectForKey:@"classifyid"];
@@ -553,6 +553,7 @@
         if (_mainArray.count)
         {
             [self timeSort];
+            _mainTabV.contentOffset = CGPointMake(0, 0);
             [_mainTabV reloadData];
         }
         else
@@ -563,6 +564,7 @@
     else if (index == 1)
     {
         [self seenumberSort];
+        _mainTabV.contentOffset = CGPointMake(0, 0);
         [_mainTabV reloadData];
     }
     if (_mainArray.count > 0)
