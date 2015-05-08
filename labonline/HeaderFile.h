@@ -69,7 +69,8 @@ typedef enum
 #define kMyCollectionUrlString @"http://192.168.0.153:8181/labonline/hyController/queryWdscList.do"
 
 // 删除收藏 参数userid  articleid
-#define kDeleteCollectionUrl @"http://123.57.155.106:8080/labonline/hyController/deleteWdsc.do"
+//#define kDeleteCollectionUrl @"http://123.57.155.106:8080/labonline/hyController/deleteWdsc.do"
+#define kDeleteCollectionUrl @"http://192.168.0.153:8181/labonline/hyController/deleteWdsc.do"
 
 // 修改昵称 参数 userid screenname
 #define kAlterUserNameURL @"http://123.57.155.106:8080/labonline/hyController/updateNc.do"
@@ -91,7 +92,7 @@ typedef enum
 #define kSysUpdataUrl @"http://123.57.155.106:8080/labonline/hyController/queryBbList.do"
 // 用户反馈
 #define kUserCallBackUrl @"http://123.57.155.106:8080/labonline/hyController/insertFk.do"
-// e检通产品分类接口
+// e检通产品分类接口 http://192.168.0.153:8181
 #define kEJTCateUrl @"http://192.168.0.153:8181/labonline/ejtController/queryCpflList.do?versionCode=0"
 // e检通产品列表接口 参数 classifyid
 #define kEJTProductListUrl @"http://192.168.0.153:8181/labonline/ejtController/queryCpList.do"

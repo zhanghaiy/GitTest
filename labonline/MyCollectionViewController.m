@@ -30,6 +30,7 @@
     EGORefreshTableHeaderView *_refresV;
     
     BOOL _netRequesting;
+    BOOL _removeProductCollection;
 }
 
 @end
@@ -130,7 +131,6 @@
  
     // 获取收藏列表
     _reloading = NO;
-    [self.view addLoadingViewInSuperView:self.view andTarget:self];
     [self requestDataWithUrlString:[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,_userId]];
     [self createRefreshView];
 }
@@ -161,6 +161,7 @@
 - (void)requestDataWithUrlString:(NSString *)urlString
 {
     _netRequesting = YES;
+    [self.view addLoadingViewInSuperView:self.view andTarget:self];
     NetManager *netManager = [NetManager getShareManager];
     netManager.delegate = self;
     netManager.action = @selector(netManagerCallBack:);
@@ -191,6 +192,27 @@
         else
         {
             [self.view addAlertViewWithMessage:[dic objectForKey:@"remark"] andTarget:self];
+        }
+    }
+    else if (_removeProductCollection)
+    {
+        _removeProductCollection = NO;
+        if (netManager.downLoadData)
+        {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
+            if ([[dic objectForKey:@"respCode"] integerValue] == 1000)
+            {
+                NSLog(@"%@",[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,_userId]);
+                [self requestDataWithUrlString:[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,_userId]];
+            }
+            else
+            {
+                [self.view addAlertViewWithMessage:[dic objectForKey:@"remark"] andTarget:self];
+            }
+        }
+        else
+        {
+           [self.view addAlertViewWithMessage:@"删除失败" andTarget:self];
         }
     }
     else
@@ -241,7 +263,6 @@
     else
     {
         return _productArray.count;
-//        return 3;
     }
 }
 #pragma mark -- 绘制cell
@@ -286,7 +307,11 @@
     NSDictionary *dic = [_productArray objectAtIndex:btn.tag-kProductRemoveButtonTag];
     NSString *productId = [dic objectForKey:@"productid"];
     NSString *userid = [[NSUserDefaults standardUserDefaults] objectForKey:@"id"];
+    NSString *productUrl = [NSString stringWithFormat:@"%@?userid=%@&articleid=%@",kDeleteCollectionUrl,userid,productId];
+    NSLog(@"%@",productUrl);
+    _removeProductCollection = YES;
     
+    [self requestDataWithUrlString:productUrl];
 }
 
 #pragma mark --高度
