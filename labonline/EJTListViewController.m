@@ -251,6 +251,16 @@
                 [_mainArray addObject:dict];
             }
             [_mainTabV reloadData];
+            CGRect rect = _mainTabV.frame;
+            if (_mainArray.count*160+_loadingMoreView.frame.size.height<kScreenHeight-100)
+            {
+                rect.size.height = _mainArray.count*160+_loadingMoreView.frame.size.height;
+            }
+            else
+            {
+                rect.size.height = kScreenHeight-100;
+            }
+            _mainTabV.frame = rect;
         }
         else
         {
@@ -526,12 +536,13 @@
     _rightTabV.hidden = YES;
     UIButton *btn = (UIButton *)[self.view viewWithTag:kMiddleButtonTag];
     [btn setTitle:[[_thirdMenuArray objectAtIndex:_thirdMenu] objectForKey:@"classifyname"] forState:UIControlStateNormal];
+    [self changeOriginalWithButtonTag:kMiddleButtonTag];
     
     // 网络请求
     _currentRequestPage = 1;
     _classifyid = [[_thirdMenuArray objectAtIndex:_thirdMenu] objectForKey:@"classifyid"];
     [self startRequestMainDataWithAnimotion:YES];
-    [self changeButtonSelectedWithButtonTag:kMiddleButtonTag];
+    
     
     NSString *secondStr=[[[_seconMenudArray objectAtIndex:_seconMenu] objectForKey:@"info"] objectForKey:@"classifyname"];
     NSString *thirdStr=[[_thirdMenuArray objectAtIndex:_thirdMenu] objectForKey:@"classifyname"];
@@ -548,25 +559,7 @@
     btn.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
     [btn setTitleColor:[UIColor colorWithRed:217/255.0 green:0 blue:36/255.0 alpha:1] forState:UIControlStateNormal];
     _smallTabV.hidden = YES;
-    if (index == 0)
-    {
-        if (_mainArray.count)
-        {
-            [self timeSort];
-            _mainTabV.contentOffset = CGPointMake(0, 0);
-            [_mainTabV reloadData];
-        }
-        else
-        {
-            NSLog(@"没有数据");
-        }
-    }
-    else if (index == 1)
-    {
-        [self seenumberSort];
-        _mainTabV.contentOffset = CGPointMake(0, 0);
-        [_mainTabV reloadData];
-    }
+    [self changeOriginalWithButtonTag:kRightButtonTag];
     if (_mainArray.count > 0)
     {
         switch (index)
@@ -585,6 +578,7 @@
                 break;
         }
         [_mainTabV reloadData];
+        _mainTabV.contentOffset = CGPointMake(0, 0);
     }
     else
     {
@@ -603,7 +597,7 @@
     [btn setTitle:titl forState:UIControlStateNormal];
     self.title = titl;
     _smallTabV.hidden = YES;
-    
+    [self changeOriginalWithButtonTag:kLeftButtonTag];
     _seconMenudArray = [[_firstMenuArray objectAtIndex:_firstMenu] objectForKey:@"submenus"];
     UIButton *btn2 = (UIButton *)[self.view viewWithTag:kMiddleButtonTag];
     [btn2 setTitle:[[[_seconMenudArray objectAtIndex:0] objectForKey:@"info"] objectForKey:@"classifyname"] forState:UIControlStateNormal];
@@ -611,7 +605,6 @@
     _currentRequestPage = 1;
     _classifyid = [[[_firstMenuArray objectAtIndex:_firstMenu] objectForKey:@"info"] objectForKey:@"classifyid"];
     [self startRequestMainDataWithAnimotion:YES];
-    [self changeButtonSelectedWithButtonTag:kLeftButtonTag];
 }
 
 #pragma mark - 改变cell选中状态（任何时刻只能有一个被选中）
@@ -664,7 +657,9 @@
     _smallTabV.hidden = YES;
     _leftTabV.hidden = YES;
     _rightTabV.hidden = YES;
-    
+    [self changeOriginalWithButtonTag:kLeftButtonTag];
+    [self changeOriginalWithButtonTag:kMiddleButtonTag];
+    [self changeOriginalWithButtonTag:kRightButtonTag];
 }
 
 
@@ -672,52 +667,69 @@
 - (void)buttonClicked:(MenuButton *)btn
 {
     [self changeButtonSelectedWithButtonTag:btn.tag];
-
-    switch (btn.tag)
+    if (btn.selected)
     {
-        case kLeftButtonTag:
-        {
-            _paiXu = NO;
-            [self.view bringSubviewToFront:_smallTabV];
-            _smallTabV.hidden = NO;
-            [_smallTabV reloadData];
-            [self changeTableViewFrameWithTag:_smallTabV.tag andCount:_firstMenuArray.count];
-            [self makeTableViewAlone:NO];
-        }
-            break;
-        case kLeftButtonTag+1:
-        {
-            NSLog(@"产品分类");
-            [self makeTableViewAlone:YES];
-            _seconMenudArray = [[_firstMenuArray objectAtIndex:_firstMenu] objectForKey:@"submenus"];
-            [self changeTableViewFrameWithTag:_leftTabV.tag andCount:_seconMenudArray.count];
-            if (!(_seconMenu < _seconMenudArray.count))
-            {
-                _seconMenu = 0;
-            }
-            _thirdMenuArray = [[_seconMenudArray objectAtIndex:_seconMenu] objectForKey:@"submenus"];
-            [self.view bringSubviewToFront:_leftTabV];
-            _leftTabV.hidden = NO;
-            [_leftTabV reloadData];
-            [self.view bringSubviewToFront:_rightTabV];
-            _rightTabV.hidden = NO;
-            [_rightTabV reloadData];
-            
-        }
-            break;
-        case kLeftButtonTag+2:
-        {
-            [self makeTableViewAlone:NO];
-            _paiXu = YES;
-            [self.view bringSubviewToFront:_smallTabV];
-             _smallTabV.hidden = NO;
-            [_smallTabV reloadData];
-            [self changeTableViewFrameWithTag:_smallTabV.tag andCount:_pXrray.count];
-        }
-            break;
-        default:
-            break;
+        [self changeOriginalWithButtonTag:btn.tag];
+        _smallTabV.hidden = YES;
+        _leftTabV.hidden = YES;
+        _rightTabV.hidden = YES;
     }
+    else
+    {
+        btn.selected = YES;
+        switch (btn.tag)
+        {
+            case kLeftButtonTag:
+            {
+                _paiXu = NO;
+                [self.view bringSubviewToFront:_smallTabV];
+                _smallTabV.hidden = NO;
+                [_smallTabV reloadData];
+                [self changeTableViewFrameWithTag:_smallTabV.tag andCount:_firstMenuArray.count];
+                [self makeTableViewAlone:NO];
+            }
+                break;
+            case kLeftButtonTag+1:
+            {
+                NSLog(@"产品分类");
+                [self makeTableViewAlone:YES];
+                _seconMenudArray = [[_firstMenuArray objectAtIndex:_firstMenu] objectForKey:@"submenus"];
+                [self changeTableViewFrameWithTag:_leftTabV.tag andCount:_seconMenudArray.count];
+                if (!(_seconMenu < _seconMenudArray.count))
+                {
+                    _seconMenu = 0;
+                }
+                _thirdMenuArray = [[_seconMenudArray objectAtIndex:_seconMenu] objectForKey:@"submenus"];
+                [self.view bringSubviewToFront:_leftTabV];
+                _leftTabV.hidden = NO;
+                [_leftTabV reloadData];
+                [self.view bringSubviewToFront:_rightTabV];
+                _rightTabV.hidden = NO;
+                [_rightTabV reloadData];
+            }
+                break;
+            case kLeftButtonTag+2:
+            {
+                [self makeTableViewAlone:NO];
+                _paiXu = YES;
+                [self.view bringSubviewToFront:_smallTabV];
+                _smallTabV.hidden = NO;
+                [_smallTabV reloadData];
+                [self changeTableViewFrameWithTag:_smallTabV.tag andCount:_pXrray.count];
+            }
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+- (void)changeOriginalWithButtonTag:(NSInteger)buttonTag
+{
+    UIButton *btn = (UIButton *)[self.view viewWithTag:buttonTag];
+    btn.selected = NO;
+    [btn setBackgroundColor:[UIColor whiteColor]];
+    [btn setTitleColor:[UIColor colorWithRed:217/255.0 green:0 blue:36/255.0 alpha:1] forState:UIControlStateNormal];
 }
 
 #pragma mark - 改变按钮选中状态
@@ -734,8 +746,10 @@
         }
         else
         {
-            [newBtn setTitleColor:[UIColor colorWithRed:217/255.0 green:0 blue:36/255.0 alpha:1] forState:UIControlStateNormal];
-            [newBtn setBackgroundColor:[UIColor whiteColor]];
+            [self changeOriginalWithButtonTag:newBtn.tag];
+//            newBtn.selected = NO;
+//            [newBtn setTitleColor:[UIColor colorWithRed:217/255.0 green:0 blue:36/255.0 alpha:1] forState:UIControlStateNormal];
+//            [newBtn setBackgroundColor:[UIColor whiteColor]];
         }
     }
 }
@@ -834,7 +848,7 @@
             {
                 NSDictionary *dict2 = [_mainArray objectAtIndex:j];
                 NSInteger seenum2 = [[dict2 objectForKey:@"seenum"] integerValue];
-                if (seenum1<seenum2)
+                if (seenum1<=seenum2)
                 {
                     [self exchangeObjectIndex:i andIndex:j];
                 }
@@ -842,7 +856,6 @@
         }
 
     }
-
 }
 
 #pragma mark - 左侧菜单
