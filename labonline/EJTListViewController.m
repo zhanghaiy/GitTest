@@ -189,7 +189,7 @@
 - (void)enterSearchVC
 {
     // 搜索
-    NSLog(@"enterSearchViewController");
+//    NSLog(@"enterSearchViewController");
     SearchViewController *searchVC = [[SearchViewController alloc]init];
     [self.navigationController pushViewController:searchVC animated:YES];
 }
@@ -207,7 +207,7 @@
         [self.view addLoadingViewInSuperView:self.view andTarget:self];
     }
     NSString *urlStr = [NSString stringWithFormat:@"%@?classifyid=%@&currentPage=%d&pageSize=10",kEJTProductListUrl,_classifyid,_currentRequestPage];
-    NSLog(@"~~~~~~%@",urlStr);
+//    NSLog(@"~~~~~~%@",urlStr);
     [self requestWithUrl:urlStr];
 }
 
@@ -234,7 +234,7 @@
     if (netManager.downLoadData)
     {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
-        NSLog(@"%@",dict);
+//        NSLog(@"%@",dict);
         if ([[dict objectForKey:@"respCode"] integerValue] == 1000)
         {
             // 成功
@@ -264,7 +264,7 @@
         }
         else
         {
-            NSLog(@"%@",[dict objectForKey:@"remark"]);
+//            NSLog(@"%@",[dict objectForKey:@"remark"]);
         }
     }
     else
@@ -327,7 +327,7 @@
             cell = [[[NSBundle mainBundle]loadNibNamed:@"EJTListCell" owner:self options:0] lastObject];
         }
         NSDictionary *dict = [_mainArray objectAtIndex:indexPath.row];
-        NSLog(@"%@",dict);
+//        NSLog(@"%@",dict);
         if ([[dict objectForKey:@"producticon"] length]>2)
         {
             [cell.imageV setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"producticon"]] placeholderImage:[UIImage imageNamed:@"wangqi.png"]];
@@ -378,7 +378,7 @@
                 break;
             case kRightTabTag:
             {
-                NSLog(@"%@",[_thirdMenuArray objectAtIndex:0]);
+//                NSLog(@"%@",[_thirdMenuArray objectAtIndex:0]);
                 cell.titleLabel.text = [[_thirdMenuArray objectAtIndex:indexPath.row] objectForKey:@"classifyname"];
                 cell.titleLabel.textColor = [UIColor colorWithWhite:128/255.0 alpha:1];
                 cell.titleLabel.font = [UIFont systemFontOfSize:kTwoFontSize];
@@ -643,17 +643,17 @@
 
     NSUserDefaults *defauls = [NSUserDefaults standardUserDefaults];
     _firstMenuArray = [defauls objectForKey:@"MENUARRAY"];
-    NSLog(@"%@",_firstMenuArray);
+//    NSLog(@"%@",_firstMenuArray);
     _seconMenudArray = [[[defauls objectForKey:@"MENUARRAY"] objectAtIndex:_firstMenu] objectForKey:@"submenus"];
-    NSLog(@"%@",_seconMenudArray);
+//    NSLog(@"%@",_seconMenudArray);
     _thirdMenuArray = [[_seconMenudArray objectAtIndex:_seconMenu] objectForKey:@"submenus"];
-    NSLog(@"%@",_thirdMenuArray);
+//    NSLog(@"%@",_thirdMenuArray);
 }
 
 #pragma mark - 触空白收起菜单
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"touchesBegan");
+//    NSLog(@"touchesBegan");
     _smallTabV.hidden = YES;
     _leftTabV.hidden = YES;
     _rightTabV.hidden = YES;
@@ -691,7 +691,7 @@
                 break;
             case kLeftButtonTag+1:
             {
-                NSLog(@"产品分类");
+//                NSLog(@"产品分类");
                 [self makeTableViewAlone:YES];
                 _seconMenudArray = [[_firstMenuArray objectAtIndex:_firstMenu] objectForKey:@"submenus"];
                 [self changeTableViewFrameWithTag:_leftTabV.tag andCount:_seconMenudArray.count];

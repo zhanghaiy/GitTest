@@ -218,7 +218,7 @@
 #pragma mark - 拖拽
 - (void) handlePan: (UIPanGestureRecognizer *)rec{
     CGPoint point = [rec translationInView:self.view];
-    NSLog(@"%f,%f",point.x,point.y);
+//    NSLog(@"%f,%f",point.x,point.y);
     rec.view.center = CGPointMake(rec.view.center.x + point.x, rec.view.center.y + point.y);
     [rec setTranslation:CGPointMake(0, 0) inView:self.view];
 }
@@ -463,10 +463,10 @@
 -(void)mailComposeController:(MFMailComposeViewController *)controller
          didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error{
     if (result) {
-        NSLog(@"Result : %d",result);
+//        NSLog(@"Result : %d",result);
     }
     if (error) {
-        NSLog(@"Error : %@",error);
+//        NSLog(@"Error : %@",error);
     }
     [self dismissModalViewControllerAnimated:YES];
     

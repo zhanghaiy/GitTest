@@ -229,7 +229,7 @@
 
 #pragma mark - 产品点击事件
 - (void)productMethod:(NSDictionary *)proDic{
-    NSLog(@"%@",proDic);
+//    NSLog(@"%@",proDic);
     ProductDetailViewController *proDV=[[ProductDetailViewController alloc] init];
     proDV.proDetail=proDic;
     [self.navigationController pushViewController:proDV animated:YES];
@@ -265,7 +265,7 @@
         [self.view removeLoadingVIewInView:self.view andTarget:self];
     }
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
-    NSLog(@"@@@@@@@:%@",netManager.downLoadData);
+//    NSLog(@"@@@@@@@:%@",netManager.downLoadData);
     
     if ([dict objectForKey:@"productclassifyList"])  _requestEJTCate= YES;
     else _requestEJTCate= NO;
@@ -386,7 +386,7 @@
 #pragma mark - 进入技术专栏界面
 - (void)enterJSZLVireController:(JSZLCateView *)jSZLCateView
 {
-    NSLog(@"进入技术专栏界面");
+//    NSLog(@"进入技术专栏界面");
     if (jSZLCateView.enterMoreVC)
     {
         // 更多界面
@@ -407,7 +407,7 @@
 - (void)enterSearchVC
 {
     // 搜索
-    NSLog(@"enterSearchViewController");
+//    NSLog(@"enterSearchViewController");
     SearchViewController *searchVC = [[SearchViewController alloc]init];
     [self.navigationController pushViewController:searchVC animated:YES];
 }

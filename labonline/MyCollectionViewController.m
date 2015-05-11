@@ -176,10 +176,11 @@
     {
         [self stopRefresh];
     }
-    else
-    {
-        [self.view removeLoadingVIewInView:self.view andTarget:self];
-    }
+     [self.view removeLoadingVIewInView:self.view andTarget:self];
+//    else
+//    {
+//        [self.view removeLoadingVIewInView:self.view andTarget:self];
+//    }
     if (_deleteCollection)
     {
         _deleteCollection = NO;
@@ -202,7 +203,7 @@
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
             if ([[dic objectForKey:@"respCode"] integerValue] == 1000)
             {
-                NSLog(@"%@",[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,_userId]);
+//                NSLog(@"%@",[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,_userId]);
                 [self requestDataWithUrlString:[NSString stringWithFormat:@"%@?userid=%@",kMyCollectionUrlString,_userId]];
             }
             else
@@ -308,7 +309,7 @@
     NSString *productId = [dic objectForKey:@"productid"];
     NSString *userid = [[NSUserDefaults standardUserDefaults] objectForKey:@"id"];
     NSString *productUrl = [NSString stringWithFormat:@"%@?userid=%@&articleid=%@",kDeleteCollectionUrl,userid,productId];
-    NSLog(@"%@",productUrl);
+//    NSLog(@"%@",productUrl);
     _removeProductCollection = YES;
     
     [self requestDataWithUrlString:productUrl];

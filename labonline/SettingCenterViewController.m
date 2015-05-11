@@ -181,10 +181,10 @@
 -(void)mailComposeController:(MFMailComposeViewController *)controller
          didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error{
     if (result) {
-        NSLog(@"Result : %d",result);
+//        NSLog(@"Result : %d",result);
     }
     if (error) {
-        NSLog(@"Error : %@",error);
+//        NSLog(@"Error : %@",error);
     }
     [self dismissModalViewControllerAnimated:YES];
     
