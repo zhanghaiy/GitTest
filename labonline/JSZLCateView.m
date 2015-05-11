@@ -94,7 +94,7 @@
                 }
                 else
                 {
-                    cateLab.backgroundColor = [UIColor whiteColor];
+                    cateLab.backgroundColor = [UIColor colorWithWhite:248/255.0 alpha:1];
                 }
             }
         }

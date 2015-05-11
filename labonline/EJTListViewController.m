@@ -327,7 +327,6 @@
             cell = [[[NSBundle mainBundle]loadNibNamed:@"EJTListCell" owner:self options:0] lastObject];
         }
         NSDictionary *dict = [_mainArray objectAtIndex:indexPath.row];
-//        NSLog(@"%@",dict);
         if ([[dict objectForKey:@"producticon"] length]>2)
         {
             [cell.imageV setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"producticon"]] placeholderImage:[UIImage imageNamed:@"wangqi.png"]];
@@ -392,7 +391,7 @@
                 }
                 if (indexPath.row == _thirdMenu)
                 {
-                    cell.selectedLable.hidden = NO;
+                    cell.titleLabel.textColor = [UIColor redColor];
                 }
             }
                 break;
@@ -666,17 +665,16 @@
 #pragma mark - 菜单按钮被点击
 - (void)buttonClicked:(MenuButton *)btn
 {
-    [self changeButtonSelectedWithButtonTag:btn.tag];
     if (btn.selected)
     {
-        [self changeOriginalWithButtonTag:btn.tag];
+        btn.selected = NO;
         _smallTabV.hidden = YES;
         _leftTabV.hidden = YES;
         _rightTabV.hidden = YES;
     }
     else
     {
-        btn.selected = YES;
+        [self changeButtonSelectedWithButtonTag:btn.tag];
         switch (btn.tag)
         {
             case kLeftButtonTag:
@@ -728,8 +726,6 @@
 {
     UIButton *btn = (UIButton *)[self.view viewWithTag:buttonTag];
     btn.selected = NO;
-    [btn setBackgroundColor:[UIColor whiteColor]];
-    [btn setTitleColor:[UIColor colorWithRed:217/255.0 green:0 blue:36/255.0 alpha:1] forState:UIControlStateNormal];
 }
 
 #pragma mark - 改变按钮选中状态
@@ -741,15 +737,11 @@
         UIButton *newBtn = (UIButton *)[self.view viewWithTag:i+kLeftButtonTag];
         if (btn.tag == newBtn.tag)
         {
-            [newBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [newBtn setBackgroundColor:[UIColor colorWithRed:217/255.0 green:0 blue:36/255.0 alpha:1]];
+            newBtn.selected = YES;
         }
         else
         {
-            [self changeOriginalWithButtonTag:newBtn.tag];
-//            newBtn.selected = NO;
-//            [newBtn setTitleColor:[UIColor colorWithRed:217/255.0 green:0 blue:36/255.0 alpha:1] forState:UIControlStateNormal];
-//            [newBtn setBackgroundColor:[UIColor whiteColor]];
+            newBtn.selected = NO;
         }
     }
 }

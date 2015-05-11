@@ -212,8 +212,7 @@
         cell.tag = indexPath.row + kSecondCellTag;
         if (indexPath.row == 0)
         {
-//            [self changeSelectedCell:cell andBaseTag:kSecondCellTag andSumCounts:rightArray.count];
-            cell.selectedLable.hidden = NO;
+            cell.titleLabel.textColor = [UIColor redColor];
         }
     }
     
@@ -250,12 +249,20 @@
         MenuCell *newCell = (MenuCell *)[self.view viewWithTag:i+tag];
         if (cell.tag == newCell.tag)
         {
-            newCell.selectedLable.hidden = NO;
+            if (tag == kSecondCellTag)
+            {
+                newCell.titleLabel.textColor = [UIColor redColor];
+            }
+            else
+            {
+                newCell.selectedLable.hidden = NO;
+            }
             newCell.backgroundColor = [UIColor colorWithWhite:244/255.0 alpha:1];
         }
         else
         {
             newCell.selectedLable.hidden = YES;
+            newCell.titleLabel.textColor = [UIColor colorWithWhite:128/255.0 alpha:1];
             if (tag == kFirstCellTag)
             {
                 newCell.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:1];
