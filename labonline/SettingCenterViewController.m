@@ -28,6 +28,8 @@
 @end
 
 @implementation SettingCenterViewController
+#define kShareViewTag 456
+
 
 - (void)viewDidLoad
 {
@@ -149,18 +151,29 @@
 - (void)createShareView
 {
     UIView *darkV = [[UIView alloc]initWithFrame:self.view.bounds];
-    darkV.backgroundColor = [UIColor colorWithWhite:14/255.0 alpha:0.5];
+    darkV.backgroundColor = [UIColor colorWithRed:50/255.0 green:75/255.0 blue:138/255.0 alpha:0.2];
     darkV.tag = 11223344;
     [self.view addSubview:darkV];
+    
+    UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapDarkView:)];
+    [darkV addGestureRecognizer:tapGes];
     
     ShareView *shareV = [[[NSBundle mainBundle]loadNibNamed:@"ShareView" owner:self options:0] lastObject];
     shareV.frame = CGRectMake(0, kScreenHeight-220, kScreenWidth, 220);
     shareV.backgroundColor = [UIColor colorWithWhite:248/255.0 alpha:1];
     shareV.target = self;
+    shareV.tag = kShareViewTag;
     shareV.action = @selector(shareCallBack:);
     shareV.shareTitle=@"临床实验室APP";
     shareV.shareUrl=@"http://www.ivdchina.com.cn/labonlineapp/index.htm";
     [self.view addSubview:shareV];
+}
+
+- (void)tapDarkView:(UITapGestureRecognizer *)tap
+{
+    [tap.view removeFromSuperview];
+    ShareView *shareV = (ShareView *)[self.view viewWithTag:kShareViewTag];
+    [shareV removeFromSuperview];
 }
 
 - (void)shareCallBack:(id)sender

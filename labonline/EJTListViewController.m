@@ -514,6 +514,7 @@
 {
     [self changeSelectedCell:cell andBaseTag:kLeftCellTag andSumCounts:_seconMenudArray.count];
     _seconMenu = cell.tag - kLeftCellTag;
+    _thirdMenu = 0;
     
     _seconMenudArray = [[_firstMenuArray objectAtIndex:_firstMenu] objectForKey:@"submenus"];
     UIButton *btn = (UIButton *)[self.view viewWithTag:kMiddleButtonTag];
