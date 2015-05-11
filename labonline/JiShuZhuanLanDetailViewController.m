@@ -64,7 +64,7 @@
     {
         _articalID = [_articalDic objectForKey:@"id"];
     }
-    NSLog(@"%@",_articalID);
+    NSLog(@"~~~~~~%@",_articalDic);
     if ([[_articalDic objectForKey:@"urlpdf"] length]>5)
     {
         _isPDF = YES;

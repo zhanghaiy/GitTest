@@ -67,7 +67,7 @@
 }
 - (void)makeUpDataArray
 {
-    NSArray *textArray = @[@"清除缓存",@"分享给好友",@"版本更新",@"用户反馈",@"关于我们"];
+    NSArray *textArray = @[@"清除缓存",@"分享给好友",@"用户反馈",@"关于我们"];
     NSArray *imageNameArray = @[@"removeCache.png",@"share.png",@"versionUpdate.png",@"UserFeedBack.png",@"about.png"];
     _listArray = [[NSMutableArray alloc]init];
     for (int i = 0; i < textArray.count; i ++)
@@ -123,19 +123,19 @@
             [self createShareView];
         }
             break;
+//        case 2:
+//        {
+//             // 版本更新
+//        }
+//            break;
         case 2:
-        {
-             // 版本更新
-        }
-            break;
-        case 3:
         {
             //用户反馈
             UserCallBackViewController *callBackVC = [[UserCallBackViewController alloc]init];
             [self.navigationController pushViewController:callBackVC animated:YES];
         }
             break;
-        case 4:
+        case 3:
         {
             // 关于我们
             AboutMeViewController *aboutMeVC = [[AboutMeViewController alloc]init];
@@ -212,12 +212,16 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (_removeCache)
+    if (buttonIndex == 0)
     {
-        _removeCache = NO;
-        [RemoveCacheManager removeUserAllLocalCacheFile];
-        [self createAlertViewWithTitle:@"提示" Message:@"清除成功" cancelTitle:@"确定" otherTitle:nil];
+        if (_removeCache)
+        {
+            _removeCache = NO;
+            [RemoveCacheManager removeUserAllLocalCacheFile];
+            [self createAlertViewWithTitle:@"提示" Message:@"清除成功" cancelTitle:@"确定" otherTitle:nil];
+        }
     }
+    
 }
 
 
