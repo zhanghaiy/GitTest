@@ -111,6 +111,6 @@ typedef enum
 #define kThreeFontSize 11
 #define kFourFontSize 10
 // 取消输出
-#define NSLog(...) {}
+//#define NSLog(...) {}
 
 #endif
