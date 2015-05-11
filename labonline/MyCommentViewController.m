@@ -121,11 +121,6 @@
             // 成功
             NSArray *listArr = [dic objectForKey:@"list"];
             _myCommentArray = [[NSMutableArray alloc]initWithArray:listArr];
-//            for (NSDictionary *dic in listArr)
-//            {
-////                [_myCommentArray insertObject:dic atIndex:0];
-//                [_myCommentArray addObject:dic];
-//            }
             [_myCommentTableV reloadData];
         }
         else

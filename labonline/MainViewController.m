@@ -378,10 +378,20 @@
 #pragma mark - 图片轮播-->进入详情
 - (void)pictureShowMethod:(PictureShowView *)pictureShowV
 {
-    NSDictionary *dict = [[pictureShowV.imageInfoArray objectAtIndex:pictureShowV.imageIndex] objectForKey:@"articleinfo"];
-    JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
-    detailVC.articalDic = dict;
-    [self.navigationController pushViewController:detailVC animated:YES];
+    NSDictionary *currentDict = [pictureShowV.imageInfoArray objectAtIndex:pictureShowV.imageIndex];
+    if ((![[currentDict objectForKey:@"articleinfo"] isEqual:[NSNull null]])&&[currentDict objectForKey:@"articleinfo"])
+    {
+        JiShuZhuanLanDetailViewController *detailVC = [[JiShuZhuanLanDetailViewController alloc]init];
+        detailVC.articalDic = [currentDict objectForKey:@"articleinfo"];
+        [self.navigationController pushViewController:detailVC animated:YES];
+    }
+    else if ((![[currentDict objectForKey:@"productpic"] isEqual:[NSNull null]])&&[currentDict objectForKey:@"productpic"])
+    {
+        ProductDetailViewController *proDV=[[ProductDetailViewController alloc] init];
+        proDV.proDetail=[currentDict objectForKey:@"productpic"];
+        [self.navigationController pushViewController:proDV animated:YES];
+    }
+    
 }
 #pragma mark - 进入技术专栏界面
 - (void)enterJSZLVireController:(JSZLCateView *)jSZLCateView
