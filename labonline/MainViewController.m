@@ -332,13 +332,10 @@
     _jSZLCateV.cateDataArray = jSZLArray;
     
     // e检通数据
-    NSArray *ejtArray = [dict objectForKey:@"productList"];//@[@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@""]; //;
-//    NSInteger hangCounts = ejtArray.count%9?ejtArray.count/9+1:ejtArray.count/9;
-//    NSLog(@"~~~~~%@",ejtArray);
+    NSArray *ejtArray = [dict objectForKey:@"productList"];
     //e检通View frame
     CGRect ejtRect = eJTView.frame;
     ejtRect.origin.y = _currentTopY + jSZLHeight +10;
-//    ejtRect.size.height = kProductHeadHeight+kProductHangHeight*hangCounts;
     eJTView.frame = ejtRect;
     eJTView.productInfoArray = ejtArray;
     
